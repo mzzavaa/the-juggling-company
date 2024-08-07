@@ -29,7 +29,7 @@ sections:
       altText: Hero section image
   - type: CardsSection
     title: The Art of Juggling
-    subtitle: Section subtitle here
+    subtitle: 'Where Everyone is Equal, Minds are Sharpened, and Bodies are Strengthened.'
     items:
       - type: Card
         title: First Card Title
