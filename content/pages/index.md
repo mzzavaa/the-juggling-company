@@ -12,7 +12,7 @@ sections:
       world of juggling.
     actions:
       - type: Button
-        label: Start Building
+        label: Start Juggling
         url: 'https://docs.netlify.com/visual-editor/get-started/'
         size: large
         variant: contained
