@@ -28,7 +28,7 @@ sections:
       url: /images/hero.svg
       altText: Hero section image
   - type: CardsSection
-    title: The Art of Juggling
+    title: The Juggling Company
     subtitle: 'Where Everyone is Equal, Minds are Sharpened, and Bodies are Strengthened.'
     items:
       - type: Card
