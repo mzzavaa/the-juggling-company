@@ -6,9 +6,11 @@ sections:
     title: Welcome
     subtitle: to the world of juggling
     text: >
-      This is the HeroSection component. You can visually edit this component &
-      add more sections while developing locally. [Learn
-      more.](https://docs.netlify.com/visual-editor/local-development/)
+      Welcome to "The Juggling Company," a unique blend of technology and the
+      art of juggling. Founded by Linda Mohamed, an AWS Hero based in Vienna,
+      Austria, this platform aims to inspire and engage the community through
+      innovative projects that combine cloud computing, AI, and the fascinating
+      world of juggling.
     actions:
       - type: Button
         label: Start Building
