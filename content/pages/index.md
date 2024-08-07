@@ -6,9 +6,8 @@ sections:
     title: Welcome
     subtitle: to the world of juggling
     text: >
-      Welcome to "The Juggling Company," a unique blend of technology and the
-      art of juggling. Founded by Linda Mohamed, an AWS Hero based in Vienna,
-      Austria, this platform aims to inspire and engage the community through
+      The Juggling Company" is a unique blend of technology and the art of
+      juggling. This platform aims to inspire and engage the community through
       innovative projects that combine cloud computing, AI, and the fascinating
       world of juggling.
     actions:
