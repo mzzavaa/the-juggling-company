@@ -6,7 +6,7 @@ sections:
     title: Welcome
     subtitle: to the world of juggling
     text: >
-      The Juggling Company" is a unique blend of technology and the art of
+      "The Juggling Company" is a unique blend of technology and the art of
       juggling. This platform aims to inspire and engage the community through
       innovative projects that combine cloud computing, AI, and the fascinating
       world of juggling.
