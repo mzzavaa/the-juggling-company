@@ -19,4 +19,8 @@ sections:
       lessons with others, helping people to find balance in both their personal
       and professional lives by merging the art of juggling with innovative
       learning and development strategies.
+    image:
+      type: Image
+      url: 'https://assets.stackbit.com/components/images/default/default-image.png'
+      altText: Image alt text
 ---
