@@ -68,7 +68,7 @@ sections:
           type: Image
           url: /images/7.png
           altText: Third item image
-        text: "\U0001F504 Juggling illustrates balance, adaptability, and continuous learning. \U0001F31F Discover how its principles apply to managing organizational change and improving leadership and team dynamics.\n"
+        text: "\U0001F4BB Juggling and cloud computing both manage complexity and scalability. \U0001F4CA Learn how juggling principles can improve understanding and management of IT systems through these parallels.\n"
         actions:
           - type: Button
             label: Learn more
