@@ -4,7 +4,7 @@ type: Page
 sections:
   - type: HeroSection
     title: About
-    subtitle: This is the subtitle
+    subtitle: The Juggling Company
     text: >
       This is **Markdown** *text*.
 
