@@ -69,6 +69,6 @@ sections:
         text: "Juggling is a powerful metaphor for managing change and organizational dynamics \U0001FAA2 It illustrates the need for balance, adaptability, and continuous learning - key components for successfully navigating change within a company. This section discusses how juggling principles can be applied to organizational change, leadership, and team dynamics, providing practical insights and strategies for effective change management.\n"
         actions:
           - type: Button
-            label: Read the Docs
+            label: Learn more
             url: 'https://docs.netlify.com/visual-editor/overview/'
 ---
