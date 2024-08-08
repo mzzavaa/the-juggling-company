@@ -49,10 +49,13 @@ sections:
           url: /images/Untitled design (3).png
           altText: Second item image
         text: >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Juggling and cloud computing share many similarities, particularly in
+          terms of complexity and scalability ↔️ Just as juggling involves
+          managing multiple objects simultaneously, cloud computing requires
+          handling numerous processes and data streams efficiently. This section
+          explores the parallels between juggling and IT, demonstrating how
+          principles of juggling can be applied to enhance understanding and
+          management of technological systems.
         actions:
           - type: Button
             label: Read the Docs
