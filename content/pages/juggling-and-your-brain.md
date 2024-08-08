@@ -4,7 +4,7 @@ title: Juggling and your Brain
 sections:
   - type: HeroSection
     title: Juggling and Your Brain
-    subtitle: The section subtitle
+    subtitle: Unlocking the Cognitive Benefits of Juggling
     text: >-
       Add more sections by hovering above or below this one and clicking '+ Add
       Section', or using the sidebar.
