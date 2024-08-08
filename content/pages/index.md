@@ -32,7 +32,7 @@ sections:
     subtitle: 'Where Everyone is Equal, Minds are Sharpened, and Bodies are Strengthened.'
     items:
       - type: Card
-        title: First Card Title
+        title: Juggling and Your Brain
         image:
           type: Image
           url: /images/nextjs.svg
