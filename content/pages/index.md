@@ -63,7 +63,7 @@ sections:
             label: Learn more
             url: /juggling-and-change
       - type: Card
-        title: Juggling and Change
+        title: Juggling and Technology
         image:
           type: Image
           url: /images/Untitled design (3).png
