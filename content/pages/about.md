@@ -21,6 +21,6 @@ sections:
       learning and development strategies.
     image:
       type: Image
-      url: 'https://assets.stackbit.com/components/images/default/default-image.png'
+      url: /images/IMG_9810.jpg
       altText: Image alt text
 ---
