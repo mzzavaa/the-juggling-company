@@ -58,7 +58,7 @@ sections:
           management of technological systems.
         actions:
           - type: Button
-            label: Read the Docs
+            label: Learn more
             url: 'https://docs.netlify.com/visual-editor/overview/'
       - type: Card
         title: Juggling and Change
