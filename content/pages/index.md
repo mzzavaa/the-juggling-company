@@ -57,7 +57,7 @@ sections:
           type: Image
           url: /images/Untitled design (3).png
           altText: Second item image
-        text: ''
+        text: "\U0001F504 Juggling illustrates balance, adaptability, and continuous learning. \U0001F31F Discover how its principles apply to managing organizational change and improving leadership and team dynamics.\n"
         actions:
           - type: Button
             label: Learn more
