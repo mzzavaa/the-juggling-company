@@ -62,7 +62,7 @@ sections:
             label: Read the Docs
             url: 'https://docs.netlify.com/visual-editor/overview/'
       - type: Card
-        title: Third Card Title
+        title: Juggling and Change
         image:
           type: Image
           url: /images/ts.svg
