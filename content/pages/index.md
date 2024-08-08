@@ -72,5 +72,5 @@ sections:
         actions:
           - type: Button
             label: Learn more
-            url: /juggling-and-change
+            url: ''
 ---
