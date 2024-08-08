@@ -50,7 +50,7 @@ sections:
         title: Juggling and Technology
         image:
           type: Image
-          url: /images/6.png
+          url: /images/Untitled design (3).png
           altText: Second item image
         text: >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
