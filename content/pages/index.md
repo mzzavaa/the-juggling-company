@@ -35,7 +35,7 @@ sections:
         title: Juggling and Your Brain
         image:
           type: Image
-          url: /images/7.png
+          url: /images/5.png
           altText: First item image
         text: >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
