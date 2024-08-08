@@ -50,7 +50,7 @@ sections:
         actions:
           - type: Button
             label: Learn more
-            url: /
+            url: /juggling-and-your-brain
       - type: Card
         title: Juggling and Technology
         image:
