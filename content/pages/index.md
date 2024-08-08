@@ -37,11 +37,7 @@ sections:
           type: Image
           url: /images/5.png
           altText: First item image
-        text: >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+        text: "Juggling is not just a fun activity \U0001F939‍♀️ it has profound effects on cognitive functions. It enhances brain function by improving coordination, concentration, and memory. Studies have shown that juggling can increase grey matter in the brain, which is responsible for processing information. This section delves into the cognitive benefits of juggling and provides scientific evidence to support these claims.\n"
         actions:
           - type: Button
             label: Read the Docs
