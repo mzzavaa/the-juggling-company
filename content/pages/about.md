@@ -6,12 +6,17 @@ sections:
     title: About
     subtitle: The Juggling Company
     text: >
-      This is **Markdown** *text*.
+      My name is Linda Mohamed, and I’ve spent over a decade navigating the tech
+      landscape, specializing in cloud technologies, IT process optimization,
+      and agile methodologies. I’ve had the privilege of guiding companies on
+      their cloud journeys, integrating cutting-edge technology with effective
+      management practices. 
 
 
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.
+      Alongside my professional endeavors, I have a deep passion for juggling -
+      a skill that has taught me invaluable lessons in balance, focus, and
+      adaptability. This platform is born out of my desire to share these
+      lessons with others, helping people to find balance in both their personal
+      and professional lives by merging the art of juggling with innovative
+      learning and development strategies.
 ---
