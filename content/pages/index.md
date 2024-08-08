@@ -65,7 +65,7 @@ sections:
         title: Juggling and Change
         image:
           type: Image
-          url: /images/6.png
+          url: /images/7.png
           altText: Third item image
         text: >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
