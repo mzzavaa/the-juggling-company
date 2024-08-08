@@ -62,8 +62,4 @@ sections:
         size: large
         variant: outlined
         color: primary
-    image:
-      type: Image
-      url: /images/7.png
-      altText: Image alt text
 ---
