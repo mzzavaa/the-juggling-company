@@ -40,7 +40,7 @@ sections:
         text: "Juggling is not just a fun activity \U0001F939‍♀️ it has profound effects on cognitive functions. It enhances brain function by improving coordination, concentration, and memory. Studies have shown that juggling can increase grey matter in the brain, which is responsible for processing information. This section delves into the cognitive benefits of juggling and provides scientific evidence to support these claims.\n"
         actions:
           - type: Button
-            label: Read the Docs
+            label: Learn more
             url: 'https://docs.netlify.com/visual-editor/overview/'
       - type: Card
         title: Juggling and Technology
