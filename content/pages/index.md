@@ -57,14 +57,7 @@ sections:
           type: Image
           url: /images/Untitled design (3).png
           altText: Second item image
-        text: >
-          Juggling and cloud computing share many similarities, particularly in
-          terms of complexity and scalability ↔️ Just as juggling involves
-          managing multiple objects simultaneously, cloud computing requires
-          handling numerous processes and data streams efficiently. This section
-          explores the parallels between juggling and IT, demonstrating how
-          principles of juggling can be applied to enhance understanding and
-          management of technological systems.
+        text: "\U0001F4BB Juggling and cloud computing both manage complexity and scalability. \U0001F4CA Learn how juggling principles can improve understanding and management of IT systems through these parallels.\n"
         actions:
           - type: Button
             label: Learn more
