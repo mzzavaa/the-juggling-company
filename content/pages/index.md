@@ -4,7 +4,7 @@ type: Page
 sections:
   - type: HeroSection
     title: Welcome
-    subtitle: to the world of juggling
+    subtitle: to the infinite world of juggling
     text: >+
       "The Juggling Company" is a unique blend of technology and the art of
       juggling. This platform aims to inspire and engage the community through
