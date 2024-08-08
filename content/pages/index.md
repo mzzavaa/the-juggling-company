@@ -52,7 +52,7 @@ sections:
             label: Learn more
             url: /juggling-and-your-brain
       - type: Card
-        title: Juggling and Technology
+        title: Juggling and Change
         image:
           type: Image
           url: /images/7.png
