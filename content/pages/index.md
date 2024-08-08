@@ -61,7 +61,7 @@ sections:
         actions:
           - type: Button
             label: Learn more
-            url: /juggling-and-technology
+            url: /juggling-and-change
       - type: Card
         title: Juggling and Change
         image:
