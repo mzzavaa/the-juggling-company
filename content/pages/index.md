@@ -72,5 +72,5 @@ sections:
         actions:
           - type: Button
             label: Learn more
-            url: ''
+            url: /juggling-and-technology
 ---
