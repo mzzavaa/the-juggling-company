@@ -25,7 +25,7 @@ sections:
         color: primary
     image:
       type: Image
-      url: /images/IMG_0492.JPG
+      url: /images/3.png
       altText: Hero section image
   - type: CardsSection
     title: The Juggling Company
