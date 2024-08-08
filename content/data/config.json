@@ -1,8 +1,8 @@
 {
     "type": "Config",
-    "favicon": "/images/favicon.svg",
+    "favicon": "/images/4.png",
     "header": {
-        "title": "TypeScript + MUI Starter",
+        "title": "The Juggling Company",
         "navLinks": [
             {
                 "type": "Link",
@@ -41,7 +41,7 @@
             },
             {
                 "type": "Link",
-                "label": "Documentation",
+                "label": "",
                 "underline": "hover",
                 "url": "https://docs.netlify.com/visual-editor/overview/"
             }
