@@ -15,12 +15,6 @@
                 "label": "About",
                 "url": "/about",
                 "underline": "hover"
-            },
-            {
-                "type": "Link",
-                "label": "Documentation",
-                "url": "https://docs.netlify.com/visual-editor/overview/",
-                "underline": "hover"
             }
         ]
     },
