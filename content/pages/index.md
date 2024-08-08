@@ -72,5 +72,5 @@ sections:
         actions:
           - type: Button
             label: Learn more
-            url: 'https://docs.netlify.com/visual-editor/overview/'
+            url: /juggling-and-change
 ---
