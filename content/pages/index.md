@@ -57,7 +57,7 @@ sections:
           type: Image
           url: /images/Untitled design (3).png
           altText: Second item image
-        text: "\U0001F4BB Juggling and cloud computing both manage complexity and scalability. \U0001F4CA Learn how juggling principles can improve understanding and management of IT systems through these parallels.\n"
+        text: ''
         actions:
           - type: Button
             label: Learn more
