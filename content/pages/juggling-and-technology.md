@@ -4,7 +4,7 @@ title: Juggling and Technology
 sections:
   - type: HeroSection
     title: Juggling and Technology
-    subtitle: The section subtitle
+    subtitle: 'Balancing Complexity: The Intersection of Juggling and Cloud Computing'
     text: >-
       Add more sections by hovering above or below this one and clicking '+ Add
       Section', or using the sidebar.
