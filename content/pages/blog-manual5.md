@@ -1,6 +1,6 @@
 ---
 type: Page
-title: Next.js Blog
+title: Blog
 sections:
   - type: HeroSection
     title: Welcome to My Blog
