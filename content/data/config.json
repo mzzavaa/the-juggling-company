@@ -15,8 +15,16 @@
                 "label": "About",
                 "url": "/about",
                 "underline": "hover"
+            },
+            {
+                "type": "Link",
+                "label": "Blog",
+                "url": "/blog",
+                "underline": "hover"
             }
-        ]
+        ],
+        "logoSrc": "/images/Untitled (5000 x 5000 px) (1).svg",
+        "logoAlt": "TheJugglingCompany"
     },
     "footer": {
         "copyrightText": "",
@@ -35,9 +43,9 @@
             },
             {
                 "type": "Link",
-                "label": "",
+                "label": "Blog",
                 "underline": "hover",
-                "url": "https://docs.netlify.com/visual-editor/overview/"
+                "url": "/blog"
             }
         ]
     }
