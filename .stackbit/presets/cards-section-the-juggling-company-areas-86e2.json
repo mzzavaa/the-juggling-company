@@ -1,0 +1,93 @@
+{
+    "model": "CardsSection",
+    "srcType": "git",
+    "srcProjectId": "9a0364b9",
+    "presets": [
+        {
+            "label": "The Juggling Company Areas",
+            "locale": null,
+            "metadata": {
+                "categories": [
+                    "building-blocks"
+                ],
+                "canDelete": true
+            },
+            "data": {
+                "title": "The Juggling Company",
+                "subtitle": "Where Everyone is Equal, Minds are Sharpened, and Bodies are Strengthened.",
+                "items": [
+                    {
+                        "$$type": "Card",
+                        "title": "Juggling and Your Brain",
+                        "text": "🧠 Juggling enhances coordination, concentration, and memory. 🧩 Studies show it increases grey matter, boosting brain function. Explore the cognitive benefits and supporting scientific evidence here.\n",
+                        "image": {
+                            "$$type": "Image",
+                            "url": {
+                                "$$ref": "stackbit_asset_id:static:public/images/5.png",
+                                "$$type": "__asset_model"
+                            },
+                            "altText": "First item image"
+                        },
+                        "actions": [
+                            {
+                                "$$type": "Button",
+                                "label": "Learn more",
+                                "url": "/juggling-and-your-brain",
+                                "size": null,
+                                "variant": null,
+                                "color": null
+                            }
+                        ]
+                    },
+                    {
+                        "$$type": "Card",
+                        "title": "Juggling and Change",
+                        "text": "🔄 Juggling illustrates balance, adaptability, and continuous learning. 🌟 Discover how its principles apply to managing organizational change and improving leadership and team dynamics.\n",
+                        "image": {
+                            "$$type": "Image",
+                            "url": {
+                                "$$ref": "stackbit_asset_id:static:public/images/7.png",
+                                "$$type": "__asset_model"
+                            },
+                            "altText": "Second item image"
+                        },
+                        "actions": [
+                            {
+                                "$$type": "Button",
+                                "label": "Learn more",
+                                "url": "/juggling-and-change",
+                                "size": null,
+                                "variant": null,
+                                "color": null
+                            }
+                        ]
+                    },
+                    {
+                        "$$type": "Card",
+                        "title": "Juggling and Technology",
+                        "text": "💻 Juggling and cloud computing both manage complexity and scalability. 📊 Learn how juggling principles can improve understanding and management of IT systems through these parallels.\n",
+                        "image": {
+                            "$$type": "Image",
+                            "url": {
+                                "$$ref": "stackbit_asset_id:static:public/images/Untitled design (3).png",
+                                "$$type": "__asset_model"
+                            },
+                            "altText": "Third item image"
+                        },
+                        "actions": [
+                            {
+                                "$$type": "Button",
+                                "label": "Learn more",
+                                "url": "/juggling-and-technology",
+                                "size": null,
+                                "variant": null,
+                                "color": null
+                            }
+                        ]
+                    }
+                ]
+            },
+            "thumbnail": "images/cards-section-the-juggling-company-areas-86e2.png"
+        }
+    ]
+}
