@@ -9,6 +9,7 @@ import { BlogPostsSection } from './BlogPostsSection';
 import { Image } from './Image';
 import { Link } from './Link';
 import { Page } from './Page';
+import { BlogPost } from './BlogPost';
 import { ThemeStyle } from './ThemeStyle';
 
 export const allModels = {
@@ -24,4 +25,5 @@ export const allModels = {
     Page, 
     ThemeStyle, 
     BlogPostsSection,
+    BlogPost,
 };
