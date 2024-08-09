@@ -1,0 +1,49 @@
+{
+    "model": "HeroSection",
+    "srcType": "git",
+    "srcProjectId": "9a0364b9",
+    "presets": [
+        {
+            "label": "Welcome",
+            "locale": null,
+            "metadata": {
+                "categories": [
+                    "building-blocks"
+                ],
+                "canDelete": true
+            },
+            "data": {
+                "title": "Welcome",
+                "subtitle": "to the infinite world of juggling",
+                "text": "\"The Juggling Company\" is a unique blend of technology and the art of juggling. This platform aims to inspire and engage through innovative projects that combine cloud computing, AI, and the fascinating world of juggling.\n\n> *Let's inspire, educate, and empower people through the art of juggling. By fostering a vibrant community that connects physical fitness, cognitive development, and creative expression, the goal is to promote holistic well-being. Through the integration of juggling principles with innovative technology and learning methods, enhance teamwork and drive positive change for both individuals and organizations.*\n\n",
+                "actions": [
+                    {
+                        "$$type": "Button",
+                        "label": "Start Juggling",
+                        "url": "https://docs.netlify.com/visual-editor/get-started/",
+                        "size": "large",
+                        "variant": "contained",
+                        "color": "primary"
+                    },
+                    {
+                        "$$type": "Button",
+                        "label": "Learn about juggling",
+                        "url": "https://docs.netlify.com/visual-editor/overview/",
+                        "size": "large",
+                        "variant": "outlined",
+                        "color": "primary"
+                    }
+                ],
+                "image": {
+                    "$$type": "Image",
+                    "url": {
+                        "$$ref": "stackbit_asset_id:static:public/images/Untitled (5000 x 5000 px) (1).png",
+                        "$$type": "__asset_model"
+                    },
+                    "altText": "Hero section image"
+                }
+            },
+            "thumbnail": "images/hero-section-welcome-2b0f.png"
+        }
+    ]
+}
