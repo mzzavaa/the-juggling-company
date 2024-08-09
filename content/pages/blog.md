@@ -8,12 +8,6 @@ sections:
     text: This is a blog built with Next.js. Stay tuned for more updates!
     actions:
       - type: Button
-        label: Get Started
-        url: /
-        size: large
-        variant: contained
-        color: primary
-      - type: Button
         label: Learn more
         url: /
         size: large
