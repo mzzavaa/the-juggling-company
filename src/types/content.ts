@@ -1,7 +1,7 @@
-export type Document = Config | Page;
-export type DocumentTypeNames = 'Config' | 'Page';
+export type Document = Config | Page | BlogPost;
+export type DocumentTypeNames = 'Config' | 'Page' | 'BlogPost';
 
-export type Section = CardsSection | HeroSection;
+export type Section = CardsSection | HeroSection | BlogPostsSection;
 
 /** Document types */
 export type Config = {
@@ -20,6 +20,15 @@ export type Page = {
     title: string;
     sections?: Section[];
     body?: string;
+};
+
+export type BlogPost = {
+    __id: string;
+    __url: string;
+    type: 'BlogPost';
+    title: string;
+    date: string;
+    content: string;
 };
 
 /** Nested types */
@@ -66,6 +75,12 @@ export type HeroSection = {
     text?: string;
     actions?: Button[];
     image?: Image;
+};
+
+export type BlogPostsSection = {
+    type: 'BlogPostsSection';
+    title: string;
+    posts: BlogPost[];
 };
 
 export type Image = {

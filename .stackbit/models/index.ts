@@ -5,6 +5,7 @@ import { Config } from './Config';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { HeroSection } from './HeroSection';
+import { BlogPostsSection } from './BlogPostsSection';
 import { Image } from './Image';
 import { Link } from './Link';
 import { Page } from './Page';
@@ -22,4 +23,5 @@ export const allModels = {
     Link, 
     Page, 
     ThemeStyle, 
+    BlogPostsSection,
 };
