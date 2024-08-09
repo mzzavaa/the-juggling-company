@@ -7,17 +7,18 @@ sections:
     subtitle: to the infinite world of juggling
     text: >+
       "The Juggling Company" is a unique blend of technology and the art of
-      juggling. This platform aims to inspire and engage the community through
-      innovative projects that combine cloud computing, AI, and the fascinating
-      world of juggling.
+      juggling. This platform aims to inspire and engage through innovative
+      projects that combine cloud computing, AI, and the fascinating world of
+      juggling.
 
 
-      > *Our mission is to inspire, educate, and empower individuals through
-      juggling. We foster a vibrant community that bridges physical fitness,
-      cognitive development, and creative expression. By combining juggling
-      principles with innovative technology and learning methods, we promote
-      holistic well-being, enhance teamwork, and drive positive change in
-      organizations and individuals.*
+      > *The mission is to inspire, educate, and empower people through the art
+      of juggling. By fostering a vibrant community that connects physical
+      fitness, cognitive development, and creative expression, the goal is to
+      promote holistic well-being. Through the integration of juggling
+      principles with innovative technology and learning methods, the aim is to
+      enhance teamwork and drive positive change for both individuals and
+      organizations.*
 
     actions:
       - type: Button
