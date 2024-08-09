@@ -1,7 +1,7 @@
 export type Document = Config | Page | BlogPost;
 export type DocumentTypeNames = 'Config' | 'Page' | 'BlogPost';
 
-export type Section = CardsSection | HeroSection | BlogPostsSection;
+export type Section = CardsSection | HeroSection | BlogPostsSection | AboutSection;
 
 /** Document types */
 export type Config = {
@@ -81,6 +81,13 @@ export type BlogPostsSection = {
     type: 'BlogPostsSection';
     title: string;
     posts: BlogPost[];
+};
+
+export type AboutSection = {
+    type: 'AboutSection';
+    title: string;
+    text: string;
+    image: Image;
 };
 
 export type Image = {

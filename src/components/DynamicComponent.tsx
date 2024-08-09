@@ -3,9 +3,10 @@ import type { ComponentType, FC } from 'react';
 import type { Props as CardsSectionProps } from './sections/CardsSection';
 import type { Props as HeroSectionProps } from './sections/HeroSection';
 import type { Props as BlogPostsSectionProps } from './sections/BlogPostsSection';
+import type { Props as AboutSectionProps } from './sections/AboutSection'; 
 
 
-export type Props = CardsSectionProps | HeroSectionProps | BlogPostsSectionProps;
+export type Props = CardsSectionProps | HeroSectionProps | BlogPostsSectionProps | AboutSectionProps;
 
 type ComponentsMap = {
     [P in Props as P['type']]: ComponentType<P>;
@@ -15,7 +16,8 @@ const componentsMap: ComponentsMap = {
     // sections
     CardsSection: dynamic(() => namedComponent(import('./sections/CardsSection'), 'CardsSection')),
     HeroSection: dynamic(() => namedComponent(import('./sections/HeroSection'), 'HeroSection')),
-    BlogPostsSection: dynamic(() => namedComponent(import('./sections/BlogPostsSection'), 'BlogPostsSection'))
+    BlogPostsSection: dynamic(() => namedComponent(import('./sections/BlogPostsSection'), 'BlogPostsSection')),
+    AboutSection: dynamic(() => namedComponent(import('./sections/AboutSection'), 'AboutSection'))
 };
 
 export const DynamicComponent: FC<Props> = (props) => {
