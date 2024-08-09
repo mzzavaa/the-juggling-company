@@ -1,10 +1,11 @@
 import * as React from 'react';
 import type * as types from 'types';
+import { Button } from '../../atoms/Button';
 import { Markdown } from '../../atoms/Markdown';
+
 import MuiBox from '@mui/material/Box';
 import MuiGrid from '@mui/material/Grid';
 import MuiTypography from '@mui/material/Typography';
-import Link from 'next/link';
 
 export type Props = types.BlogPostsSection & types.StackbitFieldPath;
 
@@ -22,11 +23,9 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                 {posts.map((post, index) => (
                     <MuiGrid item xs={12} sm={6} md={4} key={index} data-sb-field-path={`.${index}`}>
                         <MuiBox>
-                            <Link href={post.__url} passHref>
-                                <MuiTypography variant="h6" color="primary" component="a">
-                                    {post.title}
-                                </MuiTypography>
-                            </Link>
+                            <MuiTypography variant="h6" color="text.primary" component="div">
+                                {post.title}
+                            </MuiTypography>
                             <MuiTypography variant="subtitle2" color="text.secondary">
                                 {post.date}
                             </MuiTypography>
@@ -35,6 +34,15 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                                     <Markdown text={post.content.slice(0, 100) + '...'} data-sb-field-path=".content" />
                                 </MuiTypography>
                             )}
+                            <Button
+                                type="Button" 
+                                label="Read More"
+                                url={post.__url || '/default-url'}
+                                variant="contained"
+                                color="primary"
+                                sx={{ mt: 2 }}
+                                data-sb-field-path={`.${index}.url`}
+                            />
                         </MuiBox>
                     </MuiGrid>
                 ))}
