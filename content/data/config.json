@@ -22,7 +22,8 @@
                 "url": "/blog",
                 "underline": "hover"
             }
-        ]
+        ],
+        "logoSrc": "/images/Untitled (5000 x 5000 px) (1).svg"
     },
     "footer": {
         "copyrightText": "",
