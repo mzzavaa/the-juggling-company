@@ -2,7 +2,7 @@
     "model": "CardsSection",
     "presets": [
         {
-            "label": "Cards Section",
+            "label": "Cards Section 2",
             "thumbnail": "images/cards-section.png",
             "data": {
                 "title": "Cards Section Title 2",
