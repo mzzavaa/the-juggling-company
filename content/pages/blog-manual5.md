@@ -21,7 +21,7 @@ sections:
         color: primary
     image:
       type: Image
-      url: /images/blog-hero.jpg
+      url: /images/3.png
       altText: Blog hero image
   - type: BlogPostsSection
     title: Latest Posts
