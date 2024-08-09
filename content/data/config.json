@@ -15,6 +15,12 @@
                 "label": "About",
                 "url": "/about",
                 "underline": "hover"
+            },
+            {
+                "type": "Link",
+                "label": "Blog",
+                "url": "/blog",
+                "underline": "hover"
             }
         ]
     },
@@ -35,9 +41,9 @@
             },
             {
                 "type": "Link",
-                "label": "",
+                "label": "Blog",
                 "underline": "hover",
-                "url": "https://docs.netlify.com/visual-editor/overview/"
+                "url": "/blog"
             }
         ]
     }
