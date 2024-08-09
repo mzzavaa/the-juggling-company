@@ -20,7 +20,7 @@ sections:
         title: Second Blog Post
   - type: AboutSection
     title: About Me
-    image: /images/about-me.jpg
+    image: /images/IMG_9810.jpg
     content: >
       Hello and welcome! I'm Linda Mohamed, a passionate technologist, speaker,
       and community advocate with a deep love for all things tech. With over a
