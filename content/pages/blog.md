@@ -6,13 +6,7 @@ sections:
     title: Welcome to My Blog
     subtitle: The section subtitle
     text: This is a blog built with Next.js. Stay tuned for more updates!
-    actions:
-      - type: Button
-        label: Learn more
-        url: /
-        size: large
-        variant: outlined
-        color: primary
+    actions: []
     image:
       type: Image
       url: /images/3.png
