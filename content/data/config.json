@@ -24,7 +24,8 @@
             }
         ],
         "logoSrc": "/images/Untitled (5000 x 5000 px) (1).svg",
-        "logoAlt": "TheJugglingCompany"
+        "logoAlt": "TheJugglingCompany",
+        "height": "100"
     },
     "footer": {
         "copyrightText": "",
