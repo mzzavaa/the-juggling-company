@@ -29,6 +29,13 @@ export const Header: Model = {
             name: 'logoAlt',
             label: 'Logo Image Alt Text',
             description: 'Alt text for the logo image'
+        },
+        {
+            type: 'string',
+            name: 'height',
+            label: 'Header Height',
+            default: 'auto',
+            description: 'Adjust the height of the header (e.g., "60px", "10vh", "auto")'
         }
     ]
 };
