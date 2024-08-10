@@ -18,8 +18,8 @@ export const Header: React.FC<Props> = (props) => {
     const { title, navLinks = [], 'data-sb-object-id': objectId, logoSrc, logoAlt, headerImageSrc, headerImageAlt, height } = props;
     const fieldPath = objectId ? `${objectId}:header` : null;
     return (
-        <MuiAppBar position="static" color="transparent" elevation={0} data-sb-field-path={fieldPath}>
-            <MuiToolbar disableGutters={true} sx={{ flexWrap: 'wrap', minHeight: height || 'auto' }}>
+        <MuiAppBar position="static" color="transparent" elevation={0} data-sb-field-path={fieldPath} sx={{ height: height || 'auto', minHeight: height || 'auto' }}>
+            <MuiToolbar disableGutters={true} sx={{ height: '100%', minHeight: 'inherit' }}>
                 {logoSrc && (
                     <MuiBox sx={{ mb: 1, mr: 2 }}>
                         <img src={logoSrc} alt={logoAlt} style={{ height: '40px' }} data-sb-field-path=".logo" />
