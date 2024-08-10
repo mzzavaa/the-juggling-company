@@ -7,6 +7,7 @@ import MuiToolbar from '@mui/material/Toolbar';
 import MuiTypography from '@mui/material/Typography';
 
 export type Props = types.Header & types.StackbitObjectId & {
+    height?: string; 
     logoSrc?: string;
     logoAlt?: string;
     headerImageSrc?: string;  // New prop for additional image
@@ -14,11 +15,11 @@ export type Props = types.Header & types.StackbitObjectId & {
 };
 
 export const Header: React.FC<Props> = (props) => {
-    const { title, navLinks = [], 'data-sb-object-id': objectId, logoSrc, logoAlt, headerImageSrc, headerImageAlt } = props;
+    const { title, navLinks = [], 'data-sb-object-id': objectId, logoSrc, logoAlt, headerImageSrc, headerImageAlt, height } = props;
     const fieldPath = objectId ? `${objectId}:header` : null;
     return (
         <MuiAppBar position="static" color="transparent" elevation={0} data-sb-field-path={fieldPath}>
-            <MuiToolbar disableGutters={true} sx={{ flexWrap: 'wrap' }}>
+            <MuiToolbar disableGutters={true} sx={{ flexWrap: 'wrap', minHeight: height || 'auto' }}>
                 {logoSrc && (
                     <MuiBox sx={{ mb: 1, mr: 2 }}>
                         <img src={logoSrc} alt={logoAlt} style={{ height: '40px' }} data-sb-field-path=".logo" />
