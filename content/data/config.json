@@ -44,7 +44,7 @@
             },
             {
                 "type": "Link",
-                "label": "Blog",
+                "label": "",
                 "underline": "hover",
                 "url": "/blog"
             }
