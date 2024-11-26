@@ -5,14 +5,14 @@ sections:
   - type: HeroSection
     title: Welcome
     subtitle: to the infinite world of juggling
-    text: >+
+    text: >
       "The Juggling Company" is a unique blend of technology and the art of
       juggling. This platform aims to inspire and engage through innovative
       projects that combine cloud computing, AI, and the fascinating world of
       juggling.
 
 
-      > *The mission is to inspire, educate, and empower people through the art
+      > *My mission is to inspire, educate, and empower people through the art
       of juggling. By fostering a vibrant community that connects physical
       fitness, cognitive development, and creative expression, the goal is to
       promote holistic well-being. Through the integration of juggling
@@ -20,6 +20,10 @@ sections:
       enhance teamwork and drive positive change for both individuals and
       organizations.*
 
+
+
+
+      **More coming soon...**
     actions: []
     image:
       type: Image
