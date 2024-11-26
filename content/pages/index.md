@@ -5,14 +5,14 @@ sections:
   - type: HeroSection
     title: Welcome
     subtitle: to the infinite world of juggling
-    text: >+
+    text: >
       "The Juggling Company" is a unique blend of technology and the art of
       juggling. This platform aims to inspire and engage through innovative
       projects that combine cloud computing, AI, and the fascinating world of
       juggling.
 
 
-      > *The mission is to inspire, educate, and empower people through the art
+      > *My mission is to inspire, educate, and empower people through the art
       of juggling. By fostering a vibrant community that connects physical
       fitness, cognitive development, and creative expression, the goal is to
       promote holistic well-being. Through the integration of juggling
@@ -20,19 +20,11 @@ sections:
       enhance teamwork and drive positive change for both individuals and
       organizations.*
 
-    actions:
-      - type: Button
-        label: Start Juggling
-        url: 'https://docs.netlify.com/visual-editor/get-started/'
-        size: large
-        variant: contained
-        color: primary
-      - type: Button
-        label: Learn about juggling
-        url: 'https://docs.netlify.com/visual-editor/overview/'
-        size: large
-        variant: outlined
-        color: primary
+
+
+
+      **More coming soon...**
+    actions: []
     image:
       type: Image
       url: /images/Untitled (5000 x 5000 px) (1).png
