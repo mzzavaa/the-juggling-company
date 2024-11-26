@@ -20,13 +20,7 @@ sections:
       enhance teamwork and drive positive change for both individuals and
       organizations.*
 
-    actions:
-      - type: Button
-        label: Learn about juggling
-        url: 'https://docs.netlify.com/visual-editor/overview/'
-        size: large
-        variant: outlined
-        color: primary
+    actions: []
     image:
       type: Image
       url: /images/Untitled (5000 x 5000 px) (1).png
