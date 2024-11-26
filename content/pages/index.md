@@ -22,12 +22,6 @@ sections:
 
     actions:
       - type: Button
-        label: Start Juggling
-        url: ''
-        size: large
-        variant: contained
-        color: primary
-      - type: Button
         label: Learn about juggling
         url: 'https://docs.netlify.com/visual-editor/overview/'
         size: large
