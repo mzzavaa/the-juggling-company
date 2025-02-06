@@ -29,6 +29,8 @@ sections:
       type: Image
       url: /images/Untitled (5000 x 5000 px) (1).png
       altText: Hero section image
+  - type: BlogPostsSection
+    title: Latest Blog Posts
   - type: CardsSection
     title: The Juggling Company
     subtitle: 'Where Everyone is Equal, Minds are Sharpened, and Bodies are Strengthened.'
