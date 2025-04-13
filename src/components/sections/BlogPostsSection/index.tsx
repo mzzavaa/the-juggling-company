@@ -19,7 +19,17 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                     {title}
                 </MuiTypography>
             )}
-            <MuiGrid container spacing={4} data-sb-field-path=".posts">
+            {Array.isArray(posts) && posts.map((post, index) => (
+                <MuiGrid item xs={12} sm={6} md={4} key={index}>
+                    <MuiBox>
+                    <MuiTypography variant="h6" color="text.primary">
+                        {post.title}
+                    </MuiTypography>
+                    </MuiBox>
+                </MuiGrid>
+            ))}
+
+            {/* <MuiGrid container spacing={4} data-sb-field-path=".posts">
                 {posts.map((post, index) => (
                     <MuiGrid item xs={12} sm={6} md={4} key={index} data-sb-field-path={`.${index}`}>
                         <MuiBox>
@@ -46,7 +56,7 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                         </MuiBox>
                     </MuiGrid>
                 ))}
-            </MuiGrid>
+            </MuiGrid> */}
         </MuiBox>
     );
 };
