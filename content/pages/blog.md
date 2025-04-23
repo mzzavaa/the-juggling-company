@@ -4,8 +4,8 @@ title: Blog
 sections:
   - type: HeroSection
     title: Welcome to My Blog
-    subtitle: The section subtitle
-    text: This is a blog built with Next.js. Stay tuned for more updates!
+    subtitle: Read what excites me most about juggling!
+    text: Stay tuned for more updates!
     actions: []
     image:
       type: Image
@@ -15,9 +15,15 @@ sections:
     title: Latest Posts
     posts:
       - type: BlogPost
-        title: First Blog Post
+        title: Juggling and Your Brain
+        url: /juggling-and-your-brain
+        content: >
+          Discover how juggling enhances brain function, improves memory, and boosts coordination.
       - type: BlogPost
-        title: Second Blog Post
+        title: Juggling and Change
+        url: /juggling-and-change
+        content: >
+          Learn how juggling principles can help manage organizational change and improve leadership.
   - type: AboutSection
     title: About Me
     image: /images/IMG_9810.jpg

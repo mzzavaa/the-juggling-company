@@ -29,7 +29,7 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                 </MuiGrid>
             ))}
 
-            {/* <MuiGrid container spacing={4} data-sb-field-path=".posts">
+            <MuiGrid container spacing={4} data-sb-field-path=".posts">
                 {posts.map((post, index) => (
                     <MuiGrid item xs={12} sm={6} md={4} key={index} data-sb-field-path={`.${index}`}>
                         <MuiBox>
@@ -47,7 +47,7 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                             <Button
                                 type="Button" 
                                 label="Read More"
-                                url={post.__url || '/default-url'}
+                                url={post.__url || '/'}
                                 variant="contained"
                                 color="primary"
                                 sx={{ mt: 2 }}
@@ -56,7 +56,7 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
                         </MuiBox>
                     </MuiGrid>
                 ))}
-            </MuiGrid> */}
+            </MuiGrid>
         </MuiBox>
     );
 };
