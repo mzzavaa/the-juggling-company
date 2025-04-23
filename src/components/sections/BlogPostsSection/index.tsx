@@ -30,33 +30,35 @@ export const BlogPostsSection: React.FC<Props> = (props) => {
             ))}
 
             <MuiGrid container spacing={4} data-sb-field-path=".posts">
-                {posts.map((post, index) => (
-                    <MuiGrid item xs={12} sm={6} md={4} key={index} data-sb-field-path={`.${index}`}>
-                        <MuiBox>
-                            <MuiTypography variant="h6" color="text.primary" component="div">
-                                {post.title}
-                            </MuiTypography>
-                            <MuiTypography variant="subtitle2" color="text.secondary">
-                                {post.date}
-                            </MuiTypography>
-                            {post.content && (
-                                <MuiTypography component="div" color="text.secondary" mt={1}>
-                                    <Markdown text={post.content.slice(0, 100) + '...'} data-sb-field-path=".content" />
+                {Array.isArray(posts) &&
+                    posts.map((post, index) => (
+                        <MuiGrid item xs={12} sm={6} md={4} key={index} data-sb-field-path={`.${index}`}>
+                            <MuiBox>
+                                <MuiTypography variant="h6" color="text.primary" component="div">
+                                    {post.title}
                                 </MuiTypography>
-                            )}
-                            <Button
-                                type="Button" 
-                                label="Read More"
-                                url={post.__url || '/'}
-                                variant="contained"
-                                color="primary"
-                                sx={{ mt: 2 }}
-                                data-sb-field-path={`.${index}.url`}
-                            />
-                        </MuiBox>
-                    </MuiGrid>
-                ))}
+                                <MuiTypography variant="subtitle2" color="text.secondary">
+                                    {post.date}
+                                </MuiTypography>
+                                {post.content && (
+                                    <MuiTypography component="div" color="text.secondary" mt={1}>
+                                        <Markdown text={post.content.slice(0, 100) + '...'} data-sb-field-path=".content" />
+                                    </MuiTypography>
+                                )}
+                                <Button
+                                    type="Button"
+                                    label="Read More"
+                                    url={post.__url || '/'}
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{ mt: 2 }}
+                                    data-sb-field-path={`.${index}.url`}
+                                />
+                            </MuiBox>
+                        </MuiGrid>
+                    ))}
             </MuiGrid>
+
         </MuiBox>
     );
 };
