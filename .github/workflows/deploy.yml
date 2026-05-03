@@ -13,13 +13,14 @@ concurrency:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
     name: Build site
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: write
     timeout-minutes: 15
     steps:
       - name: Checkout
@@ -60,6 +61,9 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
