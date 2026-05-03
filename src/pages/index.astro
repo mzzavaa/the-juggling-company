@@ -1,0 +1,219 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import VideoCard from "@/components/VideoCard.astro";
+import PostCard from "@/components/PostCard.astro";
+import {
+  getFeaturedVideos,
+  getLatestPosts,
+  getIdeas,
+  getLocations,
+} from "@/lib/content";
+import { site } from "@/lib/site";
+
+const [featuredVideos, latestPosts, ideas, locations] = await Promise.all([
+  getFeaturedVideos(3),
+  getLatestPosts(2),
+  getIdeas(),
+  getLocations(),
+]);
+
+const flagshipIdea = ideas[0];
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.author.name,
+  jobTitle: site.author.role,
+  url: site.url,
+  image: new URL(site.defaultOgImage, site.url).toString(),
+  description: site.description,
+  sameAs: [],
+};
+---
+
+<BaseLayout jsonLd={personJsonLd}>
+  <section class="relative overflow-hidden">
+    <video
+      class="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+    >
+      <source src="/images/JugglingExampleVideo.mp4" type="video/mp4" />
+    </video>
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-b from-[var(--color-bg)]/40 via-[var(--color-bg)]/80 to-[var(--color-bg)]"
+    >
+    </div>
+
+    <div class="mx-auto max-w-5xl px-4 py-24 text-center md:py-32 md:px-6">
+      <p
+        class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/80 px-3 py-1 text-xs font-medium uppercase tracking-widest text-[var(--color-muted)] backdrop-blur"
+      >
+        <Icon name="sparkles" size={12} />
+        Where juggling meets innovation
+      </p>
+      <h1
+        class="mt-6 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--color-fg)] md:text-6xl"
+      >
+        Sharper minds through<br />
+        <span class="text-[var(--color-accent)]">cascading patterns.</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-[var(--color-muted)]">
+        {site.description}
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <a
+          href="/ideas"
+          class="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-5 py-3 font-medium text-[var(--color-accent-fg)] shadow-md transition hover:bg-[var(--color-accent-hover)]"
+        >
+          Explore the Ideas
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-3 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-accent)]"
+        >
+          Book me for an event
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        flagshipIdea && (
+          <a
+            href={`/ideas/${flagshipIdea.id}`}
+            class="group flex flex-col justify-between gap-6 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-8 transition hover:border-[var(--color-accent)]"
+          >
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
+                Flagship essay
+              </p>
+              <h2 class="mt-2 font-display text-2xl font-semibold text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">
+                {flagshipIdea.data.title}
+              </h2>
+              <p class="mt-3 text-[var(--color-muted)]">{flagshipIdea.data.summary}</p>
+            </div>
+            <span class="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)]">
+              Read the essay <Icon name="arrow-right" size={14} />
+            </span>
+          </a>
+        )
+      }
+      <a
+        href="/services"
+        class="group flex flex-col justify-between gap-6 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-8 transition hover:border-[var(--color-accent)]"
+      >
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
+            Work with me
+          </p>
+          <h2
+            class="mt-2 font-display text-2xl font-semibold text-[var(--color-fg)] group-hover:text-[var(--color-accent)]"
+          >
+            Performances, workshops, keynotes.
+          </h2>
+          <p class="mt-3 text-[var(--color-muted)]">
+            Tailored juggling sessions for teams, conferences, and corporate stages — from ten-minute openers to full-day programmes.
+          </p>
+        </div>
+        <span class="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)]">
+          See services <Icon name="arrow-right" size={14} />
+        </span>
+      </a>
+    </div>
+  </section>
+
+  {
+    featuredVideos.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+        <div class="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+              Latest videos
+            </p>
+            <h2 class="mt-1 font-display text-3xl font-semibold tracking-tight">Watch</h2>
+          </div>
+          <a
+            href="/videos"
+            class="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline"
+          >
+            All videos <Icon name="arrow-right" size={14} />
+          </a>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-3">
+          {featuredVideos.map((v) => (
+            <li>
+              <VideoCard video={v} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    latestPosts.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+        <div class="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+              From the blog
+            </p>
+            <h2 class="mt-1 font-display text-3xl font-semibold tracking-tight">Read</h2>
+          </div>
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline"
+          >
+            All posts <Icon name="arrow-right" size={14} />
+          </a>
+        </div>
+        <ul class="grid gap-6 md:grid-cols-2">
+          {latestPosts.map((p) => (
+            <li>
+              <PostCard post={p} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+    <div class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+      <div class="grid gap-0 md:grid-cols-2">
+        <div class="p-8 md:p-12">
+          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+            Where I am
+          </p>
+          <h2 class="mt-1 font-display text-3xl font-semibold tracking-tight">
+            Past stages, future dates.
+          </h2>
+          <p class="mt-3 max-w-md text-[var(--color-muted)]">
+            {locations.length} {locations.length === 1 ? "location" : "locations"} on the map — performances I've done and places I'm available next.
+          </p>
+          <a
+            href="/locations"
+            class="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-5 py-3 font-medium text-[var(--color-accent-fg)] transition hover:bg-[var(--color-accent-hover)]"
+          >
+            <Icon name="map-pin" size={16} />
+            Open the map
+          </a>
+        </div>
+        <div
+          class="relative flex min-h-[240px] items-center justify-center bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent)]/5"
+        >
+          <Icon name="map-pin" size={96} class="text-[var(--color-accent)] opacity-60" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,62 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  videoId: string;
+  username?: string;
+  title: string;
+  externalUrl: string;
+}
+
+const { videoId, username, title, externalUrl } = Astro.props;
+---
+
+<div
+  class="tiktok-embed-wrapper relative w-full overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6"
+  data-video-id={videoId}
+  data-username={username ?? ""}
+  data-external-url={externalUrl}
+>
+  <button
+    type="button"
+    class="tiktok-embed-trigger flex w-full flex-col items-center gap-3 py-12 text-center"
+    aria-label={`Load TikTok video: ${title}`}
+  >
+    <span
+      class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-accent)] text-[var(--color-accent-fg)]"
+    >
+      <Icon name="music" size={28} />
+    </span>
+    <span class="font-medium text-[var(--color-fg)]">Load TikTok video</span>
+    <span class="text-sm text-[var(--color-muted)]">{title}</span>
+    <a
+      href={externalUrl}
+      class="mt-2 inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:underline"
+      rel="noopener"
+    >
+      Watch on TikTok <Icon name="external-link" size={14} />
+    </a>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".tiktok-embed-wrapper").forEach((wrapper) => {
+    const trigger = wrapper.querySelector<HTMLButtonElement>(".tiktok-embed-trigger");
+    const id = wrapper.dataset.videoId;
+    const username = wrapper.dataset.username || "user";
+    if (!trigger || !id) return;
+    trigger.addEventListener("click", () => {
+      const blockquote = document.createElement("blockquote");
+      blockquote.className = "tiktok-embed";
+      blockquote.setAttribute("cite", `https://www.tiktok.com/@${username}/video/${id}`);
+      blockquote.setAttribute("data-video-id", id);
+      blockquote.style.maxWidth = "605px";
+      blockquote.style.minWidth = "325px";
+      wrapper.replaceChildren(blockquote);
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.tiktok.com/embed.js";
+      document.body.appendChild(script);
+    });
+  });
+</script>

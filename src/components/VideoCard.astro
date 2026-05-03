@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Icon from "./Icon.astro";
+import { formatDuration } from "@/lib/format";
+
+interface Props {
+  video: CollectionEntry<"video">;
+}
+
+const { video } = Astro.props;
+const { source, externalId, title, durationSec, tags } = video.data;
+
+const thumbUrl =
+  source === "youtube"
+    ? `https://i.ytimg.com/vi/${externalId}/hqdefault.jpg`
+    : "/images/3.png";
+
+const sourceLabel: Record<typeof source, string> = {
+  youtube: "YouTube",
+  tiktok: "TikTok",
+  instagram: "Instagram",
+};
+
+const sourceIcon: Record<typeof source, "youtube" | "music" | "instagram"> = {
+  youtube: "youtube",
+  tiktok: "music",
+  instagram: "instagram",
+};
+---
+
+<a
+  href={`/videos/${video.id}`}
+  class="group flex h-full flex-col overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition hover:border-[var(--color-accent)]"
+>
+  <div class="relative aspect-video overflow-hidden bg-black">
+    <img
+      src={thumbUrl}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      class="h-full w-full object-cover transition group-hover:scale-105"
+    />
+    <span
+      class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-xs text-white"
+    >
+      <Icon name={sourceIcon[source]} size={12} />
+      {sourceLabel[source]}
+    </span>
+    <span class="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-1 text-xs text-white">
+      {formatDuration(durationSec)}
+    </span>
+  </div>
+  <div class="flex flex-1 flex-col gap-2 p-4">
+    <h3
+      class="font-display text-lg font-semibold leading-snug text-[var(--color-fg)] group-hover:text-[var(--color-accent)]"
+    >
+      {title}
+    </h3>
+    {
+      tags.length > 0 && (
+        <ul class="mt-auto flex flex-wrap gap-1.5 pt-2">
+          {tags.slice(0, 4).map((t) => (
+            <li class="rounded-full bg-[var(--color-bg)] px-2 py-0.5 text-xs text-[var(--color-muted)]">
+              #{t}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</a>

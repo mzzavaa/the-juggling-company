@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { site } from "@/lib/site";
+
+const mailto = (topic: string) =>
+  `mailto:${site.author.email}?subject=${encodeURIComponent("[" + topic + "] inquiry")}`;
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch about a performance, workshop, keynote, or idea talk."
+>
+  <section class="mx-auto max-w-3xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Contact</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      Say hello.
+    </h1>
+    <p class="mt-4 text-lg text-[var(--color-muted)]">
+      Email is the fastest way to reach me. Pick the topic that fits and I'll usually
+      reply within two working days.
+    </p>
+
+    <ul class="mt-10 grid gap-3 md:grid-cols-2">
+      {
+        ["Performance", "Workshop", "Keynote", "Idea Talk", "Press", "Other"].map((topic) => (
+          <li>
+            <a
+              href={mailto(topic)}
+              class="group flex h-full items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5 transition hover:border-[var(--color-accent)]"
+            >
+              <span class="font-medium text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">
+                {topic}
+              </span>
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+      <p class="flex items-center gap-2 text-sm text-[var(--color-muted)]">
+        <Icon name="mail" size={16} />
+        <a class="text-[var(--color-accent)] hover:underline" href={`mailto:${site.author.email}`}>
+          {site.author.email}
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

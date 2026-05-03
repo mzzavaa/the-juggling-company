@@ -1,0 +1,138 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import YouTubeEmbed from "@/components/YouTubeEmbed.astro";
+import TikTokEmbed from "@/components/TikTokEmbed.astro";
+import InstagramEmbed from "@/components/InstagramEmbed.astro";
+import VideoCard from "@/components/VideoCard.astro";
+import Icon from "@/components/Icon.astro";
+import { formatDate, formatDuration } from "@/lib/format";
+import { getVideos, getIdeas } from "@/lib/content";
+
+export async function getStaticPaths() {
+  const videos = await getVideos();
+  return videos.map((v) => ({ params: { slug: v.id }, props: { video: v } }));
+}
+
+const { video } = Astro.props;
+const allVideos = await getVideos();
+const allIdeas = await getIdeas();
+
+const related = allVideos
+  .filter(
+    (v) =>
+      v.id !== video.id &&
+      (v.data.tags.some((t) => video.data.tags.includes(t)) ||
+        v.data.ideaSlugs.some((ref) => video.data.ideaSlugs.some((r) => r.id === ref.id))),
+  )
+  .slice(0, 3);
+
+const linkedIdeas = allIdeas.filter((i) => video.data.ideaSlugs.some((ref) => ref.id === i.id));
+
+const videoJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: video.data.title,
+  description: video.data.description || video.data.title,
+  uploadDate: video.data.publishedAt.toISOString(),
+  duration: `PT${video.data.durationSec}S`,
+  contentUrl: video.data.externalUrl,
+  thumbnailUrl:
+    video.data.source === "youtube"
+      ? `https://i.ytimg.com/vi/${video.data.externalId}/hqdefault.jpg`
+      : undefined,
+};
+---
+
+<BaseLayout
+  title={video.data.title}
+  description={video.data.description || video.data.title}
+  jsonLd={videoJsonLd}
+>
+  <article class="mx-auto max-w-4xl px-4 py-12 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+      <a href="/videos" class="hover:text-[var(--color-accent)]">Videos</a> · {formatDate(video.data.publishedAt)} · {formatDuration(video.data.durationSec)}
+    </p>
+    <h1 class="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+      {video.data.title}
+    </h1>
+
+    <div class="mt-8">
+      {
+        video.data.source === "youtube" ? (
+          <YouTubeEmbed videoId={video.data.externalId} title={video.data.title} />
+        ) : video.data.source === "tiktok" ? (
+          <TikTokEmbed
+            videoId={video.data.externalId}
+            title={video.data.title}
+            externalUrl={video.data.externalUrl}
+          />
+        ) : (
+          <InstagramEmbed
+            postId={video.data.externalId}
+            title={video.data.title}
+            externalUrl={video.data.externalUrl}
+          />
+        )
+      }
+    </div>
+
+    {
+      video.data.description && (
+        <p class="prose mt-8 max-w-none text-[var(--color-fg)]">{video.data.description}</p>
+      )
+    }
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      {
+        video.data.tags.map((t) => (
+          <span class="rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1 text-xs">
+            #{t}
+          </span>
+        ))
+      }
+    </div>
+
+    <a
+      href={video.data.externalUrl}
+      class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline"
+      rel="noopener"
+    >
+      Watch on {video.data.source} <Icon name="external-link" size={14} />
+    </a>
+
+    {
+      linkedIdeas.length > 0 && (
+        <section class="mt-12 border-t border-[var(--color-border)] pt-8">
+          <h2 class="font-display text-xl font-semibold tracking-tight">Related ideas</h2>
+          <ul class="mt-4 flex flex-col gap-2">
+            {linkedIdeas.map((i) => (
+              <li>
+                <a
+                  href={`/ideas/${i.id}`}
+                  class="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline"
+                >
+                  {i.data.title} <Icon name="arrow-right" size={14} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      related.length > 0 && (
+        <section class="mt-12 border-t border-[var(--color-border)] pt-8">
+          <h2 class="font-display text-xl font-semibold tracking-tight">More videos</h2>
+          <ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((v) => (
+              <li>
+                <VideoCard video={v} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

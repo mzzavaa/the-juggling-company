@@ -1,0 +1,114 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { formatDate } from "@/lib/format";
+import { getTalks } from "@/lib/content";
+import type { CollectionEntry } from "astro:content";
+
+const { upcoming, past } = await getTalks();
+
+const eventJsonLd = upcoming.map((t) => ({
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: t.data.title,
+  startDate: t.data.date.toISOString(),
+  location: {
+    "@type": "Place",
+    name: t.data.venue,
+    address: { "@type": "PostalAddress", addressLocality: t.data.city, addressCountry: t.data.country },
+  },
+  description: t.data.abstract,
+}));
+
+function venueLine(t: CollectionEntry<"talk">) {
+  return `${t.data.venue} — ${t.data.city}, ${t.data.country}`;
+}
+---
+
+<BaseLayout
+  title="Talks"
+  description="Upcoming and past talks — from conference keynotes to intimate idea evenings."
+  jsonLd={eventJsonLd as unknown as Record<string, unknown>[]}
+>
+  <section class="mx-auto max-w-4xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Talks</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      On stage and at the lectern.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Conference keynotes, meetup talks, and salon evenings — past and upcoming.
+    </p>
+  </section>
+
+  {
+    upcoming.length > 0 && (
+      <section class="mx-auto max-w-4xl px-4 pb-16 md:px-6">
+        <h2 class="font-display text-2xl font-semibold tracking-tight">Upcoming ({upcoming.length})</h2>
+        <ul class="mt-6 flex flex-col gap-4">
+          {upcoming.map((t) => (
+            <li class="rounded-lg border border-[var(--color-accent)] bg-[var(--color-accent)]/5 p-6">
+              <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
+                <Icon name="calendar" size={12} /> {formatDate(t.data.date)}
+              </p>
+              <h3 class="mt-2 font-display text-xl font-semibold">{t.data.title}</h3>
+              <p class="mt-1 flex items-center gap-1 text-sm text-[var(--color-muted)]">
+                <Icon name="map-pin" size={14} /> {venueLine(t)}
+              </p>
+              <p class="mt-3 text-[var(--color-fg)]">{t.data.abstract}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    past.length > 0 && (
+      <section class="mx-auto max-w-4xl px-4 pb-24 md:px-6">
+        <h2 class="font-display text-2xl font-semibold tracking-tight">Past ({past.length})</h2>
+        <ul class="mt-6 flex flex-col gap-4">
+          {past.map((t) => (
+            <li class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+              <p class="flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--color-muted)]">
+                <Icon name="calendar" size={12} /> {formatDate(t.data.date)}
+              </p>
+              <h3 class="mt-2 font-display text-xl font-semibold">{t.data.title}</h3>
+              <p class="mt-1 flex items-center gap-1 text-sm text-[var(--color-muted)]">
+                <Icon name="map-pin" size={14} /> {venueLine(t)}
+              </p>
+              <p class="mt-3 text-[var(--color-fg)]">{t.data.abstract}</p>
+              <div class="mt-4 flex flex-wrap gap-3 text-sm">
+                {t.data.slidesUrl && (
+                  <a
+                    href={t.data.slidesUrl}
+                    rel="noopener"
+                    class="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline"
+                  >
+                    Slides <Icon name="external-link" size={14} />
+                  </a>
+                )}
+                {t.data.recordingUrl && (
+                  <a
+                    href={t.data.recordingUrl}
+                    rel="noopener"
+                    class="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline"
+                  >
+                    Recording <Icon name="external-link" size={14} />
+                  </a>
+                )}
+                {t.data.locationSlug && (
+                  <a
+                    href={`/locations#${t.data.locationSlug.id}`}
+                    class="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline"
+                  >
+                    On the map <Icon name="map-pin" size={14} />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>

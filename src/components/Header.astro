@@ -1,0 +1,99 @@
+---
+import { primaryNav, site } from "@/lib/site";
+import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath === href || currentPath.startsWith(`${href}/`);
+---
+
+<header
+  class="sticky top-0 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 md:px-6">
+    <a
+      href="/"
+      class="font-display text-lg font-semibold tracking-tight text-[var(--color-fg)] hover:text-[var(--color-accent)]"
+    >
+      {site.name}
+    </a>
+
+    <nav class="hidden md:block" aria-label="Primary">
+      <ul class="flex items-center gap-1">
+        {
+          primaryNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  "inline-flex items-center rounded-full px-3 py-2 text-sm transition",
+                  isActive(item.href)
+                    ? "bg-[var(--color-bg-elevated)] text-[var(--color-fg)]"
+                    : "text-[var(--color-muted)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-fg)]",
+                ]}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <ThemeToggle />
+      <button
+        type="button"
+        class="nav-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span class="nav-toggle-open"><Icon name="menu" size={18} /></span>
+        <span class="nav-toggle-close hidden"><Icon name="x" size={18} /></span>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    class="mobile-nav hidden border-t border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-4 md:hidden"
+    aria-label="Mobile"
+  >
+    <ul class="flex flex-col gap-1">
+      {
+        primaryNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                "block rounded-md px-3 py-2 text-base transition",
+                isActive(item.href)
+                  ? "bg-[var(--color-bg-elevated)] text-[var(--color-fg)]"
+                  : "text-[var(--color-muted)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-fg)]",
+              ]}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".nav-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const nav = document.getElementById("mobile-nav");
+      if (!nav) return;
+      const open = nav.classList.toggle("hidden");
+      btn.setAttribute("aria-expanded", String(!open));
+      btn.querySelector(".nav-toggle-open")?.classList.toggle("hidden");
+      btn.querySelector(".nav-toggle-close")?.classList.toggle("hidden");
+    });
+  });
+</script>

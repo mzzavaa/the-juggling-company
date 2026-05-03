@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { Image } from "astro:assets";
+import { getProducts } from "@/lib/content";
+import { formatPrice } from "@/lib/format";
+
+const products = await getProducts();
+---
+
+<BaseLayout
+  title="Products"
+  description="Juggling props and kit Linda actually uses — links go to the original makers."
+>
+  <section class="mx-auto max-w-4xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+      Products
+    </p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      Kit I actually use.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Props and starter kits for picking up juggling — every link goes straight to the original maker.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        products.map((p) => (
+          <li>
+            <a
+              href={p.data.externalUrl}
+              rel="noopener nofollow"
+              class="group flex h-full flex-col gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5 transition hover:border-[var(--color-accent)]"
+            >
+              {p.data.image ? (
+                <Image
+                  src={p.data.image}
+                  alt={p.data.imageAlt ?? p.data.title}
+                  width={400}
+                  height={300}
+                  class="aspect-[4/3] w-full rounded-md object-cover"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="flex aspect-[4/3] w-full items-center justify-center rounded-md bg-[var(--color-bg)] text-[var(--color-muted)]">
+                  <Icon name="sparkles" size={32} />
+                </div>
+              )}
+              <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+                {p.data.category}
+                {!p.data.inStock && <span class="ml-2 text-amber-600">Out of stock</span>}
+              </p>
+              <h3 class="font-display text-lg font-semibold leading-snug text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">
+                {p.data.title}
+              </h3>
+              <p class="text-sm text-[var(--color-muted)]">{p.data.summary}</p>
+              <div class="mt-auto flex items-center justify-between pt-2">
+                {p.data.priceCents !== undefined && (
+                  <span class="font-medium text-[var(--color-fg)]">
+                    {formatPrice(p.data.priceCents)}
+                  </span>
+                )}
+                <span class="inline-flex items-center gap-1 text-sm text-[var(--color-accent)]">
+                  Buy <Icon name="external-link" size={14} />
+                </span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

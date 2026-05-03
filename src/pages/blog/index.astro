@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostCard from "@/components/PostCard.astro";
+import { getPosts } from "@/lib/content";
+
+const posts = await getPosts();
+---
+
+<BaseLayout
+  title="Blog"
+  description="Shorter pieces — research notes, behind-the-scenes from workshops, and field reports from the road."
+>
+  <section class="mx-auto max-w-4xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Blog</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      Shorter writing.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Research notes, behind-the-scenes from workshops, and field reports from the road.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
+    <ul class="grid gap-6 md:grid-cols-2">
+      {posts.map((p) => <li><PostCard post={p} /></li>)}
+    </ul>
+  </section>
+</BaseLayout>

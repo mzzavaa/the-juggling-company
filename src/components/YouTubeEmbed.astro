@@ -1,0 +1,59 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  videoId: string;
+  title: string;
+  /** Aspect ratio for the placeholder. Defaults to 16:9. */
+  aspect?: string;
+}
+
+const { videoId, title, aspect = "16 / 9" } = Astro.props;
+const thumbUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+---
+
+<div
+  class="lite-youtube relative w-full overflow-hidden rounded-lg bg-black"
+  style={`aspect-ratio: ${aspect};`}
+  data-video-id={videoId}
+>
+  <button
+    type="button"
+    class="lite-youtube-trigger group absolute inset-0 flex items-center justify-center"
+    aria-label={`Play video: ${title}`}
+  >
+    <img
+      src={thumbUrl}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover transition group-hover:scale-105"
+    />
+    <span
+      class="relative z-10 inline-flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white shadow-lg backdrop-blur transition group-hover:bg-[var(--color-accent)]"
+    >
+      <Icon name="play" size={28} />
+    </span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".lite-youtube").forEach((wrapper) => {
+    const trigger = wrapper.querySelector<HTMLButtonElement>(".lite-youtube-trigger");
+    const id = wrapper.dataset.videoId;
+    if (!trigger || !id) return;
+    trigger.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = trigger.getAttribute("aria-label") ?? "YouTube video";
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute(
+        "allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+      );
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.className = "absolute inset-0 h-full w-full";
+      wrapper.replaceChildren(iframe);
+    });
+  });
+</script>

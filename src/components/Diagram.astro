@@ -1,0 +1,36 @@
+---
+interface Props {
+  caption?: string;
+}
+
+const { caption } = Astro.props;
+---
+
+<figure
+  class="diagram my-8 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6"
+>
+  <div class="diagram-body flex w-full justify-center text-[var(--color-fg)]">
+    <slot />
+  </div>
+  {
+    caption && (
+      <figcaption class="mt-4 text-center text-sm text-[var(--color-muted)]">{caption}</figcaption>
+    )
+  }
+</figure>
+
+<style is:global>
+  .diagram svg {
+    max-width: 100%;
+    height: auto;
+    color: inherit;
+  }
+  .diagram svg [stroke="currentColor"],
+  .diagram svg [stroke="currentcolor"] {
+    stroke: currentColor;
+  }
+  .diagram svg [fill="currentColor"],
+  .diagram svg [fill="currentcolor"] {
+    fill: currentColor;
+  }
+</style>

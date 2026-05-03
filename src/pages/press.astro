@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { formatDate } from "@/lib/format";
+import { getPress } from "@/lib/content";
+
+const press = await getPress();
+---
+
+<BaseLayout
+  title="Press"
+  description="External coverage, podcast appearances, and write-ups featuring Linda Mohamed and The Juggling Company."
+>
+  <section class="mx-auto max-w-4xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Press</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      In other people's words.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Coverage, podcast appearances, and write-ups from across the web.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-24 md:px-6">
+    <ul class="flex flex-col gap-4">
+      {
+        press.map((p) => (
+          <li>
+            <a
+              href={p.data.url}
+              rel="noopener"
+              class="group flex flex-col gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6 transition hover:border-[var(--color-accent)]"
+            >
+              <p class="flex items-center gap-3 text-xs uppercase tracking-widest text-[var(--color-muted)]">
+                <span class="font-semibold text-[var(--color-accent)]">{p.data.outlet}</span>
+                <span>{formatDate(p.data.date)}</span>
+              </p>
+              <h2 class="font-display text-xl font-semibold leading-snug text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">
+                {p.data.title}
+              </h2>
+              <p class="text-[var(--color-muted)]">{p.data.excerpt}</p>
+              <span class="mt-2 inline-flex items-center gap-1 text-sm text-[var(--color-accent)]">
+                Read on {p.data.outlet} <Icon name="external-link" size={14} />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<button
+  type="button"
+  class="theme-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-fg)] transition hover:bg-[var(--color-border)]"
+  aria-label="Toggle colour theme"
+>
+  <span class="theme-toggle-sun"><Icon name="sun" size={18} /></span>
+  <span class="theme-toggle-moon hidden"><Icon name="moon" size={18} /></span>
+</button>
+
+<script>
+  const STORAGE_KEY = "tjc-theme";
+
+  type Theme = "light" | "dark";
+
+  function applyTheme(theme: Theme | null) {
+    const root = document.documentElement;
+    if (theme === "light" || theme === "dark") {
+      root.dataset.theme = theme;
+    } else {
+      delete root.dataset.theme;
+    }
+    const isDark =
+      root.dataset.theme === "dark" ||
+      (!root.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.querySelectorAll<HTMLElement>(".theme-toggle-sun").forEach((el) => {
+      el.classList.toggle("hidden", !isDark);
+    });
+    document.querySelectorAll<HTMLElement>(".theme-toggle-moon").forEach((el) => {
+      el.classList.toggle("hidden", isDark);
+    });
+  }
+
+  applyTheme((localStorage.getItem(STORAGE_KEY) as Theme | null) ?? null);
+
+  document.querySelectorAll<HTMLButtonElement>(".theme-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const root = document.documentElement;
+      const current =
+        (root.dataset.theme as Theme | undefined) ??
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const next: Theme = current === "dark" ? "light" : "dark";
+      localStorage.setItem(STORAGE_KEY, next);
+      applyTheme(next);
+    });
+  });
+</script>

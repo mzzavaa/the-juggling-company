@@ -1,0 +1,51 @@
+---
+interface Row {
+  juggling: string;
+  analogue: string;
+}
+
+interface Props {
+  /** Title of the right-hand concept domain (e.g. "Tech", "Change Management"). */
+  domain: string;
+  rows: Row[];
+  caption?: string;
+}
+
+const { domain, rows, caption } = Astro.props;
+---
+
+<figure class="my-8 overflow-hidden rounded-lg border border-[var(--color-border)]">
+  <table class="w-full border-collapse text-left text-sm">
+    <thead class="bg-[var(--color-bg-elevated)] text-[var(--color-fg)]">
+      <tr>
+        <th scope="col" class="border-b border-[var(--color-border)] px-4 py-3 font-semibold">
+          Juggling
+        </th>
+        <th scope="col" class="border-b border-[var(--color-border)] px-4 py-3 font-semibold">
+          {domain}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row, idx) => (
+          <tr class={idx % 2 === 0 ? "" : "bg-[var(--color-bg-elevated)]/40"}>
+            <td class="border-b border-[var(--color-border)] px-4 py-3 align-top">
+              {row.juggling}
+            </td>
+            <td class="border-b border-[var(--color-border)] px-4 py-3 align-top">
+              {row.analogue}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {
+    caption && (
+      <figcaption class="bg-[var(--color-bg-elevated)] px-4 py-2 text-xs text-[var(--color-muted)]">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

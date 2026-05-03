@@ -1,58 +1,60 @@
-# Netlify Next.js + TypeScript + MUI Starter  
+# The Juggling Company
 
-![Netlify Next.js + TS + MUI Starter](https://assets.stackbit.com/docs/ts-nextjs-starter-thumb.png)
+Static site for [The Juggling Company](https://thejugglingcompany.com), built with [Astro](https://astro.build) and deployed to GitHub Pages.
 
-This is a minimal starting point for new Netlify projects with visual editing. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with [visual editing capabilities](https://docs.netlify.com/visual-editor/visual-editing/). It uses markdown files as the the [Git Content Source](https://docs.netlify.com/create/content-sources/git/).
+## Tech stack
 
-**⚡ View demo:** [ts-mui-starter.netlify.app](https://ts-mui-starter.netlify.app/)
+- **Astro 5** — static site generator with island architecture
+- **TypeScript** strict mode throughout
+- **Tailwind CSS v4** — design tokens in `src/styles/global.css`
+- **React 19** islands for interactive components only (video filter, MapLibre map)
+- **MDX** for long-form content (Ideas essays, blog posts)
+- **Zod-validated content collections** — broken frontmatter fails the build
 
-## Deploying to Netlify
+## Local development
 
-If you click "Deploy to Netlify" button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify.
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/ts-mui-nextjs-starter)
-
-## Features
-
-This is meant to be a simple starting point that demonstrates the use of bringing your own component library, such as MUI.
-
-In addition to MUI support, this project contains the following:
-
-- **Flexible Pages:** Simple and flexible page model that lets editors add new pages.
-- **Basic Components:** A few basic components to add to new pages.
-- **Layout Elements:** Header and footer elements automatically added to pages.
-- **Component & Template Presets:** Predefined arrangements of content and components for faster editing. [Learn more](https://docs.netlify.com/create/content-presets/).
-- **TypeScript Support:** Components and content are type-safe. (See `types` directory for definitions.)
-
-## Getting Started
-
-The typical development process is to begin by working locally. Clone this repository, then run `npm install` in its root directory.
-
-Run the Next.js development server:
-
-```txt
-cd ts-mui-nextjs-starter
-npm run dev
+```sh
+nvm use            # Node 20 (see .nvmrc)
+npm ci
+npm run dev        # http://localhost:4321
+npm run typecheck  # astro check
+npm run build      # outputs to dist/
+npm run preview    # serve dist/ locally
 ```
 
-Install the [Netlify Create CLI](https://www.npmjs.com/package/@stackbit/cli). Then open a new terminal window in the same project directory and run the Netlify Create Dev server:
+## Project layout
 
-```txt
-npm install -g @stackbit/cli
-stackbit dev
+```
+src/
+  components/        # .astro components (no JS shipped by default)
+  islands/           # React components hydrated client-side
+  content/           # Zod-validated content collections (8 types)
+  layouts/           # Page layouts
+  pages/             # File-based routing
+  styles/            # Tailwind tokens + global CSS
+  lib/               # Pure utility functions
+public/
+  images/            # Static images served as-is
+.github/workflows/   # CI, deploy, zizmor
 ```
 
-This outputs your own Netlify visual editor URL. Open this, register, or sign in, and you will be directed to the Netlify visual editor for your new project.
+## Content collections
 
-![Next.js Dev + Netlify Create Dev](https://assets.stackbit.com/docs/next-dev-stackbit-dev.png)
+All content is Zod-validated at build time. See `src/content/config.ts` for schemas.
 
-## Next Steps
+| Collection  | Purpose                                          |
+| ----------- | ------------------------------------------------ |
+| `idea`      | Long-form essays (MDX)                           |
+| `video`     | YouTube/TikTok/Instagram references              |
+| `talk`      | Speaking engagements (upcoming + past)           |
+| `service`   | Bookable offerings                               |
+| `product`   | Items linking to external storefronts           |
+| `location`  | Map pins (lat/lng) for past + future appearances |
+| `press`     | External coverage and mentions                   |
+| `post`      | Blog posts (MDX, with RSS feed)                  |
 
-Here are a few suggestions on what to do next if you're new to Netlify visual editor:
+## Deployment
 
-- Learn [how Netlify visual editor works](https://docs.netlify.com/visual-editor/overview/)
-- Check [Netlify visual editor reference documentation](https://visual-editor-reference.netlify.com/)
-
-## Support
-
-If you get stuck along the way, get help in our [support forums](https://answers.netlify.com/).
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site
+and publishes `dist/` to GitHub Pages. PRs run `.github/workflows/ci.yml` for
+typecheck, build, link check, and zizmor scan of workflow files.

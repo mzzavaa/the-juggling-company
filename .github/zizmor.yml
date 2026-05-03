@@ -1,0 +1,4 @@
+# zizmor configuration. See: https://docs.zizmor.sh/configuration/
+rules:
+  # All rules enabled at default severity. Add explicit overrides here if a
+  # finding turns out to be a false positive for this repo.

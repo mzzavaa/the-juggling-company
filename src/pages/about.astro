@@ -1,0 +1,90 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { site } from "@/lib/site";
+---
+
+<BaseLayout
+  title="About"
+  description="Linda Mohamed brings over a decade of cloud and agile expertise together with a deep practice of juggling — at The Juggling Company, the two are the same craft."
+>
+  <article class="mx-auto grid max-w-5xl gap-12 px-4 py-16 md:grid-cols-[18rem_1fr] md:px-6">
+    <aside>
+      <img
+        src="/images/IMG_9810.jpg"
+        alt="Linda Mohamed"
+        width="320"
+        height="400"
+        class="aspect-[4/5] w-full rounded-2xl border border-[var(--color-border)] object-cover shadow-lg"
+        loading="eager"
+      />
+      <dl class="mt-6 grid gap-3 text-sm">
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Role</dt>
+          <dd class="mt-0.5 text-[var(--color-fg)]">{site.author.role}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Based in</dt>
+          <dd class="mt-0.5 text-[var(--color-fg)]">London, United Kingdom</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Email</dt>
+          <dd class="mt-0.5 text-[var(--color-fg)]">
+            <a class="text-[var(--color-accent)] hover:underline" href={`mailto:${site.author.email}`}>{site.author.email}</a>
+          </dd>
+        </div>
+      </dl>
+    </aside>
+
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">About</p>
+      <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+        {site.author.name}
+      </h1>
+
+      <div class="prose mt-6 max-w-none">
+        <p class="text-lg text-[var(--color-muted)]">
+          Linda Mohamed has spent over a decade in tech, specialising in cloud
+          technologies, IT process optimisation, and agile methodologies. She
+          guides companies on cloud journeys, integrating cutting-edge
+          technology with effective management practices.
+        </p>
+        <p>
+          Alongside her professional work, she has a deep passion for juggling
+          — a skill that teaches balance, focus, and adaptability. The Juggling
+          Company merges the art of juggling with innovative learning and
+          development strategies.
+        </p>
+
+        <h2>Mission</h2>
+        <p>
+          At The Juggling Company, our mission is to inspire, educate, and
+          empower individuals through the art of juggling. We are dedicated to
+          fostering a vibrant community where juggling serves as a bridge
+          between physical fitness, cognitive development, and creative
+          expression. By integrating the principles of juggling with cutting-edge
+          technology and innovative learning methods, we aim to promote
+          holistic well-being, enhance teamwork, and drive positive change
+          within organisations and individuals alike.
+        </p>
+
+        <h2>How I work</h2>
+        <ul>
+          <li>
+            <strong>One craft, two surfaces.</strong> Juggling and software both
+            reward incremental load, fast feedback, and a calm response to
+            dropped balls.
+          </li>
+          <li>
+            <strong>Bespoke before stock.</strong> Every keynote, workshop, and
+            performance is tailored to the room — no recycled decks.
+          </li>
+          <li>
+            <strong>Evidence over vibe.</strong> The Ideas section cites the
+            neuroscience the workshops draw on. The metaphor only earns its
+            keep when the research holds.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import VideoFilter, { type VideoSummary } from "@/islands/VideoFilter";
+import { getVideos, getIdeas } from "@/lib/content";
+
+const [videos, ideas] = await Promise.all([getVideos(), getIdeas()]);
+
+const ideaTitlesBySlug = Object.fromEntries(ideas.map((i) => [i.id, i.data.title]));
+
+const summaries: VideoSummary[] = videos.map((v) => ({
+  slug: v.id,
+  title: v.data.title,
+  source: v.data.source,
+  externalUrl: v.data.externalUrl,
+  externalId: v.data.externalId,
+  thumbUrl:
+    v.data.source === "youtube"
+      ? `https://i.ytimg.com/vi/${v.data.externalId}/hqdefault.jpg`
+      : "/images/3.png",
+  publishedAt: v.data.publishedAt.toISOString(),
+  durationSec: v.data.durationSec,
+  tags: v.data.tags,
+  ideaSlugs: v.data.ideaSlugs.map((ref) => ref.id),
+  description: v.data.description,
+}));
+---
+
+<BaseLayout
+  title="Videos"
+  description="Juggling tutorials, performance clips, and workshop demos — across YouTube, TikTok, and Instagram."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Videos</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      Watch the work.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Tutorials, performance reels, and clips from workshops — filterable by source, tag, or related idea.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
+    <VideoFilter client:load videos={summaries} ideaTitlesBySlug={ideaTitlesBySlug} />
+  </section>
+</BaseLayout>

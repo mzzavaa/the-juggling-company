@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { formatDate } from "@/lib/format";
+import Icon from "./Icon.astro";
+
+interface Props {
+  post: CollectionEntry<"post">;
+}
+
+const { post } = Astro.props;
+---
+
+<a
+  href={`/blog/${post.id}`}
+  class="group flex h-full flex-col overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition hover:border-[var(--color-accent)]"
+>
+  {
+    post.data.cover && (
+      <div class="aspect-[16/9] overflow-hidden bg-black">
+        <Image
+          src={post.data.cover}
+          alt={post.data.coverAlt ?? ""}
+          width={800}
+          height={450}
+          class="h-full w-full object-cover transition group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+    )
+  }
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <p class="text-xs uppercase tracking-widest text-[var(--color-muted)]">
+      {formatDate(post.data.date)}
+    </p>
+    <h3
+      class="font-display text-xl font-semibold leading-snug text-[var(--color-fg)] group-hover:text-[var(--color-accent)]"
+    >
+      {post.data.title}
+    </h3>
+    <p class="text-sm text-[var(--color-muted)]">{post.data.summary}</p>
+    <span
+      class="mt-auto inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)]"
+    >
+      Read more <Icon name="arrow-right" size={14} />
+    </span>
+  </div>
+</a>

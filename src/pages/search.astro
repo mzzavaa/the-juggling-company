@@ -1,0 +1,166 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { getIdeas, getPosts, getVideos, getServices } from "@/lib/content";
+
+const [ideas, posts, videos, services] = await Promise.all([
+  getIdeas(),
+  getPosts(),
+  getVideos(),
+  getServices(),
+]);
+
+interface SearchItem {
+  type: "idea" | "post" | "video" | "service";
+  title: string;
+  url: string;
+  summary: string;
+  tags: string[];
+}
+
+const items: SearchItem[] = [
+  ...ideas.map((i) => ({
+    type: "idea" as const,
+    title: i.data.title,
+    url: `/ideas/${i.id}`,
+    summary: i.data.summary,
+    tags: i.data.tags,
+  })),
+  ...posts.map((p) => ({
+    type: "post" as const,
+    title: p.data.title,
+    url: `/blog/${p.id}`,
+    summary: p.data.summary,
+    tags: p.data.tags,
+  })),
+  ...videos.map((v) => ({
+    type: "video" as const,
+    title: v.data.title,
+    url: `/videos/${v.id}`,
+    summary: v.data.description,
+    tags: v.data.tags,
+  })),
+  ...services.map((s) => ({
+    type: "service" as const,
+    title: s.data.title,
+    url: `/services/${s.id}`,
+    summary: s.data.summary,
+    tags: [],
+  })),
+];
+
+const itemsJson = JSON.stringify(items);
+---
+
+<BaseLayout title="Search" description="Search across ideas, blog posts, videos, and services.">
+  <section class="mx-auto max-w-3xl px-4 py-16 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Search</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
+      Find anything.
+    </h1>
+
+    <label
+      class="mt-8 flex items-center gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-3 focus-within:border-[var(--color-accent)]"
+    >
+      <Icon name="search" size={18} />
+      <input
+        id="search-input"
+        type="search"
+        autocomplete="off"
+        placeholder="Search ideas, posts, videos, services…"
+        class="w-full bg-transparent text-base outline-none"
+      />
+    </label>
+
+    <p id="search-count" class="mt-4 text-sm text-[var(--color-muted)]">
+      {items.length} items indexed.
+    </p>
+
+    <ul id="search-results" class="mt-8 flex flex-col gap-3"></ul>
+  </section>
+
+  <script id="search-data" type="application/json" is:inline set:html={itemsJson}></script>
+
+  <script>
+    type Item = {
+      type: "idea" | "post" | "video" | "service";
+      title: string;
+      url: string;
+      summary: string;
+      tags: string[];
+    };
+
+    const dataEl = document.getElementById("search-data");
+    if (!dataEl) throw new Error("search data missing");
+    const items: Item[] = JSON.parse(dataEl.textContent ?? "[]");
+
+    const input = document.getElementById("search-input");
+    const resultsEl = document.getElementById("search-results");
+    const countEl = document.getElementById("search-count");
+    if (!(input instanceof HTMLInputElement) || !resultsEl || !countEl) {
+      throw new Error("search shell missing");
+    }
+    const results: HTMLElement = resultsEl;
+    const count: HTMLElement = countEl;
+
+    function score(item: Item, query: string): number {
+      const q = query.toLowerCase();
+      const hay = `${item.title} ${item.summary} ${item.tags.join(" ")}`.toLowerCase();
+      if (!hay.includes(q)) return 0;
+      let s = 0;
+      if (item.title.toLowerCase().includes(q)) s += 4;
+      if (item.tags.some((t) => t.toLowerCase().includes(q))) s += 2;
+      if (item.summary.toLowerCase().includes(q)) s += 1;
+      return s;
+    }
+
+    function buildResultNode(item: Item): HTMLLIElement {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = item.url;
+      a.className =
+        "group block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-4 transition hover:border-[var(--color-accent)]";
+
+      const type = document.createElement("p");
+      type.className =
+        "text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]";
+      type.textContent = item.type;
+      a.appendChild(type);
+
+      const title = document.createElement("p");
+      title.className =
+        "mt-1 font-medium text-[var(--color-fg)] group-hover:text-[var(--color-accent)]";
+      title.textContent = item.title;
+      a.appendChild(title);
+
+      if (item.summary) {
+        const summary = document.createElement("p");
+        summary.className = "mt-1 text-sm text-[var(--color-muted)]";
+        summary.textContent = item.summary;
+        a.appendChild(summary);
+      }
+
+      li.appendChild(a);
+      return li;
+    }
+
+    function render(query: string) {
+      const trimmed = query.trim();
+      const matches = trimmed
+        ? items
+            .map((item) => ({ item, s: score(item, trimmed) }))
+            .filter((r) => r.s > 0)
+            .sort((a, b) => b.s - a.s)
+        : items.map((item) => ({ item, s: 0 }));
+
+      count.textContent = trimmed
+        ? `${matches.length} match${matches.length === 1 ? "" : "es"}`
+        : `${items.length} items indexed.`;
+
+      results.replaceChildren(...matches.map(({ item }) => buildResultNode(item)));
+    }
+
+    input.addEventListener("input", () => render(input.value));
+    render("");
+  </script>
+</BaseLayout>
