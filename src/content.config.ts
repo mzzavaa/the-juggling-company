@@ -8,6 +8,8 @@ const slug = z
 
 const isoDate = z.coerce.date();
 
+const pillar = z.enum(["brain", "tech", "change"]);
+
 const idea = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/idea" }),
   schema: ({ image }) =>
@@ -19,6 +21,7 @@ const idea = defineCollection({
       heroAlt: z.string().optional(),
       order: z.number().int().nonnegative().default(0),
       tags: z.array(z.string()).default([]),
+      pillars: z.array(pillar).min(1),
       updatedAt: isoDate,
       draft: z.boolean().default(false),
       related: z.array(reference("idea")).default([]),
@@ -36,6 +39,7 @@ const video = defineCollection({
     publishedAt: isoDate,
     durationSec: z.number().int().positive(),
     tags: z.array(z.string()).default([]),
+    pillars: z.array(pillar).default([]),
     description: z.string().default(""),
     locationSlug: reference("location").optional(),
     ideaSlugs: z.array(reference("idea")).default([]),
@@ -56,6 +60,7 @@ const talk = defineCollection({
     slidesUrl: z.string().url().optional(),
     recordingUrl: z.string().url().optional(),
     locationSlug: reference("location").optional(),
+    pillars: z.array(pillar).default([]),
     upcoming: z.boolean().default(false),
   }),
 });
@@ -131,6 +136,7 @@ const post = defineCollection({
       summary: z.string(),
       date: isoDate,
       tags: z.array(z.string()).default([]),
+      pillars: z.array(pillar).default([]),
       cover: image().optional(),
       coverAlt: z.string().optional(),
       draft: z.boolean().default(false),

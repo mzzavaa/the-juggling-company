@@ -1,0 +1,94 @@
+---
+import {
+  PILLAR_LABEL,
+  PILLAR_HEX,
+  blendKey,
+  normalizePillars,
+  type Pillar,
+} from "@/lib/pillar";
+
+interface Props {
+  pillars: readonly Pillar[];
+  /** "solid" = filled chip, "ghost" = outlined, "dot" = tiny coloured dot only. */
+  variant?: "solid" | "ghost" | "dot";
+  size?: "sm" | "md";
+  /** When showing multiple pillars, "split" stacks chips; "blend" shows one merged chip. */
+  multi?: "split" | "blend";
+}
+
+const {
+  pillars,
+  variant = "solid",
+  size = "sm",
+  multi = "split",
+} = Astro.props;
+
+const list = normalizePillars(pillars);
+if (list.length === 0) {
+  // Render nothing rather than an empty badge.
+}
+
+const padding = size === "md" ? "px-3 py-1 text-sm" : "px-2 py-0.5 text-xs";
+
+function chipStyle(hex: string): string {
+  if (variant === "solid") {
+    // Mix the pillar hex with white-ish text overlay for legibility on saturated bg.
+    return `background-color: ${hex}; color: #0a0a12;`;
+  }
+  if (variant === "ghost") {
+    return `border-color: ${hex}; color: ${hex}; background-color: transparent;`;
+  }
+  return `background-color: ${hex};`;
+}
+---
+
+{
+  multi === "blend" && list.length > 1 ? (
+    (() => {
+      const key = blendKey(list);
+      const hex = PILLAR_HEX[key];
+      const label = list.map((p) => PILLAR_LABEL[p]).join(" × ");
+      return variant === "dot" ? (
+        <span
+          class="inline-block h-2 w-2 rounded-full"
+          style={chipStyle(hex)}
+          aria-label={label}
+        />
+      ) : (
+        <span
+          class:list={[
+            "inline-flex items-center gap-1 rounded-full font-semibold uppercase tracking-wide",
+            padding,
+            variant === "ghost" && "border",
+          ]}
+          style={chipStyle(hex)}
+        >
+          {label}
+        </span>
+      );
+    })()
+  ) : (
+    <span class="inline-flex flex-wrap items-center gap-1.5">
+      {list.map((p) =>
+        variant === "dot" ? (
+          <span
+            class="inline-block h-2 w-2 rounded-full"
+            style={chipStyle(PILLAR_HEX[p])}
+            aria-label={PILLAR_LABEL[p]}
+          />
+        ) : (
+          <span
+            class:list={[
+              "inline-flex items-center gap-1 rounded-full font-semibold uppercase tracking-wide",
+              padding,
+              variant === "ghost" && "border",
+            ]}
+            style={chipStyle(PILLAR_HEX[p])}
+          >
+            {PILLAR_LABEL[p]}
+          </span>
+        ),
+      )}
+    </span>
+  )
+}

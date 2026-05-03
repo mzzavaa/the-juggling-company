@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import VideoFilter, { type VideoSummary } from "@/islands/VideoFilter";
+import SocialLinks from "@/components/SocialLinks.astro";
 import { getVideos, getIdeas } from "@/lib/content";
 
 const [videos, ideas] = await Promise.all([getVideos(), getIdeas()]);
@@ -20,6 +21,7 @@ const summaries: VideoSummary[] = videos.map((v) => ({
   publishedAt: v.data.publishedAt.toISOString(),
   durationSec: v.data.durationSec,
   tags: v.data.tags,
+  pillars: v.data.pillars,
   ideaSlugs: v.data.ideaSlugs.map((ref) => ref.id),
   description: v.data.description,
 }));
@@ -27,16 +29,19 @@ const summaries: VideoSummary[] = videos.map((v) => ({
 
 <BaseLayout
   title="Videos"
-  description="Juggling tutorials, performance clips, and workshop demos — across YouTube, TikTok, and Instagram."
+  description="Talks, podcast appearances, AWS sessions, and juggling clips — colour-coded by pillar."
 >
-  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Videos</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
-      Watch the work.
+    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
+      <span class="rgb-text">Watch the work.</span>
     </h1>
-    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
-      Tutorials, performance reels, and clips from workshops — filterable by source, tag, or related idea.
+    <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
+      Conference talks, podcast appearances, and AWS community sessions — filterable by pillar, source, or related idea.
     </p>
+    <div class="mt-6">
+      <SocialLinks />
+    </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">

@@ -1,14 +1,20 @@
 ---
 import { footerNav, primaryNav, site } from "@/lib/site";
+import SocialLinks from "./SocialLinks.astro";
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="mt-auto border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
-  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-3 md:px-6">
-    <div>
+  <div class="rgb-stripe" aria-hidden="true"></div>
+
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-4 md:px-6">
+    <div class="md:col-span-2">
       <p class="font-display text-lg font-semibold tracking-tight">{site.name}</p>
       <p class="mt-2 max-w-sm text-sm text-[var(--color-muted)]">{site.description}</p>
+      <div class="mt-5">
+        <SocialLinks />
+      </div>
     </div>
 
     <nav aria-label="Site">
@@ -17,7 +23,7 @@ const year = new Date().getFullYear();
         {
           primaryNav.map((item) => (
             <li>
-              <a class="text-[var(--color-fg)] hover:text-[var(--color-accent)]" href={item.href}>
+              <a class="text-[var(--color-fg)] hover:text-[var(--color-brain-tech)]" href={item.href}>
                 {item.label}
               </a>
             </li>
@@ -32,7 +38,7 @@ const year = new Date().getFullYear();
         {
           footerNav.map((item) => (
             <li>
-              <a class="text-[var(--color-fg)] hover:text-[var(--color-accent)]" href={item.href}>
+              <a class="text-[var(--color-fg)] hover:text-[var(--color-brain-tech)]" href={item.href}>
                 {item.label}
               </a>
             </li>
@@ -43,8 +49,22 @@ const year = new Date().getFullYear();
   </div>
 
   <div
-    class="border-t border-[var(--color-border)] py-6 text-center text-xs text-[var(--color-muted)]"
+    class="border-t border-[var(--color-border)] px-4 py-6 text-center text-xs text-[var(--color-muted)] md:px-6"
   >
-    &copy; {year} {site.name}. Built with Astro.
+    &copy; {year} {site.name} · Built with Astro · <span class="rgb-text font-semibold">brain · tech · change</span>
   </div>
 </footer>
+
+<style>
+  .rgb-stripe {
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      var(--color-brain) 0%,
+      var(--color-brain-change) 25%,
+      var(--color-change) 50%,
+      var(--color-tech-change) 75%,
+      var(--color-tech) 100%
+    );
+  }
+</style>

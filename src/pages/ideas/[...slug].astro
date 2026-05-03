@@ -2,9 +2,11 @@
 import { render } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
+import PillarBadge from "@/components/PillarBadge.astro";
 import VideoCard from "@/components/VideoCard.astro";
 import { formatDate, readingTimeMinutes } from "@/lib/format";
 import { getIdeas, getVideos } from "@/lib/content";
+import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 export async function getStaticPaths() {
   const ideas = await getIdeas();
@@ -33,6 +35,9 @@ const readingMinutes = readingTimeMinutes(
 
 const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
+const pKey = blendKey(idea.data.pillars);
+const accentHex = PILLAR_HEX[pKey];
+
 const articleJsonLd = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -51,10 +56,20 @@ const articleJsonLd = {
   publishedAt={idea.data.updatedAt}
   jsonLd={articleJsonLd}
 >
-  <article class="mx-auto grid max-w-6xl gap-12 px-4 py-12 md:px-6 lg:grid-cols-[1fr_18rem]">
+  <div class="essay-stripe" style={`background: ${accentHex};`} aria-hidden="true"></div>
+
+  <article
+    class="mx-auto grid max-w-6xl gap-12 px-4 py-12 md:px-6 lg:grid-cols-[1fr_18rem]"
+    data-pillar={pKey}
+  >
     <div class="prose">
-      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-        <a href="/ideas" class="hover:text-[var(--color-accent)]">Ideas</a> · {readingMinutes} min read · Updated {formatDate(idea.data.updatedAt)}
+      <p class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+        <a href="/ideas" class="hover:text-[var(--color-fg)]">Ideas</a>
+        <span>·</span>
+        <span>{readingMinutes} min read</span>
+        <span>·</span>
+        <span>Updated {formatDate(idea.data.updatedAt)}</span>
+        <PillarBadge pillars={idea.data.pillars} variant="solid" />
       </p>
       <h1>{idea.data.title}</h1>
       <p class="text-lg text-[var(--color-muted)]">{idea.data.summary}</p>
@@ -64,7 +79,7 @@ const articleJsonLd = {
       {
         relatedVideos.length > 0 && (
           <section class="not-prose mt-12">
-            <h2 class="font-display text-2xl font-semibold tracking-tight">Related videos</h2>
+            <h2 class="font-display text-2xl font-bold tracking-tight">Related videos</h2>
             <ul class="mt-6 grid gap-6 md:grid-cols-2">
               {relatedVideos.map((v) => (
                 <li>
@@ -84,14 +99,12 @@ const articleJsonLd = {
           prev ? (
             <a
               href={`/ideas/${prev.id}`}
-              class="group rounded-lg border border-[var(--color-border)] p-4 transition hover:border-[var(--color-accent)]"
+              class="group rounded-xl border border-[var(--color-border)] p-4 transition hover:border-[var(--color-fg)]"
             >
               <span class="flex items-center gap-1 text-xs uppercase tracking-widest text-[var(--color-muted)]">
                 <Icon name="chevron-left" size={12} /> Previous
               </span>
-              <span class="mt-1 block font-medium group-hover:text-[var(--color-accent)]">
-                {prev.data.title}
-              </span>
+              <span class="mt-1 block font-medium">{prev.data.title}</span>
             </a>
           ) : (
             <div />
@@ -101,14 +114,12 @@ const articleJsonLd = {
           next && (
             <a
               href={`/ideas/${next.id}`}
-              class="group rounded-lg border border-[var(--color-border)] p-4 text-right transition hover:border-[var(--color-accent)]"
+              class="group rounded-xl border border-[var(--color-border)] p-4 text-right transition hover:border-[var(--color-fg)]"
             >
               <span class="flex items-center justify-end gap-1 text-xs uppercase tracking-widest text-[var(--color-muted)]">
                 Next <Icon name="chevron-right" size={12} />
               </span>
-              <span class="mt-1 block font-medium group-hover:text-[var(--color-accent)]">
-                {next.data.title}
-              </span>
+              <span class="mt-1 block font-medium">{next.data.title}</span>
             </a>
           )
         }
@@ -118,8 +129,11 @@ const articleJsonLd = {
     {
       tocHeadings.length > 0 && (
         <aside class="hidden lg:block">
-          <div class="sticky top-24">
-            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+          <div class="sticky top-24 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5">
+            <p
+              class="text-xs font-semibold uppercase tracking-widest"
+              style={`color: ${accentHex};`}
+            >
               On this page
             </p>
             <ol class="mt-3 flex flex-col gap-2 text-sm">
@@ -127,7 +141,7 @@ const articleJsonLd = {
                 <li class={h.depth === 3 ? "pl-4" : ""}>
                   <a
                     href={`#${h.slug}`}
-                    class="text-[var(--color-muted)] hover:text-[var(--color-accent)]"
+                    class="text-[var(--color-muted)] transition hover:text-[var(--color-fg)]"
                   >
                     {h.text}
                   </a>
@@ -140,3 +154,10 @@ const articleJsonLd = {
     }
   </article>
 </BaseLayout>
+
+<style>
+  .essay-stripe {
+    height: 4px;
+    width: 100%;
+  }
+</style>

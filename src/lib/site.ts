@@ -5,13 +5,14 @@
 
 export const site = {
   name: "The Juggling Company",
-  tagline: "Where juggling meets innovation.",
+  tagline: "Brain. Tech. Change.",
   description:
-    "Inspiring, educating, and empowering individuals through the art of juggling — bridging physical fitness, cognitive development, and creative expression.",
+    "Linda Mohamed (@mrs_lee_g) — AWS Hero, juggler, and community builder. Where cognitive science, cloud, and human change converge.",
   url: "https://thejugglingcompany.com",
   author: {
     name: "Linda Mohamed",
-    role: "Founder",
+    handle: "mrs_lee_g",
+    role: "AWS Hero · Juggler · Founder",
     email: "hello@thejugglingcompany.com",
   },
   defaultOgImage: "/images/IMG_9810.jpg",
@@ -35,4 +36,39 @@ export const footerNav: readonly NavItem[] = [
   { label: "Contact", href: "/contact" },
   { label: "Search", href: "/search" },
   { label: "RSS", href: "/rss.xml" },
+] as const;
+
+export type SocialIcon = "youtube" | "instagram" | "linkedin" | "x" | "github" | "external-link";
+
+export interface SocialLink {
+  readonly label: string;
+  readonly href: string;
+  readonly icon: SocialIcon;
+  readonly handle?: string;
+}
+
+export const socialLinks: readonly SocialLink[] = [
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@mrs_lee_g",
+    icon: "youtube",
+    handle: "@mrs_lee_g",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/mrs_lee_g/",
+    icon: "instagram",
+    handle: "@mrs_lee_g",
+  },
+  {
+    label: "X / Twitter",
+    href: "https://x.com/mrs_lee_g",
+    icon: "x",
+    handle: "@mrs_lee_g",
+  },
+  {
+    label: "AWS Hero profile",
+    href: "https://aws.amazon.com/developer/community/heroes/linda-mohamed/",
+    icon: "external-link",
+  },
 ] as const;

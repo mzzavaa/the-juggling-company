@@ -23,6 +23,13 @@ const typeLabel: Record<MapLocation["type"], string> = {
   workshop: "Workshop",
 };
 
+const typeAccent: Record<MapLocation["type"], string> = {
+  "past-performance": "var(--color-brain-tech)",
+  "home-base": "var(--color-brain)",
+  available: "var(--color-tech)",
+  workshop: "var(--color-change)",
+};
+
 const grouped = locations.reduce(
   (acc, l) => {
     const key = l.data.type;
@@ -37,14 +44,14 @@ const grouped = locations.reduce(
   title="Locations"
   description="Where I've performed, where I'm based, and where I'm available next."
 >
-  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
       Locations
     </p>
-    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
-      Where I am, where I've been.
+    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
+      <span class="rgb-text">Where I am, where I've been.</span>
     </h1>
-    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+    <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
       {locations.length} {locations.length === 1 ? "location" : "locations"} on the map. Click a pin for details, or browse the list below.
     </p>
   </section>
@@ -54,17 +61,24 @@ const grouped = locations.reduce(
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
-    <h2 class="font-display text-2xl font-semibold tracking-tight">All locations</h2>
+    <h2 class="font-display text-2xl font-bold tracking-tight">All locations</h2>
     <div class="mt-6 grid gap-8 md:grid-cols-2">
       {
         (Object.keys(grouped) as MapLocation["type"][]).map((type) => (
           <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+            <p
+              class="text-xs font-semibold uppercase tracking-widest"
+              style={`color: ${typeAccent[type]};`}
+            >
               {typeLabel[type]} ({grouped[type].length})
             </p>
             <ul class="mt-3 flex flex-col gap-3">
               {grouped[type].map((l) => (
-                <li id={l.id} class="rounded-lg border border-[var(--color-border)] p-4">
+                <li
+                  id={l.id}
+                  class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4"
+                  style={`border-left: 3px solid ${typeAccent[type]};`}
+                >
                   <p class="font-medium text-[var(--color-fg)]">{l.data.name}</p>
                   <p class="text-sm text-[var(--color-muted)]">
                     {l.data.city}, {l.data.country}

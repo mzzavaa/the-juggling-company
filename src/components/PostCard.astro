@@ -3,17 +3,22 @@ import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import { formatDate } from "@/lib/format";
 import Icon from "./Icon.astro";
+import PillarBadge from "./PillarBadge.astro";
+import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 interface Props {
   post: CollectionEntry<"post">;
 }
 
 const { post } = Astro.props;
+
+const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.pillars)] : "#9696b0";
 ---
 
 <a
   href={`/blog/${post.id}`}
-  class="group flex h-full flex-col overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition hover:border-[var(--color-accent)]"
+  class="card group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition"
+  style={`--card-accent: ${accentHex};`}
 >
   {
     post.data.cover && (
@@ -29,20 +34,36 @@ const { post } = Astro.props;
       </div>
     )
   }
-  <div class="flex flex-1 flex-col gap-3 p-5">
-    <p class="text-xs uppercase tracking-widest text-[var(--color-muted)]">
-      {formatDate(post.data.date)}
-    </p>
+  <div class="flex flex-1 flex-col gap-3 p-6">
+    <div class="flex flex-wrap items-center gap-3">
+      <p class="text-xs uppercase tracking-widest text-[var(--color-muted)]">
+        {formatDate(post.data.date)}
+      </p>
+      {post.data.pillars.length > 0 && <PillarBadge pillars={post.data.pillars} variant="solid" />}
+    </div>
     <h3
-      class="font-display text-xl font-semibold leading-snug text-[var(--color-fg)] group-hover:text-[var(--color-accent)]"
+      class="font-display text-2xl font-bold leading-snug text-[var(--color-fg)]"
     >
       {post.data.title}
     </h3>
     <p class="text-sm text-[var(--color-muted)]">{post.data.summary}</p>
     <span
-      class="mt-auto inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)]"
+      class="mt-auto inline-flex items-center gap-1 text-sm font-medium"
+      style={`color: ${accentHex};`}
     >
       Read more <Icon name="arrow-right" size={14} />
     </span>
   </div>
 </a>
+
+<style>
+  .card {
+    transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
+  }
+  .card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
+      0 12px 36px -12px color-mix(in oklab, var(--card-accent) 60%, transparent);
+    transform: translateY(-2px);
+  }
+</style>

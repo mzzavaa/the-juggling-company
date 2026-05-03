@@ -1,0 +1,63 @@
+---
+import Icon from "./Icon.astro";
+import { socialLinks } from "@/lib/site";
+
+interface Props {
+  variant?: "icons" | "list";
+  iconSize?: number;
+  class?: string;
+}
+
+const { variant = "icons", iconSize = 18, class: className } = Astro.props;
+
+const iconMap = {
+  youtube: "youtube",
+  instagram: "instagram",
+  linkedin: "linkedin",
+  x: "x-twitter",
+  github: "github",
+  "external-link": "external-link",
+} as const;
+---
+
+{
+  variant === "icons" ? (
+    <ul class:list={["flex items-center gap-1.5", className]}>
+      {socialLinks.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            rel="noopener me"
+            target="_blank"
+            class="group inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-muted)] transition hover:border-[var(--color-brain-tech)] hover:text-[var(--color-brain-tech)]"
+            aria-label={`${s.label}${s.handle ? ` (${s.handle})` : ""}`}
+            title={s.handle ? `${s.label} ${s.handle}` : s.label}
+          >
+            <Icon name={iconMap[s.icon]} size={iconSize} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <ul class:list={["flex flex-col gap-2", className]}>
+      {socialLinks.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            rel="noopener me"
+            target="_blank"
+            class="group inline-flex items-center gap-2 text-sm text-[var(--color-fg)] transition hover:text-[var(--color-brain-tech)]"
+          >
+            <Icon name={iconMap[s.icon]} size={16} />
+            <span class="font-medium">{s.label}</span>
+            {s.handle && (
+              <span class="text-[var(--color-muted)] group-hover:text-[var(--color-brain-tech)]">
+                {s.handle}
+              </span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

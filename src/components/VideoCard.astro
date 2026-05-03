@@ -1,14 +1,16 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Icon from "./Icon.astro";
+import PillarBadge from "./PillarBadge.astro";
 import { formatDuration } from "@/lib/format";
+import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 interface Props {
   video: CollectionEntry<"video">;
 }
 
 const { video } = Astro.props;
-const { source, externalId, title, durationSec, tags } = video.data;
+const { source, externalId, title, durationSec, pillars } = video.data;
 
 const thumbUrl =
   source === "youtube"
@@ -26,11 +28,14 @@ const sourceIcon: Record<typeof source, "youtube" | "music" | "instagram"> = {
   tiktok: "music",
   instagram: "instagram",
 };
+
+const accentHex = pillars.length > 0 ? PILLAR_HEX[blendKey(pillars)] : "#9696b0";
 ---
 
 <a
   href={`/videos/${video.id}`}
-  class="group flex h-full flex-col overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition hover:border-[var(--color-accent)]"
+  class="card group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition"
+  style={`--card-accent: ${accentHex};`}
 >
   <div class="relative aspect-video overflow-hidden bg-black">
     <img
@@ -50,22 +55,24 @@ const sourceIcon: Record<typeof source, "youtube" | "music" | "instagram"> = {
       {formatDuration(durationSec)}
     </span>
   </div>
-  <div class="flex flex-1 flex-col gap-2 p-4">
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    {pillars.length > 0 && <PillarBadge pillars={pillars} variant="solid" />}
     <h3
-      class="font-display text-lg font-semibold leading-snug text-[var(--color-fg)] group-hover:text-[var(--color-accent)]"
+      class="font-display text-lg font-semibold leading-snug text-[var(--color-fg)] transition group-hover:text-[var(--color-fg)]"
     >
       {title}
     </h3>
-    {
-      tags.length > 0 && (
-        <ul class="mt-auto flex flex-wrap gap-1.5 pt-2">
-          {tags.slice(0, 4).map((t) => (
-            <li class="rounded-full bg-[var(--color-bg)] px-2 py-0.5 text-xs text-[var(--color-muted)]">
-              #{t}
-            </li>
-          ))}
-        </ul>
-      )
-    }
   </div>
 </a>
+
+<style>
+  .card {
+    transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
+  }
+  .card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
+      0 12px 36px -12px color-mix(in oklab, var(--card-accent) 60%, transparent);
+    transform: translateY(-2px);
+  }
+</style>

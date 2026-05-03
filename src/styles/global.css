@@ -1,9 +1,18 @@
 @import "tailwindcss";
 
 /*
-  Design tokens. Tailwind v4 reads @theme blocks and emits matching utility
-  classes (bg-bg, text-fg, text-accent, font-display, etc.). Tokens cascade
-  via CSS custom properties so dark mode flips by toggling [data-theme].
+  RGB pillar design system. Three topic pillars map to RGB primaries:
+    Brain      = Red    (#ff3366)
+    Technology = Green  (#33cc66)
+    Change     = Blue   (#3b6cff)
+
+  Overlaps blend additively (like light, not paint):
+    Brain + Tech     = Yellow   (#ffcc33)
+    Brain + Change   = Magenta  (#cc33ff)
+    Tech + Change    = Cyan     (#33ccff)
+    All three        = White-ish (#f4f4f0)
+
+  Theme: dark by default. Light theme available via [data-theme="light"].
 */
 
 @theme {
@@ -11,49 +20,53 @@
     "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   --font-display:
-    "Fraunces", "Inter", ui-serif, Georgia, "Times New Roman", serif;
+    "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono:
-    ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --color-bg: oklch(0.99 0.005 80);
-  --color-bg-elevated: oklch(0.97 0.008 80);
-  --color-fg: oklch(0.22 0.02 60);
-  --color-muted: oklch(0.55 0.02 60);
-  --color-border: oklch(0.9 0.01 80);
-  --color-accent: oklch(0.66 0.15 45);
-  --color-accent-hover: oklch(0.6 0.16 45);
-  --color-accent-fg: oklch(0.99 0.005 80);
+  /* Pillar primaries (RGB additive) */
+  --color-brain: #ff3366;
+  --color-tech: #33cc66;
+  --color-change: #3b6cff;
+
+  /* Pillar blends */
+  --color-brain-tech: #ffcc33;
+  --color-brain-change: #cc33ff;
+  --color-tech-change: #33ccff;
+  --color-all: #f4f4f0;
+
+  /* Surface — dark default */
+  --color-bg: #0a0a12;
+  --color-bg-elevated: #14141f;
+  --color-bg-card: #1b1b2a;
+  --color-fg: #f3f3f8;
+  --color-muted: #9696b0;
+  --color-border: #2a2a3d;
+  --color-border-strong: #3d3d5a;
 
   --radius-sm: 0.375rem;
   --radius-md: 0.625rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
 
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.08);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.6);
+  --shadow-glow-brain: 0 0 0 1px rgb(255 51 102 / 0.3), 0 8px 32px -8px rgb(255 51 102 / 0.4);
+  --shadow-glow-tech: 0 0 0 1px rgb(51 204 102 / 0.3), 0 8px 32px -8px rgb(51 204 102 / 0.4);
+  --shadow-glow-change: 0 0 0 1px rgb(59 108 255 / 0.3), 0 8px 32px -8px rgb(59 108 255 / 0.4);
 }
 
-[data-theme="dark"] {
-  --color-bg: oklch(0.18 0.015 260);
-  --color-bg-elevated: oklch(0.22 0.018 260);
-  --color-fg: oklch(0.95 0.01 80);
-  --color-muted: oklch(0.7 0.02 80);
-  --color-border: oklch(0.3 0.02 260);
-  --color-accent: oklch(0.74 0.16 60);
-  --color-accent-hover: oklch(0.78 0.17 60);
-  --color-accent-fg: oklch(0.18 0.015 260);
-}
+/* Light-theme overrides (manual opt-in only). */
+[data-theme="light"] {
+  --color-bg: #fafaf6;
+  --color-bg-elevated: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-fg: #16161f;
+  --color-muted: #5a5a72;
+  --color-border: #e6e6ed;
+  --color-border-strong: #d0d0db;
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-bg: oklch(0.18 0.015 260);
-    --color-bg-elevated: oklch(0.22 0.018 260);
-    --color-fg: oklch(0.95 0.01 80);
-    --color-muted: oklch(0.7 0.02 80);
-    --color-border: oklch(0.3 0.02 260);
-    --color-accent: oklch(0.74 0.16 60);
-    --color-accent-hover: oklch(0.78 0.17 60);
-    --color-accent-fg: oklch(0.18 0.015 260);
-  }
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px -12px rgb(0 0 0 / 0.1);
 }
 
 html {
@@ -69,9 +82,22 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgb(255 51 102 / 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgb(51 204 102 / 0.06), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 100%, rgb(59 108 255 / 0.07), transparent 60%),
+    var(--color-bg);
 }
 
-/* Skip link — visible only when focused. */
+[data-theme="light"] body {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgb(255 51 102 / 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgb(51 204 102 / 0.04), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 100%, rgb(59 108 255 / 0.04), transparent 60%),
+    var(--color-bg);
+}
+
+/* Skip link */
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -79,8 +105,8 @@ body {
   z-index: 50;
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
-  background: var(--color-accent);
-  color: var(--color-accent-fg);
+  background: var(--color-brain);
+  color: white;
   font-weight: 600;
   transition: top 150ms ease;
 }
@@ -88,11 +114,69 @@ body {
   top: 1rem;
 }
 
-/* Focus rings — accessible by default. */
+/* Focus rings */
 :where(a, button, [role="button"], input, textarea, select, summary):focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-brain-change);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
+}
+
+/* Pillar utilities — apply by setting [data-pillar="brain|tech|change|brain-tech|..."] */
+[data-pillar="brain"] {
+  --pillar-color: var(--color-brain);
+  --pillar-glow: var(--shadow-glow-brain);
+}
+[data-pillar="tech"] {
+  --pillar-color: var(--color-tech);
+  --pillar-glow: var(--shadow-glow-tech);
+}
+[data-pillar="change"] {
+  --pillar-color: var(--color-change);
+  --pillar-glow: var(--shadow-glow-change);
+}
+[data-pillar="brain-tech"] {
+  --pillar-color: var(--color-brain-tech);
+  --pillar-glow: 0 8px 32px -8px rgb(255 204 51 / 0.4);
+}
+[data-pillar="brain-change"] {
+  --pillar-color: var(--color-brain-change);
+  --pillar-glow: 0 8px 32px -8px rgb(204 51 255 / 0.4);
+}
+[data-pillar="tech-change"] {
+  --pillar-color: var(--color-tech-change);
+  --pillar-glow: 0 8px 32px -8px rgb(51 204 255 / 0.4);
+}
+[data-pillar="all"] {
+  --pillar-color: var(--color-all);
+  --pillar-glow: 0 8px 32px -8px rgb(244 244 240 / 0.4);
+}
+
+/* Animated gradient text — used sparingly for big headers. */
+.rgb-text {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-brain) 0%,
+    var(--color-brain-change) 25%,
+    var(--color-change) 50%,
+    var(--color-tech-change) 75%,
+    var(--color-tech) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rgb-text {
+    animation: rgb-pan 12s linear infinite;
+  }
+}
+
+@keyframes rgb-pan {
+  to {
+    background-position: 200% center;
+  }
 }
 
 /* Prose styling for MDX content. */
@@ -100,6 +184,7 @@ body {
   max-width: 70ch;
   font-size: 1.0625rem;
   line-height: 1.75;
+  color: var(--color-fg);
 }
 .prose h1,
 .prose h2,
@@ -111,6 +196,7 @@ body {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   scroll-margin-top: 6rem;
+  color: var(--color-fg);
 }
 .prose h1 {
   font-size: clamp(2rem, 4vw, 2.75rem);
@@ -118,6 +204,18 @@ body {
 }
 .prose h2 {
   font-size: 1.625rem;
+  position: relative;
+  padding-left: 1rem;
+}
+.prose h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 3px;
+  height: 0.9em;
+  background: var(--pillar-color, var(--color-brain));
+  border-radius: 2px;
 }
 .prose h3 {
   font-size: 1.25rem;
@@ -133,22 +231,37 @@ body {
   padding-inline-start: 1.5rem;
 }
 .prose ul {
-  list-style: disc;
+  list-style: none;
+}
+.prose ul li {
+  position: relative;
+}
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 0.7em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: var(--pillar-color, var(--color-brain));
 }
 .prose ol {
   list-style: decimal;
 }
 .prose a {
-  color: var(--color-accent);
+  color: var(--pillar-color, var(--color-brain-change));
   text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--pillar-color, var(--color-brain-change)) 50%, transparent);
   text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color 150ms ease;
 }
 .prose a:hover {
-  color: var(--color-accent-hover);
+  text-decoration-color: var(--pillar-color, var(--color-brain-change));
 }
 .prose blockquote {
-  border-inline-start: 3px solid var(--color-accent);
+  border-inline-start: 3px solid var(--pillar-color, var(--color-brain));
   padding-inline-start: 1rem;
   color: var(--color-muted);
   font-style: italic;
@@ -160,6 +273,7 @@ body {
   padding: 0.1rem 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.9em;
+  color: var(--pillar-color, var(--color-tech));
 }
 .prose pre {
   background: var(--color-bg-elevated);
@@ -174,6 +288,7 @@ body {
   background: transparent;
   border: 0;
   padding: 0;
+  color: inherit;
 }
 .prose img {
   border-radius: var(--radius-md);
@@ -183,4 +298,34 @@ body {
   border: 0;
   border-top: 1px solid var(--color-border);
   margin-block: 2rem;
+}
+
+/* Animated background blobs for hero. */
+@media (prefers-reduced-motion: no-preference) {
+  .blob-brain,
+  .blob-tech,
+  .blob-change {
+    animation: blob-drift 18s ease-in-out infinite;
+  }
+  .blob-tech {
+    animation-duration: 22s;
+    animation-delay: -6s;
+  }
+  .blob-change {
+    animation-duration: 26s;
+    animation-delay: -12s;
+  }
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(4%, -4%, 0) scale(1.05);
+  }
+  66% {
+    transform: translate3d(-3%, 3%, 0) scale(0.95);
+  }
 }

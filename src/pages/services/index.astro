@@ -10,18 +10,28 @@ const priceLabel: Record<string, string> = {
   fixed: "Fixed fee",
   tiered: "Tiered pricing",
 };
+
+// Cycle through pillar accent colours for visual variety.
+const accents = [
+  "var(--color-brain)",
+  "var(--color-tech)",
+  "var(--color-change)",
+  "var(--color-brain-tech)",
+  "var(--color-brain-change)",
+  "var(--color-tech-change)",
+];
 ---
 
 <BaseLayout
   title="Services"
   description="Performances, workshops, keynotes, and idea talks — bookable formats for events, teams, and conferences."
 >
-  <section class="mx-auto max-w-4xl px-4 py-16 md:px-6">
+  <section class="mx-auto max-w-4xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Services</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
-      Ways to work together.
+    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
+      <span class="rgb-text">Ways to work together.</span>
     </h1>
-    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+    <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
       Four bookable formats — pick the one that fits your room. Custom packages combining
       formats are available too; just say what you need.
     </p>
@@ -30,26 +40,43 @@ const priceLabel: Record<string, string> = {
   <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
     <ul class="grid gap-6 md:grid-cols-2">
       {
-        services.map((s) => (
-          <li>
-            <a
-              href={`/services/${s.id}`}
-              class="group flex h-full flex-col gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-8 transition hover:border-[var(--color-accent)]"
-            >
-              <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
-                {priceLabel[s.data.priceModel]}
-              </p>
-              <h2 class="font-display text-2xl font-semibold tracking-tight text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">
-                {s.data.title}
-              </h2>
-              <p class="text-[var(--color-muted)]">{s.data.summary}</p>
-              <span class="mt-auto inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)]">
-                Details <Icon name="arrow-right" size={14} />
-              </span>
-            </a>
-          </li>
-        ))
+        services.map((s, i) => {
+          const accent = accents[i % accents.length];
+          return (
+            <li>
+              <a
+                href={`/services/${s.id}`}
+                class="card group flex h-full flex-col gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8 transition"
+                style={`--card-accent: ${accent};`}
+              >
+                <p class="text-xs font-semibold uppercase tracking-widest" style={`color: ${accent};`}>
+                  {priceLabel[s.data.priceModel]}
+                </p>
+                <h2 class="font-display text-2xl font-bold tracking-tight text-[var(--color-fg)]">
+                  {s.data.title}
+                </h2>
+                <p class="text-[var(--color-muted)]">{s.data.summary}</p>
+                <span
+                  class="mt-auto inline-flex items-center gap-1 text-sm font-semibold"
+                  style={`color: ${accent};`}
+                >
+                  Details <Icon name="arrow-right" size={14} />
+                </span>
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
   </section>
 </BaseLayout>
+
+<style>
+  .card { transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease; }
+  .card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
+      0 16px 48px -16px color-mix(in oklab, var(--card-accent) 60%, transparent);
+    transform: translateY(-2px);
+  }
+</style>

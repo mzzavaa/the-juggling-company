@@ -31,14 +31,15 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0a12" />
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title="The Juggling Company" href="/rss.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preconnect"
-      href="https://rsms.me/"
-      crossorigin
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
     />
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <SEO
       title={title}
       description={description}
@@ -49,12 +50,13 @@ const {
       noindex={noindex}
     />
     <script is:inline>
-      // Theme bootstrap — runs before paint to prevent flash.
+      // Theme bootstrap — runs before paint to prevent flash. Dark is default;
+      // only set [data-theme="light"] when the user explicitly opted in.
       (function () {
         try {
           var stored = localStorage.getItem("tjc-theme");
-          if (stored === "light" || stored === "dark") {
-            document.documentElement.dataset.theme = stored;
+          if (stored === "light") {
+            document.documentElement.dataset.theme = "light";
           }
         } catch (_) {
           /* localStorage unavailable */

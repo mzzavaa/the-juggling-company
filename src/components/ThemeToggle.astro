@@ -4,7 +4,7 @@ import Icon from "./Icon.astro";
 
 <button
   type="button"
-  class="theme-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-fg)] transition hover:bg-[var(--color-border)]"
+  class="theme-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-fg)] transition hover:border-[var(--color-brain-tech)] hover:text-[var(--color-brain-tech)]"
   aria-label="Toggle colour theme"
 >
   <span class="theme-toggle-sun"><Icon name="sun" size={18} /></span>
@@ -18,14 +18,13 @@ import Icon from "./Icon.astro";
 
   function applyTheme(theme: Theme | null) {
     const root = document.documentElement;
-    if (theme === "light" || theme === "dark") {
-      root.dataset.theme = theme;
+    if (theme === "light") {
+      root.dataset.theme = "light";
     } else {
+      // Default and "dark" — clear the attribute so the dark base styles apply.
       delete root.dataset.theme;
     }
-    const isDark =
-      root.dataset.theme === "dark" ||
-      (!root.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    const isDark = !root.dataset.theme || root.dataset.theme === "dark";
     document.querySelectorAll<HTMLElement>(".theme-toggle-sun").forEach((el) => {
       el.classList.toggle("hidden", !isDark);
     });
@@ -39,10 +38,8 @@ import Icon from "./Icon.astro";
   document.querySelectorAll<HTMLButtonElement>(".theme-toggle").forEach((btn) => {
     btn.addEventListener("click", () => {
       const root = document.documentElement;
-      const current =
-        (root.dataset.theme as Theme | undefined) ??
-        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      const next: Theme = current === "dark" ? "light" : "dark";
+      const current: Theme = root.dataset.theme === "light" ? "light" : "dark";
+      const next: Theme = current === "light" ? "dark" : "light";
       localStorage.setItem(STORAGE_KEY, next);
       applyTheme(next);
     });

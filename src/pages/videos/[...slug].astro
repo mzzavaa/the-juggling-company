@@ -4,9 +4,11 @@ import YouTubeEmbed from "@/components/YouTubeEmbed.astro";
 import TikTokEmbed from "@/components/TikTokEmbed.astro";
 import InstagramEmbed from "@/components/InstagramEmbed.astro";
 import VideoCard from "@/components/VideoCard.astro";
+import PillarBadge from "@/components/PillarBadge.astro";
 import Icon from "@/components/Icon.astro";
 import { formatDate, formatDuration } from "@/lib/format";
 import { getVideos, getIdeas } from "@/lib/content";
+import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 export async function getStaticPaths() {
   const videos = await getVideos();
@@ -22,11 +24,14 @@ const related = allVideos
     (v) =>
       v.id !== video.id &&
       (v.data.tags.some((t) => video.data.tags.includes(t)) ||
+        v.data.pillars.some((p) => video.data.pillars.includes(p)) ||
         v.data.ideaSlugs.some((ref) => video.data.ideaSlugs.some((r) => r.id === ref.id))),
   )
   .slice(0, 3);
 
 const linkedIdeas = allIdeas.filter((i) => video.data.ideaSlugs.some((ref) => ref.id === i.id));
+
+const accentHex = video.data.pillars.length > 0 ? PILLAR_HEX[blendKey(video.data.pillars)] : "#9696b0";
 
 const videoJsonLd = {
   "@context": "https://schema.org",
@@ -48,11 +53,18 @@ const videoJsonLd = {
   description={video.data.description || video.data.title}
   jsonLd={videoJsonLd}
 >
+  <div class="video-stripe" style={`background: ${accentHex};`} aria-hidden="true"></div>
+
   <article class="mx-auto max-w-4xl px-4 py-12 md:px-6">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-      <a href="/videos" class="hover:text-[var(--color-accent)]">Videos</a> · {formatDate(video.data.publishedAt)} · {formatDuration(video.data.durationSec)}
+    <p class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+      <a href="/videos" class="hover:text-[var(--color-fg)]">Videos</a>
+      <span>·</span>
+      <span>{formatDate(video.data.publishedAt)}</span>
+      <span>·</span>
+      <span>{formatDuration(video.data.durationSec)}</span>
+      {video.data.pillars.length > 0 && <PillarBadge pillars={video.data.pillars} variant="solid" />}
     </p>
-    <h1 class="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+    <h1 class="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
       {video.data.title}
     </h1>
 
@@ -94,7 +106,8 @@ const videoJsonLd = {
 
     <a
       href={video.data.externalUrl}
-      class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline"
+      class="mt-6 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
+      style={`color: ${accentHex};`}
       rel="noopener"
     >
       Watch on {video.data.source} <Icon name="external-link" size={14} />
@@ -103,13 +116,13 @@ const videoJsonLd = {
     {
       linkedIdeas.length > 0 && (
         <section class="mt-12 border-t border-[var(--color-border)] pt-8">
-          <h2 class="font-display text-xl font-semibold tracking-tight">Related ideas</h2>
+          <h2 class="font-display text-xl font-bold tracking-tight">Related ideas</h2>
           <ul class="mt-4 flex flex-col gap-2">
             {linkedIdeas.map((i) => (
               <li>
                 <a
                   href={`/ideas/${i.id}`}
-                  class="inline-flex items-center gap-1 text-[var(--color-accent)] hover:underline"
+                  class="inline-flex items-center gap-1 text-[var(--color-brain-tech)] hover:underline"
                 >
                   {i.data.title} <Icon name="arrow-right" size={14} />
                 </a>
@@ -123,7 +136,7 @@ const videoJsonLd = {
     {
       related.length > 0 && (
         <section class="mt-12 border-t border-[var(--color-border)] pt-8">
-          <h2 class="font-display text-xl font-semibold tracking-tight">More videos</h2>
+          <h2 class="font-display text-xl font-bold tracking-tight">More videos</h2>
           <ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((v) => (
               <li>
@@ -136,3 +149,7 @@ const videoJsonLd = {
     }
   </article>
 </BaseLayout>
+
+<style>
+  .video-stripe { height: 4px; width: 100%; }
+</style>

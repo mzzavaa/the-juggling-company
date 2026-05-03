@@ -9,5 +9,6 @@ abstract: "A live-juggling keynote on how teams absorb new work — and the mome
 slidesUrl: "https://example.com/talks/agile-summit-berlin-2025-slides.pdf"
 recordingUrl: "https://example.com/talks/agile-summit-berlin-2025-recording"
 locationSlug: berlin
+pillars: ["change", "brain"]
 upcoming: false
 ---

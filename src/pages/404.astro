@@ -1,39 +1,49 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
+import RGBHero from "@/components/RGBHero.astro";
 ---
 
-<BaseLayout
-  title="Not found"
-  description="That page didn't catch."
-  noindex
->
-  <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-32 text-center md:px-6">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
+<BaseLayout title="Not found" description="That page didn't catch." noindex>
+  <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center md:px-6">
+    <RGBHero size={220} />
+    <p class="mt-6 text-xs font-semibold uppercase tracking-widest text-[var(--color-brain)]">
       404
     </p>
-    <h1 class="mt-3 font-display text-5xl font-semibold tracking-tight">Dropped one.</h1>
+    <h1 class="mt-3 font-display text-5xl font-bold tracking-tight md:text-6xl">
+      <span class="rgb-text">Dropped one.</span>
+    </h1>
     <p class="mt-4 max-w-xl text-lg text-[var(--color-muted)]">
       The page you were looking for isn't here. Recover the rhythm — try the home page, or jump to one of these.
     </p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
       <a
         href="/"
-        class="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-5 py-3 font-medium text-[var(--color-accent-fg)] shadow-md transition hover:bg-[var(--color-accent-hover)]"
+        class="inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-[var(--color-bg)] shadow-lg"
+        style="background: linear-gradient(100deg, var(--color-brain), var(--color-change), var(--color-tech));"
       >
         Home <Icon name="arrow-right" size={16} />
       </a>
       <a
         href="/ideas"
-        class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-3 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-accent)]"
+        class="inline-flex items-center gap-2 rounded-full border px-5 py-3 font-medium text-[var(--color-brain)] transition hover:bg-[var(--color-brain)] hover:text-[var(--color-bg)]"
+        style="border-color: var(--color-brain);"
       >
         Ideas
       </a>
       <a
         href="/videos"
-        class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-3 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-accent)]"
+        class="inline-flex items-center gap-2 rounded-full border px-5 py-3 font-medium text-[var(--color-tech)] transition hover:bg-[var(--color-tech)] hover:text-[var(--color-bg)]"
+        style="border-color: var(--color-tech);"
       >
         Videos
+      </a>
+      <a
+        href="/talks"
+        class="inline-flex items-center gap-2 rounded-full border px-5 py-3 font-medium text-[var(--color-change)] transition hover:bg-[var(--color-change)] hover:text-[var(--color-bg)]"
+        style="border-color: var(--color-change);"
+      >
+        Talks
       </a>
     </div>
   </section>

@@ -1,48 +1,83 @@
 ---
 import { primaryNav, site } from "@/lib/site";
 import Icon from "./Icon.astro";
+import SocialLinks from "./SocialLinks.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isActive = (href: string) =>
   href === "/" ? currentPath === "/" : currentPath === href || currentPath.startsWith(`${href}/`);
+
+const pillarForNav: Record<string, string> = {
+  Ideas: "var(--color-brain)",
+  Videos: "var(--color-tech)",
+  Talks: "var(--color-tech)",
+  Services: "var(--color-brain-change)",
+  Locations: "var(--color-tech-change)",
+  Blog: "var(--color-brain-tech)",
+  About: "var(--color-all)",
+};
 ---
 
 <header
-  class="sticky top-0 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur"
+  class="sticky top-0 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-xl"
 >
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 md:px-6">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-3.5 md:px-6">
     <a
       href="/"
-      class="font-display text-lg font-semibold tracking-tight text-[var(--color-fg)] hover:text-[var(--color-accent)]"
+      class="group inline-flex items-center gap-2.5 font-display text-base font-semibold tracking-tight text-[var(--color-fg)]"
+      aria-label={`${site.name} — home`}
     >
-      {site.name}
+      <span class="logo-dots inline-flex" aria-hidden="true">
+        <span class="logo-dot" style="background: var(--color-brain);"></span>
+        <span class="logo-dot logo-dot--mid" style="background: var(--color-tech);"></span>
+        <span class="logo-dot" style="background: var(--color-change);"></span>
+      </span>
+      <span>The Juggling Co.</span>
     </a>
 
     <nav class="hidden md:block" aria-label="Primary">
       <ul class="flex items-center gap-1">
         {
-          primaryNav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class:list={[
-                  "inline-flex items-center rounded-full px-3 py-2 text-sm transition",
-                  isActive(item.href)
-                    ? "bg-[var(--color-bg-elevated)] text-[var(--color-fg)]"
-                    : "text-[var(--color-muted)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-fg)]",
-                ]}
-                aria-current={isActive(item.href) ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
+          primaryNav.map((item) => {
+            const accent = pillarForNav[item.label] ?? "var(--color-brain-tech)";
+            const active = isActive(item.href);
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    "group relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium transition",
+                    active
+                      ? "text-[var(--color-fg)]"
+                      : "text-[var(--color-muted)] hover:text-[var(--color-fg)]",
+                  ]}
+                  aria-current={active ? "page" : undefined}
+                  style={`--nav-accent: ${accent};`}
+                >
+                  <span
+                    class="absolute inset-x-3 -bottom-px h-0.5 origin-left scale-x-0 transition-transform duration-200 group-hover:scale-x-100"
+                    style="background: var(--nav-accent);"
+                    aria-hidden="true"
+                  ></span>
+                  {active && (
+                    <span
+                      class="absolute inset-x-3 -bottom-px h-0.5"
+                      style="background: var(--nav-accent);"
+                      aria-hidden="true"
+                    />
+                  )}
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </nav>
 
     <div class="flex items-center gap-2">
+      <SocialLinks class="hidden lg:flex" />
       <ThemeToggle />
       <button
         type="button"
@@ -64,26 +99,61 @@ const isActive = (href: string) =>
   >
     <ul class="flex flex-col gap-1">
       {
-        primaryNav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class:list={[
-                "block rounded-md px-3 py-2 text-base transition",
-                isActive(item.href)
-                  ? "bg-[var(--color-bg-elevated)] text-[var(--color-fg)]"
-                  : "text-[var(--color-muted)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-fg)]",
-              ]}
-              aria-current={isActive(item.href) ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))
+        primaryNav.map((item) => {
+          const accent = pillarForNav[item.label] ?? "var(--color-brain-tech)";
+          const active = isActive(item.href);
+          return (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium transition",
+                  active
+                    ? "bg-[var(--color-bg-elevated)] text-[var(--color-fg)]"
+                    : "text-[var(--color-muted)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-fg)]",
+                ]}
+                aria-current={active ? "page" : undefined}
+              >
+                <span
+                  class="inline-block h-2 w-2 rounded-full"
+                  style={`background: ${accent};`}
+                  aria-hidden="true"
+                />
+                {item.label}
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
+    <div class="mt-4 border-t border-[var(--color-border)] pt-4">
+      <SocialLinks variant="icons" />
+    </div>
   </nav>
 </header>
+
+<style>
+  .logo-dots {
+    position: relative;
+    width: 28px;
+    height: 18px;
+  }
+  .logo-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    top: 2px;
+    mix-blend-mode: screen;
+    transition: transform 220ms ease;
+  }
+  .logo-dot:nth-child(1) { left: 0; }
+  .logo-dot--mid { left: 7px; }
+  .logo-dot:nth-child(3) { left: 14px; }
+  a:hover .logo-dot:nth-child(1) { transform: translate(-2px, -1px); }
+  a:hover .logo-dot--mid { transform: translate(0, 1px); }
+  a:hover .logo-dot:nth-child(3) { transform: translate(2px, -1px); }
+</style>
 
 <script>
   document.querySelectorAll<HTMLButtonElement>(".nav-toggle").forEach((btn) => {

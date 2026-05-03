@@ -1,51 +1,75 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
+import SocialLinks from "@/components/SocialLinks.astro";
 import { site } from "@/lib/site";
 
 const mailto = (topic: string) =>
   `mailto:${site.author.email}?subject=${encodeURIComponent("[" + topic + "] inquiry")}`;
+
+const topics: { label: string; accent: string }[] = [
+  { label: "Performance", accent: "var(--color-brain)" },
+  { label: "Workshop", accent: "var(--color-brain-tech)" },
+  { label: "Keynote", accent: "var(--color-tech)" },
+  { label: "Idea Talk", accent: "var(--color-tech-change)" },
+  { label: "Press", accent: "var(--color-brain-change)" },
+  { label: "Other", accent: "var(--color-change)" },
+];
 ---
 
 <BaseLayout
   title="Contact"
   description="Get in touch about a performance, workshop, keynote, or idea talk."
 >
-  <section class="mx-auto max-w-3xl px-4 py-16 md:px-6">
+  <section class="mx-auto max-w-3xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Contact</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight md:text-5xl">
-      Say hello.
+    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
+      <span class="rgb-text">Say hello.</span>
     </h1>
-    <p class="mt-4 text-lg text-[var(--color-muted)]">
+    <p class="mt-5 text-lg text-[var(--color-muted)]">
       Email is the fastest way to reach me. Pick the topic that fits and I'll usually
       reply within two working days.
     </p>
 
     <ul class="mt-10 grid gap-3 md:grid-cols-2">
       {
-        ["Performance", "Workshop", "Keynote", "Idea Talk", "Press", "Other"].map((topic) => (
+        topics.map(({ label, accent }) => (
           <li>
             <a
-              href={mailto(topic)}
-              class="group flex h-full items-center justify-between gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5 transition hover:border-[var(--color-accent)]"
+              href={mailto(label)}
+              class="card group flex h-full items-center justify-between gap-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 transition"
+              style={`--card-accent: ${accent};`}
             >
-              <span class="font-medium text-[var(--color-fg)] group-hover:text-[var(--color-accent)]">
-                {topic}
+              <span class="font-medium text-[var(--color-fg)]">{label}</span>
+              <span style={`color: ${accent};`}>
+                <Icon name="arrow-right" size={16} />
               </span>
-              <Icon name="arrow-right" size={16} />
             </a>
           </li>
         ))
       }
     </ul>
 
-    <div class="mt-10 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6">
+    <div class="mt-10 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6">
       <p class="flex items-center gap-2 text-sm text-[var(--color-muted)]">
         <Icon name="mail" size={16} />
-        <a class="text-[var(--color-accent)] hover:underline" href={`mailto:${site.author.email}`}>
+        <a class="text-[var(--color-brain-tech)] hover:underline" href={`mailto:${site.author.email}`}>
           {site.author.email}
         </a>
       </p>
+      <div class="mt-4">
+        <SocialLinks variant="list" />
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .card { transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease; }
+  .card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
+      0 12px 32px -16px color-mix(in oklab, var(--card-accent) 60%, transparent);
+    transform: translateY(-2px);
+  }
+</style>

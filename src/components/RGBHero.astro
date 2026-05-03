@@ -1,0 +1,85 @@
+---
+/**
+ * Three overlapping circles in additive RGB. Pure SVG, no JS.
+ * Uses mix-blend-mode: screen so the overlapping regions render the actual
+ * additive blends (R+G=Y, R+B=M, G+B=C, all=W) instead of muddy alpha mixing.
+ *
+ * Optional `interactive` adds a soft drift animation; respects prefers-reduced-motion.
+ */
+interface Props {
+  size?: number;
+  interactive?: boolean;
+  class?: string;
+}
+
+const { size = 480, interactive = true, class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 400 400"
+  width={size}
+  height={size}
+  role="img"
+  aria-label="Three overlapping RGB circles representing the Brain, Tech, and Change pillars."
+  class:list={["rgb-hero", className]}
+  data-interactive={interactive ? "true" : undefined}
+>
+  <defs>
+    <radialGradient id="rgbBrain" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff3366" stop-opacity="1" />
+      <stop offset="80%" stop-color="#ff3366" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ff3366" stop-opacity="0.6" />
+    </radialGradient>
+    <radialGradient id="rgbTech" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#33cc66" stop-opacity="1" />
+      <stop offset="80%" stop-color="#33cc66" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#33cc66" stop-opacity="0.6" />
+    </radialGradient>
+    <radialGradient id="rgbChange" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3b6cff" stop-opacity="1" />
+      <stop offset="80%" stop-color="#3b6cff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#3b6cff" stop-opacity="0.6" />
+    </radialGradient>
+  </defs>
+
+  <g style="mix-blend-mode: screen;">
+    <circle class="circle circle-brain" cx="160" cy="150" r="115" fill="url(#rgbBrain)" />
+    <circle class="circle circle-tech" cx="240" cy="150" r="115" fill="url(#rgbTech)" />
+    <circle class="circle circle-change" cx="200" cy="240" r="115" fill="url(#rgbChange)" />
+  </g>
+</svg>
+
+<style>
+  .rgb-hero {
+    display: block;
+    filter: blur(0.5px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .rgb-hero[data-interactive="true"] .circle-brain {
+      animation: drift-brain 14s ease-in-out infinite;
+      transform-origin: 160px 150px;
+    }
+    .rgb-hero[data-interactive="true"] .circle-tech {
+      animation: drift-tech 16s ease-in-out infinite;
+      transform-origin: 240px 150px;
+    }
+    .rgb-hero[data-interactive="true"] .circle-change {
+      animation: drift-change 18s ease-in-out infinite;
+      transform-origin: 200px 240px;
+    }
+  }
+
+  @keyframes drift-brain {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-12px, -8px) scale(1.05); }
+  }
+  @keyframes drift-tech {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(12px, -8px) scale(0.97); }
+  }
+  @keyframes drift-change {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(0, 12px) scale(1.04); }
+  }
+</style>
