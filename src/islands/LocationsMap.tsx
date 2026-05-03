@@ -1,3 +1,4 @@
+import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import type { Map as MapLibreMap, Marker } from "maplibre-gl";
 
@@ -42,7 +43,6 @@ export default function LocationsMap({ locations }: Props) {
 
     (async () => {
       const maplibre = await import("maplibre-gl");
-      await import("maplibre-gl/dist/maplibre-gl.css");
       if (cancelled || !containerRef.current) return;
 
       const map = new maplibre.Map({

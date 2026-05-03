@@ -38,7 +38,7 @@ export const footerNav: readonly NavItem[] = [
   { label: "RSS", href: "/rss.xml" },
 ] as const;
 
-export type SocialIcon = "youtube" | "instagram" | "linkedin" | "x" | "github" | "external-link";
+export type SocialIcon = "youtube" | "instagram" | "tiktok" | "linkedin" | "x" | "github" | "external-link";
 
 export interface SocialLink {
   readonly label: string;
@@ -53,6 +53,12 @@ export const socialLinks: readonly SocialLink[] = [
     href: "https://www.youtube.com/@mrs_lee_g",
     icon: "youtube",
     handle: "@mrs_lee_g",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@mrs_lee_g_",
+    icon: "tiktok",
+    handle: "@mrs_lee_g_",
   },
   {
     label: "Instagram",
