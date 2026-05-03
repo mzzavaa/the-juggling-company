@@ -3,12 +3,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import VideoCard from "@/components/VideoCard.astro";
 import PostCard from "@/components/PostCard.astro";
-import RGBHero from "@/components/RGBHero.astro";
+import JugglingCascade from "@/components/JugglingCascade.astro";
 import {
   getFeaturedVideos,
   getLatestPosts,
   getIdeas,
   getLocations,
+  getTalks,
+  getVideos,
 } from "@/lib/content";
 import { site } from "@/lib/site";
 import {
@@ -19,11 +21,13 @@ import {
   type Pillar,
 } from "@/lib/pillar";
 
-const [featuredVideos, latestPosts, ideas, locations] = await Promise.all([
+const [featuredVideos, latestPosts, ideas, locations, talks, allVideos] = await Promise.all([
   getFeaturedVideos(3),
   getLatestPosts(2),
   getIdeas(),
   getLocations(),
+  getTalks(),
+  getVideos(),
 ]);
 
 const pillarIcons: Record<Pillar, "brain" | "cpu" | "shuffle"> = {
@@ -34,7 +38,7 @@ const pillarIcons: Record<Pillar, "brain" | "cpu" | "shuffle"> = {
 
 const pillarSummaries: Record<Pillar, string> = {
   brain:
-    "What juggling does to grey matter, focus, and the way we learn — backed by neuroscience, not folklore.",
+    "What juggling does to grey matter, focus, and the way humans learn — backed by neuroscience, not folklore.",
   tech:
     "Cloud architecture, AWS systems, and AI patterns — read through a juggler's lens of incremental load and recovery.",
   change:
@@ -42,6 +46,14 @@ const pillarSummaries: Record<Pillar, string> = {
 };
 
 const ideasByPillar = (p: Pillar) => ideas.find((i) => i.data.pillars.includes(p));
+
+// Numeric stats — derived from real collection counts, never hardcoded.
+const stats = [
+  { label: "Essays", value: ideas.length, color: "var(--color-brain)" },
+  { label: "Talks", value: talks.upcoming.length + talks.past.length, color: "var(--color-tech)" },
+  { label: "Videos", value: allVideos.length, color: "var(--color-change)" },
+  { label: "Locations", value: locations.length, color: "var(--color-tech-change)" },
+];
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -61,108 +73,156 @@ const personJsonLd = {
 ---
 
 <BaseLayout jsonLd={personJsonLd}>
-  <section class="relative overflow-hidden">
+  <!-- HERO: asymmetric, juggling-cascade-driven -->
+  <section class="hero relative overflow-hidden">
     <div class="absolute inset-0 -z-10" aria-hidden="true">
       <div
-        class="blob-brain absolute -left-32 top-0 h-[28rem] w-[28rem] rounded-full opacity-30 blur-3xl"
+        class="blob-brain absolute -left-32 top-0 h-[28rem] w-[28rem] rounded-full opacity-40 blur-3xl"
         style="background: var(--color-brain);"
       ></div>
       <div
-        class="blob-tech absolute right-0 top-20 h-[24rem] w-[24rem] rounded-full opacity-30 blur-3xl"
+        class="blob-tech absolute right-0 top-32 h-[26rem] w-[26rem] rounded-full opacity-35 blur-3xl"
         style="background: var(--color-tech);"
       ></div>
       <div
-        class="blob-change absolute bottom-0 left-1/3 h-[28rem] w-[28rem] rounded-full opacity-30 blur-3xl"
+        class="blob-change absolute bottom-0 left-1/3 h-[30rem] w-[30rem] rounded-full opacity-40 blur-3xl"
         style="background: var(--color-change);"
       ></div>
     </div>
 
-    <div class="mx-auto grid max-w-6xl gap-12 px-4 py-20 md:py-28 md:px-6 lg:grid-cols-[1fr_auto] lg:items-center">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:py-20 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center">
       <div>
-        <p class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/70 px-3 py-1 text-xs font-medium uppercase tracking-widest text-[var(--color-muted)] backdrop-blur">
-          <span class="inline-block h-1.5 w-1.5 rounded-full" style="background: var(--color-brain);"></span>
-          <span class="inline-block h-1.5 w-1.5 rounded-full" style="background: var(--color-tech);"></span>
-          <span class="inline-block h-1.5 w-1.5 rounded-full" style="background: var(--color-change);"></span>
+        <p
+          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/80 px-3 py-1 text-xs font-medium uppercase tracking-widest text-[var(--color-fg)] backdrop-blur"
+        >
+          <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-brain);"></span>
+          <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-tech);"></span>
+          <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-change);"></span>
           AWS Hero · Juggler · @mrs_lee_g
         </p>
 
-        <h1 class="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl">
-          <span style="color: var(--color-brain);">Brain.</span>
-          <span style="color: var(--color-tech);">Tech.</span>
-          <span style="color: var(--color-change);">Change.</span>
+        <h1 class="mt-6 font-display text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
+          <span class="block" style="color: var(--color-brain);">Brain.</span>
+          <span class="block ml-[5%]" style="color: var(--color-tech);">Tech.</span>
+          <span class="block ml-[10%]" style="color: var(--color-change);">Change.</span>
         </h1>
 
-        <p class="mt-6 max-w-xl text-lg text-[var(--color-muted)] md:text-xl">
-          Three pillars, mixing like light. {site.author.name} on the patterns underneath cloud systems, cognitive science, and leading change — taught from a stage with three balls in the air.
+        <p class="mt-8 max-w-md text-lg text-[var(--color-fg)] md:text-xl">
+          Three pillars, mixing like light. <strong>{site.author.name}</strong> on the patterns
+          underneath cloud systems, cognitive science, and leading change — taught from a stage
+          with three balls in the air.
         </p>
 
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="mt-10 flex flex-wrap gap-3">
           <a
             href="/ideas"
-            class="group inline-flex items-center gap-2 rounded-full px-5 py-3 font-semibold text-[var(--color-bg)] shadow-lg transition hover:shadow-xl"
-            style="background: linear-gradient(100deg, var(--color-brain), var(--color-brain-change), var(--color-change), var(--color-tech-change), var(--color-tech)); background-size: 200% auto;"
+            class="group inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold text-[var(--color-bg)] shadow-xl transition hover:shadow-2xl"
+            style="background: linear-gradient(100deg, var(--color-brain), var(--color-brain-change), var(--color-change), var(--color-tech-change), var(--color-tech)); background-size: 220% auto;"
           >
             Read the Ideas
-            <Icon name="arrow-right" size={16} />
+            <Icon name="arrow-right" size={18} />
           </a>
           <a
             href="/contact"
-            class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-5 py-3 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-brain-tech)] hover:text-[var(--color-brain-tech)]"
+            class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-6 py-3.5 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-brain-tech)] hover:text-[var(--color-brain-tech)]"
           >
             <Icon name="mail" size={16} />
-            Book me for an event
+            Book me
           </a>
         </div>
       </div>
 
-      <div class="hidden justify-center lg:flex">
-        <RGBHero size={420} />
+      <!-- Cascade animation, visible from md and up -->
+      <div class="hidden md:flex md:items-center md:justify-center">
+        <JugglingCascade size={460} />
       </div>
     </div>
   </section>
 
-  <!-- Three pillar cards -->
-  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-      Three pillars
-    </p>
-    <h2 class="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">
-      The work lives at the overlap.
-    </h2>
-    <p class="mt-3 max-w-2xl text-[var(--color-muted)]">
-      Like additive light: each pillar is its own colour, but the most interesting work happens
-      where two or three combine.
-    </p>
-
-    <ul class="mt-10 grid gap-6 md:grid-cols-3">
+  <!-- STATS STRIP: real counts from collections -->
+  <section
+    class="border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]/50 backdrop-blur"
+  >
+    <ul class="mx-auto grid max-w-6xl grid-cols-2 gap-px md:grid-cols-4">
       {
-        PILLARS.map((p) => {
+        stats.map((s) => (
+          <li
+            class="group relative flex flex-col items-start gap-1 px-6 py-7 transition"
+            style={`--stat-color: ${s.color};`}
+          >
+            <span
+              class="font-display text-5xl font-bold tracking-tight transition group-hover:text-[var(--stat-color)]"
+            >
+              {s.value}
+            </span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+              {s.label}
+            </span>
+            <span
+              class="absolute inset-x-6 bottom-0 h-0.5 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+              style="background: var(--stat-color);"
+              aria-hidden="true"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- THREE PILLARS — bold, oversized cards -->
+  <section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
+    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+          Three pillars
+        </p>
+        <h2 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          The work lives at the<br /><span class="rgb-text">overlap.</span>
+        </h2>
+      </div>
+      <p class="max-w-md text-[var(--color-muted)]">
+        Like additive light: each pillar is its own colour. The most interesting work happens
+        where two or three combine.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid gap-6 md:grid-cols-3">
+      {
+        PILLARS.map((p, i) => {
           const idea = ideasByPillar(p);
+          // Stagger the cards vertically for asymmetry.
+          const offset = i === 0 ? "" : i === 1 ? "md:translate-y-6" : "md:translate-y-12";
           return (
-            <li>
+            <li class={offset}>
               <a
                 href={idea ? `/ideas/${idea.id}` : "/ideas"}
-                class="pillar-card group flex h-full flex-col gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-7 transition"
+                class="pillar-card group flex h-full flex-col gap-5 rounded-3xl border-2 p-7 transition"
                 data-pillar={p}
-                style={`--pillar-color: ${PILLAR_HEX[p]}; --pillar-glow: 0 0 0 1px ${PILLAR_HEX[p]}55, 0 16px 48px -16px ${PILLAR_HEX[p]}99;`}
+                style={`border-color: ${PILLAR_HEX[p]}55; background: linear-gradient(145deg, color-mix(in oklab, ${PILLAR_HEX[p]} 14%, var(--color-bg-card)), var(--color-bg-card)); --pillar-color: ${PILLAR_HEX[p]}; --pillar-glow: 0 0 0 2px ${PILLAR_HEX[p]}, 0 24px 64px -16px ${PILLAR_HEX[p]}aa;`}
               >
                 <span
-                  class="inline-flex h-12 w-12 items-center justify-center rounded-xl"
-                  style={`background: color-mix(in oklab, ${PILLAR_HEX[p]} 18%, transparent); color: ${PILLAR_HEX[p]};`}
+                  class="inline-flex h-14 w-14 items-center justify-center rounded-2xl"
+                  style={`background: ${PILLAR_HEX[p]}; color: #0a0a12;`}
                 >
-                  <Icon name={pillarIcons[p]} size={24} />
+                  <Icon name={pillarIcons[p]} size={28} />
                 </span>
                 <div>
-                  <p class="text-xs font-semibold uppercase tracking-widest" style={`color: ${PILLAR_HEX[p]};`}>
+                  <p
+                    class="text-xs font-bold uppercase tracking-widest"
+                    style={`color: ${PILLAR_HEX[p]};`}
+                  >
                     {PILLAR_LABEL[p]}
                   </p>
-                  <h3 class="mt-1 font-display text-2xl font-bold tracking-tight text-[var(--color-fg)]">
+                  <h3 class="mt-1 font-display text-3xl font-bold leading-tight tracking-tight text-[var(--color-fg)]">
                     {PILLAR_FULL_LABEL[p].replace("Juggling and ", "").replace("Your ", "")}
                   </h3>
                 </div>
-                <p class="text-sm text-[var(--color-muted)]">{pillarSummaries[p]}</p>
+                <p class="text-[var(--color-muted)]">{pillarSummaries[p]}</p>
                 {idea && (
-                  <span class="mt-auto inline-flex items-center gap-1 text-sm font-medium" style={`color: ${PILLAR_HEX[p]};`}>
+                  <span
+                    class="mt-auto inline-flex items-center gap-1 text-sm font-semibold"
+                    style={`color: ${PILLAR_HEX[p]};`}
+                  >
                     Read the essay <Icon name="arrow-right" size={14} />
                   </span>
                 )}
@@ -172,6 +232,27 @@ const personJsonLd = {
         })
       }
     </ul>
+
+    <!-- Tiny additive-mixing legend -->
+    <div
+      class="mt-12 grid gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+        Additive blends
+      </p>
+      <div class="flex items-center gap-2 text-sm">
+        <span class="legend-swatch" style="background: var(--color-brain-tech);"></span>
+        <span><strong style="color: var(--color-brain-tech);">Brain × Tech</strong> = AI &amp; cognition</span>
+      </div>
+      <div class="flex items-center gap-2 text-sm">
+        <span class="legend-swatch" style="background: var(--color-brain-change);"></span>
+        <span><strong style="color: var(--color-brain-change);">Brain × Change</strong> = workshops</span>
+      </div>
+      <div class="flex items-center gap-2 text-sm">
+        <span class="legend-swatch" style="background: var(--color-tech-change);"></span>
+        <span><strong style="color: var(--color-tech-change);">Tech × Change</strong> = leadership</span>
+      </div>
+    </div>
   </section>
 
   {
@@ -182,11 +263,11 @@ const personJsonLd = {
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
               Latest videos
             </p>
-            <h2 class="mt-1 font-display text-3xl font-bold tracking-tight">From the channel</h2>
+            <h2 class="mt-1 font-display text-4xl font-bold tracking-tight">From the channel</h2>
           </div>
           <a
             href="/videos"
-            class="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-brain-tech)] hover:underline"
+            class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brain-tech)] hover:underline"
           >
             All videos <Icon name="arrow-right" size={14} />
           </a>
@@ -210,11 +291,11 @@ const personJsonLd = {
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
               From the blog
             </p>
-            <h2 class="mt-1 font-display text-3xl font-bold tracking-tight">Read</h2>
+            <h2 class="mt-1 font-display text-4xl font-bold tracking-tight">Read</h2>
           </div>
           <a
             href="/blog"
-            class="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-brain-tech)] hover:underline"
+            class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brain-tech)] hover:underline"
           >
             All posts <Icon name="arrow-right" size={14} />
           </a>
@@ -230,33 +311,41 @@ const personJsonLd = {
     )
   }
 
+  <!-- LOCATIONS CTA: punchier -->
   <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
-    <div class="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+    <div
+      class="locations-cta relative overflow-hidden rounded-3xl border-2 border-[var(--color-tech-change)] bg-[var(--color-bg-card)] p-1"
+    >
       <div class="grid gap-0 md:grid-cols-2">
         <div class="p-8 md:p-12">
           <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-tech-change)]">
             Where I am
           </p>
-          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight">
-            Past stages, future dates.
+          <h2 class="mt-2 font-display text-4xl font-bold tracking-tight">
+            Past stages,<br />future dates.
           </h2>
           <p class="mt-3 max-w-md text-[var(--color-muted)]">
-            {locations.length} {locations.length === 1 ? "location" : "locations"} on the map — performances I've done and places I'm available next.
+            <span class="font-semibold text-[var(--color-fg)]">{locations.length}</span>{" "}
+            {locations.length === 1 ? "location" : "locations"} on the map — performances I've
+            done and places I'm available next.
           </p>
           <a
             href="/locations"
-            class="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-tech-change)] px-5 py-3 font-medium text-[var(--color-tech-change)] transition hover:bg-[var(--color-tech-change)] hover:text-[var(--color-bg)]"
+            class="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--color-tech-change)] px-5 py-3 font-semibold text-[var(--color-bg)] transition hover:opacity-90"
           >
             <Icon name="map-pin" size={16} />
             Open the map
           </a>
         </div>
-        <div class="relative flex min-h-[240px] items-center justify-center overflow-hidden">
-          <div
-            class="absolute inset-0"
-            style="background: radial-gradient(ellipse at center, rgb(51 204 255 / 0.25), transparent 60%), radial-gradient(ellipse at 30% 70%, rgb(204 51 255 / 0.18), transparent 60%);"
-          ></div>
-          <Icon name="map-pin" size={120} class="relative text-[var(--color-tech-change)] opacity-80" />
+        <div
+          class="relative flex min-h-[280px] items-center justify-center overflow-hidden"
+          style="background: radial-gradient(ellipse at 60% 50%, rgb(51 204 255 / 0.35), transparent 65%), radial-gradient(ellipse at 30% 80%, rgb(204 51 255 / 0.25), transparent 60%), radial-gradient(ellipse at 80% 20%, rgb(255 204 51 / 0.20), transparent 60%);"
+        >
+          <Icon
+            name="map-pin"
+            size={140}
+            class="text-[var(--color-tech-change)] drop-shadow-[0_0_24px_rgba(51,204,255,0.6)]"
+          />
         </div>
       </div>
     </div>
@@ -266,10 +355,17 @@ const personJsonLd = {
 <style>
   .pillar-card:hover {
     box-shadow: var(--pillar-glow);
-    border-color: var(--pillar-color);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
   }
   .pillar-card {
-    transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
+    transition: box-shadow 220ms ease, transform 220ms ease;
+  }
+
+  .legend-swatch {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    flex-shrink: 0;
   }
 </style>

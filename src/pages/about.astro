@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import RGBHero from "@/components/RGBHero.astro";
+import JugglingCascade from "@/components/JugglingCascade.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
 import { site } from "@/lib/site";
 ---
@@ -90,9 +90,14 @@ import { site } from "@/lib/site";
         </ul>
 
         <div
-          class="not-prose mt-10 flex justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8"
+          class="not-prose relative mt-10 flex justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4"
         >
-          <RGBHero size={280} />
+          <div
+            class="absolute inset-0 -z-10"
+            aria-hidden="true"
+            style="background: radial-gradient(ellipse at 30% 30%, rgb(255 51 102 / 0.18), transparent 60%), radial-gradient(ellipse at 70% 30%, rgb(51 204 102 / 0.16), transparent 60%), radial-gradient(ellipse at 50% 80%, rgb(59 108 255 / 0.18), transparent 60%);"
+          ></div>
+          <JugglingCascade size={320} />
         </div>
       </div>
     </div>

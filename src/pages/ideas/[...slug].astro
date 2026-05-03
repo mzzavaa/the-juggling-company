@@ -6,7 +6,7 @@ import PillarBadge from "@/components/PillarBadge.astro";
 import VideoCard from "@/components/VideoCard.astro";
 import { formatDate, readingTimeMinutes } from "@/lib/format";
 import { getIdeas, getVideos } from "@/lib/content";
-import { blendKey, PILLAR_HEX } from "@/lib/pillar";
+import { blendKey, PILLAR_HEX, PILLAR_LABEL_KEYED } from "@/lib/pillar";
 
 export async function getStaticPaths() {
   const ideas = await getIdeas();
@@ -37,6 +37,7 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 
 const pKey = blendKey(idea.data.pillars);
 const accentHex = PILLAR_HEX[pKey];
+const pLabel = PILLAR_LABEL_KEYED[pKey];
 
 const articleJsonLd = {
   "@context": "https://schema.org",
@@ -56,24 +57,53 @@ const articleJsonLd = {
   publishedAt={idea.data.updatedAt}
   jsonLd={articleJsonLd}
 >
-  <div class="essay-stripe" style={`background: ${accentHex};`} aria-hidden="true"></div>
+  <!-- Big pillar-coloured hero band -->
+  <header
+    class="essay-hero relative overflow-hidden"
+    style={`--accent: ${accentHex};`}
+  >
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div
+        class="absolute -left-20 top-0 h-[24rem] w-[24rem] rounded-full opacity-50 blur-3xl"
+        style={`background: ${accentHex};`}
+      ></div>
+      <div
+        class="absolute -right-20 bottom-0 h-[20rem] w-[20rem] rounded-full opacity-30 blur-3xl"
+        style={`background: ${accentHex};`}
+      ></div>
+    </div>
+    <div class="mx-auto max-w-4xl px-4 py-16 md:py-20 md:px-6">
+      <p class="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-widest">
+        <a
+          href="/ideas"
+          class="text-[var(--color-muted)] transition hover:text-[var(--color-fg)]"
+        >
+          Ideas
+        </a>
+        <span class="text-[var(--color-muted)]">·</span>
+        <span style={`color: ${accentHex};`}>{pLabel}</span>
+        <span class="text-[var(--color-muted)]">·</span>
+        <span class="text-[var(--color-muted)]">{readingMinutes} min read</span>
+        <span class="text-[var(--color-muted)]">·</span>
+        <span class="text-[var(--color-muted)]">Updated {formatDate(idea.data.updatedAt)}</span>
+      </p>
+      <h1
+        class="mt-5 font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl"
+      >
+        {idea.data.title}
+      </h1>
+      <p class="mt-6 max-w-2xl text-xl text-[var(--color-fg)]">{idea.data.summary}</p>
+      <div class="mt-6">
+        <PillarBadge pillars={idea.data.pillars} variant="solid" size="md" />
+      </div>
+    </div>
+  </header>
 
   <article
     class="mx-auto grid max-w-6xl gap-12 px-4 py-12 md:px-6 lg:grid-cols-[1fr_18rem]"
     data-pillar={pKey}
   >
     <div class="prose">
-      <p class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-        <a href="/ideas" class="hover:text-[var(--color-fg)]">Ideas</a>
-        <span>·</span>
-        <span>{readingMinutes} min read</span>
-        <span>·</span>
-        <span>Updated {formatDate(idea.data.updatedAt)}</span>
-        <PillarBadge pillars={idea.data.pillars} variant="solid" />
-      </p>
-      <h1>{idea.data.title}</h1>
-      <p class="text-lg text-[var(--color-muted)]">{idea.data.summary}</p>
-      <hr />
       <Content />
 
       {
@@ -129,9 +159,12 @@ const articleJsonLd = {
     {
       tocHeadings.length > 0 && (
         <aside class="hidden lg:block">
-          <div class="sticky top-24 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5">
+          <div
+            class="sticky top-24 rounded-xl border-2 bg-[var(--color-bg-elevated)] p-5"
+            style={`border-color: ${accentHex}55;`}
+          >
             <p
-              class="text-xs font-semibold uppercase tracking-widest"
+              class="text-xs font-bold uppercase tracking-widest"
               style={`color: ${accentHex};`}
             >
               On this page
@@ -156,8 +189,7 @@ const articleJsonLd = {
 </BaseLayout>
 
 <style>
-  .essay-stripe {
-    height: 4px;
-    width: 100%;
+  .essay-hero {
+    border-bottom: 4px solid var(--accent);
   }
 </style>

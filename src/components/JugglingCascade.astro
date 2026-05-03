@@ -1,0 +1,116 @@
+---
+/**
+ * Three balls tracing an actual three-ball cascade. Each ball follows the same
+ * teardrop arc, offset by 120° in phase. Uses SVG <animateMotion> along a path
+ * for accurate motion (not a parabola — a real cascade is asymmetric).
+ *
+ * Colours are the three pillar primaries; mix-blend-mode: screen produces
+ * additive RGB blends at the apex crossings (R+G=Y, R+B=M, G+B=C).
+ */
+
+interface Props {
+  size?: number;
+  /** Pause animation (e.g. for screenshots, or when prefers-reduced-motion). */
+  pause?: boolean;
+  class?: string;
+}
+
+const { size = 480, pause = false, class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 400 400"
+  width={size}
+  height={size}
+  role="img"
+  aria-label="Three juggling balls in cascade — Brain (red), Tech (green), Change (blue) — overlapping additively at the apex."
+  class:list={["cascade", className]}
+  data-pause={pause ? "true" : undefined}
+>
+  <defs>
+    <!--
+      The cascade arc. Starts at the right hand (270, 290), arcs up and across
+      to the left side (130, 180) at apex, comes down to the left hand (130, 290),
+      then crosses back under to the right hand. One ball completes this loop;
+      the other two are the same path with phase offsets.
+    -->
+    <path
+      id="cascadeArc"
+      d="M 270,290 Q 200,80 130,290 Q 200,260 270,290"
+      fill="none"
+    />
+
+    <radialGradient id="ballRed" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#ff7799" />
+      <stop offset="60%" stop-color="#ff3366" />
+      <stop offset="100%" stop-color="#cc0033" />
+    </radialGradient>
+    <radialGradient id="ballGreen" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#7fdf99" />
+      <stop offset="60%" stop-color="#33cc66" />
+      <stop offset="100%" stop-color="#0a8033" />
+    </radialGradient>
+    <radialGradient id="ballBlue" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#7fa3ff" />
+      <stop offset="60%" stop-color="#3b6cff" />
+      <stop offset="100%" stop-color="#0033cc" />
+    </radialGradient>
+
+    <!-- Ambient glow filters so balls feel like light, not paint. -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!--
+    Faint trace of the cascade arc — gives the eye a hint of the trajectory
+    without overpowering the balls.
+  -->
+  <use
+    href="#cascadeArc"
+    stroke="rgba(255,255,255,0.08)"
+    stroke-width="1.5"
+    stroke-dasharray="2 6"
+    fill="none"
+  />
+
+  <!-- Three balls, screen-blended so apex overlaps render as additive colour. -->
+  <g style="mix-blend-mode: screen;" filter="url(#glow)">
+    <circle r="22" fill="url(#ballRed)">
+      <animateMotion dur="4s" repeatCount="indefinite" rotate="0">
+        <mpath href="#cascadeArc" />
+      </animateMotion>
+    </circle>
+    <circle r="22" fill="url(#ballGreen)">
+      <animateMotion dur="4s" begin="-1.33s" repeatCount="indefinite" rotate="0">
+        <mpath href="#cascadeArc" />
+      </animateMotion>
+    </circle>
+    <circle r="22" fill="url(#ballBlue)">
+      <animateMotion dur="4s" begin="-2.66s" repeatCount="indefinite" rotate="0">
+        <mpath href="#cascadeArc" />
+      </animateMotion>
+    </circle>
+  </g>
+</svg>
+
+<style>
+  .cascade {
+    display: block;
+  }
+
+  /* Respect reduced-motion: pause the SVG animation entirely. */
+  @media (prefers-reduced-motion: reduce) {
+    .cascade animateMotion {
+      display: none;
+    }
+  }
+
+  .cascade[data-pause="true"] animateMotion {
+    display: none;
+  }
+</style>

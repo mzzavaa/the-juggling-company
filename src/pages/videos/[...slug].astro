@@ -8,7 +8,7 @@ import PillarBadge from "@/components/PillarBadge.astro";
 import Icon from "@/components/Icon.astro";
 import { formatDate, formatDuration } from "@/lib/format";
 import { getVideos, getIdeas } from "@/lib/content";
-import { blendKey, PILLAR_HEX } from "@/lib/pillar";
+import { blendKey, PILLAR_HEX, PILLAR_LABEL_KEYED } from "@/lib/pillar";
 
 export async function getStaticPaths() {
   const videos = await getVideos();
@@ -31,7 +31,9 @@ const related = allVideos
 
 const linkedIdeas = allIdeas.filter((i) => video.data.ideaSlugs.some((ref) => ref.id === i.id));
 
-const accentHex = video.data.pillars.length > 0 ? PILLAR_HEX[blendKey(video.data.pillars)] : "#9696b0";
+const pKey = video.data.pillars.length > 0 ? blendKey(video.data.pillars) : "all";
+const accentHex = PILLAR_HEX[pKey];
+const pLabel = PILLAR_LABEL_KEYED[pKey];
 
 const videoJsonLd = {
   "@context": "https://schema.org",
@@ -53,22 +55,36 @@ const videoJsonLd = {
   description={video.data.description || video.data.title}
   jsonLd={videoJsonLd}
 >
-  <div class="video-stripe" style={`background: ${accentHex};`} aria-hidden="true"></div>
+  <header class="video-hero relative overflow-hidden" style={`--accent: ${accentHex};`}>
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div
+        class="absolute -left-20 top-0 h-[20rem] w-[20rem] rounded-full opacity-40 blur-3xl"
+        style={`background: ${accentHex};`}
+      ></div>
+    </div>
+    <div class="mx-auto max-w-4xl px-4 py-14 md:px-6">
+      <p class="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--color-muted)]">
+        <a href="/videos" class="transition hover:text-[var(--color-fg)]">Videos</a>
+        <span>·</span>
+        <span style={`color: ${accentHex};`}>{pLabel}</span>
+        <span>·</span>
+        <span>{formatDate(video.data.publishedAt)}</span>
+        <span>·</span>
+        <span>{formatDuration(video.data.durationSec)}</span>
+      </p>
+      <h1 class="mt-4 font-display text-3xl font-bold tracking-tight md:text-5xl">
+        {video.data.title}
+      </h1>
+      {video.data.pillars.length > 0 && (
+        <div class="mt-5">
+          <PillarBadge pillars={video.data.pillars} variant="solid" size="md" />
+        </div>
+      )}
+    </div>
+  </header>
 
   <article class="mx-auto max-w-4xl px-4 py-12 md:px-6">
-    <p class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-      <a href="/videos" class="hover:text-[var(--color-fg)]">Videos</a>
-      <span>·</span>
-      <span>{formatDate(video.data.publishedAt)}</span>
-      <span>·</span>
-      <span>{formatDuration(video.data.durationSec)}</span>
-      {video.data.pillars.length > 0 && <PillarBadge pillars={video.data.pillars} variant="solid" />}
-    </p>
-    <h1 class="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
-      {video.data.title}
-    </h1>
-
-    <div class="mt-8">
+    <div>
       {
         video.data.source === "youtube" ? (
           <YouTubeEmbed videoId={video.data.externalId} title={video.data.title} />
@@ -151,5 +167,7 @@ const videoJsonLd = {
 </BaseLayout>
 
 <style>
-  .video-stripe { height: 4px; width: 100%; }
+  .video-hero {
+    border-bottom: 4px solid var(--accent);
+  }
 </style>

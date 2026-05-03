@@ -37,17 +37,31 @@ const articleJsonLd = {
   publishedAt={post.data.date}
   jsonLd={articleJsonLd}
 >
-  <div class="post-stripe" style={`background: ${accentHex};`} aria-hidden="true"></div>
+  <header
+    class="post-hero relative overflow-hidden"
+    style={`--accent: ${accentHex};`}
+  >
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div
+        class="absolute -left-20 top-0 h-[20rem] w-[20rem] rounded-full opacity-40 blur-3xl"
+        style={`background: ${accentHex};`}
+      ></div>
+    </div>
+    <div class="mx-auto max-w-3xl px-4 py-14 md:px-6">
+      <p class="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--color-muted)]">
+        <a href="/blog" class="transition hover:text-[var(--color-fg)]">Blog</a>
+        <span>·</span>
+        <span>{formatDate(post.data.date)}</span>
+        <span>·</span>
+        <span>{readingMinutes} min read</span>
+        {post.data.pillars.length > 0 && <PillarBadge pillars={post.data.pillars} variant="solid" />}
+      </p>
+      <h1 class="mt-4 font-display text-4xl font-bold tracking-tight md:text-5xl">{post.data.title}</h1>
+      <p class="mt-3 text-lg text-[var(--color-muted)]">{post.data.summary}</p>
+    </div>
+  </header>
 
   <article class="mx-auto max-w-3xl px-4 py-12 md:px-6" data-pillar={pKey}>
-    <p class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-      <a href="/blog" class="hover:text-[var(--color-fg)]">Blog</a>
-      <span>·</span>
-      <span>{formatDate(post.data.date)}</span>
-      <span>·</span>
-      <span>{readingMinutes} min read</span>
-      {post.data.pillars.length > 0 && <PillarBadge pillars={post.data.pillars} variant="solid" />}
-    </p>
     {
       post.data.cover && (
         <Image
@@ -55,18 +69,18 @@ const articleJsonLd = {
           alt={post.data.coverAlt ?? ""}
           width={1280}
           height={720}
-          class="my-8 aspect-[16/9] w-full rounded-xl object-cover"
+          class="mb-8 aspect-[16/9] w-full rounded-xl object-cover"
         />
       )
     }
-    <h1 class="mt-4 font-display text-4xl font-bold tracking-tight">{post.data.title}</h1>
-    <p class="mt-3 text-lg text-[var(--color-muted)]">{post.data.summary}</p>
-    <div class="prose mt-8">
+    <div class="prose">
       <Content />
     </div>
   </article>
 </BaseLayout>
 
 <style>
-  .post-stripe { height: 4px; width: 100%; }
+  .post-hero {
+    border-bottom: 4px solid var(--accent);
+  }
 </style>
