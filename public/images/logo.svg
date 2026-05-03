@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 130" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Cascade juggling diagram: three-ball cascade trajectory with throw/catch positions -->
+  <path stroke-width="4"
+    d="M 70 65
+       C 56 50 34 32 20 40
+       C 6 48 10 70 34 70
+       C 54 70 64 65 70 65
+       C 80 65 114 50 154 34
+       C 188 20 238 22 244 52
+       C 250 82 230 104 192 102
+       C 155 100 124 86 106 74
+       C 96 66 100 57 120 56
+       C 148 54 210 64 244 56"
+  />
+  <!-- Ball 1: upper right throw position -->
+  <rect x="146" y="26" width="16" height="16" stroke-width="2"/>
+  <circle cx="154" cy="34" r="6.5" fill="currentColor" stroke="none"/>
+  <!-- Ball 2: center catch/throw position -->
+  <rect x="98"  y="66" width="16" height="16" stroke-width="2"/>
+  <circle cx="106" cy="74" r="6.5" fill="currentColor" stroke="none"/>
+  <!-- Ball 3: lower right catch position -->
+  <rect x="128" y="82" width="16" height="16" stroke-width="2"/>
+  <circle cx="136" cy="90" r="6.5" fill="currentColor" stroke="none"/>
+</svg>

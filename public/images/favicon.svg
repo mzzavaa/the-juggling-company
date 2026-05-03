@@ -1,1 +1,20 @@
-<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><rect width="22" height="22" rx="1" fill="#fff"/><path d="M2 11.795V4l6.75 3.897v2.599l-4.5-2.599v5.197L2 11.794Z" fill="#00B0FF"/><path d="M8.75 7.897 15.501 4v7.795l-4.5 2.598-2.25-1.299 4.5-2.598V7.897l-4.5 2.599V7.897Z" fill="#0081CB"/><path d="M8.75 13.094v2.599l4.5 2.598v-2.598l-4.5-2.599Z" fill="#00B0FF"/><path d="m13.25 18.29 6.751-3.897V9.197l-2.25 1.299v2.598l-4.5 2.598v2.599Zm4.5-10.393V5.3L20.002 4v2.598l-2.25 1.3Z" fill="#0081CB"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke-width="1.8"
+    d="M 9 16
+       C 7 13 4 8 2 10
+       C 0 12 1 17 5 17
+       C 7 17 8 16 9 16
+       C 10 16 14 13 19 9
+       C 23 6 30 6 30 13
+       C 30 20 25 24 20 24
+       C 15 24 12 20 12 18
+       C 11 16 12 14 14 14
+       C 18 14 27 16 30 14"
+  />
+  <rect x="16" y="5"  width="6" height="6" stroke-width="1.2"/>
+  <circle cx="19" cy="8"  r="2.2" fill="currentColor" stroke="none"/>
+  <rect x="9"  y="14" width="6" height="6" stroke-width="1.2"/>
+  <circle cx="12" cy="17" r="2.2" fill="currentColor" stroke="none"/>
+  <rect x="14" y="19" width="6" height="6" stroke-width="1.2"/>
+  <circle cx="17" cy="22" r="2.2" fill="currentColor" stroke="none"/>
+</svg>
