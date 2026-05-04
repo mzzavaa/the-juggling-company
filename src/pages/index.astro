@@ -9,8 +9,6 @@ import {
   getLatestPosts,
   getIdeas,
   getLocations,
-  getTalks,
-  getVideos,
 } from "@/lib/content";
 import { site } from "@/lib/site";
 import {
@@ -21,13 +19,11 @@ import {
   type Pillar,
 } from "@/lib/pillar";
 
-const [featuredVideos, latestPosts, ideas, locations, talks, allVideos] = await Promise.all([
+const [featuredVideos, latestPosts, ideas, locations] = await Promise.all([
   getFeaturedVideos(3),
   getLatestPosts(2),
   getIdeas(),
   getLocations(),
-  getTalks(),
-  getVideos(),
 ]);
 
 const pillarIcons: Record<Pillar, "brain" | "cpu" | "shuffle"> = {
@@ -47,12 +43,6 @@ const pillarSummaries: Record<Pillar, string> = {
 
 const ideasByPillar = (p: Pillar) => ideas.find((i) => i.data.pillars.includes(p));
 
-const stats = [
-  { label: "Essays", value: ideas.length, color: "var(--color-brain)" },
-  { label: "Talks", value: talks.upcoming.length + talks.past.length, color: "var(--color-tech)" },
-  { label: "Videos", value: allVideos.length, color: "var(--color-change)" },
-  { label: "Locations", value: locations.length, color: "var(--color-tech-change)" },
-];
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -139,35 +129,6 @@ const personJsonLd = {
     </div>
   </section>
 
-  <!-- STATS STRIP -->
-  <section
-    class="border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]/50 backdrop-blur"
-  >
-    <ul class="mx-auto grid max-w-6xl grid-cols-2 gap-px md:grid-cols-4">
-      {
-        stats.map((s) => (
-          <li
-            class="group relative flex flex-col items-start gap-1 px-6 py-7 transition"
-            style={`--stat-color: ${s.color};`}
-          >
-            <span
-              class="font-display text-5xl font-bold tracking-tight transition group-hover:text-[var(--stat-color)]"
-            >
-              {s.value}
-            </span>
-            <span class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-              {s.label}
-            </span>
-            <span
-              class="absolute inset-x-6 bottom-0 h-0.5 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-              style="background: var(--stat-color);"
-              aria-hidden="true"
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </section>
 
   <!-- NO PREREQUISITES: the mission -->
   <section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
