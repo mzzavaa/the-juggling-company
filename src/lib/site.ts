@@ -1,13 +1,9 @@
-/**
- * Single source of truth for branding strings, nav, and social links.
- * Keep dynamic content (counts, lists) out of here - derive from collections at build time.
- */
-
 export const site = {
-  name: "The Juggling Company",
-  tagline: "Brain. Tech. Change.",
+  name: "theJugglingCompany.com",
+  nameShort: "theJugglingCompany",
+  tagline: "Everyone juggles. Everyone belongs.",
   description:
-    "Linda Mohamed (@mrs_lee_g) - AWS Hero, juggler, and community builder. Where cognitive science, cloud, and human change converge.",
+    "Linda Mohamed - AWS Hero, juggler, and community builder. Juggling has no prerequisites. No size, age, or background requirement. When you juggle, you are enough.",
   url: "https://thejugglingcompany.com",
   author: {
     name: "Linda Mohamed",
@@ -18,16 +14,78 @@ export const site = {
   defaultOgImage: "/images/IMG_9810.jpg",
 } as const;
 
-export type NavItem = { readonly label: string; readonly href: string };
+export type NavChild = {
+  readonly label: string;
+  readonly href: string;
+  readonly description: string;
+  readonly accent: string;
+};
+
+export type NavItem = {
+  readonly label: string;
+  readonly href: string;
+  readonly children?: readonly NavChild[];
+};
 
 export const primaryNav: readonly NavItem[] = [
-  { label: "Ideas", href: "/ideas" },
-  { label: "Videos", href: "/videos" },
-  { label: "Talks", href: "/talks" },
-  { label: "Services", href: "/services" },
-  { label: "Locations", href: "/locations" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
+  {
+    label: "Watch",
+    href: "/videos",
+    children: [
+      {
+        label: "Juggling",
+        href: "/videos",
+        description: "Balls, clubs, and rings in motion. Live performances and practice clips.",
+        accent: "var(--color-brain)",
+      },
+      {
+        label: "Talks & Podcasts",
+        href: "/talks",
+        description: "AWS re:Invent sessions, community conversations, and podcast appearances.",
+        accent: "var(--color-tech)",
+      },
+      {
+        label: "Short Clips",
+        href: "/videos#tiktok",
+        description: "Quick juggling moments from everyday life - on TikTok.",
+        accent: "var(--color-change)",
+      },
+    ],
+  },
+  {
+    label: "Why Juggle?",
+    href: "/ideas",
+  },
+  {
+    label: "Shops",
+    href: "/locations/juggling-shops",
+    children: [
+      {
+        label: "Juggling Shops",
+        href: "/locations/juggling-shops",
+        description: "Find specialist juggling shops near you - worldwide directory.",
+        accent: "var(--color-brain-change)",
+      },
+      {
+        label: "Map",
+        href: "/locations",
+        description: "Performances, workshops, and juggling spots around the world.",
+        accent: "var(--color-tech-change)",
+      },
+    ],
+  },
+  {
+    label: "Services",
+    href: "/services",
+  },
+  {
+    label: "Blog",
+    href: "/blog",
+  },
+  {
+    label: "About",
+    href: "/about",
+  },
 ] as const;
 
 export const footerNav: readonly NavItem[] = [

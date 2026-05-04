@@ -2,7 +2,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import PillarBadge from "@/components/PillarBadge.astro";
-import { formatDate } from "@/lib/format";
 import { getIdeas } from "@/lib/content";
 import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
@@ -10,22 +9,315 @@ const ideas = await getIdeas();
 ---
 
 <BaseLayout
-  title="Ideas"
-  description="Long-form essays at the intersection of juggling, neuroscience, cloud, and how teams adapt to change."
+  title="Why Juggle?"
+  description="Juggling has no prerequisites. No size, weight, age, or background. When you juggle, you are enough. Explore the science, the community, and the practice."
 >
-  <section class="mx-auto max-w-4xl px-4 py-20 md:px-6">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Ideas</p>
-    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
-      <span class="rgb-text">Essays from the practice.</span>
-    </h1>
-    <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Slow-cooked pieces on what juggling teaches about cognition, cloud systems, and how
-      humans absorb change.
-    </p>
+
+  <!-- HERO -->
+  <section class="relative mx-auto max-w-6xl overflow-hidden px-4 py-24 md:px-6 md:py-32">
+    <div class="relative z-10 max-w-3xl">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Why juggle?</p>
+      <h1 class="mt-4 font-display text-5xl font-bold leading-[1.1] tracking-tight md:text-7xl">
+        <span class="rgb-text">No prerequisites.</span><br />
+        <span class="text-[var(--color-fg)]">Just you.</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-xl leading-relaxed text-[var(--color-muted)]">
+        You don't need to be tall, thin, young, or coordinated. You don't need to adapt, perform, or fit in. Juggling has no requirements. When you juggle, you are enough - exactly as you are.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href="#the-practice"
+          class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+          style="background: var(--color-brain);"
+        >
+          The practice <Icon name="arrow-right" size={16} />
+        </a>
+        <a
+          href="/videos"
+          class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] px-5 py-3 text-sm font-semibold text-[var(--color-fg)] transition hover:bg-[var(--color-bg-elevated)]"
+        >
+          Watch <Icon name="external-link" size={16} />
+        </a>
+      </div>
+    </div>
+
+    <div class="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-10 md:opacity-20" aria-hidden="true">
+      <svg viewBox="0 0 600 600" class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="wj-ball1" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#ffee88"/>
+            <stop offset="100%" stop-color="#cc9900"/>
+          </radialGradient>
+          <radialGradient id="wj-ball2" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#7fdf99"/>
+            <stop offset="100%" stop-color="#0a8033"/>
+          </radialGradient>
+          <radialGradient id="wj-ball3" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#7fa3ff"/>
+            <stop offset="100%" stop-color="#0033cc"/>
+          </radialGradient>
+        </defs>
+        <circle cx="150" cy="100" r="70" fill="url(#wj-ball1)"/>
+        <circle cx="420" cy="200" r="85" fill="url(#wj-ball2)"/>
+        <circle cx="280" cy="420" r="75" fill="url(#wj-ball3)"/>
+      </svg>
+    </div>
   </section>
 
-  <section class="mx-auto max-w-4xl px-4 pb-24 md:px-6">
-    <ul class="flex flex-col gap-6">
+  <!-- THE EQUALITY STATEMENT -->
+  <section class="border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20">
+      <div class="grid gap-10 md:grid-cols-2 md:gap-16">
+        <div>
+          <p
+            class="text-xs font-semibold uppercase tracking-widest"
+            style="color: var(--color-brain);"
+          >The core idea</p>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Juggling is egalitarian.
+          </h2>
+          <p class="mt-4 text-lg leading-relaxed text-[var(--color-muted)]">
+            Basketball rewards height. Ballet has historically demanded a specific body type. Most team sports require coordination with others. Distance running punishes old injuries. Almost every physical skill comes with a gate — real or assumed — that tells certain people they don't belong.
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-[var(--color-muted)]">
+            Juggling doesn't have one. Whether you're short or tall, young or old, throwing with your hands or your feet or a headband — the pattern works the same way for everyone. The feeling of keeping something in the air doesn't change based on who you are or what body you arrived in.
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-[var(--color-fg)]">
+            That feeling — of being enough, of not needing to adapt or perform or qualify first — is what juggling gives you. You just do. You just are.
+          </p>
+        </div>
+        <div class="flex flex-col justify-center gap-3">
+          {[
+            { text: "No height requirement", accent: "var(--color-brain)" },
+            { text: "No weight or age limit", accent: "var(--color-tech)" },
+            { text: "No prior experience needed", accent: "var(--color-change)" },
+            { text: "No special body type", accent: "var(--color-brain-change)" },
+            { text: "Arms, feet, or a headband - all valid", accent: "var(--color-tech-change)" },
+            { text: "Any prop, any style, any speed", accent: "var(--color-brain-tech)" },
+          ].map((item) => (
+            <div
+              class="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3"
+              style={`border-left: 3px solid ${item.accent};`}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="7" stroke={item.accent} stroke-width="1.5"/>
+                <path d="M5 8l2 2 4-4" stroke={item.accent} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-sm font-medium text-[var(--color-fg)]">{item.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE THREE AREAS -->
+  <section id="the-practice" class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Three reasons</p>
+    <h2 class="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
+      What juggling actually does.
+    </h2>
+    <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+      Fun is the entry point. What stays is deeper.
+    </p>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+
+      <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-brain);">
+        <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl" style="background: color-mix(in oklab, var(--color-brain) 12%, transparent);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2C8.5 2 6 4.5 6 7c0 1.5.6 2.8 1.5 3.8C5.6 11.8 4 13.7 4 16c0 3.3 3.6 6 8 6s8-2.7 8-6c0-2.3-1.6-4.2-3.5-5.2C17.4 9.8 18 8.5 18 7c0-2.5-2.5-5-6-5z" stroke="var(--color-brain)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 9v3M10.5 12h3" stroke="var(--color-brain)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-xl font-bold" style="color: var(--color-brain);">Brain</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+          Oxford and Regensburg studies both confirm it: juggling grows grey matter. Three months of practice produces measurable changes in regions that process motion and multitasking. It rewires neural pathways in ways that persist.
+        </p>
+        <ul class="mt-4 flex flex-col gap-2">
+          {["Measurable grey matter growth", "Improved focus and working memory", "Faster reaction times", "Neuroplasticity confirmed at any age"].map((b) => (
+            <li class="flex items-start gap-2 text-xs text-[var(--color-fg)]">
+              <span class="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--color-brain);" aria-hidden="true"/>
+              {b}
+            </li>
+          ))}
+        </ul>
+        <a href="/ideas/juggling-and-the-brain" class="mt-5 inline-flex items-center gap-1 text-xs font-semibold hover:underline" style="color: var(--color-brain);">
+          Read the deep dive <Icon name="arrow-right" size={12} />
+        </a>
+      </div>
+
+      <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-tech);">
+        <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl" style="background: color-mix(in oklab, var(--color-tech) 12%, transparent);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="5" r="2" stroke="var(--color-tech)" stroke-width="1.5"/>
+            <path d="M12 7v5l3 3M12 12l-3 3" stroke="var(--color-tech)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 20c.6-1.5 2.4-3 5-3s4.4 1.5 5 3" stroke="var(--color-tech)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-xl font-bold" style="color: var(--color-tech);">Body</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+          Juggling is a full-body practice. Coordination, balance, proprioception. Add weight balls and it becomes a workout. Both hemispheres fire. Both sides of the body stay active. The physical benefits compound the cognitive ones.
+        </p>
+        <ul class="mt-4 flex flex-col gap-2">
+          {["Bilateral coordination", "Balance and proprioception", "Core engagement with weight balls", "Everyday reflexes improve sustainably"].map((b) => (
+            <li class="flex items-start gap-2 text-xs text-[var(--color-fg)]">
+              <span class="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--color-tech);" aria-hidden="true"/>
+              {b}
+            </li>
+          ))}
+        </ul>
+        <a href="/videos" class="mt-5 inline-flex items-center gap-1 text-xs font-semibold hover:underline" style="color: var(--color-tech);">
+          See it in action <Icon name="arrow-right" size={12} />
+        </a>
+      </div>
+
+      <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-change);">
+        <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl" style="background: color-mix(in oklab, var(--color-change) 12%, transparent);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="9" cy="8" r="3" stroke="var(--color-change)" stroke-width="1.5"/>
+            <circle cx="17" cy="10" r="2.5" stroke="var(--color-change)" stroke-width="1.5"/>
+            <path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5" stroke="var(--color-change)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M17 14c1.5.5 3 1.7 3 4" stroke="var(--color-change)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-xl font-bold" style="color: var(--color-change);">Community and mind</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+          Juggling has been used to help children in orphanages learn joy and feel success for the first time. It helps with depression and stress. And it creates an instant connection between strangers - because everyone starts at zero.
+        </p>
+        <ul class="mt-4 flex flex-col gap-2">
+          {["Stress and anxiety relief", "Proven benefits for depression", "Brings strangers together instantly", "Used in orphan children programmes"].map((b) => (
+            <li class="flex items-start gap-2 text-xs text-[var(--color-fg)]">
+              <span class="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--color-change);" aria-hidden="true"/>
+              {b}
+            </li>
+          ))}
+        </ul>
+        <a href="/ideas/juggling-and-change-management" class="mt-5 inline-flex items-center gap-1 text-xs font-semibold hover:underline" style="color: var(--color-change);">
+          Juggling in workshops <Icon name="arrow-right" size={12} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH PULL QUOTE -->
+  <section class="border-y border-[var(--color-border)]" style="background: color-mix(in oklab, var(--color-brain) 5%, var(--color-bg));">
+    <div class="mx-auto max-w-4xl px-4 py-16 md:px-6">
+      <div class="flex flex-col gap-6 md:flex-row md:items-start md:gap-10">
+        <div class="shrink-0">
+          <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl font-display text-4xl font-black leading-none"
+            style="color: var(--color-brain); background: color-mix(in oklab, var(--color-brain) 15%, transparent);"
+          >"</div>
+        </div>
+        <div>
+          <p class="font-display text-xl font-semibold leading-snug text-[var(--color-fg)] md:text-2xl">
+            Adults who learned to juggle over three months showed measurable increases in grey matter in regions associated with processing visual motion.
+          </p>
+          <p class="mt-3 text-sm text-[var(--color-muted)]">
+            Draganski et al., Nature 2004. Replicated with white matter changes by Scholz et al., Nature Neuroscience 2009, Oxford.
+          </p>
+          <a
+            href="/ideas/juggling-and-the-brain"
+            class="mt-4 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
+            style="color: var(--color-brain);"
+          >
+            Full breakdown with sources <Icon name="arrow-right" size={14} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS GRID -->
+  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-tech-change);">Practical effects</p>
+        <h2 class="mt-3 font-display text-3xl font-bold tracking-tight">
+          It stays with you.
+        </h2>
+        <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+          The reflexes you build juggling show up in daily life. If something falls, you catch it. If something unexpected happens, your reaction time is faster. Under pressure, the focus state you trained kicks in.
+        </p>
+        <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+          This is the practical argument for juggling that doesn't get said enough: it makes you more capable in ordinary moments, not just when you're performing.
+        </p>
+        <p class="mt-4 leading-relaxed text-[var(--color-fg)]">
+          The mental health benefits don't require anything fancy. A ball, some space, ten minutes. Repetitive physical-cognitive tasks are among the most effective known stress regulators. Juggling is one of the most accessible.
+        </p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        {[
+          { stat: "3 months", desc: "to measurable brain changes", accent: "var(--color-brain)" },
+          { stat: "Both hands", desc: "bilateral training, both hemispheres", accent: "var(--color-brain-tech)" },
+          { stat: "Any age", desc: "neuroplasticity confirmed in 60+", accent: "var(--color-tech)" },
+          { stat: "10 minutes", desc: "enough for stress regulation", accent: "var(--color-change)" },
+          { stat: "Zero", desc: "prerequisites or prior fitness required", accent: "var(--color-tech-change)" },
+          { stat: "Day one", desc: "you already feel it working", accent: "var(--color-brain-change)" },
+        ].map((item) => (
+          <div
+            class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4"
+            style={`border-bottom: 3px solid ${item.accent};`}
+          >
+            <p class="font-display text-2xl font-bold" style={`color: ${item.accent};`}>{item.stat}</p>
+            <p class="mt-1 text-xs text-[var(--color-muted)]">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+      <p class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-change);">Community</p>
+      <h2 class="mt-3 font-display text-3xl font-bold tracking-tight md:text-4xl">
+        Everyone starts at zero.
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-[var(--color-muted)]">
+        That's the thing about juggling that makes it different from almost every other skill. The moment you put a ball in someone's hands, you both become beginners. No past performance, no reputation, no advantage from height or strength or years of experience. Just the next throw.
+      </p>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {[
+          {
+            title: "Orphaned children",
+            body: "Juggling has been used in programmes for orphaned children specifically because it creates achievable success experiences from the very first session. A catch. A pattern. Joy that belongs to you.",
+            accent: "var(--color-change)",
+          },
+          {
+            title: "Depression and stress",
+            body: "The focus required to juggle is incompatible with rumination. You cannot spiral while tracking three objects. The effect is immediate and doesn't require a diagnosis or a prescription.",
+            accent: "var(--color-brain)",
+          },
+          {
+            title: "Cross-cultural connection",
+            body: "A juggling prop travels without language. Show someone a three-ball cascade and they understand immediately. It's one of the most universal and non-verbal invitations to connect.",
+            accent: "var(--color-tech)",
+          },
+        ].map((item) => (
+          <div
+            class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6"
+            style={`border-left: 3px solid ${item.accent};`}
+          >
+            <h3 class="font-display text-lg font-bold" style={`color: ${item.accent};`}>{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ESSAYS -->
+  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Go deeper</p>
+    <h2 class="mt-3 font-display text-3xl font-bold tracking-tight">
+      Long-form essays.
+    </h2>
+    <p class="mt-4 max-w-xl text-lg text-[var(--color-muted)]">
+      Each essay takes one thread and follows it all the way through.
+    </p>
+    <ul class="mt-10 flex flex-col gap-5">
       {
         ideas.map((idea) => {
           const accentHex = PILLAR_HEX[blendKey(idea.data.pillars)];
@@ -33,23 +325,34 @@ const ideas = await getIdeas();
             <li>
               <a
                 href={`/ideas/${idea.id}`}
-                class="card group block rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition md:p-8"
+                class="essay-card group flex items-start gap-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition md:p-7"
                 style={`--card-accent: ${accentHex};`}
               >
-                <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-widest text-[var(--color-muted)]">
-                  <span>Updated {formatDate(idea.data.updatedAt)}</span>
-                  <PillarBadge pillars={idea.data.pillars} variant="solid" />
-                </div>
-                <h2 class="mt-4 font-display text-2xl font-bold tracking-tight text-[var(--color-fg)] md:text-3xl">
-                  {idea.data.title}
-                </h2>
-                <p class="mt-3 max-w-2xl text-[var(--color-muted)]">{idea.data.summary}</p>
-                <span
-                  class="mt-5 inline-flex items-center gap-1 text-sm font-semibold"
-                  style={`color: ${accentHex};`}
+                <div
+                  class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                  style={`background: color-mix(in oklab, ${accentHex} 12%, transparent);`}
                 >
-                  Read essay <Icon name="arrow-right" size={14} />
-                </span>
+                  <span
+                    class="h-3 w-3 rounded-full"
+                    style={`background: ${accentHex};`}
+                    aria-hidden="true"
+                  />
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <PillarBadge pillars={idea.data.pillars} variant="solid" />
+                  </div>
+                  <h3 class="mt-2 font-display text-xl font-bold text-[var(--color-fg)] md:text-2xl">
+                    {idea.data.title}
+                  </h3>
+                  <p class="mt-2 text-[var(--color-muted)]">{idea.data.summary}</p>
+                  <span
+                    class="mt-3 inline-flex items-center gap-1 text-sm font-semibold"
+                    style={`color: ${accentHex};`}
+                  >
+                    Read essay <Icon name="arrow-right" size={14} />
+                  </span>
+                </div>
               </a>
             </li>
           );
@@ -57,14 +360,49 @@ const ideas = await getIdeas();
       }
     </ul>
   </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
+    <div
+      class="overflow-hidden rounded-3xl border border-[var(--color-border)] p-8 md:p-12"
+      style="background: linear-gradient(135deg, color-mix(in oklab, var(--color-brain) 8%, var(--color-bg)) 0%, color-mix(in oklab, var(--color-tech) 6%, var(--color-bg)) 50%, color-mix(in oklab, var(--color-change) 8%, var(--color-bg)) 100%);"
+    >
+      <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">
+        <span class="rgb-text">Start where you are.</span>
+      </h2>
+      <p class="mt-4 max-w-xl text-lg text-[var(--color-muted)]">
+        Watch juggling. Find a shop near you for your first props. Or start with one ball and a wall.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href="/videos"
+          class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-[var(--color-bg)] transition hover:opacity-85"
+          style="background: var(--color-fg);"
+        >
+          <Icon name="external-link" size={16} />
+          Watch juggling
+        </a>
+        <a
+          href="/locations/juggling-shops"
+          class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-5 py-3 text-sm font-semibold text-[var(--color-fg)] transition hover:bg-[var(--color-bg-elevated)]"
+        >
+          <Icon name="map-pin" size={16} />
+          Find a juggling shop
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .card { transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease; }
-  .card:hover {
+  .essay-card {
+    transition: border-color 200ms ease, box-shadow 220ms ease, transform 200ms ease;
+  }
+  .essay-card:hover {
     border-color: var(--card-accent);
-    box-shadow: 0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
-      0 16px 48px -16px color-mix(in oklab, var(--card-accent) 60%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--card-accent) 25%, transparent),
+      0 12px 40px -12px color-mix(in oklab, var(--card-accent) 50%, transparent);
     transform: translateY(-2px);
   }
 </style>

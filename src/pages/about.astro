@@ -2,104 +2,189 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
+import Icon from "@/components/Icon.astro";
 import { site } from "@/lib/site";
 ---
 
 <BaseLayout
-  title="About"
-  description="Linda Mohamed (@mrs_lee_g) - AWS Hero, juggler, and community builder. The Juggling Company brings cloud architecture, cognitive science, and the art of juggling onto the same stage."
+  title="About Linda Mohamed"
+  description="AWS Hero, juggler, community builder. Juggling has no prerequisites - no size, age, or background required. When you juggle, you are enough."
 >
-  <article class="mx-auto grid max-w-5xl gap-12 px-4 py-20 md:grid-cols-[20rem_1fr] md:px-6">
-    <aside>
-      <div
-        class="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-1"
-      >
-        <img
-          src="/images/IMG_9810.jpg"
-          alt="Linda Mohamed"
-          width="320"
-          height="400"
-          class="aspect-[4/5] w-full rounded-2xl object-cover"
-          loading="eager"
-        />
-      </div>
-      <dl class="mt-6 grid gap-4 text-sm">
-        <div>
-          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Role</dt>
-          <dd class="mt-0.5 text-[var(--color-fg)]">{site.author.role}</dd>
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+    <div class="grid gap-10 md:grid-cols-[22rem_1fr] md:gap-16">
+      <aside class="md:sticky md:top-24 md:self-start">
+        <div class="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-1">
+          <img
+            src="/images/IMG_9810.jpg"
+            alt="Linda Mohamed"
+            width="360"
+            height="450"
+            class="aspect-[4/5] w-full rounded-2xl object-cover"
+            loading="eager"
+          />
         </div>
-        <div>
-          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Handle</dt>
-          <dd class="mt-0.5 text-[var(--color-fg)]">@{site.author.handle}</dd>
+        <dl class="mt-6 grid gap-3 text-sm">
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Role</dt>
+            <dd class="mt-0.5 text-[var(--color-fg)]">{site.author.role}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Based in</dt>
+            <dd class="mt-0.5 text-[var(--color-fg)]">Vienna, Austria</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Handle</dt>
+            <dd class="mt-0.5 text-[var(--color-fg)]">@{site.author.handle}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Email</dt>
+            <dd class="mt-0.5">
+              <a class="text-[var(--color-brain-tech)] hover:underline" href={`mailto:${site.author.email}`}>{site.author.email}</a>
+            </dd>
+          </div>
+        </dl>
+        <div class="mt-6">
+          <SocialLinks variant="list" />
         </div>
-        <div>
-          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Email</dt>
-          <dd class="mt-0.5">
-            <a class="text-[var(--color-brain-tech)] hover:underline" href={`mailto:${site.author.email}`}>{site.author.email}</a>
-          </dd>
-        </div>
-      </dl>
-      <div class="mt-6">
-        <SocialLinks variant="list" />
-      </div>
-    </aside>
+      </aside>
 
-    <div>
-      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">About</p>
-      <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
-        <span class="rgb-text">{site.author.name}.</span>
-      </h1>
-
-      <div class="prose mt-8 max-w-none">
-        <p class="text-lg text-[var(--color-muted)]">
-          Linda Mohamed is an AWS Hero with over a decade in tech, specialising in cloud
-          architecture, IT process optimisation, and agile delivery. She also juggles -
-          on stage, at conferences, and as the rough metaphor for everything else she does.
-        </p>
-        <p>
-          The Juggling Company merges those two crafts into one body of work, organised around
-          three pillars that overlap like additive light: <strong style="color: var(--color-brain);">Brain</strong>,
-          <strong style="color: var(--color-tech);">Tech</strong>, and
-          <strong style="color: var(--color-change);">Change</strong>.
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">About</p>
+        <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
+          <span class="rgb-text">Linda Mohamed.</span>
+        </h1>
+        <p class="mt-5 text-xl leading-relaxed text-[var(--color-muted)]">
+          AWS Hero. Juggler. Community builder. Born in Vienna, performing on stages from Las Vegas to Istanbul.
         </p>
 
-        <h2 style="--pillar-color: var(--color-all);">Mission</h2>
-        <p>
-          To inspire, educate, and empower individuals through the art of juggling - fostering
-          a community where juggling serves as a bridge between physical fitness, cognitive
-          development, and creative expression. By integrating juggling principles with
-          cutting-edge technology and innovative learning methods, we aim to promote holistic
-          well-being, enhance teamwork, and drive positive change within organisations and
-          individuals alike.
-        </p>
-
-        <h2 style="--pillar-color: var(--color-brain-tech);">How I work</h2>
-        <ul>
-          <li>
-            <strong>One craft, two surfaces.</strong> Juggling and cloud both reward incremental
-            load, fast feedback, and a calm response to dropped balls.
-          </li>
-          <li>
-            <strong>Bespoke before stock.</strong> Every keynote, workshop, and performance is
-            tailored to the room - no recycled decks.
-          </li>
-          <li>
-            <strong>Evidence over vibe.</strong> The Ideas section cites the neuroscience the
-            workshops draw on. The metaphor only earns its keep when the research holds.
-          </li>
-        </ul>
-
+        <!-- The mission in her own voice -->
         <div
-          class="not-prose relative mt-10 flex justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4"
+          class="mt-10 rounded-2xl border border-[var(--color-border)] p-6 md:p-8"
+          style="background: color-mix(in oklab, var(--color-brain) 5%, var(--color-bg-card));"
+        >
+          <p class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-brain);">The mission</p>
+          <p class="mt-4 text-xl font-semibold leading-snug text-[var(--color-fg)] md:text-2xl">
+            "When you juggle, you are enough."
+          </p>
+          <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+            Basketball, volleyball, so many sports - not for me, because I'm small. Ballet didn't feel like mine either, even after almost ten years of dancing, because I thought I was too big to be a ballerina. Juggling has no prerequisites. Whether you're big or small, old or young, throwing with your arms or your feet or a headband - the pattern works the same for everyone.
+          </p>
+          <p class="mt-4 leading-relaxed text-[var(--color-fg)]">
+            That's what I want people to feel: that they don't need to be quiet, or small, or different. That they don't have to meet expectations. That they can just be, and just do. Without needing to be tall. Without needing to adapt. Just as they are.
+          </p>
+          <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+            This is what I carry into every talk, every stage appearance, every workshop. The juggling is never just the juggling. It's proof that the prerequisites we assumed were required - were never required at all.
+          </p>
+        </div>
+
+        <!-- Why it matters -->
+        <div class="mt-10">
+          <h2 class="font-display text-2xl font-bold tracking-tight">More than equality.</h2>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Juggling is egalitarian - but that's only the beginning. It's also togetherness, growth, and getting better. It can improve your brain, your balance, your mobility, and your reaction time. It helps with depression. It relieves stress. It has been used to help orphaned children learn joy and feel success for the first time. And it does all of this while being genuinely fun, and while connecting you to other people.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            If something falls or tips over in daily life - you catch it faster, because you've trained your hands to respond. That's not a metaphor. That's a literal, practical benefit of juggling that almost no one talks about.
+          </p>
+        </div>
+
+        <!-- Three pillars -->
+        <div class="mt-10 grid gap-4 sm:grid-cols-3">
+          {[
+            {
+              pillar: "Brain",
+              accent: "var(--color-brain)",
+              text: "Juggling physically rewires neural pathways. Oxford and Regensburg studies both confirm measurable grey matter growth after just three months of practice.",
+            },
+            {
+              pillar: "Tech",
+              accent: "var(--color-tech)",
+              text: "Over a decade as a cloud architect and AWS Hero. The pattern of building distributed systems and the pattern of juggling are, structurally, the same problem.",
+            },
+            {
+              pillar: "Change",
+              accent: "var(--color-change)",
+              text: "Change management has a metaphor problem. A ball in someone's hand is more honest than an iceberg diagram. Workshops, keynotes, and community building around this idea.",
+            },
+          ].map(({ pillar, accent, text }) => (
+            <div
+              class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5"
+              style={`border-top: 3px solid ${accent};`}
+            >
+              <p class="font-display text-lg font-bold" style={`color: ${accent};`}>{pillar}</p>
+              <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{text}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Tech and community work -->
+        <div class="mt-10">
+          <h2 class="font-display text-2xl font-bold tracking-tight">The tech side.</h2>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Over a decade in cloud architecture, IT process optimisation, and agile delivery. Named an AWS Hero for community contributions across Austria and beyond. Co-organiser of the AWS User Group Vienna. Regular speaker at Women &amp;&amp; Code, sec4dev, and WeAreDevelopers Live Week.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            The Juggling Company brings the tech and the juggling onto the same stage - because they've always been the same problem. Keeping multiple things in the air. Knowing when to add load and when to stabilise. Building patterns that work even when you're not watching.
+          </p>
+        </div>
+
+        <!-- How I work -->
+        <div class="mt-10">
+          <h2 class="font-display text-2xl font-bold tracking-tight">How I work.</h2>
+          <div class="mt-4 flex flex-col gap-3">
+            {[
+              { label: "Bespoke, always.", body: "Every keynote, workshop, and performance is built for the room. No recycled decks." },
+              { label: "Evidence over vibe.", body: "The neuroscience behind the workshops is real and cited. The metaphor only earns its place when the research holds." },
+              { label: "On site and on the road.", body: "Based in Vienna for on-site workshops. Regular travel throughout Europe and beyond - Istanbul, Athens, Las Vegas, and more." },
+              { label: "Community first.", body: "AWS User Group co-organiser. Community days, meetups, and events are as much the work as the paid engagements." },
+            ].map(({ label, body }) => (
+              <div class="flex items-start gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3">
+                <span class="mt-0.5 h-2 w-2 shrink-0 rounded-full" style="background: var(--color-brain-tech);" aria-hidden="true" />
+                <p class="text-sm text-[var(--color-fg)]">
+                  <strong>{label}</strong> {body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Juggling animation -->
+        <div
+          class="relative mt-12 flex justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6"
         >
           <div
-            class="absolute inset-0 -z-10"
+            class="absolute inset-0"
             aria-hidden="true"
-            style="background: radial-gradient(ellipse at 30% 30%, rgb(255 51 102 / 0.18), transparent 60%), radial-gradient(ellipse at 70% 30%, rgb(51 204 102 / 0.16), transparent 60%), radial-gradient(ellipse at 50% 80%, rgb(59 108 255 / 0.18), transparent 60%);"
-          ></div>
-          <JugglingCascade size={320} />
+            style="background: radial-gradient(ellipse at 30% 30%, rgb(255 51 102 / 0.15), transparent 60%), radial-gradient(ellipse at 70% 30%, rgb(51 204 102 / 0.13), transparent 60%), radial-gradient(ellipse at 50% 80%, rgb(59 108 255 / 0.15), transparent 60%);"
+          />
+          <JugglingCascade size={280} />
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a
+            href="/services"
+            class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            style="background: var(--color-brain-tech);"
+          >
+            <Icon name="arrow-right" size={14} />
+            Work with me
+          </a>
+          <a
+            href="/ideas"
+            class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] px-5 py-3 text-sm font-semibold text-[var(--color-fg)] transition hover:bg-[var(--color-bg-elevated)]"
+          >
+            Why juggle?
+          </a>
+          <a
+            href={`mailto:${site.author.email}`}
+            class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] px-5 py-3 text-sm font-semibold text-[var(--color-fg)] transition hover:bg-[var(--color-bg-elevated)]"
+          >
+            Get in touch
+          </a>
         </div>
       </div>
     </div>
-  </article>
+  </section>
 </BaseLayout>

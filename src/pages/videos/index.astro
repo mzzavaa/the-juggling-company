@@ -14,12 +14,11 @@ const techVideos = videos.filter(
   (v) => v.data.source === "youtube" && !v.data.tags.includes("juggling"),
 );
 const tiktokVideos = videos.filter((v) => v.data.source === "tiktok");
-const instagramVideos = videos.filter((v) => v.data.source === "instagram");
 ---
 
 <BaseLayout
   title="Videos"
-  description="Juggling clips, conference talks, and short-form content - on YouTube, TikTok, and Instagram."
+  description="Juggling clips, conference talks, and short-form content - on YouTube and TikTok."
 >
   <!-- Hero -->
   <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
@@ -28,14 +27,14 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
       <span class="rgb-text">Watch the work.</span>
     </h1>
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Juggling, talks, and everything in between - on YouTube, TikTok, and Instagram.
+      Juggling, talks, and everything in between - on YouTube and TikTok.
     </p>
     <div class="mt-6">
       <SocialLinks />
     </div>
   </section>
 
-  <!-- ── Juggling (YouTube) ─────────────────────────── -->
+  <!-- Juggling (YouTube) -->
   {jugglingVideos.length > 0 && (
     <section class="mx-auto max-w-6xl px-4 pb-20 md:px-6">
       <div class="mb-8 flex items-end justify-between gap-4">
@@ -87,7 +86,7 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
     </section>
   )}
 
-  <!-- ── TikTok grid (official embeds) ─────────────────── -->
+  <!-- TikTok -->
   {tiktokVideos.length > 0 && (
     <section class="mx-auto max-w-6xl px-4 pb-20 md:px-6">
       <div class="mb-8 flex items-end justify-between gap-4">
@@ -105,72 +104,71 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
         </a>
       </div>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {tiktokVideos.map((v) => (
-          <div class="flex justify-center min-w-0">
-            <blockquote
-              class="tiktok-embed"
-              cite={v.data.externalUrl}
-              data-video-id={v.data.externalId}
-              style="max-width:100%; min-width:0; width:100%;"
+        {tiktokVideos.map((v) => {
+          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#9696b0";
+          return (
+            <div
+              class="tiktok-card overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
+              style={`--card-accent: ${accent};`}
             >
-              <section>
-                <a href={v.data.externalUrl} target="_blank" rel="noopener noreferrer">
+              {v.data.localVideo ? (
+                <div class="aspect-[9/16] bg-black">
+                  <video
+                    src={v.data.localVideo}
+                    controls
+                    playsinline
+                    preload="metadata"
+                    class="h-full w-full object-contain"
+                  />
+                </div>
+              ) : (
+                <div class="aspect-[9/16] flex items-center justify-center bg-[var(--color-bg-card)]">
+                  <a
+                    href={v.data.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex flex-col items-center gap-3 p-6 text-center"
+                    style={`color: ${accent};`}
+                  >
+                    <Icon name="external-link" size={32} />
+                    <span class="text-sm font-medium text-[var(--color-fg)]">{v.data.title}</span>
+                    <span class="text-xs text-[var(--color-muted)]">Watch on TikTok</span>
+                  </a>
+                </div>
+              )}
+              <div class="p-4">
+                <h3 class="font-display text-sm font-semibold leading-snug text-[var(--color-fg)]">
                   {v.data.title}
-                </a>
-              </section>
-            </blockquote>
-          </div>
-        ))}
-      </div>
-    </section>
-  )}
-
-  <!-- ── Instagram grid (official embeds) ──────────────── -->
-  {instagramVideos.length > 0 && (
-    <section class="mx-auto max-w-6xl px-4 pb-20 md:px-6">
-      <div class="mb-8 flex items-end justify-between gap-4">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest" style="color: #e1306c;">Reels</p>
-          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Instagram</h2>
-        </div>
-        <a
-          href="https://www.instagram.com/mrs_lee_g/"
-          class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold hover:underline"
-          style="color: #e1306c;"
-          rel="noopener"
-          target="_blank"
-        >
-          @mrs_lee_g <Icon name="external-link" size={14} />
-        </a>
-      </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {instagramVideos.map((v) => (
-          <div class="flex justify-center min-w-0">
-            <blockquote
-              class="instagram-media"
-              data-instgrm-permalink={v.data.externalUrl}
-              data-instgrm-version="14"
-              style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:0; max-width:100%; min-width:326px; width:100%;"
-            >
-              <div style="padding:16px;">
-                <a href={v.data.externalUrl} target="_blank" rel="noopener noreferrer">
-                  {v.data.title}
+                </h3>
+                {v.data.description && (
+                  <p class="mt-1 line-clamp-2 text-xs text-[var(--color-muted)]">
+                    {v.data.description}
+                  </p>
+                )}
+                <a
+                  href={v.data.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-2 inline-flex items-center gap-1 text-xs hover:underline"
+                  style={`color: ${accent};`}
+                >
+                  TikTok <Icon name="external-link" size={12} />
                 </a>
               </div>
-            </blockquote>
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </section>
   )}
 
-  <!-- ── Creative tech (YouTube) ───────────────────── -->
+  <!-- Creative tech (YouTube) -->
   {techVideos.length > 0 && (
     <section class="pb-24">
       <div class="mx-auto max-w-6xl px-4 md:px-6">
         <div class="mb-6 flex items-end justify-between gap-4">
           <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-tech)]">Talks & podcasts</p>
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-tech)]">Talks and podcasts</p>
             <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Creative tech</h2>
           </div>
           <a
@@ -233,9 +231,6 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
   )}
 </BaseLayout>
 
-<script is:inline src="https://www.tiktok.com/embed.js"></script>
-<script is:inline src="https://www.instagram.com/embed.js"></script>
-
 <style>
   .yt-card {
     transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
@@ -245,6 +240,14 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
     box-shadow:
       0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
       0 12px 36px -12px color-mix(in oklab, var(--card-accent) 60%, transparent);
+  }
+
+  .tiktok-card {
+    transition: border-color 200ms ease, box-shadow 220ms ease;
+  }
+  .tiktok-card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--card-accent) 50%, transparent);
   }
 
   .tech-card {

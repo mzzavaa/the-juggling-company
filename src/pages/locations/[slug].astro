@@ -1,0 +1,184 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const locations = await getCollection("location");
+  return locations.map((loc) => ({ params: { slug: loc.id }, props: { loc } }));
+}
+
+const { loc } = Astro.props;
+const { data } = loc;
+
+// Pull talks and videos that reference this location
+const [allTalks, allVideos] = await Promise.all([
+  getCollection("talk"),
+  getCollection("video"),
+]);
+const talks = allTalks.filter((t) => t.data.locationSlug?.id === loc.id);
+const videos = allVideos.filter((v) => v.data.locationSlug?.id === loc.id);
+
+const typeColor: Record<typeof data.type, string> = {
+  "past-performance": "#d97706",
+  "home-base": "#dc2626",
+  available: "#10b981",
+  workshop: "#2563eb",
+  "juggling-shop": "#9333ea",
+};
+const typeLabel: Record<typeof data.type, string> = {
+  "past-performance": "Past performance",
+  "home-base": "Home base",
+  available: "Available",
+  workshop: "Workshop",
+  "juggling-shop": "Juggling shop",
+};
+
+const accent = typeColor[data.type];
+const osmZoom = data.type === "home-base" ? 13 : 10;
+const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${data.lng - 0.15},${data.lat - 0.1},${data.lng + 0.15},${data.lat + 0.1}&layer=mapnik&marker=${data.lat},${data.lng}`;
+---
+
+<BaseLayout
+  title={`${data.name} - theJugglingCompany`}
+  description={data.notes || `${typeLabel[data.type]} in ${data.city}, ${data.country}.`}
+>
+  <section class="mx-auto max-w-5xl px-4 py-16 md:px-6">
+    <a
+      href="/locations"
+      class="mb-8 inline-flex items-center gap-1.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-fg)] transition"
+    >
+      <Icon name="arrow-right" size={14} class="rotate-180" />
+      All locations
+    </a>
+
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr]">
+
+      <!-- Left sidebar -->
+      <div>
+        <p
+          class="text-xs font-semibold uppercase tracking-widest"
+          style={`color: ${accent};`}
+        >
+          {typeLabel[data.type]}
+        </p>
+        <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          {data.name}
+        </h1>
+        <p class="mt-1 text-lg text-[var(--color-muted)]">{data.city}, {data.country}</p>
+
+        {data.notes && (
+          <p class="mt-4 leading-relaxed text-[var(--color-fg)]">{data.notes}</p>
+        )}
+
+        {data.website && (
+          <a
+            href={data.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
+            style={`color: ${accent};`}
+          >
+            <Icon name="external-link" size={14} />
+            Visit website
+          </a>
+        )}
+
+        <div class="mt-6">
+          <a
+            href={`https://www.openstreetmap.org/?mlat=${data.lat}&mlon=${data.lng}#map=${osmZoom}/${data.lat}/${data.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-fg)] transition"
+          >
+            <Icon name="map-pin" size={14} />
+            Open in OpenStreetMap
+          </a>
+        </div>
+
+        <!-- Related talks -->
+        {talks.length > 0 && (
+          <div class="mt-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Talks here</p>
+            <ul class="mt-3 flex flex-col gap-3">
+              {talks.map((t) => (
+                <li class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4" style={`border-left: 3px solid ${accent};`}>
+                  <p class="text-sm font-semibold text-[var(--color-fg)]">{t.data.title}</p>
+                  <p class="text-xs text-[var(--color-muted)]">{t.data.venue}</p>
+                  {t.data.recordingUrl && (
+                    <a
+                      href={t.data.recordingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="mt-1 inline-flex items-center gap-1 text-xs hover:underline"
+                      style={`color: ${accent};`}
+                    >
+                      Recording <Icon name="external-link" size={12} />
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <!-- Related videos -->
+        {videos.length > 0 && (
+          <div class="mt-8">
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Videos from here</p>
+            <ul class="mt-3 flex flex-col gap-3">
+              {videos.map((v) => (
+                <li class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4" style={`border-left: 3px solid ${accent};`}>
+                  <a
+                    href={v.data.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm font-semibold hover:underline"
+                    style={`color: ${accent};`}
+                  >
+                    {v.data.title} <Icon name="external-link" size={12} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <!-- Map -->
+      <div class="overflow-hidden rounded-2xl border border-[var(--color-border)]" style={`border-top: 3px solid ${accent};`}>
+        <iframe
+          src={osmEmbed}
+          title={`Map of ${data.name}`}
+          class="h-[420px] w-full border-0 md:h-[520px]"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        />
+        <div class="border-t border-[var(--color-border)] px-4 py-2 text-xs text-[var(--color-muted)]">
+          Map data &copy; <a href="https://www.openstreetmap.org/copyright" class="hover:underline">OpenStreetMap</a> contributors
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to all -->
+  <section class="mx-auto max-w-5xl px-4 pb-16 md:px-6">
+    <div class="flex flex-wrap gap-4">
+      <a
+        href="/locations"
+        class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium text-[var(--color-fg)] transition hover:bg-[var(--color-bg-elevated)]"
+      >
+        <Icon name="map-pin" size={14} />
+        Full map
+      </a>
+      <a
+        href="/locations/juggling-shops"
+        class="inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition hover:opacity-80"
+        style={`border-color: var(--color-brain-change); color: var(--color-brain-change);`}
+      >
+        <Icon name="map-pin" size={14} />
+        Juggling shops directory
+      </a>
+    </div>
+  </section>
+</BaseLayout>

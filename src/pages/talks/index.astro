@@ -23,22 +23,23 @@ const eventJsonLd = upcoming.map((t) => ({
 }));
 
 function venueLine(t: CollectionEntry<"talk">) {
-  return `${t.data.venue} - ${t.data.city}, ${t.data.country}`;
+  const place = t.data.city === "Virtual" ? t.data.venue : `${t.data.venue} - ${t.data.city}, ${t.data.country}`;
+  return place;
 }
 ---
 
 <BaseLayout
   title="Talks"
-  description="Conference keynotes, AWS community days, and salon-evening idea talks - past and upcoming."
+  description="Conference sessions, podcast conversations, and community appearances - past and upcoming."
   jsonLd={eventJsonLd as unknown as Record<string, unknown>[]}
 >
   <section class="mx-auto max-w-4xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Talks</p>
     <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
-      <span class="rgb-text">On stage and at the lectern.</span>
+      <span class="rgb-text">On stage and on air.</span>
     </h1>
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Conference keynotes, AWS community days, meetup talks, and salon evenings - past and upcoming.
+      AWS re:Invent sessions, community tech talks, and podcast conversations. Each one is a juggling act in a different costume.
     </p>
   </section>
 
@@ -82,55 +83,86 @@ function venueLine(t: CollectionEntry<"talk">) {
     past.length > 0 && (
       <section class="mx-auto max-w-4xl px-4 pb-24 md:px-6">
         <h2 class="font-display text-2xl font-bold tracking-tight">Past ({past.length})</h2>
-        <ul class="mt-6 flex flex-col gap-4">
+        <ul class="mt-8 flex flex-col gap-8">
           {past.map((t) => {
             const accent = PILLAR_HEX[blendKey(t.data.pillars)];
             return (
-              <li
-                class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6"
-                style={`border-left: 4px solid ${accent};`}
-              >
-                <p class="flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--color-muted)]">
-                  <Icon name="calendar" size={12} /> {formatDate(t.data.date)}
-                </p>
-                <h3 class="mt-2 font-display text-xl font-bold">{t.data.title}</h3>
-                <p class="mt-1 flex items-center gap-1 text-sm text-[var(--color-muted)]">
-                  <Icon name="map-pin" size={14} /> {venueLine(t)}
-                </p>
-                <p class="mt-3 text-[var(--color-fg)]">{t.data.abstract}</p>
-                <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
-                  {t.data.pillars.length > 0 && (
-                    <PillarBadge pillars={t.data.pillars} variant="solid" />
-                  )}
-                  {t.data.slidesUrl && (
-                    <a
-                      href={t.data.slidesUrl}
-                      rel="noopener"
-                      class="inline-flex items-center gap-1 hover:underline"
-                      style={`color: ${accent};`}
-                    >
-                      Slides <Icon name="external-link" size={14} />
-                    </a>
-                  )}
-                  {t.data.recordingUrl && (
-                    <a
-                      href={t.data.recordingUrl}
-                      rel="noopener"
-                      class="inline-flex items-center gap-1 hover:underline"
-                      style={`color: ${accent};`}
-                    >
-                      Recording <Icon name="external-link" size={14} />
-                    </a>
-                  )}
-                  {t.data.locationSlug && (
-                    <a
-                      href={`/locations#${t.data.locationSlug.id}`}
-                      class="inline-flex items-center gap-1 text-[var(--color-tech-change)] hover:underline"
-                    >
-                      On the map <Icon name="map-pin" size={14} />
-                    </a>
-                  )}
+              <li class="grid gap-0 md:grid-cols-[1fr_1px_1fr]">
+                <!-- Left: talk details -->
+                <div
+                  class="rounded-t-2xl border border-b-0 border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 md:rounded-l-2xl md:rounded-tr-none md:border-b md:border-r-0"
+                  style={`border-top: 3px solid ${accent};`}
+                >
+                  <p class="flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--color-muted)]">
+                    <Icon name="calendar" size={12} /> {formatDate(t.data.date)}
+                  </p>
+                  <h3 class="mt-2 font-display text-lg font-bold leading-snug">{t.data.title}</h3>
+                  <p class="mt-1 flex items-center gap-1 text-sm text-[var(--color-muted)]">
+                    <Icon name="map-pin" size={14} /> {venueLine(t)}
+                  </p>
+                  <p class="mt-3 text-sm text-[var(--color-fg)]">{t.data.abstract}</p>
+                  <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
+                    {t.data.pillars.length > 0 && (
+                      <PillarBadge pillars={t.data.pillars} variant="solid" />
+                    )}
+                    {t.data.slidesUrl && (
+                      <a
+                        href={t.data.slidesUrl}
+                        rel="noopener"
+                        class="inline-flex items-center gap-1 hover:underline"
+                        style={`color: ${accent};`}
+                      >
+                        Slides <Icon name="external-link" size={14} />
+                      </a>
+                    )}
+                    {t.data.recordingUrl && (
+                      <a
+                        href={t.data.recordingUrl}
+                        rel="noopener"
+                        class="inline-flex items-center gap-1 hover:underline"
+                        style={`color: ${accent};`}
+                      >
+                        Recording <Icon name="external-link" size={14} />
+                      </a>
+                    )}
+                    {t.data.locationSlug && (
+                      <a
+                        href={`/locations#${t.data.locationSlug.id}`}
+                        class="inline-flex items-center gap-1 text-[var(--color-tech-change)] hover:underline"
+                      >
+                        On the map <Icon name="map-pin" size={14} />
+                      </a>
+                    )}
+                  </div>
                 </div>
+
+                <!-- Divider -->
+                <div class="hidden border-[var(--color-border)] md:block" style="border-left: 1px solid;" aria-hidden="true" />
+
+                <!-- Right: juggling connection -->
+                {t.data.jugglingConnection ? (
+                  <div
+                    class="rounded-b-2xl border border-t-0 border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 md:rounded-r-2xl md:rounded-bl-none md:border-l-0 md:border-t"
+                    style={`border-bottom: 3px solid ${accent};`}
+                  >
+                    <p
+                      class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest"
+                      style={`color: ${accent};`}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8c-1.5 0-2.5 1-2.5 2.5S10.5 13 12 13s2.5-1 2.5-2.5S13.5 8 12 8z"/>
+                        <path d="M12 13v3"/>
+                      </svg>
+                      The juggling connection
+                    </p>
+                    <p class="text-sm leading-relaxed text-[var(--color-fg)]">
+                      {t.data.jugglingConnection}
+                    </p>
+                  </div>
+                ) : (
+                  <div class="hidden rounded-b-2xl border border-t-0 border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 md:flex md:rounded-r-2xl md:rounded-bl-none md:border-l-0 md:border-t" />
+                )}
               </li>
             );
           })}

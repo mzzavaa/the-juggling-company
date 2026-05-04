@@ -28,3 +28,12 @@ yarn-error.log*
 
 # linkcheck cache
 .lycheecache
+
+# original .mov exports — too large for git
+public/videos/*.mov
+
+# build/tool caches
+.cache/
+.next/
+.stackbit/
+screenshots/

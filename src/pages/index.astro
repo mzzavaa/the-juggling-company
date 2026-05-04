@@ -38,16 +38,15 @@ const pillarIcons: Record<Pillar, "brain" | "cpu" | "shuffle"> = {
 
 const pillarSummaries: Record<Pillar, string> = {
   brain:
-    "What juggling does to grey matter, focus, and the way humans learn - backed by neuroscience, not folklore.",
+    "What juggling does to grey matter, focus, and the way humans learn — backed by peer-reviewed neuroscience, not folklore.",
   tech:
-    "Cloud architecture, AWS systems, and AI patterns - read through a juggler's lens of incremental load and recovery.",
+    "Cloud architecture, AWS systems, and AI patterns — read through a juggler's lens of incremental load, graceful recovery, and knowing when to add a fourth ball.",
   change:
-    "How teams absorb new work, recover from drops, and build the muscle to add a fourth ball.",
+    "How teams absorb new work, recover from drops, and build the muscle memory to stay stable under pressure. A ball in someone's hand is more honest than an iceberg diagram.",
 };
 
 const ideasByPillar = (p: Pillar) => ideas.find((i) => i.data.pillars.includes(p));
 
-// Numeric stats - derived from real collection counts, never hardcoded.
 const stats = [
   { label: "Essays", value: ideas.length, color: "var(--color-brain)" },
   { label: "Talks", value: talks.upcoming.length + talks.past.length, color: "var(--color-tech)" },
@@ -73,7 +72,7 @@ const personJsonLd = {
 ---
 
 <BaseLayout jsonLd={personJsonLd}>
-  <!-- HERO: asymmetric, juggling-cascade-driven -->
+  <!-- HERO -->
   <section class="hero relative overflow-hidden">
     <div class="absolute inset-0 -z-10" aria-hidden="true">
       <div
@@ -98,7 +97,7 @@ const personJsonLd = {
           <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-brain);"></span>
           <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-tech);"></span>
           <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-change);"></span>
-          AWS Hero · Juggler · @mrs_lee_g
+          AWS Hero · Juggler · Vienna
         </p>
 
         <h1 class="mt-6 font-display text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
@@ -107,10 +106,12 @@ const personJsonLd = {
           <span class="block ml-[10%]" style="color: var(--color-change);">Change.</span>
         </h1>
 
-        <p class="mt-8 max-w-md text-lg text-[var(--color-fg)] md:text-xl">
-          Three pillars, mixing like light. <strong>{site.author.name}</strong> on the patterns
-          underneath cloud systems, cognitive science, and leading change - taught from a stage
-          with three balls in the air.
+        <p class="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-fg)] md:text-xl">
+          Juggling has no prerequisites. <strong>{site.author.name}</strong> — AWS Hero, keynote speaker, and juggler — explores what happens when you stop choosing between the technical and the human, and keep everything moving at once.
+        </p>
+
+        <p class="mt-4 max-w-md text-base leading-relaxed text-[var(--color-muted)]">
+          On stage from Las Vegas to Istanbul. In workshops, in conference rooms, and on the road — bringing the pattern that connects brain science, cloud systems, and the courage to change.
         </p>
 
         <div class="mt-10 flex flex-wrap gap-3">
@@ -119,27 +120,26 @@ const personJsonLd = {
             class="group inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold text-[var(--color-bg)] shadow-xl transition hover:shadow-2xl"
             style="background: linear-gradient(100deg, var(--color-brain), var(--color-brain-tech), var(--color-tech), var(--color-tech-change), var(--color-change)); background-size: 220% auto;"
           >
-            Read the Ideas
+            Why juggle?
             <Icon name="arrow-right" size={18} />
           </a>
           <a
-            href="/contact"
+            href={`mailto:${site.author.email}`}
             class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-6 py-3.5 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-brain-tech)] hover:text-[var(--color-brain-tech)]"
           >
             <Icon name="mail" size={16} />
-            Book me
+            Work with me
           </a>
         </div>
       </div>
 
-      <!-- Cascade animation, visible from md and up -->
       <div class="hidden md:flex md:items-center md:justify-center">
         <JugglingCascade size={460} />
       </div>
     </div>
   </section>
 
-  <!-- STATS STRIP: real counts from collections -->
+  <!-- STATS STRIP -->
   <section
     class="border-y border-[var(--color-border)] bg-[var(--color-bg-elevated)]/50 backdrop-blur"
   >
@@ -169,7 +169,101 @@ const personJsonLd = {
     </ul>
   </section>
 
-  <!-- THREE PILLARS - bold, oversized cards -->
+  <!-- NO PREREQUISITES: the mission -->
+  <section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
+    <div class="grid gap-14 md:grid-cols-[1.1fr_1fr] md:items-start">
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">The one thing juggling has that most skills don't</p>
+        <h2 class="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          No prerequisites.
+        </h2>
+        <p class="mt-6 text-lg leading-relaxed text-[var(--color-muted)]">
+          Basketball rewards height. Ballet has historically demanded a specific body type. Team sports need coordination with others. Distance running punishes old injuries. Swimming requires access to water. Almost every skill you might want to learn comes with a gatekeeping requirement — real or assumed — standing in front of it.
+        </p>
+        <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+          Juggling has none of these. You can juggle short or tall, young or old, with your hands, your feet, or a headband. Sitting in a wheelchair. After surgery. At eight or at eighty. The pattern works the same for everyone, because the only requirement is that you try.
+        </p>
+        <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+          It's been used with orphaned children to teach them what success feels like for the first time. With refugees building resilience after trauma. With older adults — 50s, 60s, 70s — who assumed that their brains had stopped growing. All of them were wrong about what they were capable of.
+        </p>
+
+        <div
+          class="mt-8 rounded-2xl border border-[var(--color-border)] p-6"
+          style="background: color-mix(in oklab, var(--color-brain) 6%, var(--color-bg-card));"
+        >
+          <p class="text-xl font-semibold leading-snug text-[var(--color-fg)] md:text-2xl">
+            "When you juggle, you are enough."
+          </p>
+          <p class="mt-3 text-sm text-[var(--color-muted)]">
+            Not because you've met a standard. Because juggling has no standard to meet.
+          </p>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="/ideas"
+            class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            style="background: var(--color-brain-tech);"
+          >
+            <Icon name="arrow-right" size={14} />
+            Read the full case
+          </a>
+          <a
+            href="/locations/juggling-shops"
+            class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] px-5 py-3 text-sm font-semibold text-[var(--color-fg)] transition hover:bg-[var(--color-bg-elevated)]"
+          >
+            Find a shop near you
+          </a>
+        </div>
+      </div>
+
+      <!-- Research cards -->
+      <div class="flex flex-col gap-4">
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-brain);">
+          <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-brain);">Grey matter grows</p>
+          <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
+            Three months of juggling produces measurable grey matter growth in visual and motor areas of the brain. The effect holds even in adults aged 50–67 — regions thought to be fixed.
+          </p>
+          <p class="mt-3 text-xs text-[var(--color-muted)]">
+            Draganski et al., <em>Nature</em>, 2004 · Boyke et al., <em>Journal of Neuroscience</em>, 2008
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-change);">
+          <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-change);">Anxiety and depression</p>
+          <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
+            Regular juggling practice significantly reduces anxiety and depression scores. Studies on medical students during high-stress exam periods found measurable improvements after only weeks of practice.
+          </p>
+          <p class="mt-3 text-xs text-[var(--color-muted)]">
+            Nakahara et al., <em>BioPsychoSocial Medicine</em>, 2007 · Zainaldeen et al., 2018
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-tech);">
+          <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-tech);">Reaction time</p>
+          <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
+            Juggling training improves reaction time by 20–25%. These reflexes aren't abstract — they transfer directly to daily life. Something tips over on a shelf, and your hands are already there.
+          </p>
+          <p class="mt-3 text-xs text-[var(--color-muted)]">
+            Malik et al., <em>International Journal of Environmental Research and Public Health</em>, 2022 (systematic review)
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-brain-change);">
+          <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-brain-change);">Community and resilience</p>
+          <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
+            Circus and juggling programs have been shown to build resilience and a sense of belonging in at-risk youth and displaced communities — not as therapy, but as shared practice.
+          </p>
+          <p class="mt-3 text-xs text-[var(--color-muted)]">
+            Fournier et al., <em>Canadian Family Physician</em>, 2014 · Van Es et al., <em>Journal of Refugee Studies</em>, 2019
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE PILLARS -->
   <section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
@@ -181,8 +275,7 @@ const personJsonLd = {
         </h2>
       </div>
       <p class="max-w-md text-[var(--color-muted)]">
-        Like additive light: each pillar is its own colour. The most interesting work happens
-        where two or three combine.
+        Like additive light — each pillar has its own colour. The most interesting work happens where two or three combine. That's where the juggling happens.
       </p>
     </div>
 
@@ -190,7 +283,6 @@ const personJsonLd = {
       {
         PILLARS.map((p, i) => {
           const idea = ideasByPillar(p);
-          // Stagger the cards vertically for asymmetry.
           const offset = i === 0 ? "" : i === 1 ? "md:translate-y-6" : "md:translate-y-12";
           return (
             <li class={offset}>
@@ -232,7 +324,6 @@ const personJsonLd = {
         })
       }
     </ul>
-
   </section>
 
   {
@@ -241,7 +332,7 @@ const personJsonLd = {
         <div class="mb-8 flex items-end justify-between gap-4">
           <div>
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-              Latest videos
+              Watch
             </p>
             <h2 class="mt-1 font-display text-4xl font-bold tracking-tight">From the channel</h2>
           </div>
@@ -271,7 +362,7 @@ const personJsonLd = {
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
               From the blog
             </p>
-            <h2 class="mt-1 font-display text-4xl font-bold tracking-tight">Read</h2>
+            <h2 class="mt-1 font-display text-4xl font-bold tracking-tight">From the road</h2>
           </div>
           <a
             href="/blog"
@@ -291,7 +382,7 @@ const personJsonLd = {
     )
   }
 
-  <!-- LOCATIONS CTA: punchier -->
+  <!-- LOCATIONS CTA -->
   <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
     <div
       class="locations-cta relative overflow-hidden rounded-3xl border-2 border-[var(--color-tech-change)] bg-[var(--color-bg-card)] p-1"
@@ -306,16 +397,23 @@ const personJsonLd = {
           </h2>
           <p class="mt-3 max-w-md text-[var(--color-muted)]">
             <span class="font-semibold text-[var(--color-fg)]">{locations.length}</span>{" "}
-            {locations.length === 1 ? "location" : "locations"} on the map - performances I've
-            done and places I'm available next.
+            {locations.length === 1 ? "location" : "locations"} on the map — performances, workshops, and places where the work has landed.
           </p>
-          <a
-            href="/locations"
-            class="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--color-tech-change)] px-5 py-3 font-semibold text-[var(--color-bg)] transition hover:opacity-90"
-          >
-            <Icon name="map-pin" size={16} />
-            Open the map
-          </a>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/locations"
+              class="inline-flex items-center gap-2 rounded-full bg-[var(--color-tech-change)] px-5 py-3 font-semibold text-[var(--color-bg)] transition hover:opacity-90"
+            >
+              <Icon name="map-pin" size={16} />
+              Open the map
+            </a>
+            <a
+              href="/locations/juggling-shops"
+              class="inline-flex items-center gap-2 rounded-full border border-[var(--color-tech-change)] px-5 py-3 text-sm font-medium text-[var(--color-tech-change)] transition hover:bg-[var(--color-tech-change)] hover:text-[var(--color-bg)]"
+            >
+              Find juggling shops
+            </a>
+          </div>
         </div>
         <div
           class="relative flex min-h-[280px] items-center justify-center overflow-hidden"
@@ -340,5 +438,4 @@ const personJsonLd = {
   .pillar-card {
     transition: box-shadow 220ms ease, transform 220ms ease;
   }
-
 </style>

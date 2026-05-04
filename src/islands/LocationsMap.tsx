@@ -1,6 +1,4 @@
-import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
-import type { Map as MapLibreMap, Marker } from "maplibre-gl";
 
 export interface MapLocation {
   slug: string;
@@ -35,138 +33,98 @@ const typeLabel: Record<MapLocation["type"], string> = {
 };
 
 export default function LocationsMap({ locations }: Props) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<MapLibreMap | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<MapLocation | null>(null);
-  const [mapError, setMapError] = useState<string | null>(null);
-
-  // Stable ref to avoid re-creating the map when the locations array identity changes
-  const locationsRef = useRef(locations);
-  locationsRef.current = locations;
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
-    let cancelled = false;
-    let markers: Marker[] = [];
+    if (!containerRef.current) return;
+    let destroyed = false;
 
     (async () => {
-      try {
-        const ml = await import("maplibre-gl");
-        // maplibre-gl ships CJS; dynamic import wraps it under .default
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const maplibre = (ml as any).default ?? ml;
-        if (cancelled || !containerRef.current) return;
+      // Leaflet touches window on import — must be dynamic (browser-only)
+      const { default: L } = await import("leaflet");
+      await import("leaflet/dist/leaflet.css");
 
-        const map = new maplibre.Map({
-          container: containerRef.current,
-          style: "https://tiles.openfreemap.org/styles/positron",
-          center: [10, 30],
-          zoom: 1.5,
-          attributionControl: { compact: true },
+      if (destroyed || !containerRef.current) return;
+
+      const map = L.map(containerRef.current, { center: [20, 10], zoom: 2 });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      locations.forEach((loc) => {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 24 32">
+          <circle cx="12" cy="12" r="10" fill="${typeColor[loc.type]}" stroke="white" stroke-width="2"/>
+          <line x1="12" y1="22" x2="12" y2="31" stroke="${typeColor[loc.type]}" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>`;
+        const icon = L.divIcon({
+          html: svg,
+          className: "",
+          iconSize: [24, 32],
+          iconAnchor: [12, 31],
         });
-        mapRef.current = map;
-        map.addControl(new maplibre.NavigationControl({ showCompass: false }), "top-right");
+        L.marker([loc.lat, loc.lng], { icon, title: loc.name })
+          .on("click", () => setSelected(loc))
+          .addTo(map);
+      });
 
-        map.on("error", (e) => {
-          console.error("MapLibre error:", e);
-        });
-
-        map.on("load", () => {
-          if (cancelled) return;
-          // Force correct canvas dimensions after hydration
-          map.resize();
-
-          const locs = locationsRef.current;
-          markers = locs.map((loc) => {
-            const el = document.createElement("button");
-            el.type = "button";
-            el.setAttribute("aria-label", `${loc.name} (${typeLabel[loc.type]})`);
-            el.style.cssText = `width:18px;height:18px;border-radius:9999px;border:2px solid white;background:${typeColor[loc.type]};box-shadow:0 1px 3px rgba(0,0,0,0.3);cursor:pointer;`;
-            el.addEventListener("click", () => setSelected(loc));
-            return new maplibre.Marker({ element: el })
-              .setLngLat([loc.lng, loc.lat])
-              .addTo(map);
-          });
-
-          if (locs.length > 0) {
-            const bounds = new maplibre.LngLatBounds();
-            for (const loc of locs) bounds.extend([loc.lng, loc.lat]);
-            map.fitBounds(bounds, { padding: 60, maxZoom: 6, duration: 0 });
-          }
-        });
-      } catch (err) {
-        console.error("Map init failed:", err);
-        setMapError("Map could not be loaded.");
+      if (locations.length > 0) {
+        const bounds = L.latLngBounds(locations.map((l) => [l.lat, l.lng]));
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 6 });
       }
+
+      return () => { map.remove(); };
     })();
 
-    return () => {
-      cancelled = true;
-      markers.forEach((m) => m.remove());
-      mapRef.current?.remove();
-      mapRef.current = null;
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => { destroyed = true; };
   }, []);
 
   return (
-    <div className="relative h-[70vh] w-full overflow-hidden rounded-lg border border-[var(--color-border)]">
-      {mapError ? (
-        <div className="flex h-full items-center justify-center text-muted">
-          {mapError}
-        </div>
-      ) : (
-        <div ref={containerRef} className="absolute inset-0" />
-      )}
+    <div className="relative h-[70vh] w-full overflow-hidden rounded-xl border border-[var(--color-border)]">
+      <div ref={containerRef} className="absolute inset-0 z-0" />
+
       {selected && (
         <aside
-          className="absolute right-4 top-4 z-10 max-w-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 shadow-xl"
+          className="absolute right-4 top-4 z-[1000] max-w-xs rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-4 shadow-2xl"
           role="dialog"
           aria-label={`Details for ${selected.name}`}
         >
           <button
             type="button"
-            className="absolute right-2 top-2 text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+            className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full text-[var(--color-muted)] hover:bg-[var(--color-bg-elevated)] hover:text-fg"
             onClick={() => setSelected(null)}
             aria-label="Close"
           >
-            ×
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
           </button>
-          <p
-            className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: typeColor[selected.type] }}
-          >
+          <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: typeColor[selected.type] }}>
             {typeLabel[selected.type]}
           </p>
-          <h3 className="mt-1 font-display text-lg font-semibold text-[var(--color-fg)]">
-            {selected.name}
-          </h3>
-          <p className="text-sm text-[var(--color-muted)]">
-            {selected.city}, {selected.country}
-          </p>
-          {selected.notes && (
-            <p className="mt-2 text-sm text-[var(--color-fg)]">{selected.notes}</p>
-          )}
+          <h3 className="mt-1 font-display text-lg font-semibold text-fg">{selected.name}</h3>
+          <p className="text-sm text-[var(--color-muted)]">{selected.city}, {selected.country}</p>
+          {selected.notes && <p className="mt-2 text-sm text-fg">{selected.notes}</p>}
           {selected.website && (
             <a
               href={selected.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-block text-sm font-medium underline underline-offset-2"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-medium underline underline-offset-2"
               style={{ color: typeColor[selected.type] }}
             >
-              Visit website →
+              Visit website
             </a>
           )}
         </aside>
       )}
-      <div className="pointer-events-none absolute bottom-4 left-4 z-10 flex flex-wrap gap-2 rounded-lg bg-[var(--color-bg)]/90 p-3 text-xs">
+
+      <div className="pointer-events-none absolute bottom-8 left-4 z-[1000] flex flex-wrap gap-2 rounded-xl bg-[var(--color-bg)]/95 p-3 text-xs shadow-lg">
         {(Object.keys(typeColor) as MapLocation["type"][]).map((t) => (
           <span key={t} className="inline-flex items-center gap-1.5">
-            <span
-              className="inline-block h-3 w-3 rounded-full"
-              style={{ backgroundColor: typeColor[t] }}
-            />
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: typeColor[t] }} />
             {typeLabel[t]}
           </span>
         ))}
