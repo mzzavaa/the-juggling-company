@@ -1,3 +1,4 @@
+import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import type { Map as MapLibreMap, Marker } from "maplibre-gl";
 
@@ -47,15 +48,6 @@ export default function LocationsMap({ locations }: Props) {
     if (!containerRef.current || mapRef.current) return;
     let cancelled = false;
     let markers: Marker[] = [];
-
-    // Inject MapLibre CSS dynamically so it never runs server-side
-    if (!document.getElementById("maplibre-css")) {
-      const link = document.createElement("link");
-      link.id = "maplibre-css";
-      link.rel = "stylesheet";
-      link.href = "https://unpkg.com/maplibre-gl@5.1.0/dist/maplibre-gl.css";
-      document.head.appendChild(link);
-    }
 
     (async () => {
       try {

@@ -117,41 +117,23 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
         <!-- leading spacer so first card aligns with max-w-6xl on wide screens -->
         <div class="shrink-0 w-[max(0px,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
 
-        {tiktokVideos.map((v) => {
-          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#1d1d1f";
-          return (
-            <div
-              class="tiktok-hover-card snap-start relative flex-none w-52 rounded-2xl overflow-hidden cursor-pointer border border-[var(--color-border)] bg-[var(--color-bg-card)] group"
-              style={`aspect-ratio: 9/16; --card-accent: ${accent};`}
-              data-video-id={v.data.externalId}
-              data-url={v.data.externalUrl}
-              role="article"
-              aria-label={v.data.title}
-            >
-              <!-- Placeholder shown before hover -->
-              <div
-                class="tiktok-placeholder absolute inset-0 flex flex-col justify-end p-4"
-                style={`background: linear-gradient(160deg, color-mix(in oklab, ${accent} 80%, #000) 0%, #0d0d0d 100%);`}
-              >
-                <div class="mb-auto flex justify-end pt-3 opacity-40">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.27 8.27 0 0 0 4.84 1.54V6.76a4.85 4.85 0 0 1-1.07-.07z"/>
-                  </svg>
-                </div>
-                <!-- Play button -->
-                <div class="mb-3 flex items-center justify-center">
-                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm ring-1 ring-white/20 transition group-hover:bg-white/25">
-                    <svg class="ml-1" width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
-                </div>
-                <p class="line-clamp-3 text-xs font-medium leading-snug text-white/90">{v.data.title}</p>
-                <p class="mt-1.5 text-[10px] text-white/50">Hover to play</p>
-              </div>
-            </div>
-          );
-        })}
+        {tiktokVideos.map((v) => (
+          <div
+            class="tiktok-hover-card snap-start relative flex-none w-52 rounded-2xl overflow-hidden border border-[var(--color-border)]"
+            style="aspect-ratio: 9/16;"
+            data-video-id={v.data.externalId}
+            data-url={v.data.externalUrl}
+            aria-label={v.data.title}
+          >
+            <iframe
+              class="tiktok-preview absolute inset-0 h-full w-full border-0"
+              src={`https://www.tiktok.com/embed/v2/${v.data.externalId}?autoplay=0`}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              loading="lazy"
+              title={v.data.title}
+            />
+          </div>
+        ))}
 
         <!-- trailing spacer -->
         <div class="shrink-0 w-[max(1rem,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
@@ -295,35 +277,23 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
 </BaseLayout>
 
 <script>
-  // TikTok hover-to-play: inject direct embed iframe on mouseenter, destroy on mouseleave
   document.querySelectorAll<HTMLElement>(".tiktok-hover-card").forEach((card) => {
-    let frame: HTMLIFrameElement | null = null;
+    const iframe = card.querySelector<HTMLIFrameElement>(".tiktok-preview");
+    if (!iframe) return;
 
-    const destroy = () => {
-      frame?.remove();
-      frame = null;
-      card.querySelector<HTMLElement>(".tiktok-placeholder")!.style.opacity = "1";
-    };
+    const videoId = card.dataset.videoId ?? "";
 
     card.addEventListener("mouseenter", () => {
-      if (frame) return;
-      const videoId = card.dataset.videoId;
-      if (!videoId) return;
-      card.querySelector<HTMLElement>(".tiktok-placeholder")!.style.opacity = "0";
-      frame = document.createElement("iframe");
-      frame.src = `https://www.tiktok.com/embed/v2/${videoId}?autoplay=1`;
-      frame.allow = "autoplay; encrypted-media; picture-in-picture";
-      frame.allowFullscreen = true;
-      frame.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0;z-index:10;";
-      card.appendChild(frame);
+      iframe.src = `https://www.tiktok.com/embed/v2/${videoId}?autoplay=1`;
     });
 
-    card.addEventListener("mouseleave", destroy);
+    card.addEventListener("mouseleave", () => {
+      iframe.src = `https://www.tiktok.com/embed/v2/${videoId}?autoplay=0`;
+    });
 
-    // Mobile: tap opens TikTok instead of trying to embed
-    card.addEventListener("click", (e) => {
+    // Mobile: tap opens TikTok
+    card.addEventListener("click", () => {
       if (window.matchMedia("(hover: none)").matches) {
-        e.preventDefault();
         const url = card.dataset.url;
         if (url) window.open(url, "_blank", "noopener,noreferrer");
       }
@@ -348,10 +318,6 @@ const instagramVideos = videos.filter((v) => v.data.source === "instagram");
   .tech-card:hover {
     border-color: var(--card-accent);
     box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--card-accent) 50%, transparent);
-  }
-
-  .tiktok-hover-card .tiktok-placeholder {
-    transition: opacity 150ms ease;
   }
 
   /* Hide default scrollbar on carousel rows but keep scrollability */
