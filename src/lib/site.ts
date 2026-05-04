@@ -3,7 +3,7 @@ export const site = {
   nameShort: "theJugglingCompany",
   tagline: "Everyone juggles. Everyone belongs.",
   description:
-    "Linda Mohamed - AWS Hero, juggler, and community builder. Juggling has no prerequisites. No size, age, or background requirement. When you juggle, you are enough.",
+    "Linda Mohamed - AWS Hero, keynote speaker, and juggler based in Vienna. Juggling has no prerequisites - it grows grey matter, reduces anxiety, and belongs to everyone. Brain. Tech. Change.",
   url: "https://thejugglingcompany.com",
   author: {
     name: "Linda Mohamed",

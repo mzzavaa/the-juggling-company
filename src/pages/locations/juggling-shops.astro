@@ -17,11 +17,40 @@ const mapLocations: MapLocation[] = shops.map((l) => ({
   notes: l.data.notes,
   website: l.data.website,
 }));
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Juggling Shops Around the World",
+  description: "A curated directory of specialist juggling and circus equipment shops, visited and verified by Linda Mohamed.",
+  numberOfItems: shops.length,
+  itemListElement: shops.map((shop, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Store",
+      name: shop.data.name,
+      description: shop.data.notes ?? `Juggling shop in ${shop.data.city}, ${shop.data.country}.`,
+      ...(shop.data.website ? { url: shop.data.website } : {}),
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: shop.data.city,
+        addressCountry: shop.data.country,
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: shop.data.lat,
+        longitude: shop.data.lng,
+      },
+    },
+  })),
+};
 ---
 
 <BaseLayout
-  title="Juggling Shops"
-  description="A growing directory of juggling shops around the world - reviewed, visited, and tested by Linda Mohamed."
+  title="Juggling Shops Directory - Where to Buy Juggling Props Worldwide"
+  description={`${shops.length} specialist juggling shops across Europe, the US, and beyond. Find where to buy juggling balls, clubs, and rings near you.`}
+  jsonLd={itemListJsonLd}
 >
   <section class="mx-auto max-w-7xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain-change)]">

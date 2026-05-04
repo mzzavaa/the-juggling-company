@@ -37,11 +37,32 @@ const typeLabel: Record<typeof data.type, string> = {
 const accent = typeColor[data.type];
 const osmZoom = data.type === "home-base" ? 13 : 10;
 const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${data.lng - 0.15},${data.lat - 0.1},${data.lng + 0.15},${data.lat + 0.1}&layer=mapnik&marker=${data.lat},${data.lng}`;
+
+const localBusinessJsonLd = data.type === "juggling-shop" ? {
+  "@context": "https://schema.org",
+  "@type": "Store",
+  name: data.name,
+  description: data.notes ?? `Juggling shop in ${data.city}, ${data.country}.`,
+  ...(data.website ? { url: data.website } : {}),
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: data.lat,
+    longitude: data.lng,
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: data.city,
+    addressCountry: data.country,
+  },
+} : null;
 ---
 
 <BaseLayout
-  title={`${data.name} - theJugglingCompany`}
+  title={data.type === "juggling-shop"
+    ? `${data.name} - Juggling Shop in ${data.city}`
+    : `${data.name} - theJugglingCompany`}
   description={data.notes || `${typeLabel[data.type]} in ${data.city}, ${data.country}.`}
+  jsonLd={localBusinessJsonLd ?? undefined}
 >
   <section class="mx-auto max-w-5xl px-4 py-16 md:px-6">
     <a
