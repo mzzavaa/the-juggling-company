@@ -51,9 +51,6 @@ const accentHex = pillars.length > 0 ? PILLAR_HEX[blendKey(pillars)] : "#9696b0"
       <Icon name={sourceIcon[source]} size={12} />
       {sourceLabel[source]}
     </span>
-    <span class="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-1 text-xs text-white">
-      {formatDuration(durationSec)}
-    </span>
   </div>
   <div class="flex flex-1 flex-col gap-3 p-5">
     {pillars.length > 0 && <PillarBadge pillars={pillars} variant="solid" />}

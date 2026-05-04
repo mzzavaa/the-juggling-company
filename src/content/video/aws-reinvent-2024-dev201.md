@@ -10,5 +10,5 @@ tags: ["aws", "reinvent", "amazon-q", "ai", "community"]
 pillars: ["tech", "change"]
 description: "The official AWS re:Invent 2024 session (DEV201) — a deep-dive into building Amazon Q Apps that scale and drive community engagement, recorded live in Las Vegas."
 ideaSlugs: ["juggling-and-technology"]
-featured: true
+featured: false
 ---

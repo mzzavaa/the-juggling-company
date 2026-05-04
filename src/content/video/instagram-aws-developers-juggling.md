@@ -9,5 +9,5 @@ durationSec: 45
 tags: ["aws", "juggling", "community", "featured", "developers"]
 pillars: ["tech", "brain"]
 description: "Featured on the official AWS Developers Instagram — juggling and cloud in the same frame."
-featured: true
+featured: false
 ---

@@ -4,7 +4,7 @@ slug: juggling-schoenbrunn-vienna
 source: youtube
 externalId: 9oHIB5TgoJs
 externalUrl: https://www.youtube.com/watch?v=9oHIB5TgoJs
-publishedAt: 2023-06-15
+publishedAt: 2026-03-10
 durationSec: 90
 tags: ["juggling", "vienna", "performance", "outdoor", "3-ball"]
 pillars: ["brain"]
