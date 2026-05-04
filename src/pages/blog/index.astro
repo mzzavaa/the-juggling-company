@@ -10,7 +10,7 @@ const posts = await getPosts();
   title="Blog"
   description="Field reports, research notes, and behind-the-scenes from workshops, stages, and the road."
 >
-  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+  <section class="mx-auto max-w-7xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Blog</p>
     <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
       <span class="rgb-text">From the road.</span>
@@ -20,7 +20,7 @@ const posts = await getPosts();
     </p>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
+  <section class="mx-auto max-w-7xl px-4 pb-24 md:px-6">
     <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((p) => <li><PostCard post={p} /></li>)}
     </ul>
