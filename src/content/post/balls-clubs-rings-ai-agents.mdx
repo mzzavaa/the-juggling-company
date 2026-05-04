@@ -1,7 +1,7 @@
 ---
 title: "Balls, Clubs, and Rings: How I Use Juggling Props to Explain AI Agents"
 slug: balls-clubs-rings-ai-agents
-summary: "Every juggling prop teaches a different lesson about complexity — and they map to AI agent types better than any diagram I've ever drawn."
+summary: "Every juggling prop teaches a different lesson about complexity - and they map to AI agent types better than any diagram I've ever drawn."
 date: 2026-02-23
 tags: ["ai-agents", "juggling", "aws", "agentcore", "architecture"]
 pillars: ["brain", "tech"]
@@ -14,19 +14,36 @@ Not because I'm rude. Because the analogy is *right there*, and nobody in the ro
 
 Here's the thing about juggling: every prop teaches you something different. Balls teach you focus. Rings teach you rhythm. Clubs teach you timing, and that mistakes are loud. The devil stick teaches you that some things can only be guided, not controlled.
 
-I've been juggling for years — for real, not as a metaphor — and the longer I do it, the more I see it in my work. Especially now, when that work increasingly means designing and building teams of AI agents.
+I've been juggling for years - for real, not as a metaphor - and the longer I do it, the more I see it in my work. Especially now, when that work increasingly means designing and building teams of AI agents.
 
 So let me give you the prop-by-prop breakdown. Because when I'm explaining agent types to a client, I reach for this framework before I reach for any diagram.
 
 ---
 
-## 🎱 The Ball: Simple, Forgiving, a Great Starting Point
+<div style="display: flex; align-items: center; gap: 20px; margin: 2.5rem 0 0.75rem;">
+  <svg viewBox="0 0 80 80" width="68" height="68" aria-hidden="true">
+    <defs>
+      <radialGradient id="ball-g" cx="38%" cy="35%" r="62%">
+        <stop offset="0%" stop-color="#ff8080" />
+        <stop offset="100%" stop-color="#991b1b" />
+      </radialGradient>
+    </defs>
+    <circle cx="40" cy="40" r="36" fill="url(#ball-g)" />
+    <ellipse cx="31" cy="29" rx="9" ry="6" fill="white" style="opacity: 0.22;" transform="rotate(-25 31 29)" />
+  </svg>
+  <div style="line-height: 1.2;">
+    <p style="margin: 0; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #dc2626;">Prop 01</p>
+    <p style="margin: 0; font-size: 1.6rem; font-weight: 700;">The Ball</p>
+  </div>
+</div>
 
-If you've never juggled before, you start with one ball. You throw it. You catch it. You add a second. Then three. The ball is the most forgiving prop there is — it's round, it bounces if you drop it, and the feedback loop is immediate and honest.
+## 🎱 Simple, Forgiving, a Great Starting Point
+
+If you've never juggled before, you start with one ball. You throw it. You catch it. You add a second. Then three. The ball is the most forgiving prop there is - it's round, it bounces if you drop it, and the feedback loop is immediate and honest.
 
 In the AI agent world, a **ball is your small, single-purpose, stateless agent**.
 
-It does one thing. It's cheap. It's fast. It doesn't carry memory between calls. You give it an input, it gives you an output, you move on. My news scanner agent is a ball. Every Thursday morning at 10am, EventBridge triggers it, it reads a set of RSS feeds, filters for AI-relevant content, formats a digest, and drops it in Notion. Done. No history, no memory, no reasoning chain — just: input in, output out.
+It does one thing. It's cheap. It's fast. It doesn't carry memory between calls. You give it an input, it gives you an output, you move on. My news scanner agent is a ball. Every Thursday morning at 10am, EventBridge triggers it, it reads a set of RSS feeds, filters for AI-relevant content, formats a digest, and drops it in Notion. Done. No history, no memory, no reasoning chain - just: input in, output out.
 
 Balls are the agents that *should* make up most of your system. They're the workhorses. They don't dazzle anyone, but they show up every day without breaking.
 
@@ -34,22 +51,51 @@ Balls are the agents that *should* make up most of your system. They're the work
 - Short, bounded context window
 - Single action or single decision
 - Runs on a small or distilled model (Haiku-class, if you're in the Claude ecosystem)
-- Stateless — each run is independent
+- Stateless - each run is independent
 - Cheap enough that you don't think twice about running it
 
 **Where balls break down:** when the task requires context across time, when the output needs to reason about previous outputs, or when the stakes are high enough that you need the agent to *understand* rather than just *process*. A ball doesn't understand. It catches and throws.
 
+<div style="border: 2px solid #dc2626; border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: color-mix(in oklab, #dc2626 7%, transparent);">
+  <p style="margin: 0 0 0.75rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #dc2626;">Ball Agent - at a glance</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 1.25rem; font-size: 0.875rem;">
+    <div><strong>Model tier</strong><br/>Haiku-class</div>
+    <div><strong>Context window</strong><br/>Short, bounded</div>
+    <div><strong>Cost per run</strong><br/>Fractions of a cent</div>
+    <div><strong>Failure mode</strong><br/>Bounces - catches and recovers</div>
+    <div><strong>Best for</strong><br/>Scanners, classifiers, pings</div>
+    <div><strong>Pizza slices</strong><br/>1 slice</div>
+  </div>
+</div>
+
 ---
 
-## 🟠 The Ring: Rhythmic, Consistent, Requires Sustained Attention
+<div style="display: flex; align-items: center; gap: 20px; margin: 2.5rem 0 0.75rem;">
+  <svg viewBox="0 0 100 56" width="88" height="50" aria-hidden="true">
+    <defs>
+      <radialGradient id="ring-g" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fcd34d" />
+        <stop offset="100%" stop-color="#b45309" />
+      </radialGradient>
+    </defs>
+    <ellipse cx="50" cy="28" rx="47" ry="25" fill="url(#ring-g)" />
+    <ellipse cx="50" cy="28" rx="32" ry="16" style="fill: #111827;" />
+  </svg>
+  <div style="line-height: 1.2;">
+    <p style="margin: 0; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #d97706;">Prop 02</p>
+    <p style="margin: 0; font-size: 1.6rem; font-weight: 700;">The Ring</p>
+  </div>
+</div>
 
-Rings are interesting because they're less intuitive than balls. They fly flat. They wobble if you throw them wrong. You have to spin them slightly on release to keep them stable in flight. Once you get the rhythm, though, they're almost meditative — there's a consistency to ring juggling that balls don't have.
+## 🟠 Rhythmic, Consistent, Requires Sustained Attention
+
+Rings are interesting because they're less intuitive than balls. They fly flat. They wobble if you throw them wrong. You have to spin them slightly on release to keep them stable in flight. Once you get the rhythm, though, they're almost meditative - there's a consistency to ring juggling that balls don't have.
 
 In the agent world, **a ring is your medium agent: multi-step, with short-term memory, running a repeatable pattern**.
 
-Rings are your content drafters, your proposal generators, your meeting summarizers. They take a context window with some history in it, reason across it, produce structured output, and hand off. They're not one-shot like balls — they hold a thread for the duration of a task — but they don't have to remember across sessions.
+Rings are your content drafters, your proposal generators, your meeting summarizers. They take a context window with some history in it, reason across it, produce structured output, and hand off. They're not one-shot like balls - they hold a thread for the duration of a task - but they don't have to remember across sessions.
 
-My invoice chaser agent is a ring. It knows the current state of the invoice (context), it looks at what's happened so far (short history), it decides whether to send a reminder or escalate, and it does it. Next week, it runs again with fresh context. The ring doesn't need to remember last week's run — the state is stored in Notion, and the agent reads it fresh each time.
+My invoice chaser agent is a ring. It knows the current state of the invoice (context), it looks at what's happened so far (short history), it decides whether to send a reminder or escalate, and it does it. Next week, it runs again with fresh context. The ring doesn't need to remember last week's run - the state is stored in Notion, and the agent reads it fresh each time.
 
 **What makes a ring agent?**
 - Medium context window (enough for a task's full state)
@@ -60,53 +106,194 @@ My invoice chaser agent is a ring. It knows the current state of the invoice (co
 
 **Where rings break down:** when the task requires complex judgment across long histories, when the agent needs to synthesize information from many sources, or when it needs to make decisions that compound over time. A ring can hold a pattern, but it can't improvise.
 
+<div style="border: 2px solid #d97706; border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: color-mix(in oklab, #d97706 7%, transparent);">
+  <p style="margin: 0 0 0.75rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #d97706;">Ring Agent - at a glance</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 1.25rem; font-size: 0.875rem;">
+    <div><strong>Model tier</strong><br/>Sonnet-class</div>
+    <div><strong>Context window</strong><br/>Medium - full task state</div>
+    <div><strong>Cost per run</strong><br/>A few cents</div>
+    <div><strong>Failure mode</strong><br/>Wobbles visibly - needs correction</div>
+    <div><strong>Best for</strong><br/>Drafters, chasers, formatters</div>
+    <div><strong>Pizza slices</strong><br/>2 slices</div>
+  </div>
+</div>
+
 ---
 
-## 🎪 The Club: Complex, Unforgiving, Loud When It Goes Wrong
+<div style="display: flex; align-items: center; gap: 20px; margin: 2.5rem 0 0.75rem;">
+  <svg viewBox="0 0 54 130" width="38" height="92" aria-hidden="true">
+    <defs>
+      <linearGradient id="club-g" x1="20%" y1="0%" x2="80%" y2="100%">
+        <stop offset="0%" stop-color="#6ee7b7" />
+        <stop offset="100%" stop-color="#064e3b" />
+      </linearGradient>
+    </defs>
+    <ellipse cx="27" cy="34" rx="23" ry="29" fill="url(#club-g)" />
+    <rect x="21" y="60" width="12" height="8" style="fill: #065f46;" />
+    <rect x="22" y="68" width="10" height="48" rx="5" fill="url(#club-g)" />
+    <ellipse cx="27" cy="116" rx="8" ry="5" style="fill: #064e3b;" />
+  </svg>
+  <div style="line-height: 1.2;">
+    <p style="margin: 0; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #10b981;">Prop 03</p>
+    <p style="margin: 0; font-size: 1.6rem; font-weight: 700;">The Club</p>
+  </div>
+</div>
 
-Clubs are what people think of when they think of juggling. They're the classic circus prop. And they are *harder* than they look — not because the throwing is complicated, but because clubs spin. Every throw has to be calibrated for rotation. Too little spin and the handle arrives before you expect it. Too much and you're chasing a horizontal club through the air.
+## 🎪 Complex, Unforgiving, Loud When It Goes Wrong
+
+Clubs are what people think of when they think of juggling. They're the classic circus prop. And they are *harder* than they look - not because the throwing is complicated, but because clubs spin. Every throw has to be calibrated for rotation. Too little spin and the handle arrives before you expect it. Too much and you're chasing a horizontal club through the air.
 
 Dropping a ball is fine. Dropping a club in front of an audience is an event. Everyone notices. It's loud.
 
 In the agent world, **a club is your large, long-context, high-stakes agent**.
 
-Clubs are your research synthesizers. Your architecture reviewers. Your agents that read multiple documents, reason across them, make complex decisions, and produce output that actually matters. They're expensive to run — they use Opus-class models, they have long context windows, they take time — and when they fail, it's visible.
+Clubs are your research synthesizers. Your architecture reviewers. Your agents that read multiple documents, reason across them, make complex decisions, and produce output that actually matters. They're expensive to run - they use Opus-class models, they have long context windows, they take time - and when they fail, it's visible.
 
-My deep research agent is a club. When I ask it to synthesize the current state of multi-agent orchestration patterns, it uses Playwright to scrape sources, retrieves from my Bedrock Knowledge Base, reasons across everything, and produces a structured brief. It costs real money to run. It takes a few minutes. But the output is worth it — it replaces two hours of my own reading and synthesis.
+My deep research agent is a club. When I ask it to synthesize the current state of multi-agent orchestration patterns, it uses Playwright to scrape sources, retrieves from my Bedrock Knowledge Base, reasons across everything, and produces a structured brief. It costs real money to run. It takes a few minutes. But the output is worth it - it replaces two hours of my own reading and synthesis.
 
 **What makes a club agent?**
 - Long context window
 - Multi-source synthesis or complex multi-step reasoning
 - Opus-class or high-context model
-- Expensive per run — you don't trigger this on a cron every 15 minutes
-- High output quality expected — failures are costly
+- Expensive per run - you don't trigger this on a cron every 15 minutes
+- High output quality expected - failures are costly
 
 **Where clubs break down:** everywhere, if you use them for ball tasks. This is the mistake I see constantly. Someone builds a research-grade agent for a task that needs a simple classifier. They run Opus on a job Haiku could do in 200 milliseconds. They wonder why their costs are out of control.
 
 The juggling principle: don't use a club when the trick calls for a ball.
 
+<div style="border: 2px solid #10b981; border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: color-mix(in oklab, #10b981 7%, transparent);">
+  <p style="margin: 0 0 0.75rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #10b981;">Club Agent - at a glance</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 1.25rem; font-size: 0.875rem;">
+    <div><strong>Model tier</strong><br/>Opus-class</div>
+    <div><strong>Context window</strong><br/>Long - multi-source</div>
+    <div><strong>Cost per run</strong><br/>Dollars, not cents</div>
+    <div><strong>Failure mode</strong><br/>Loud drop - everyone notices</div>
+    <div><strong>Best for</strong><br/>Research, proposals, architecture</div>
+    <div><strong>Pizza slices</strong><br/>4 slices</div>
+  </div>
+</div>
+
 ---
 
-## 🌀 The Devil Stick: Autonomous, Unpredictable, Requires a Light Touch
+<div style="display: flex; align-items: center; gap: 20px; margin: 2.5rem 0 0.75rem;">
+  <svg viewBox="0 0 120 100" width="96" height="80" aria-hidden="true">
+    <line x1="12" y1="92" x2="52" y2="22" style="stroke: #9333ea; stroke-width: 7; stroke-linecap: round;" />
+    <line x1="108" y1="92" x2="68" y2="22" style="stroke: #9333ea; stroke-width: 7; stroke-linecap: round;" />
+    <line x1="16" y1="54" x2="104" y2="46" style="stroke: #c084fc; stroke-width: 9; stroke-linecap: round;" />
+    <circle cx="16" cy="54" r="6" fill="#7e22ce" />
+    <circle cx="104" cy="46" r="6" fill="#7e22ce" />
+  </svg>
+  <div style="line-height: 1.2;">
+    <p style="margin: 0; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #9333ea;">Prop 04</p>
+    <p style="margin: 0; font-size: 1.6rem; font-weight: 700;">The Devil Stick</p>
+  </div>
+</div>
+
+## 🌀 Autonomous, Unpredictable, Requires a Light Touch
 
 The devil stick is the prop that teaches you something the others don't: you cannot directly control it.
 
-You use two hand sticks to keep the center stick spinning. You guide it. You correct it when it starts to drift. But the moment you grab it directly — the moment you try to take over — the whole thing falls apart. The skill is learning to influence without controlling. To react to what the prop does, not what you planned for it to do.
+You use two hand sticks to keep the center stick spinning. You guide it. You correct it when it starts to drift. But the moment you grab it directly - the moment you try to take over - the whole thing falls apart. The skill is learning to influence without controlling. To react to what the prop does, not what you planned for it to do.
 
-In the agent world, **a devil stick is your autonomous, long-running agent** — an agent you give a goal to, then watch.
+In the agent world, **a devil stick is your autonomous, long-running agent** - an agent you give a goal to, then watch.
 
 These are the agents that scare people. The ones that browse the web, write and execute code, trigger other agents, and make decisions in a loop until they reach a goal or hit a stop condition. They're not triggered once and finished. They run, observe, decide, act, observe again.
 
-Otto — my AI community orchestration bot — has devil stick behaviors. When I ask him to plan the next Vienna meetup, he doesn't just format a template. He checks Sessionize for speaker submissions, looks at the event calendar, drafts a shortlist of speaker suggestions, checks the venue availability pattern from past events, and proposes an agenda. He does it in a loop. I set the goal; he figures out the steps.
+Otto - my AI community orchestration bot - has devil stick behaviors. When I ask him to plan the next Vienna meetup, he doesn't just format a template. He checks Sessionize for speaker submissions, looks at the event calendar, drafts a shortlist of speaker suggestions, checks the venue availability pattern from past events, and proposes an agenda. He does it in a loop. I set the goal; he figures out the steps.
 
 **What makes a devil stick agent?**
 - Autonomous reasoning loop (think, act, observe, repeat)
 - Tool access: can call APIs, read/write files, trigger other agents
 - Goal-directed rather than instruction-directed
 - Requires guardrails: stop conditions, maximum iterations, human-in-the-loop checkpoints
-- Unpredictable in execution — same goal can take different paths
+- Unpredictable in execution - same goal can take different paths
 
 **Where devil sticks break down:** without guardrails, they run forever. Without a well-defined goal, they hallucinate a target. Without observability, you have no idea what they're doing until they've already done it. The key insight from juggling: you have to stay actively engaged. The devil stick doesn't run itself. You guide it.
+
+<div style="border: 2px solid #9333ea; border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: color-mix(in oklab, #9333ea 7%, transparent);">
+  <p style="margin: 0 0 0.75rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9333ea;">Devil Stick Agent - at a glance</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 1.25rem; font-size: 0.875rem;">
+    <div><strong>Model tier</strong><br/>Variable (scales with task)</div>
+    <div><strong>Context window</strong><br/>Self-extending across loop</div>
+    <div><strong>Cost per run</strong><br/>Unpredictable - set a ceiling</div>
+    <div><strong>Failure mode</strong><br/>Silent drift - may not tell you it failed</div>
+    <div><strong>Best for</strong><br/>Goal-directed multi-step orchestration</div>
+    <div><strong>Pizza slices</strong><br/>Variable - define at design time</div>
+  </div>
+</div>
+
+---
+
+## How the Props Work Together in a Team
+
+Here's what took me a while to understand: the prop taxonomy isn't just for classifying individual agents. It's a design language for the whole crew.
+
+When I built Otto, I started with one ball. A single Slack bot that could answer questions about upcoming events. Stateless. Simple. It worked. Then I noticed what it couldn't do - and instead of making it smarter, I added more props.
+
+Today Otto is an ensemble of seven agents:
+- Four balls: ingestion, notification routing, FAQ responses, calendar sync
+- Two rings: speaker coordination and event drafts
+- One orchestrating layer that behaves more like a devil stick - watching the whole system and deciding which agent needs to fire
+
+The insight from this: **never make one agent smarter when you can give it a specialized colleague instead.**
+
+This mirrors how juggling actually scales. You don't start with a complicated prop and simplify down. You master one ball, add a second, add a third. When you can handle three balls cleanly, you introduce rings into the pattern - not to replace the balls, but because the mix becomes richer.
+
+<div style="border-left: 4px solid #6366f1; padding: 0.875rem 1.25rem; margin: 1.75rem 0; background: color-mix(in oklab, #6366f1 6%, transparent); border-radius: 0 8px 8px 0;">
+  <p style="margin: 0; font-style: italic; font-size: 1.05rem; line-height: 1.6;">"When you can handle three balls cleanly, you introduce rings into the pattern - not to replace the balls, but because the mix becomes richer."</p>
+</div>
+
+Running a community works the same way. I started managing the AWS User Group Vienna entirely manually. Spreadsheets. Calendar reminders. DMs. I was the only agent in the system, and I was running at capacity. When I reached my limit, I didn't try to be a better human - I built a ball. Then a ring. Then gradually assembled a crew that handles the routine work so I can focus on the parts that genuinely require judgment.
+
+The team model isn't about replacing human work. It's about right-sizing each task to the right prop.
+
+---
+
+## The Ensemble Capacity Model
+
+A juggler has a total cognitive load they can sustain. Research into physical juggling suggests around 11 units of sustained attention. The unit cost varies by prop because they demand different kinds of focus:
+
+<div style="overflow-x: auto; margin: 1.5rem 0;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; border: 1px solid var(--color-border);">
+    <thead>
+      <tr style="border-bottom: 2px solid var(--color-border);">
+        <th style="text-align: left; padding: 10px 14px; font-weight: 600;">Prop</th>
+        <th style="text-align: left; padding: 10px 14px; font-weight: 600;">Juggler attention</th>
+        <th style="text-align: left; padding: 10px 14px; font-weight: 600;">AI model tier</th>
+        <th style="text-align: left; padding: 10px 14px; font-weight: 600;">Pizza slices</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid var(--color-border);">
+        <td style="padding: 10px 14px;">🎱 Ball</td>
+        <td style="padding: 10px 14px; color: #dc2626; font-weight: 600;">1 unit</td>
+        <td style="padding: 10px 14px;">Haiku-class</td>
+        <td style="padding: 10px 14px;">1 slice</td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--color-border);">
+        <td style="padding: 10px 14px;">🎪 Club</td>
+        <td style="padding: 10px 14px; color: #10b981; font-weight: 600;">2 units</td>
+        <td style="padding: 10px 14px;">Opus-class</td>
+        <td style="padding: 10px 14px;">4 slices</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px 14px;">🟠 Ring</td>
+        <td style="padding: 10px 14px; color: #d97706; font-weight: 600;">3 units</td>
+        <td style="padding: 10px 14px;">Sonnet-class</td>
+        <td style="padding: 10px 14px;">2 slices</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Notice something interesting: in physical juggling, rings are the most *attention-demanding* per item - they require more precision to maintain than clubs. But in AI agent design, clubs (Opus-class) are the most expensive to run. The analogy isn't perfect. It's a map, not a mirror.
+
+What both models capture is the same underlying truth: **you can't run everything at maximum complexity simultaneously.** A juggler mid-routine has no attention left to improvise. An AI system running three concurrent Opus agents has no token budget left for anything else.
+
+The load formula for an AI session window: `balls × 1 + rings × 2 + clubs × 4 ≤ 16 slices`
+
+The full resource allocation system lives in [Post 4: The Complete Juggling-Pizza Framework](/blog/juggling-pizza-framework-ai-agent-teams).
 
 ---
 
@@ -114,7 +301,7 @@ Otto — my AI community orchestration bot — has devil stick behaviors. When I
 
 Here's the juggling insight that most agent architecture discussions miss: *the same prop behaves differently depending on where you're juggling.*
 
-Indoors, no wind, perfect lighting — you juggle clubs the way you practiced them. You know exactly what's coming. Outdoors, light breeze — the rings wobble slightly. You adjust. Full wind and rain — you don't juggle clubs at all. You grab the balls, because the balls are forgiving enough to survive the chaos.
+Indoors, no wind, perfect lighting - you juggle clubs the way you practiced them. You know exactly what's coming. Outdoors, light breeze - the rings wobble slightly. You adjust. Full wind and rain - you don't juggle clubs at all. You grab the balls, because the balls are forgiving enough to survive the chaos.
 
 Agent systems are the same. The "environment" is your production context:
 
@@ -122,7 +309,7 @@ Agent systems are the same. The "environment" is your production context:
 - **Non-critical production (light breeze):** moderate stakes. Use rings. Run clubs with human review. Log everything.
 - **High-stakes production (full wind):** don't run devil sticks without human checkpoints. Consider whether a ring can do the job instead of a club. Have fallbacks for every agent that matters.
 
-I watched a team deploy an autonomous agent to their customer-facing production system — basically, a devil stick outdoors in a thunderstorm — with no guardrails, no human review, and no stop conditions. The agent decided that "help the customer resolve their issue" included sending a full account credit without any approval flow. The agent was technically correct. The business was furious.
+I watched a team deploy an autonomous agent to their customer-facing production system - basically, a devil stick outdoors in a thunderstorm - with no guardrails, no human review, and no stop conditions. The agent decided that "help the customer resolve their issue" included sending a full account credit without any approval flow. The agent was technically correct. The business was furious.
 
 Wrong prop for the environment.
 
@@ -141,8 +328,34 @@ Bounce and recover = ball. Noticeable but handleable = ring. Loud and visible = 
 **3. What's the environment?**
 Controlled dev = fine to experiment with clubs and devil sticks. Production with real consequences = start with balls and rings. Add complexity only when simpler props can't do the job.
 
+The patterns behind each of these questions are explored further in [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure) - where all three drop types map directly to root causes in AI systems.
+
 ---
 
-*Post 2 in the Juggling-Pizza Framework series. [Post 1: The Pizza Agent Model](/blog/pizza-agent-model) · [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure) · [Post 4: The Complete Framework](/blog/juggling-pizza-framework-ai-agent-teams)*
+<div style="margin: 2.5rem 0; padding: 1.5rem 1.75rem; border-radius: 16px; border: 1px solid var(--color-border); background: var(--color-bg-card);">
+  <p style="margin: 0 0 1.25rem; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">Juggling-Pizza Framework - Full Series</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.75rem;">
+    <a href="/blog/pizza-agent-model" style="display: block; padding: 1rem 1.125rem; border-radius: 10px; border: 1px solid var(--color-border); text-decoration: none; color: inherit;">
+      <p style="margin: 0 0 0.3rem; font-size: 0.68rem; color: var(--color-muted);">Post 1</p>
+      <p style="margin: 0; font-weight: 600; font-size: 0.9rem; line-height: 1.3;">The Pizza Agent Model</p>
+      <p style="margin: 0.3rem 0 0; font-size: 0.78rem; color: var(--color-muted);">The resource allocation framework</p>
+    </a>
+    <a href="/blog/balls-clubs-rings-ai-agents" style="display: block; padding: 1rem 1.125rem; border-radius: 10px; border: 2px solid #6366f1; text-decoration: none; color: inherit; background: color-mix(in oklab, #6366f1 5%, transparent);">
+      <p style="margin: 0 0 0.3rem; font-size: 0.68rem; color: #6366f1; font-weight: 600;">Post 2 - you are here</p>
+      <p style="margin: 0; font-weight: 600; font-size: 0.9rem; line-height: 1.3;">Balls, Clubs, and Rings</p>
+      <p style="margin: 0.3rem 0 0; font-size: 0.78rem; color: var(--color-muted);">The prop taxonomy for agents</p>
+    </a>
+    <a href="/blog/juggling-ai-failure" style="display: block; padding: 1rem 1.125rem; border-radius: 10px; border: 1px solid var(--color-border); text-decoration: none; color: inherit;">
+      <p style="margin: 0 0 0.3rem; font-size: 0.68rem; color: var(--color-muted);">Post 3</p>
+      <p style="margin: 0; font-weight: 600; font-size: 0.9rem; line-height: 1.3;">Dropping the Ball Is the Point</p>
+      <p style="margin: 0.3rem 0 0; font-size: 0.78rem; color: var(--color-muted);">Designing for failure, not against it</p>
+    </a>
+    <a href="/blog/juggling-pizza-framework-ai-agent-teams" style="display: block; padding: 1rem 1.125rem; border-radius: 10px; border: 1px solid var(--color-border); text-decoration: none; color: inherit;">
+      <p style="margin: 0 0 0.3rem; font-size: 0.68rem; color: var(--color-muted);">Post 4</p>
+      <p style="margin: 0; font-weight: 600; font-size: 0.9rem; line-height: 1.3;">The Complete Framework</p>
+      <p style="margin: 0.3rem 0 0; font-size: 0.78rem; color: var(--color-muted);">Props + pizza in one system</p>
+    </a>
+  </div>
+</div>
 
 *Linda Mohamed is an AWS Hero and cloud consultant in Vienna. She runs the AWS User Groups in Vienna and Linz, builds AI agent systems on AWS Bedrock, and occasionally juggles clubs on stage to make a point about distributed architectures.*

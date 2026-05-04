@@ -32,7 +32,7 @@ In 2023, I was running the AWS User Group Vienna, consulting for clients, speaki
 
 I was, in the literal and metaphorical sense, juggling too many things.
 
-At some point — and I've been honest about this on stage because I think it's important — I reached a point where I had underestimated the effort required. The meetup planning that I thought took two hours was taking six. The speaker outreach that I thought was a quick email was a three-week negotiation. The community stuff that I thought I could fit around consulting was consuming the space where consulting was supposed to live.
+At some point - and I've been honest about this on stage because I think it's important - I reached a point where I had underestimated the effort required. The meetup planning that I thought took two hours was taking six. The speaker outreach that I thought was a quick email was a three-week negotiation. The community stuff that I thought I could fit around consulting was consuming the space where consulting was supposed to live.
 
 I dropped the ball.
 
@@ -40,7 +40,7 @@ Not catastrophically. Nobody got hurt. But I recognized the moment: this is the 
 
 So I built Otto.
 
-Otto — Organizer That Takes Over — started as a Slack bot that could answer common community questions without me. Just a simple retrieval system. A ball agent, in my current vocabulary. Single-purpose, lightweight, totally dumb in the best possible way.
+Otto - Organizer That Takes Over - started as a Slack bot that could answer common community questions without me. Just a simple retrieval system. A ball agent, in my current vocabulary. Single-purpose, lightweight, totally dumb in the best possible way.
 
 And then Otto dropped the ball too.
 
@@ -60,7 +60,7 @@ I've seen teams spend three months designing an agent architecture with elaborat
 
 You can't fully anticipate failure in advance. Not in juggling, not in software, not in AI. You have to let things run until they break, observe where they break, and then design the response.
 
-This is not recklessness. This is structured iteration. There's a difference between dropping balls in practice and dropping balls during a performance. The former is how you learn. The latter is a system design problem — it means you didn't practice enough in the right conditions.
+This is not recklessness. This is structured iteration. There's a difference between dropping balls in practice and dropping balls during a performance. The former is how you learn. The latter is a system design problem - it means you didn't practice enough in the right conditions.
 
 ---
 
@@ -68,7 +68,7 @@ This is not recklessness. This is structured iteration. There's a difference bet
 
 When I teach juggling, I tell students to pay attention to *how* they drop. Because different drops tell you different things.
 
-**The reach drop:** You throw too wide and you reach for it and still miss. This means your throw was off, not your catch. Don't try harder — fix the throw.
+**The reach drop:** You throw too wide and you reach for it and still miss. This means your throw was off, not your catch. Don't try harder - fix the throw.
 
 In agents: the output fails because the input was malformed or ambiguous. The agent isn't broken; the prompt or the data pipeline is. Fix upstream before you redesign the agent.
 
@@ -76,7 +76,7 @@ In agents: the output fails because the input was malformed or ambiguous. The ag
 
 In agents: the agent was working fine, then started producing degraded outputs after extended runs. Classic context contamination. The agent is anticipating patterns from earlier in the context window instead of reading the current state. Clear the context. Reset the session. Don't try to fix it in-flight.
 
-**The environmental drop:** Something changed in the environment — a gust of wind, bad lighting, an unexpected noise — and it disrupted a pattern that was otherwise solid.
+**The environmental drop:** Something changed in the environment - a gust of wind, bad lighting, an unexpected noise - and it disrupted a pattern that was otherwise solid.
 
 In agents: the downstream API changed. The data schema shifted. The model got updated. The agent was fine; the environment changed. This is the hardest drop to catch before it happens, because you're not watching the right thing. You're watching the agent. You should be watching the environment too.
 
@@ -86,15 +86,15 @@ In agents: the downstream API changed. The data schema shifted. The model got up
 
 Here's the shift that changes everything: instead of designing your agent system to *avoid* failure, design it to *surface* failure fast and cheaply.
 
-In juggling, this is called *controlled dropping*. It's a real skill. Advanced jugglers practice deliberately dropping a prop in a way that lets them recover quickly — positioned, not sprawled across the floor. The drop becomes a reset, not a crisis.
+In juggling, this is called *controlled dropping*. It's a real skill. Advanced jugglers practice deliberately dropping a prop in a way that lets them recover quickly - positioned, not sprawled across the floor. The drop becomes a reset, not a crisis.
 
 For AI agents, controlled dropping means:
 
 **1. Make failures observable.** Every agent run should produce a structured log: what was the input, what did the agent do, what was the output, what tools did it call, did anything time out or return an unexpected response. You can't learn from drops you can't see.
 
-My setup: every AgentCore crew writes to a Results database in Notion. Not just the output — the execution trace. When something goes wrong, I can see exactly what the agent was looking at when it made the wrong decision.
+My setup: every AgentCore crew writes to a Results database in Notion. Not just the output - the execution trace. When something goes wrong, I can see exactly what the agent was looking at when it made the wrong decision.
 
-**2. Make failures cheap.** Your most complex, expensive agents — the clubs and devil sticks — should not be running unchecked in production on important data. They should have a human-in-the-loop checkpoint before their output becomes real. Not because you don't trust them, but because you're still learning where their drops are.
+**2. Make failures cheap.** Your most complex, expensive agents - the clubs and devil sticks - should not be running unchecked in production on important data. They should have a human-in-the-loop checkpoint before their output becomes real. Not because you don't trust them, but because you're still learning where their drops are.
 
 My setup: any agent crew that writes to client-facing systems (proposals, invoices, customer emails) has a draft-first pattern. The agent produces the output; a human approves it before it sends. Once the error rate drops below a threshold I'm comfortable with, I remove the checkpoint. But not before.
 
@@ -104,7 +104,7 @@ For agents: what happens when the research agent returns garbage? Does the conte
 
 **4. Distinguish between agent failure and system failure.** This is the most important one. When something goes wrong, most people's first instinct is to blame the agent. Retrain it. Prompt-engineer it. Swap in a bigger model.
 
-But in my experience, most agent failures are actually system failures: the wrong data, the wrong context, the wrong trigger, the wrong tool configuration. The agent is doing exactly what it was designed to do — with broken inputs.
+But in my experience, most agent failures are actually system failures: the wrong data, the wrong context, the wrong trigger, the wrong tool configuration. The agent is doing exactly what it was designed to do - with broken inputs.
 
 Before you touch the agent, look at everything upstream of it.
 
@@ -120,13 +120,13 @@ Otto said yes. Confidently. With the date and location.
 
 The June meetup had been canceled two days earlier.
 
-Otto had no way of knowing. His knowledge came from a knowledge base that hadn't been updated. His confidence was a model artifact — he was trained to sound definitive, and he was definitive about stale information.
+Otto had no way of knowing. His knowledge came from a knowledge base that hadn't been updated. His confidence was a model artifact - he was trained to sound definitive, and he was definitive about stale information.
 
-This is a reach drop. The throw was wrong — the knowledge base update process was broken. Fixing it required adding a sync mechanism between the event cancellation workflow and Otto's knowledge base. Not retraining Otto. Not prompting him differently. Fixing the upstream pipe.
+This is a reach drop. The throw was wrong - the knowledge base update process was broken. Fixing it required adding a sync mechanism between the event cancellation workflow and Otto's knowledge base. Not retraining Otto. Not prompting him differently. Fixing the upstream pipe.
 
 But here's what that drop built: we now have an automatic sync. Every time an event status changes in Notion, a trigger fires, the knowledge base gets updated, and Otto is current within fifteen minutes. That automation didn't exist before. It only exists because Otto dropped the ball.
 
-This is the compounding value of dropping in practice: each drop, handled well, builds something that makes the system more robust. Not just patched — genuinely better.
+This is the compounding value of dropping in practice: each drop, handled well, builds something that makes the system more robust. Not just patched - genuinely better.
 
 ---
 
@@ -136,7 +136,7 @@ When a team comes to me and says they want to build AI agents, the first thing I
 
 "Great. Plan to drop the ball. A lot. In the beginning, make it your job to drop the ball as fast as possible and see what happens."
 
-Deploy something real — not a demo, not a sandbox with synthetic data, something that touches your actual workflow — and let it run. Watch where it fails. Document the failures. Build the recovery.
+Deploy something real - not a demo, not a sandbox with synthetic data, something that touches your actual workflow - and let it run. Watch where it fails. Document the failures. Build the recovery.
 
 Don't wait until you've designed a perfect system to start. A perfect system is one that's already been through its drops and learned from them.
 

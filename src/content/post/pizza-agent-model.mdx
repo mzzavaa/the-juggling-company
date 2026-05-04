@@ -1,7 +1,7 @@
 ---
 title: "The Pizza Agent Model: How I Size My AI Agent Teams"
 slug: pizza-agent-model
-summary: "Amazon's 2-pizza rule remixed for AI agents — because you actually can measure compute capacity in pizza slices."
+summary: "Amazon's 2-pizza rule remixed for AI agents - because you actually can measure compute capacity in pizza slices."
 date: 2026-02-19
 tags: ["ai-agents", "aws", "agentcore", "pizza-model", "architecture"]
 pillars: ["brain", "tech"]
@@ -20,11 +20,11 @@ But you know what you *actually* can measure in pizza slices? AI agents.
 
 ## Where this came from
 
-I've been automating my consulting business with AI agents — 64 crews running on an AgentCore runtime, handling everything from email triage to research synthesis to speaker coordination for meetups.
+I've been automating my consulting business with AI agents - 64 crews running on an AgentCore runtime, handling everything from email triage to research synthesis to speaker coordination for meetups.
 
 At some point I needed a simple way to think about how many agents I can run concurrently without blowing my budget or hitting rate limits. The math is real: different model tiers cost very different amounts, and running too many heavy agents in parallel creates problems.
 
-I kept staring at the Amazon rule and thinking: *this applies here*. Not because my agents need to eat — obviously they don't — but because I needed the same kind of intuitive constraint.
+I kept staring at the Amazon rule and thinking: *this applies here*. Not because my agents need to eat - obviously they don't - but because I needed the same kind of intuitive constraint.
 
 So I adapted it.
 
@@ -59,25 +59,25 @@ More importantly: **the constraint forces honest decisions.** When you only have
 Here are some real configurations from my own setup:
 
 **Morning cron window (07:00–09:00):**
-- Email triage — 1 slice
-- Security alert check — 1 slice
-- Wellness check — 1 slice
-- OKR status — 2 slices
-- Travel detection — 1 slice
+- Email triage - 1 slice
+- Security alert check - 1 slice
+- Wellness check - 1 slice
+- OKR status - 2 slices
+- Travel detection - 1 slice
 
 Total: 6/16 slices. Half a pizza. Leaves headroom if something urgent comes in.
 
 **Deep work session:**
-- Research agent — 4 slices
-- Architecture reviewer — 4 slices
-- Content drafter — 2 slices
+- Research agent - 4 slices
+- Architecture reviewer - 4 slices
+- Content drafter - 2 slices
 
 Total: 10/16 slices. Comfortable. Still 6 slices available for reactive tasks.
 
 **Revenue crew:**
-- Proposal generator — 4 slices
-- Invoice chaser — 2 slices
-- Client onboarding setup — 2 slices
+- Proposal generator - 4 slices
+- Invoice chaser - 2 slices
+- Client onboarding setup - 2 slices
 
 Total: 8/16 slices. Can run this and the morning cron simultaneously without conflict.
 
@@ -85,7 +85,7 @@ Total: 8/16 slices. Can run this and the morning cron simultaneously without con
 
 ## Scaling beyond 16 slices
 
-If you genuinely need more than 16 slices running concurrently, you order more pizzas. But the constraint per pizza still holds. You don't eat 32 slices at once — you run two separate sessions, maybe in parallel queues, maybe with different budget owners.
+If you genuinely need more than 16 slices running concurrently, you order more pizzas. But the constraint per pizza still holds. You don't eat 32 slices at once - you run two separate sessions, maybe in parallel queues, maybe with different budget owners.
 
 For a solo consultant, one pizza is usually enough. For a startup team, maybe two or three concurrent pizzas across departments. For an enterprise, you're running a full pizzeria.
 
@@ -103,6 +103,6 @@ If you can, you have a right-sized team. Start building.
 
 ---
 
-*Post 1 in the Juggling-Pizza Framework series. Next: [Balls, Clubs, and Rings — How I Use Juggling Props to Explain AI Agents](/blog/balls-clubs-rings-ai-agents).*
+*Post 1 in the Juggling-Pizza Framework series. Next: [Balls, Clubs, and Rings - How I Use Juggling Props to Explain AI Agents](/blog/balls-clubs-rings-ai-agents).*
 
 *Linda Mohamed is an AWS Hero and cloud consultant in Vienna. She invented a pizza-based resource allocation framework while staring at billing reports. The juggling came first.*

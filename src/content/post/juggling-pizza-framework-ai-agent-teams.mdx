@@ -1,7 +1,7 @@
 ---
 title: "The Juggling-Pizza Framework: My Complete System for Designing AI Agent Teams"
 slug: juggling-pizza-framework-ai-agent-teams
-summary: "Two frameworks I invented by accident — one from juggling props, one from Amazon's pizza rule — that together make agent team design actually make sense."
+summary: "Two frameworks I invented by accident - one from juggling props, one from Amazon's pizza rule - that together make agent team design actually make sense."
 date: 2026-02-23
 tags: ["ai-agents", "juggling", "aws", "agentcore", "architecture", "pizza-model"]
 pillars: ["brain", "tech"]
@@ -21,7 +21,7 @@ If you can answer those two questions clearly, you can design a real agent syste
 
 ---
 
-## Part 1: The Juggling Framework — Choosing the Right Agent Type
+## Part 1: The Juggling Framework - Choosing the Right Agent Type
 
 I've been juggling for years. On stage, in workshops, in my kitchen when I'm trying to think. And the longer I do it, the more I see the props as a taxonomy of complexity.
 
@@ -31,12 +31,12 @@ Every juggling prop teaches you something different. And they map directly to AI
 
 Balls are the most forgiving prop. They bounce. They're round. The feedback is immediate and honest. You drop one, you pick it up, you keep going.
 
-Ball agents are single-purpose, stateless, and cheap. They do one thing on a schedule or trigger, return an output, and stop. They don't need to remember anything between runs — state lives somewhere external (a database, a Notion page, an S3 bucket), and the agent reads it fresh each time.
+Ball agents are single-purpose, stateless, and cheap. They do one thing on a schedule or trigger, return an output, and stop. They don't need to remember anything between runs - state lives somewhere external (a database, a Notion page, an S3 bucket), and the agent reads it fresh each time.
 
 **Examples from my system:**
-- News scanner — runs Thursday 10am, scans RSS, formats digest
-- Wellness check — runs daily 9am, reads my calendar load, sends a one-line nudge
-- Email classifier — runs on inbound, tags and routes, done
+- News scanner - runs Thursday 10am, scans RSS, formats digest
+- Wellness check - runs daily 9am, reads my calendar load, sends a one-line nudge
+- Email classifier - runs on inbound, tags and routes, done
 
 Run them on Haiku-class models. They don't need the big brain.
 
@@ -44,12 +44,12 @@ Run them on Haiku-class models. They don't need the big brain.
 
 Rings require rhythm. They fly flat, wobble if you throw them wrong, and demand consistency. They're not forgiving like balls, but they're not as demanding as clubs.
 
-Ring agents handle multi-step tasks with context. They read a meaningful state, reason across it, produce structured output, and hand off. They have short-term memory within a task — they know what they're working on — but they don't carry state between sessions.
+Ring agents handle multi-step tasks with context. They read a meaningful state, reason across it, produce structured output, and hand off. They have short-term memory within a task - they know what they're working on - but they don't carry state between sessions.
 
 **Examples from my system:**
-- Invoice chaser — reads invoice state, decides action, sends email or flags for review
-- Content drafter — takes a rough outline, pulls from knowledge base, produces a draft
-- CFP abstract writer — reads talk description, conference context, generates tailored abstract
+- Invoice chaser - reads invoice state, decides action, sends email or flags for review
+- Content drafter - takes a rough outline, pulls from knowledge base, produces a draft
+- CFP abstract writer - reads talk description, conference context, generates tailored abstract
 
 Sonnet-class. Smart enough to reason; cheap enough to run regularly.
 
@@ -57,14 +57,14 @@ Sonnet-class. Smart enough to reason; cheap enough to run regularly.
 
 Clubs are the prop that impresses people at parties. They spin. They're loud when dropped. They demand precision on every throw.
 
-Club agents handle heavy work: multi-document synthesis, complex reasoning, high-stakes output. They're expensive, they're slow, and they should be triggered intentionally — not on a cron every fifteen minutes.
+Club agents handle heavy work: multi-document synthesis, complex reasoning, high-stakes output. They're expensive, they're slow, and they should be triggered intentionally - not on a cron every fifteen minutes.
 
 **Examples from my system:**
-- Research synthesizer — Playwright scraping + Bedrock Knowledge Base retrieval + multi-source synthesis
-- Architecture reviewer — reads the codebase context + design docs + produces a structured critique
-- Proposal generator — reads deal context + case studies + testimonials + writes a customized pitch
+- Research synthesizer - Playwright scraping + Bedrock Knowledge Base retrieval + multi-source synthesis
+- Architecture reviewer - reads the codebase context + design docs + produces a structured critique
+- Proposal generator - reads deal context + case studies + testimonials + writes a customized pitch
 
-Opus-class. Worth every token — for the right tasks. Not the right tool for classifying emails.
+Opus-class. Worth every token - for the right tasks. Not the right tool for classifying emails.
 
 ### 🌀 Devil Stick = Autonomous agents (variable, requires guardrails)
 
@@ -73,14 +73,14 @@ You don't grip the devil stick. You guide it with two hand sticks. It spins. It 
 Autonomous agents are goal-directed rather than instruction-directed. You tell them *what* to achieve; they figure out *how*. They have tool access, they run in loops, they observe and adapt.
 
 **Examples from my system:**
-- Otto's meetup planner — given "plan the June event," it checks speaker submissions, drafts agenda, flags conflicts, proposes options
-- Funding researcher — given "find grants for AI consulting SMEs in Austria," it searches, filters, compiles, scores
+- Otto's meetup planner - given "plan the June event," it checks speaker submissions, drafts agenda, flags conflicts, proposes options
+- Funding researcher - given "find grants for AI consulting SMEs in Austria," it searches, filters, compiles, scores
 
 These agents don't fit neatly into a slice count, because their complexity is determined at runtime. Which is exactly why they need guardrails: maximum iterations, stop conditions, human checkpoints before irreversible actions.
 
 ---
 
-## Part 2: The Pizza Model — How Many Agents Can Run at Once
+## Part 2: The Pizza Model - How Many Agents Can Run at Once
 
 You know Amazon's 2-pizza team rule: a team should be small enough that two large pizzas can feed them. It's a proxy for communication overhead. Too many people, too many handoffs, everything slows down.
 
@@ -125,8 +125,8 @@ For every task I want to automate, I write one sentence: what does this agent ne
 
 ### Step 2: Assign the prop
 
-News scanner — pure ball. Simple input, simple output, stateless.  
-Research synthesizer — club. Multi-source, long context, complex output.
+News scanner - pure ball. Simple input, simple output, stateless.  
+Research synthesizer - club. Multi-source, long context, complex output.
 
 ### Step 3: Count the slices
 
@@ -182,7 +182,7 @@ For agents:
 - **Non-critical production:** Use rings where you'd normally use balls; add human review to clubs. Log everything.
 - **High-stakes production:** Start with balls and rings. Add clubs only with human checkpoints. Devil sticks only with explicit stop conditions and human-in-the-loop on any irreversible action.
 
-I've watched teams deploy club-level agents to production customer-facing systems with no guardrails. The agents aren't wrong — the environment is wrong for that prop.
+I've watched teams deploy club-level agents to production customer-facing systems with no guardrails. The agents aren't wrong - the environment is wrong for that prop.
 
 ---
 
