@@ -51,7 +51,10 @@ export default function LocationsMap({ locations }: Props) {
 
     (async () => {
       try {
-        const maplibre = await import("maplibre-gl");
+        const ml = await import("maplibre-gl");
+        // maplibre-gl ships CJS; dynamic import wraps it under .default
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const maplibre = (ml as any).default ?? ml;
         if (cancelled || !containerRef.current) return;
 
         const map = new maplibre.Map({
