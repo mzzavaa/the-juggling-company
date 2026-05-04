@@ -1,7 +1,7 @@
 ---
-title: "Juggling and Technology — From Cascade to Cloud"
+title: "Juggling and Technology - From Cascade to Cloud"
 slug: juggling-and-technology
-summary: "Three balls in the air, n services in production, k decisions in flight. The pattern is the same — and once you've felt it physically, you read it differently in code."
+summary: "Three balls in the air, n services in production, k decisions in flight. The pattern is the same - and once you've felt it physically, you read it differently in code."
 order: 2
 tags: ["aws", "cloud", "ai", "systems"]
 pillars: ["tech"]
@@ -23,12 +23,12 @@ clock with bigger props.
 
 A juggling cascade is a control loop disguised as a trick. Eyes track,
 brain predicts, hands execute, the next throw corrects the last drop. The
-loop doesn't pause for novelty — when you add a new prop or change the
+loop doesn't pause for novelty - when you add a new prop or change the
 rhythm, you negotiate the change while the loop keeps spinning.
 
 Every cloud system worth shipping is the same shape. Health checks predict.
 Auto-scaling executes. Deploys correct. Rollbacks recover. The clock is
-slower — but if the loop ever stops, the system stops.
+slower - but if the loop ever stops, the system stops.
 
 <Callout type="info" title="Why this matters at re:Invent">
 The reason "ops as a discipline" took two decades to mature is that the
@@ -43,28 +43,28 @@ runbooks differently after.
   domain="Cloud & systems"
   rows={[
     {
-      juggling: "Three-ball cascade — alternating throws on a fixed beat",
-      analogue: "Round-robin load balancing — even distribution across n healthy targets",
+      juggling: "Three-ball cascade - alternating throws on a fixed beat",
+      analogue: "Round-robin load balancing - even distribution across n healthy targets",
     },
     {
-      juggling: "The apex — the moment between throw and catch where you can plan",
-      analogue: "The deploy window — the gap between traffic spikes where you can ship",
+      juggling: "The apex - the moment between throw and catch where you can plan",
+      analogue: "The deploy window - the gap between traffic spikes where you can ship",
     },
     {
       juggling: "Adding a fourth ball collapses the cascade into a fountain",
       analogue: "Adding a region collapses your single-cluster mental model into multi-master",
     },
     {
-      juggling: "A drop costs you one beat — if you don't panic and chase it",
-      analogue: "A failed pod costs you one window — if you let the orchestrator do its job",
+      juggling: "A drop costs you one beat - if you don't panic and chase it",
+      analogue: "A failed pod costs you one window - if you let the orchestrator do its job",
     },
     {
-      juggling: "Different-weight props — same pattern, different hand-feel",
-      analogue: "Different runtimes (Lambda, ECS, EKS) — same shape, different tuning",
+      juggling: "Different-weight props - same pattern, different hand-feel",
+      analogue: "Different runtimes (Lambda, ECS, EKS) - same shape, different tuning",
     },
     {
-      juggling: "Pass to a partner — you trust their timing or you both drop",
-      analogue: "Cross-team contracts — you trust the SLA or the integration breaks",
+      juggling: "Pass to a partner - you trust their timing or you both drop",
+      analogue: "Cross-team contracts - you trust the SLA or the integration breaks",
     },
   ]}
   caption="The pattern transfers in both directions. Engineers who learn to juggle make better operators. Jugglers who learn AWS make stranger keynote speakers."
@@ -72,7 +72,7 @@ runbooks differently after.
 
 ## AI changes the prop, not the pattern
 
-The current wave — agents, MCP, Q-style assistants — adds a new prop to
+The current wave - agents, MCP, Q-style assistants - adds a new prop to
 the cascade. The prop is unfamiliar. The pattern isn't. You still:
 
 1. **Predict** what each tool will do under load.
@@ -82,16 +82,16 @@ the cascade. The prop is unfamiliar. The pattern isn't. You still:
 
 The teams shipping the best agentic systems aren't the ones with the
 deepest theory. They're the ones who've shipped enough cloud to know what
-the loop *feels* like — and have therefore developed the muscle to add a
+the loop *feels* like - and have therefore developed the muscle to add a
 ball without dropping the rest.
 
 ## Why this is the through-line
 
 The Brain essay is about the substrate. The Change essay is about the
-people. This one is about the medium I actually work in — AWS, AI, and
+people. This one is about the medium I actually work in - AWS, AI, and
 the cloud platforms that show up in every conference talk I give. If you
 came here from the [AWS Hero
 profile](https://aws.amazon.com/developer/community/heroes/linda-mohamed/),
 this is the page that explains why my conference badge says both
-"Community Builder" and "Performer" — and why those words are doing the
+"Community Builder" and "Performer" - and why those words are doing the
 same job.

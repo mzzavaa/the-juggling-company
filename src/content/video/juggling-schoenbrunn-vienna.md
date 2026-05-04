@@ -8,6 +8,6 @@ publishedAt: 2026-03-10
 durationSec: 90
 tags: ["juggling", "vienna", "performance", "outdoor", "3-ball"]
 pillars: ["brain"]
-description: "Three-ball juggling in the gardens of Schönbrunn Palace, Vienna — a spontaneous set to an instrumental cover of 'Leavin'. Lemons, limes, or balls — whatever's in reach."
+description: "Three-ball juggling in the gardens of Schönbrunn Palace, Vienna - a spontaneous set to an instrumental cover of 'Leavin'. Lemons, limes, or balls - whatever's in reach."
 featured: true
 ---

@@ -38,16 +38,16 @@ const pillarIcons: Record<Pillar, "brain" | "cpu" | "shuffle"> = {
 
 const pillarSummaries: Record<Pillar, string> = {
   brain:
-    "What juggling does to grey matter, focus, and the way humans learn — backed by neuroscience, not folklore.",
+    "What juggling does to grey matter, focus, and the way humans learn - backed by neuroscience, not folklore.",
   tech:
-    "Cloud architecture, AWS systems, and AI patterns — read through a juggler's lens of incremental load and recovery.",
+    "Cloud architecture, AWS systems, and AI patterns - read through a juggler's lens of incremental load and recovery.",
   change:
     "How teams absorb new work, recover from drops, and build the muscle to add a fourth ball.",
 };
 
 const ideasByPillar = (p: Pillar) => ideas.find((i) => i.data.pillars.includes(p));
 
-// Numeric stats — derived from real collection counts, never hardcoded.
+// Numeric stats - derived from real collection counts, never hardcoded.
 const stats = [
   { label: "Essays", value: ideas.length, color: "var(--color-brain)" },
   { label: "Talks", value: talks.upcoming.length + talks.past.length, color: "var(--color-tech)" },
@@ -109,7 +109,7 @@ const personJsonLd = {
 
         <p class="mt-8 max-w-md text-lg text-[var(--color-fg)] md:text-xl">
           Three pillars, mixing like light. <strong>{site.author.name}</strong> on the patterns
-          underneath cloud systems, cognitive science, and leading change — taught from a stage
+          underneath cloud systems, cognitive science, and leading change - taught from a stage
           with three balls in the air.
         </p>
 
@@ -169,7 +169,7 @@ const personJsonLd = {
     </ul>
   </section>
 
-  <!-- THREE PILLARS — bold, oversized cards -->
+  <!-- THREE PILLARS - bold, oversized cards -->
   <section class="mx-auto max-w-6xl px-4 py-24 md:px-6">
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
@@ -306,7 +306,7 @@ const personJsonLd = {
           </h2>
           <p class="mt-3 max-w-md text-[var(--color-muted)]">
             <span class="font-semibold text-[var(--color-fg)]">{locations.length}</span>{" "}
-            {locations.length === 1 ? "location" : "locations"} on the map — performances I've
+            {locations.length === 1 ? "location" : "locations"} on the map - performances I've
             done and places I'm available next.
           </p>
           <a

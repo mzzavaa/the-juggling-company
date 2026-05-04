@@ -8,6 +8,6 @@ publishedAt: 2023-04-26
 durationSec: 60
 tags: ["juggling", "fitness", "workout", "weight-balls", "reverse-cascade", "core"]
 pillars: ["brain"]
-description: "The weight ball table crunch with a 3-ball reverse cascade — core engagement meets pattern recognition."
+description: "The weight ball table crunch with a 3-ball reverse cascade - core engagement meets pattern recognition."
 featured: false
 ---

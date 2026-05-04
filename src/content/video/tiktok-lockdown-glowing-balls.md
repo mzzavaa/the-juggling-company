@@ -8,6 +8,6 @@ publishedAt: 2023-02-20
 durationSec: 45
 tags: ["juggling", "lockdown", "glowing-balls", "patterns", "performance"]
 pillars: ["brain"]
-description: "Dug up lockdown-era footage of juggling glowing balls to whatever TikTok suggested — still figuring out the patterns, years later."
+description: "Dug up lockdown-era footage of juggling glowing balls to whatever TikTok suggested - still figuring out the patterns, years later."
 featured: false
 ---

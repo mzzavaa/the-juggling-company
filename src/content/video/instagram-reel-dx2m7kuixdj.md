@@ -8,6 +8,6 @@ publishedAt: 2025-03-01
 durationSec: 30
 tags: ["juggling", "performance", "reel"]
 pillars: ["brain"]
-description: "A juggling reel — because Instagram needs balls in the air too."
+description: "A juggling reel - because Instagram needs balls in the air too."
 featured: false
 ---

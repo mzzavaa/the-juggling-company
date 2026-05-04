@@ -1,13 +1,13 @@
 /**
  * Single source of truth for branding strings, nav, and social links.
- * Keep dynamic content (counts, lists) out of here — derive from collections at build time.
+ * Keep dynamic content (counts, lists) out of here - derive from collections at build time.
  */
 
 export const site = {
   name: "The Juggling Company",
   tagline: "Brain. Tech. Change.",
   description:
-    "Linda Mohamed (@mrs_lee_g) — AWS Hero, juggler, and community builder. Where cognitive science, cloud, and human change converge.",
+    "Linda Mohamed (@mrs_lee_g) - AWS Hero, juggler, and community builder. Where cognitive science, cloud, and human change converge.",
   url: "https://thejugglingcompany.com",
   author: {
     name: "Linda Mohamed",

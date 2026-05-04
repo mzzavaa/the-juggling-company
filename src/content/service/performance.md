@@ -1,7 +1,7 @@
 ---
 title: "Performance"
 slug: performance
-summary: "A high-energy juggling show, scaled to your venue — from corporate stages to street festivals."
+summary: "A high-energy juggling show, scaled to your venue - from corporate stages to street festivals."
 audience: "Event organisers, festival programmers, corporate event teams."
 whatsIncluded:
   - "Tailored 10–25 minute act, structured to your event arc"

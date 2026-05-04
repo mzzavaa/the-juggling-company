@@ -8,6 +8,6 @@ publishedAt: 2023-01-10
 durationSec: 45
 tags: ["juggling", "mindset", "performance", "resilience", "motivation"]
 pillars: ["brain", "change"]
-description: "You can be the greatest and still drop a ball now and then. Every drop is a step to being better — keep juggling, keep growing."
+description: "You can be the greatest and still drop a ball now and then. Every drop is a step to being better - keep juggling, keep growing."
 featured: false
 ---

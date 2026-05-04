@@ -21,7 +21,7 @@ import Icon from "./Icon.astro";
     if (theme === "light") {
       root.dataset.theme = "light";
     } else {
-      // Default and "dark" — clear the attribute so the dark base styles apply.
+      // Default and "dark" - clear the attribute so the dark base styles apply.
       delete root.dataset.theme;
     }
     const isDark = !root.dataset.theme || root.dataset.theme === "dark";

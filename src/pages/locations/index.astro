@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
 import LocationsMap, { type MapLocation } from "@/islands/LocationsMap";
 import { getLocations } from "@/lib/content";
 
@@ -61,7 +62,9 @@ const grouped = locations.reduce(
       href="/locations/juggling-shops"
       class="mt-6 inline-flex items-center gap-2 rounded-lg border border-[var(--color-brain-change)] px-4 py-2 text-sm font-medium text-[var(--color-brain-change)] transition hover:bg-[var(--color-brain-change)] hover:text-white"
     >
-      🎪 Juggling shops directory →
+      <Icon name="map-pin" size={14} />
+      Juggling shops directory
+      <Icon name="arrow-right" size={14} />
     </a>
   </section>
 

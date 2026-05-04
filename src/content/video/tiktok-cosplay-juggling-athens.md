@@ -8,6 +8,6 @@ publishedAt: 2024-12-01
 durationSec: 45
 tags: ["juggling", "cosplay", "athens", "performance", "travel"]
 pillars: ["brain", "change"]
-description: "Juggling in cosplay in Athens — because why not bring the balls wherever you go."
+description: "Juggling in cosplay in Athens - because why not bring the balls wherever you go."
 featured: false
 ---

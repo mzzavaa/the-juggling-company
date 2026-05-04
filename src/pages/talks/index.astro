@@ -23,13 +23,13 @@ const eventJsonLd = upcoming.map((t) => ({
 }));
 
 function venueLine(t: CollectionEntry<"talk">) {
-  return `${t.data.venue} — ${t.data.city}, ${t.data.country}`;
+  return `${t.data.venue} - ${t.data.city}, ${t.data.country}`;
 }
 ---
 
 <BaseLayout
   title="Talks"
-  description="Conference keynotes, AWS community days, and salon-evening idea talks — past and upcoming."
+  description="Conference keynotes, AWS community days, and salon-evening idea talks - past and upcoming."
   jsonLd={eventJsonLd as unknown as Record<string, unknown>[]}
 >
   <section class="mx-auto max-w-4xl px-4 py-20 md:px-6">
@@ -38,7 +38,7 @@ function venueLine(t: CollectionEntry<"talk">) {
       <span class="rgb-text">On stage and at the lectern.</span>
     </h1>
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Conference keynotes, AWS community days, meetup talks, and salon evenings — past and upcoming.
+      Conference keynotes, AWS community days, meetup talks, and salon evenings - past and upcoming.
     </p>
   </section>
 

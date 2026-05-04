@@ -2,7 +2,7 @@
 /**
  * Three balls tracing an actual three-ball cascade. Each ball follows the same
  * teardrop arc, offset by 120° in phase. Uses SVG <animateMotion> along a path
- * for accurate motion (not a parabola — a real cascade is asymmetric).
+ * for accurate motion (not a parabola - a real cascade is asymmetric).
  *
  * Colours are the three pillar primaries; mix-blend-mode: screen produces
  * additive RGB blends at the apex crossings (R+G=Y, R+B=M, G+B=C).
@@ -23,7 +23,7 @@ const { size = 480, pause = false, class: className } = Astro.props;
   width={size}
   height={size}
   role="img"
-  aria-label="Three juggling balls in cascade — Brain (red), Tech (green), Change (blue) — overlapping additively at the apex."
+  aria-label="Three juggling balls in cascade - Brain (red), Tech (green), Change (blue) - overlapping additively at the apex."
   class:list={["cascade", className]}
   data-pause={pause ? "true" : undefined}
 >
@@ -67,7 +67,7 @@ const { size = 480, pause = false, class: className } = Astro.props;
   </defs>
 
   <!--
-    Faint trace of the cascade arc — gives the eye a hint of the trajectory
+    Faint trace of the cascade arc - gives the eye a hint of the trajectory
     without overpowering the balls.
   -->
   <use

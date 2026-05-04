@@ -1,7 +1,7 @@
 ---
 title: "Idea Talk"
 slug: idea-talk
-summary: "A 20-minute idea talk pairing juggling with technology or brain science — for meetups, internal lunch-and-learns, and salon evenings."
+summary: "A 20-minute idea talk pairing juggling with technology or brain science - for meetups, internal lunch-and-learns, and salon evenings."
 audience: "Meetup organisers, internal speaker series, intimate event programmers."
 whatsIncluded:
   - "20-minute structured talk with one live juggling demo"

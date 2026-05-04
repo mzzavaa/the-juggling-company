@@ -8,6 +8,6 @@ publishedAt: 2023-05-01
 durationSec: 45
 tags: ["juggling", "warmup", "freestyle", "workout", "lighter-balls"]
 pillars: ["brain"]
-description: "Starting the warm-up with lighter juggling balls to add some freestyle into the mix — the pattern changes when you're not fighting the weight."
+description: "Starting the warm-up with lighter juggling balls to add some freestyle into the mix - the pattern changes when you're not fighting the weight."
 featured: false
 ---

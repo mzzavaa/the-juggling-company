@@ -69,7 +69,7 @@ export async function getLatestPosts(limit = 2): Promise<CollectionEntry<"post">
   return entries.slice(0, limit);
 }
 
-/** Aggregated tag counts across a collection — used by filter chips. */
+/** Aggregated tag counts across a collection - used by filter chips. */
 export function tagCounts<T extends { data: { tags: string[] } }>(
   entries: readonly T[],
 ): { tag: string; count: number }[] {

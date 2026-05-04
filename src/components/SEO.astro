@@ -21,7 +21,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+const fullTitle = title ? `${title} - ${site.name}` : `${site.name} - ${site.tagline}`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
 const imageUrl = new URL(image, Astro.site ?? site.url).toString();
 const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];

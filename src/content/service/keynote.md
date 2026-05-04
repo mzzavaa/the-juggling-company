@@ -1,7 +1,7 @@
 ---
 title: "Corporate Keynote"
 slug: keynote
-summary: "A live-juggling keynote built around your conference theme — change, leadership, focus, or systems thinking."
+summary: "A live-juggling keynote built around your conference theme - change, leadership, focus, or systems thinking."
 audience: "Conference organisers, all-hands organisers, leadership summits."
 whatsIncluded:
   - "30–45 minute keynote with live juggling segments anchoring each beat"

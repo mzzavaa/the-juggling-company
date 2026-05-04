@@ -8,6 +8,6 @@ publishedAt: 2023-04-05
 durationSec: 45
 tags: ["juggling", "progression", "throwback", "2017", "2023", "performance"]
 pillars: ["brain", "change"]
-description: "From 2017 to 2023 — more balls in the air but still dropping some along the way. Progress is never a straight line."
+description: "From 2017 to 2023 - more balls in the air but still dropping some along the way. Progress is never a straight line."
 featured: false
 ---

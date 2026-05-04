@@ -50,7 +50,7 @@ export const PILLAR_LABEL_KEYED: Record<PillarKey, string> = {
 
 /**
  * Reduce an array of pillars to a single canonical key for visual display.
- * Empty input falls back to "all" (white) — used as a safe default.
+ * Empty input falls back to "all" (white) - used as a safe default.
  */
 export function blendKey(pillars: readonly Pillar[]): PillarKey {
   const set = new Set(pillars);

@@ -8,6 +8,6 @@ publishedAt: 2026-03-05
 durationSec: 75
 tags: ["juggling", "routine", "outdoor", "freestyle"]
 pillars: ["brain"]
-description: "A daily juggling routine — freestyle clips from wherever the day takes you."
+description: "A daily juggling routine - freestyle clips from wherever the day takes you."
 featured: true
 ---

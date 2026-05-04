@@ -8,6 +8,6 @@ publishedAt: 2023-01-20
 durationSec: 45
 tags: ["juggling", "vienna", "prater", "outdoor", "performance", "travel"]
 pillars: ["brain"]
-description: "Juggling at the iconic Wiener Prater in Vienna — because the world's most liveable city deserves some balls in the air."
+description: "Juggling at the iconic Wiener Prater in Vienna - because the world's most liveable city deserves some balls in the air."
 featured: false
 ---

@@ -8,6 +8,6 @@ publishedAt: 2023-04-25
 durationSec: 60
 tags: ["juggling", "fitness", "workout", "weight-balls", "full-body"]
 pillars: ["brain", "change"]
-description: "An old clip working through the weight ball juggling routine — a unique full-body workout where the balls do some of the thinking for you."
+description: "An old clip working through the weight ball juggling routine - a unique full-body workout where the balls do some of the thinking for you."
 featured: false
 ---

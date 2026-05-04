@@ -8,6 +8,6 @@ publishedAt: 2023-01-08
 durationSec: 30
 tags: ["juggling", "holiday", "performance"]
 pillars: ["brain"]
-description: "Juggling for the holidays — whatever the season, the balls stay in the air."
+description: "Juggling for the holidays - whatever the season, the balls stay in the air."
 featured: false
 ---

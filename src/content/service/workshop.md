@@ -4,9 +4,9 @@ slug: workshop
 summary: "Half-day or full-day team workshop using juggling as a hands-on lens for change, focus, and recovery."
 audience: "Engineering teams, leadership offsites, learning & development programmes."
 whatsIncluded:
-  - "Skill progression: one ball, two, three — everyone leaves juggling"
+  - "Skill progression: one ball, two, three - everyone leaves juggling"
   - "Mid-session debrief mapping juggling experience to a real change you're leading"
-  - "All props supplied — bean bags, LED balls, optional CV demo kit"
+  - "All props supplied - bean bags, LED balls, optional CV demo kit"
   - "Post-workshop write-up with the team's own translations"
 formats:
   - "Half-day (3 hours, up to 20 people)"

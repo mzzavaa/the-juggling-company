@@ -27,7 +27,7 @@ I've been juggling for years. On stage, in workshops, in my kitchen when I'm try
 
 Every juggling prop teaches you something different. And they map directly to AI agent types.
 
-### 🎱 Balls = Small agents (1 slice)
+### Balls = Small agents (1 slice)
 
 Balls are the most forgiving prop. They bounce. They're round. The feedback is immediate and honest. You drop one, you pick it up, you keep going.
 
@@ -40,7 +40,7 @@ Ball agents are single-purpose, stateless, and cheap. They do one thing on a sch
 
 Run them on Haiku-class models. They don't need the big brain.
 
-### 🟠 Rings = Medium agents (2 slices)
+### Rings = Medium agents (2 slices)
 
 Rings require rhythm. They fly flat, wobble if you throw them wrong, and demand consistency. They're not forgiving like balls, but they're not as demanding as clubs.
 
@@ -53,7 +53,7 @@ Ring agents handle multi-step tasks with context. They read a meaningful state, 
 
 Sonnet-class. Smart enough to reason; cheap enough to run regularly.
 
-### 🎪 Clubs = Large agents (4 slices)
+### Clubs = Large agents (4 slices)
 
 Clubs are the prop that impresses people at parties. They spin. They're loud when dropped. They demand precision on every throw.
 
@@ -66,7 +66,7 @@ Club agents handle heavy work: multi-document synthesis, complex reasoning, high
 
 Opus-class. Worth every token - for the right tasks. Not the right tool for classifying emails.
 
-### 🌀 Devil Stick = Autonomous agents (variable, requires guardrails)
+### Devil Stick = Autonomous agents (variable, requires guardrails)
 
 You don't grip the devil stick. You guide it with two hand sticks. It spins. It drifts. It does things you didn't explicitly tell it to do. The skill is learning to influence without controlling.
 
@@ -94,9 +94,9 @@ Each agent eats slices based on how heavy it is:
 
 | Agent type | Slices | Model tier |
 |---|---|---|
-| 🎱 Ball (small) | 1 slice | Haiku-class |
-| 🟠 Ring (medium) | 2 slices | Sonnet-class |
-| 🎪 Club (large) | 4 slices | Opus-class |
+| Ball (small) | 1 slice | Haiku-class |
+| Ring (medium) | 2 slices | Sonnet-class |
+| Club (large) | 4 slices | Opus-class |
 
 Sixteen slices max per concurrent window. If you go over, you hit rate limits, context overflow, or costs that will make your finance team ask uncomfortable questions.
 
@@ -164,10 +164,10 @@ Total: 8/16 slices. Exactly half a pizza. I can run the morning cron and the rev
 
 | Juggling prop | Agent type | Slices | When to use | When NOT to use |
 |---|---|---|---|---|
-| 🎱 Ball | Single-purpose, stateless | 1 | Scanners, classifiers, pings, checks | Tasks requiring reasoning, memory, or multi-step logic |
-| 🟠 Ring | Multi-step, short-term memory | 2 | Drafters, chasers, generators, formatters | Tasks requiring synthesis across many sources or autonomous decisions |
-| 🎪 Club | Long-context, complex synthesis | 4 | Research, proposals, architecture review | Anything that a ring can handle; anything triggered on a frequent schedule |
-| 🌀 Devil Stick | Autonomous, goal-directed | Variable | Tasks where you can define a goal but not all the steps | Production systems without guardrails; anything irreversible without human review |
+| Ball | Single-purpose, stateless | 1 | Scanners, classifiers, pings, checks | Tasks requiring reasoning, memory, or multi-step logic |
+| Ring | Multi-step, short-term memory | 2 | Drafters, chasers, generators, formatters | Tasks requiring synthesis across many sources or autonomous decisions |
+| Club | Long-context, complex synthesis | 4 | Research, proposals, architecture review | Anything that a ring can handle; anything triggered on a frequent schedule |
+| Devil Stick | Autonomous, goal-directed | Variable | Tasks where you can define a goal but not all the steps | Production systems without guardrails; anything irreversible without human review |
 
 ---
 
