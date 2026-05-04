@@ -7,7 +7,7 @@ export const site = {
   url: "https://thejugglingcompany.com",
   author: {
     name: "Linda Mohamed",
-    handle: "mrs_lee_g",
+    handle: "linda_mhmd",
     role: "AWS Hero · Juggler · Founder",
     email: "hello@thejugglingcompany.com",
   },
@@ -126,9 +126,15 @@ export const socialLinks: readonly SocialLink[] = [
   },
   {
     label: "X / Twitter",
-    href: "https://x.com/mrs_lee_g",
+    href: "https://x.com/linda_mhmd",
     icon: "x",
-    handle: "@mrs_lee_g",
+    handle: "@linda_mhmd",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/linda_mhmd",
+    icon: "github",
+    handle: "@linda_mhmd",
   },
   {
     label: "AWS Hero profile",

@@ -33,7 +33,7 @@ function venueLine(t: CollectionEntry<"talk">) {
   description="Conference sessions, podcast conversations, and community appearances - past and upcoming."
   jsonLd={eventJsonLd as unknown as Record<string, unknown>[]}
 >
-  <section class="mx-auto max-w-4xl px-4 py-20 md:px-6">
+  <section class="mx-auto max-w-7xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Talks</p>
     <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
       <span class="rgb-text">On stage and on air.</span>
@@ -45,7 +45,7 @@ function venueLine(t: CollectionEntry<"talk">) {
 
   {
     upcoming.length > 0 && (
-      <section class="mx-auto max-w-4xl px-4 pb-16 md:px-6">
+      <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6">
         <h2 class="font-display text-2xl font-bold tracking-tight">Upcoming ({upcoming.length})</h2>
         <ul class="mt-6 flex flex-col gap-4">
           {upcoming.map((t) => {
@@ -81,7 +81,7 @@ function venueLine(t: CollectionEntry<"talk">) {
 
   {
     past.length > 0 && (
-      <section class="mx-auto max-w-4xl px-4 pb-24 md:px-6">
+      <section class="mx-auto max-w-7xl px-4 pb-24 md:px-6">
         <h2 class="font-display text-2xl font-bold tracking-tight">Past ({past.length})</h2>
         <ul class="mt-8 flex flex-col gap-8">
           {past.map((t) => {
