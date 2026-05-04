@@ -19,6 +19,7 @@ export type NavChild = {
   readonly href: string;
   readonly description: string;
   readonly accent: string;
+  readonly icon: string;
 };
 
 export type NavItem = {
@@ -37,18 +38,21 @@ export const primaryNav: readonly NavItem[] = [
         href: "/videos",
         description: "Balls, clubs, and rings in motion. Live performances and practice clips.",
         accent: "var(--color-brain)",
+        icon: "ball",
       },
       {
         label: "Talks & Podcasts",
         href: "/talks",
-        description: "AWS re:Invent sessions, community conversations, and podcast appearances.",
+        description: "AWS re:Invent, community events, and podcast conversations.",
         accent: "var(--color-tech)",
+        icon: "calendar",
       },
       {
         label: "Short Clips",
         href: "/videos#tiktok",
-        description: "Quick juggling moments from everyday life - on TikTok.",
+        description: "Quick juggling moments from everyday life.",
         accent: "var(--color-change)",
+        icon: "tiktok",
       },
     ],
   },
@@ -65,12 +69,14 @@ export const primaryNav: readonly NavItem[] = [
         href: "/locations/juggling-shops",
         description: "Find specialist juggling shops near you - worldwide directory.",
         accent: "var(--color-brain-change)",
+        icon: "map-pin",
       },
       {
-        label: "Map",
+        label: "Where I've been",
         href: "/locations",
         description: "Performances, workshops, and juggling spots around the world.",
         accent: "var(--color-tech-change)",
+        icon: "globe",
       },
     ],
   },

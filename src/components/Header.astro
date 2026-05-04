@@ -69,11 +69,12 @@ const isGroupActive = (item: (typeof primaryNav)[number]) => {
     <nav class="hidden md:block" aria-label="Primary">
       <ul class="flex items-center gap-0.5">
         {
-          primaryNav.map((item) => {
+          primaryNav.map((item, i) => {
             const active = isGroupActive(item);
             const hasMega = !!item.children?.length;
+            const panelAlign = i === 0 ? "left" : "center";
             return (
-              <li class={hasMega ? "mega-item group relative" : "relative"}>
+              <li class={hasMega ? "mega-item group relative" : "relative"} data-align={panelAlign}>
                 {hasMega ? (
                   <button
                     type="button"
@@ -120,33 +121,42 @@ const isGroupActive = (item: (typeof primaryNav)[number]) => {
 
                 {hasMega && (
                   <div
-                    class="mega-panel pointer-events-none absolute left-1/2 top-full z-50 -translate-x-1/2 pt-1.5 opacity-0 transition-all duration-150"
+                    class="mega-panel pointer-events-none absolute top-full z-50 pt-2 opacity-0 transition-all duration-200"
                     role="region"
                   >
-                    <div class="min-w-56 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] shadow-xl">
-                      {item.children!.map((child) => (
-                        <a
-                          href={child.href}
-                          class:list={[
-                            "group flex items-start gap-3 px-4 py-3 transition hover:bg-[var(--color-bg-elevated)]",
-                            isActive(child.href) ? "bg-[var(--color-bg-elevated)]" : "",
-                          ]}
-                        >
-                          <span
-                            class="mt-0.5 h-2 w-2 shrink-0 rounded-full"
-                            style={`background: ${child.accent};`}
-                            aria-hidden="true"
-                          />
-                          <span>
-                            <span class="block text-sm font-semibold text-[var(--color-fg)]">
-                              {child.label}
+                    <div
+                      class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] shadow-2xl"
+                      style="min-width: 480px;"
+                    >
+                      <div
+                        class="grid divide-x divide-[var(--color-border)]"
+                        style={`grid-template-columns: repeat(${item.children!.length}, 1fr);`}
+                      >
+                        {item.children!.map((child) => (
+                          <a
+                            href={child.href}
+                            class:list={[
+                              "group/child flex flex-col gap-3 p-5 transition hover:bg-[var(--color-bg-elevated)]",
+                              isActive(child.href) ? "bg-[var(--color-bg-elevated)]" : "",
+                            ]}
+                          >
+                            <span
+                              class="inline-flex h-11 w-11 items-center justify-center rounded-xl transition-transform group-hover/child:scale-110"
+                              style={`background: color-mix(in oklab, ${child.accent} 18%, var(--color-bg-elevated)); color: ${child.accent};`}
+                            >
+                              <Icon name={child.icon as any} size={22} />
                             </span>
-                            <span class="mt-0.5 block text-xs text-[var(--color-muted)]">
-                              {child.description}
+                            <span>
+                              <span class="block text-sm font-semibold text-[var(--color-fg)]">
+                                {child.label}
+                              </span>
+                              <span class="mt-1 block text-xs leading-relaxed text-[var(--color-muted)]">
+                                {child.description}
+                              </span>
                             </span>
-                          </span>
-                        </a>
-                      ))}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -256,15 +266,28 @@ const isGroupActive = (item: (typeof primaryNav)[number]) => {
 </header>
 
 <style>
-  .mega-item:is(:hover, :focus-within) .mega-panel {
+  /* Left-anchored panel (first nav item) */
+  [data-align="left"] .mega-panel {
+    left: 0;
+    transform: translateY(-8px);
+  }
+  [data-align="left"]:is(:hover, :focus-within) .mega-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  /* Center-anchored panel */
+  [data-align="center"] .mega-panel {
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  [data-align="center"]:is(:hover, :focus-within) .mega-panel {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(-50%) translateY(0);
   }
-  /* Closed state: slight upward offset for the slide-in animation */
-  .mega-item .mega-panel {
-    transform: translateX(-50%) translateY(-6px);
-  }
+
   .mega-item:is(:hover, :focus-within) .mega-chevron {
     transform: rotate(180deg);
   }

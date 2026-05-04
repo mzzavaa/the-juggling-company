@@ -18,30 +18,42 @@ const mapLocations: MapLocation[] = locations.map((l) => ({
   website: l.data.website,
 }));
 
-const typeLabel: Record<MapLocation["type"], string> = {
-  "past-performance": "Past performance",
-  "home-base": "Home base",
-  available: "Available",
-  workshop: "Workshop",
-  "juggling-shop": "Juggling shop",
+const flags: Record<string, string> = {
+  "Austria": "🇦🇹",
+  "Germany": "🇩🇪",
+  "Turkey": "🇹🇷",
+  "United States": "🇺🇸",
+  "Czechia": "🇨🇿",
+  "Poland": "🇵🇱",
+  "Switzerland": "🇨🇭",
+  "Slovakia": "🇸🇰",
+  "Greece": "🇬🇷",
+  "Malta": "🇲🇹",
+  "Italy": "🇮🇹",
+  "Romania": "🇷🇴",
+  "Bosnia and Herzegovina": "🇧🇦",
+  "United Kingdom": "🇬🇧",
+  "France": "🇫🇷",
+  "Netherlands": "🇳🇱",
+  "Belgium": "🇧🇪",
+  "Spain": "🇪🇸",
+  "Portugal": "🇵🇹",
+  "Sweden": "🇸🇪",
+  "Norway": "🇳🇴",
+  "Denmark": "🇩🇰",
+  "Finland": "🇫🇮",
 };
 
-const typeAccent: Record<MapLocation["type"], string> = {
-  "past-performance": "var(--color-brain-tech)",
-  "home-base": "var(--color-brain)",
-  available: "var(--color-tech)",
-  workshop: "var(--color-change)",
-  "juggling-shop": "var(--color-brain-change)",
-};
+const homeBase = locations.find((l) => l.data.type === "home-base");
+const performances = locations
+  .filter((l) => l.data.type === "past-performance")
+  .sort((a, b) => a.data.city.localeCompare(b.data.city));
+const workshops = locations.filter((l) => l.data.type === "workshop");
+const available = locations.filter((l) => l.data.type === "available");
+const shops = locations.filter((l) => l.data.type === "juggling-shop");
 
-const grouped = locations.reduce(
-  (acc, l) => {
-    const key = l.data.type;
-    (acc[key] ??= []).push(l);
-    return acc;
-  },
-  {} as Record<MapLocation["type"], typeof locations>,
-);
+const performanceCount = performances.length;
+const countryCount = new Set(performances.map((l) => l.data.country)).size;
 ---
 
 <BaseLayout
@@ -49,63 +61,136 @@ const grouped = locations.reduce(
   description="Where I've performed, where I'm based, and where I'm available next."
 >
   <section class="mx-auto max-w-7xl px-4 py-20 md:px-6">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-      Locations
-    </p>
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Locations</p>
     <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
       <span class="rgb-text">Where I am, where I've been.</span>
     </h1>
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      {locations.length} {locations.length === 1 ? "location" : "locations"} on the map. Click a pin for details, or browse the list below.
+      {performanceCount} cities across {countryCount} countries - and counting. Click a pin on the map for details, or browse the list below.
     </p>
-    <a
-      href="/locations/juggling-shops"
-      class="mt-6 inline-flex items-center gap-2 rounded-lg border border-[var(--color-brain-change)] px-4 py-2 text-sm font-medium text-[var(--color-brain-change)] transition hover:bg-[var(--color-brain-change)] hover:text-white"
-    >
-      <Icon name="map-pin" size={14} />
-      Juggling shops directory
-      <Icon name="arrow-right" size={14} />
-    </a>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a
+        href="/locations/juggling-shops"
+        class="inline-flex items-center gap-2 rounded-lg border border-[var(--color-brain-change)] px-4 py-2 text-sm font-medium text-[var(--color-brain-change)] transition hover:bg-[var(--color-brain-change)] hover:text-white"
+      >
+        <Icon name="map-pin" size={14} />
+        Juggling shops directory
+        <Icon name="arrow-right" size={14} />
+      </a>
+    </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-12 md:px-6">
     <LocationsMap client:visible locations={mapLocations} />
   </section>
 
-  <section class="mx-auto max-w-7xl px-4 pb-24 md:px-6">
-    <h2 class="font-display text-2xl font-bold tracking-tight">All locations</h2>
-    <div class="mt-6 grid gap-8 md:grid-cols-2">
-      {
-        (Object.keys(grouped) as MapLocation["type"][]).map((type) => (
-          <div>
-            <p
-              class="text-xs font-semibold uppercase tracking-widest"
-              style={`color: ${typeAccent[type]};`}
+  <!-- Home Base -->
+  {homeBase && (
+    <section class="mx-auto max-w-7xl px-4 pb-12 md:px-6">
+      <div
+        class="relative overflow-hidden rounded-3xl border-2 p-8 md:p-10"
+        style="border-color: var(--color-brain); background: color-mix(in oklab, var(--color-brain) 8%, var(--color-bg-card));"
+      >
+        <div class="absolute -right-8 -top-8 text-[8rem] opacity-10 select-none" aria-hidden="true">
+          {flags[homeBase.data.country] ?? "📍"}
+        </div>
+        <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-brain);">
+          Home base
+        </p>
+        <h2 class="mt-2 font-display text-3xl font-bold tracking-tight text-[var(--color-fg)]">
+          {homeBase.data.city}, {homeBase.data.country} {flags[homeBase.data.country] ?? ""}
+        </h2>
+        <p class="mt-3 max-w-2xl text-[var(--color-muted)]">{homeBase.data.notes}</p>
+      </div>
+    </section>
+  )}
+
+  <!-- Past Performances -->
+  {performances.length > 0 && (
+    <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6">
+      <div class="mb-6 flex items-baseline justify-between gap-4">
+        <h2 class="font-display text-2xl font-bold tracking-tight">
+          Performances &amp; events
+          <span class="ml-2 text-lg font-normal text-[var(--color-muted)]">({performances.length})</span>
+        </h2>
+      </div>
+      <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {performances.map((l) => (
+          <li>
+            <a
+              href={`/locations/${l.id}`}
+              class="group flex h-full flex-col gap-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 transition hover:border-[var(--color-brain-tech)] hover:shadow-md"
+              style="border-left: 3px solid var(--color-brain-tech);"
             >
-              {typeLabel[type]} ({grouped[type].length})
-            </p>
-            <ul class="mt-3 flex flex-col gap-3">
-              {grouped[type].map((l) => (
-                <li id={l.id}>
-                  <a
-                    href={`/locations/${l.id}`}
-                    class="group block rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 transition hover:border-current"
-                    style={`border-left: 3px solid ${typeAccent[type]};`}
-                  >
-                    <p class="font-medium text-[var(--color-fg)] group-hover:underline">{l.data.name}</p>
-                    <p class="text-sm text-[var(--color-muted)]">
-                      {l.data.city}, {l.data.country}
-                    </p>
-                    {l.data.notes && (
-                      <p class="mt-2 text-sm text-[var(--color-fg)]">{l.data.notes}</p>
-                    )}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+              <p class="flex items-center gap-2">
+                <span class="text-xl leading-none">{flags[l.data.country] ?? "🌍"}</span>
+                <span class="font-semibold text-[var(--color-fg)] group-hover:underline">{l.data.city}</span>
+              </p>
+              <p class="text-xs font-medium text-[var(--color-muted)]">{l.data.country}</p>
+              {l.data.notes && (
+                <p class="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--color-muted)]">
+                  {l.data.notes}
+                </p>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- Workshops & Available -->
+  {(workshops.length > 0 || available.length > 0) && (
+    <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6">
+      <h2 class="mb-6 font-display text-2xl font-bold tracking-tight">Workshops &amp; upcoming</h2>
+      <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {[...workshops, ...available].map((l) => (
+          <li>
+            <a
+              href={`/locations/${l.id}`}
+              class="group flex h-full flex-col gap-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 transition hover:border-[var(--color-change)] hover:shadow-md"
+              style="border-left: 3px solid var(--color-change);"
+            >
+              <p class="flex items-center gap-2">
+                <span class="text-xl leading-none">{flags[l.data.country] ?? "🌍"}</span>
+                <span class="font-semibold text-[var(--color-fg)] group-hover:underline">{l.data.city}</span>
+              </p>
+              <p class="text-xs font-medium text-[var(--color-muted)]">{l.data.country}</p>
+              {l.data.notes && (
+                <p class="mt-1 line-clamp-2 text-xs leading-relaxed text-[var(--color-muted)]">{l.data.notes}</p>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- Juggling Shops CTA -->
+  <section class="mx-auto max-w-7xl px-4 pb-24 md:px-6">
+    <div
+      class="flex flex-col items-start gap-6 rounded-3xl border-2 p-8 md:flex-row md:items-center md:justify-between md:p-10"
+      style="border-color: var(--color-brain-change); background: color-mix(in oklab, var(--color-brain-change) 6%, var(--color-bg-card));"
+    >
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-brain-change);">
+          Juggling shops
+        </p>
+        <h2 class="mt-1 font-display text-2xl font-bold tracking-tight text-[var(--color-fg)]">
+          {shops.length > 0 ? `${shops.length} shops listed so far.` : "Know a shop?"}
+        </h2>
+        <p class="mt-2 max-w-md text-[var(--color-muted)]">
+          Whenever I travel I look for specialist juggling shops. This is my growing directory of shops I've visited and tested.
+        </p>
+      </div>
+      <a
+        href="/locations/juggling-shops"
+        class="inline-flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 font-semibold text-white transition hover:opacity-90"
+        style="background: var(--color-brain-change);"
+      >
+        <Icon name="map-pin" size={16} />
+        Browse shops
+      </a>
     </div>
   </section>
 </BaseLayout>
