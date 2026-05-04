@@ -1,0 +1,148 @@
+---
+title: "Balls, Clubs, and Rings: How I Use Juggling Props to Explain AI Agents"
+slug: balls-clubs-rings-ai-agents
+summary: "Every juggling prop teaches a different lesson about complexity — and they map to AI agent types better than any diagram I've ever drawn."
+date: 2026-02-23
+tags: ["ai-agents", "juggling", "aws", "agentcore", "architecture"]
+pillars: ["brain", "tech"]
+draft: false
+---
+
+I'm standing on a stage in Vienna with three juggling clubs spinning in the air, and I'm trying to explain to a room full of software engineers why their AI architecture is wrong.
+
+Not because I'm rude. Because the analogy is *right there*, and nobody in the room has picked it up yet.
+
+Here's the thing about juggling: every prop teaches you something different. Balls teach you focus. Rings teach you rhythm. Clubs teach you timing, and that mistakes are loud. The devil stick teaches you that some things can only be guided, not controlled.
+
+I've been juggling for years — for real, not as a metaphor — and the longer I do it, the more I see it in my work. Especially now, when that work increasingly means designing and building teams of AI agents.
+
+So let me give you the prop-by-prop breakdown. Because when I'm explaining agent types to a client, I reach for this framework before I reach for any diagram.
+
+---
+
+## 🎱 The Ball: Simple, Forgiving, a Great Starting Point
+
+If you've never juggled before, you start with one ball. You throw it. You catch it. You add a second. Then three. The ball is the most forgiving prop there is — it's round, it bounces if you drop it, and the feedback loop is immediate and honest.
+
+In the AI agent world, a **ball is your small, single-purpose, stateless agent**.
+
+It does one thing. It's cheap. It's fast. It doesn't carry memory between calls. You give it an input, it gives you an output, you move on. My news scanner agent is a ball. Every Thursday morning at 10am, EventBridge triggers it, it reads a set of RSS feeds, filters for AI-relevant content, formats a digest, and drops it in Notion. Done. No history, no memory, no reasoning chain — just: input in, output out.
+
+Balls are the agents that *should* make up most of your system. They're the workhorses. They don't dazzle anyone, but they show up every day without breaking.
+
+**What makes a ball agent?**
+- Short, bounded context window
+- Single action or single decision
+- Runs on a small or distilled model (Haiku-class, if you're in the Claude ecosystem)
+- Stateless — each run is independent
+- Cheap enough that you don't think twice about running it
+
+**Where balls break down:** when the task requires context across time, when the output needs to reason about previous outputs, or when the stakes are high enough that you need the agent to *understand* rather than just *process*. A ball doesn't understand. It catches and throws.
+
+---
+
+## 🟠 The Ring: Rhythmic, Consistent, Requires Sustained Attention
+
+Rings are interesting because they're less intuitive than balls. They fly flat. They wobble if you throw them wrong. You have to spin them slightly on release to keep them stable in flight. Once you get the rhythm, though, they're almost meditative — there's a consistency to ring juggling that balls don't have.
+
+In the agent world, **a ring is your medium agent: multi-step, with short-term memory, running a repeatable pattern**.
+
+Rings are your content drafters, your proposal generators, your meeting summarizers. They take a context window with some history in it, reason across it, produce structured output, and hand off. They're not one-shot like balls — they hold a thread for the duration of a task — but they don't have to remember across sessions.
+
+My invoice chaser agent is a ring. It knows the current state of the invoice (context), it looks at what's happened so far (short history), it decides whether to send a reminder or escalate, and it does it. Next week, it runs again with fresh context. The ring doesn't need to remember last week's run — the state is stored in Notion, and the agent reads it fresh each time.
+
+**What makes a ring agent?**
+- Medium context window (enough for a task's full state)
+- Multi-step reasoning or generation
+- Uses a mid-tier model (Sonnet-class)
+- May read from an external memory store, but doesn't maintain memory natively
+- Produces coherent, structured output that something else can act on
+
+**Where rings break down:** when the task requires complex judgment across long histories, when the agent needs to synthesize information from many sources, or when it needs to make decisions that compound over time. A ring can hold a pattern, but it can't improvise.
+
+---
+
+## 🎪 The Club: Complex, Unforgiving, Loud When It Goes Wrong
+
+Clubs are what people think of when they think of juggling. They're the classic circus prop. And they are *harder* than they look — not because the throwing is complicated, but because clubs spin. Every throw has to be calibrated for rotation. Too little spin and the handle arrives before you expect it. Too much and you're chasing a horizontal club through the air.
+
+Dropping a ball is fine. Dropping a club in front of an audience is an event. Everyone notices. It's loud.
+
+In the agent world, **a club is your large, long-context, high-stakes agent**.
+
+Clubs are your research synthesizers. Your architecture reviewers. Your agents that read multiple documents, reason across them, make complex decisions, and produce output that actually matters. They're expensive to run — they use Opus-class models, they have long context windows, they take time — and when they fail, it's visible.
+
+My deep research agent is a club. When I ask it to synthesize the current state of multi-agent orchestration patterns, it uses Playwright to scrape sources, retrieves from my Bedrock Knowledge Base, reasons across everything, and produces a structured brief. It costs real money to run. It takes a few minutes. But the output is worth it — it replaces two hours of my own reading and synthesis.
+
+**What makes a club agent?**
+- Long context window
+- Multi-source synthesis or complex multi-step reasoning
+- Opus-class or high-context model
+- Expensive per run — you don't trigger this on a cron every 15 minutes
+- High output quality expected — failures are costly
+
+**Where clubs break down:** everywhere, if you use them for ball tasks. This is the mistake I see constantly. Someone builds a research-grade agent for a task that needs a simple classifier. They run Opus on a job Haiku could do in 200 milliseconds. They wonder why their costs are out of control.
+
+The juggling principle: don't use a club when the trick calls for a ball.
+
+---
+
+## 🌀 The Devil Stick: Autonomous, Unpredictable, Requires a Light Touch
+
+The devil stick is the prop that teaches you something the others don't: you cannot directly control it.
+
+You use two hand sticks to keep the center stick spinning. You guide it. You correct it when it starts to drift. But the moment you grab it directly — the moment you try to take over — the whole thing falls apart. The skill is learning to influence without controlling. To react to what the prop does, not what you planned for it to do.
+
+In the agent world, **a devil stick is your autonomous, long-running agent** — an agent you give a goal to, then watch.
+
+These are the agents that scare people. The ones that browse the web, write and execute code, trigger other agents, and make decisions in a loop until they reach a goal or hit a stop condition. They're not triggered once and finished. They run, observe, decide, act, observe again.
+
+Otto — my AI community orchestration bot — has devil stick behaviors. When I ask him to plan the next Vienna meetup, he doesn't just format a template. He checks Sessionize for speaker submissions, looks at the event calendar, drafts a shortlist of speaker suggestions, checks the venue availability pattern from past events, and proposes an agenda. He does it in a loop. I set the goal; he figures out the steps.
+
+**What makes a devil stick agent?**
+- Autonomous reasoning loop (think, act, observe, repeat)
+- Tool access: can call APIs, read/write files, trigger other agents
+- Goal-directed rather than instruction-directed
+- Requires guardrails: stop conditions, maximum iterations, human-in-the-loop checkpoints
+- Unpredictable in execution — same goal can take different paths
+
+**Where devil sticks break down:** without guardrails, they run forever. Without a well-defined goal, they hallucinate a target. Without observability, you have no idea what they're doing until they've already done it. The key insight from juggling: you have to stay actively engaged. The devil stick doesn't run itself. You guide it.
+
+---
+
+## The Environment Changes Everything
+
+Here's the juggling insight that most agent architecture discussions miss: *the same prop behaves differently depending on where you're juggling.*
+
+Indoors, no wind, perfect lighting — you juggle clubs the way you practiced them. You know exactly what's coming. Outdoors, light breeze — the rings wobble slightly. You adjust. Full wind and rain — you don't juggle clubs at all. You grab the balls, because the balls are forgiving enough to survive the chaos.
+
+Agent systems are the same. The "environment" is your production context:
+
+- **Dev/staging (indoors):** predictable, controlled, no real consequences. Test your clubs here. Try the devil stick. See what breaks.
+- **Non-critical production (light breeze):** moderate stakes. Use rings. Run clubs with human review. Log everything.
+- **High-stakes production (full wind):** don't run devil sticks without human checkpoints. Consider whether a ring can do the job instead of a club. Have fallbacks for every agent that matters.
+
+I watched a team deploy an autonomous agent to their customer-facing production system — basically, a devil stick outdoors in a thunderstorm — with no guardrails, no human review, and no stop conditions. The agent decided that "help the customer resolve their issue" included sending a full account credit without any approval flow. The agent was technically correct. The business was furious.
+
+Wrong prop for the environment.
+
+---
+
+## The Prop Selection Checklist
+
+Before I design any agent, I ask three questions:
+
+**1. How much does it need to remember?**
+Nothing = ball. The current task = ring. Across many sources and long history = club. Across an autonomous run with self-generated memory = devil stick.
+
+**2. What happens when it fails?**
+Bounce and recover = ball. Noticeable but handleable = ring. Loud and visible = club. Potentially cascading and hard to reverse = devil stick. Match the stakes to the prop.
+
+**3. What's the environment?**
+Controlled dev = fine to experiment with clubs and devil sticks. Production with real consequences = start with balls and rings. Add complexity only when simpler props can't do the job.
+
+---
+
+*Post 2 in the Juggling-Pizza Framework series. [Post 1: The Pizza Agent Model](/blog/pizza-agent-model) · [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure) · [Post 4: The Complete Framework](/blog/juggling-pizza-framework-ai-agent-teams)*
+
+*Linda Mohamed is an AWS Hero and cloud consultant in Vienna. She runs the AWS User Groups in Vienna and Linz, builds AI agent systems on AWS Bedrock, and occasionally juggles clubs on stage to make a point about distributed architectures.*

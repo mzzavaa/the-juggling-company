@@ -1,0 +1,206 @@
+---
+title: "The Juggling-Pizza Framework: My Complete System for Designing AI Agent Teams"
+slug: juggling-pizza-framework-ai-agent-teams
+summary: "Two frameworks I invented by accident — one from juggling props, one from Amazon's pizza rule — that together make agent team design actually make sense."
+date: 2026-02-23
+tags: ["ai-agents", "juggling", "aws", "agentcore", "architecture", "pizza-model"]
+pillars: ["brain", "tech"]
+draft: false
+---
+
+I want to tell you about the two frameworks I use to design AI agent teams.
+
+Neither of them came from a research paper. Neither of them has a fancy acronym. One of them came from standing on a stage in Vienna throwing juggling clubs at an audience (metaphorically), and the other one came from staring at AWS pricing tables and thinking about pizza.
+
+But together, they answer the two questions that every AI agent team design comes down to:
+
+1. **What kind of agent do I need for this task?** (That's the juggling framework)
+2. **How many agents can I run concurrently without it blowing up?** (That's the pizza framework)
+
+If you can answer those two questions clearly, you can design a real agent system. Not a demo. Not a proof-of-concept. A system that runs in production, does real work, and doesn't cost you your entire cloud budget by Tuesday.
+
+---
+
+## Part 1: The Juggling Framework — Choosing the Right Agent Type
+
+I've been juggling for years. On stage, in workshops, in my kitchen when I'm trying to think. And the longer I do it, the more I see the props as a taxonomy of complexity.
+
+Every juggling prop teaches you something different. And they map directly to AI agent types.
+
+### 🎱 Balls = Small agents (1 slice)
+
+Balls are the most forgiving prop. They bounce. They're round. The feedback is immediate and honest. You drop one, you pick it up, you keep going.
+
+Ball agents are single-purpose, stateless, and cheap. They do one thing on a schedule or trigger, return an output, and stop. They don't need to remember anything between runs — state lives somewhere external (a database, a Notion page, an S3 bucket), and the agent reads it fresh each time.
+
+**Examples from my system:**
+- News scanner — runs Thursday 10am, scans RSS, formats digest
+- Wellness check — runs daily 9am, reads my calendar load, sends a one-line nudge
+- Email classifier — runs on inbound, tags and routes, done
+
+Run them on Haiku-class models. They don't need the big brain.
+
+### 🟠 Rings = Medium agents (2 slices)
+
+Rings require rhythm. They fly flat, wobble if you throw them wrong, and demand consistency. They're not forgiving like balls, but they're not as demanding as clubs.
+
+Ring agents handle multi-step tasks with context. They read a meaningful state, reason across it, produce structured output, and hand off. They have short-term memory within a task — they know what they're working on — but they don't carry state between sessions.
+
+**Examples from my system:**
+- Invoice chaser — reads invoice state, decides action, sends email or flags for review
+- Content drafter — takes a rough outline, pulls from knowledge base, produces a draft
+- CFP abstract writer — reads talk description, conference context, generates tailored abstract
+
+Sonnet-class. Smart enough to reason; cheap enough to run regularly.
+
+### 🎪 Clubs = Large agents (4 slices)
+
+Clubs are the prop that impresses people at parties. They spin. They're loud when dropped. They demand precision on every throw.
+
+Club agents handle heavy work: multi-document synthesis, complex reasoning, high-stakes output. They're expensive, they're slow, and they should be triggered intentionally — not on a cron every fifteen minutes.
+
+**Examples from my system:**
+- Research synthesizer — Playwright scraping + Bedrock Knowledge Base retrieval + multi-source synthesis
+- Architecture reviewer — reads the codebase context + design docs + produces a structured critique
+- Proposal generator — reads deal context + case studies + testimonials + writes a customized pitch
+
+Opus-class. Worth every token — for the right tasks. Not the right tool for classifying emails.
+
+### 🌀 Devil Stick = Autonomous agents (variable, requires guardrails)
+
+You don't grip the devil stick. You guide it with two hand sticks. It spins. It drifts. It does things you didn't explicitly tell it to do. The skill is learning to influence without controlling.
+
+Autonomous agents are goal-directed rather than instruction-directed. You tell them *what* to achieve; they figure out *how*. They have tool access, they run in loops, they observe and adapt.
+
+**Examples from my system:**
+- Otto's meetup planner — given "plan the June event," it checks speaker submissions, drafts agenda, flags conflicts, proposes options
+- Funding researcher — given "find grants for AI consulting SMEs in Austria," it searches, filters, compiles, scores
+
+These agents don't fit neatly into a slice count, because their complexity is determined at runtime. Which is exactly why they need guardrails: maximum iterations, stop conditions, human checkpoints before irreversible actions.
+
+---
+
+## Part 2: The Pizza Model — How Many Agents Can Run at Once
+
+You know Amazon's 2-pizza team rule: a team should be small enough that two large pizzas can feed them. It's a proxy for communication overhead. Too many people, too many handoffs, everything slows down.
+
+For humans, the limiting factor is coordination. For AI agents, the limiting factor is tokens. They don't get tired or hungry, but they do get expensive and slow if you run too many heavy ones concurrently.
+
+So I kept the pizza metaphor but changed what it measures.
+
+**Two large pizzas. Sixteen slices. That's your concurrent session budget.**
+
+Each agent eats slices based on how heavy it is:
+
+| Agent type | Slices | Model tier |
+|---|---|---|
+| 🎱 Ball (small) | 1 slice | Haiku-class |
+| 🟠 Ring (medium) | 2 slices | Sonnet-class |
+| 🎪 Club (large) | 4 slices | Opus-class |
+
+Sixteen slices max per concurrent window. If you go over, you hit rate limits, context overflow, or costs that will make your finance team ask uncomfortable questions.
+
+### Why this actually works
+
+It's not just a cute metaphor. The 1-2-4 ratio reflects real pricing tiers. Haiku costs roughly 4x less than Sonnet per token. Sonnet costs roughly 5x less than Opus. The slice counts are calibrated to match real cost and compute weight, not pulled from thin air.
+
+And more importantly: **the constraint forces the right design questions.**
+
+When you sit down to design an agent crew and you have 16 slices to work with, you can't just add agents until it feels comprehensive. You have to ask:
+- Does this task actually need a club, or would a ring do it?
+- Can I split this into two balls instead of one ring?
+- What's the minimum intelligence required here?
+
+Those are the right questions. The pizza makes you ask them.
+
+---
+
+## Part 3: How They Fit Together
+
+The juggling framework tells you **what to build**. The pizza model tells you **how much you can run at once**. Together, they give you a complete picture of your agent team.
+
+### Step 1: Map the tasks
+
+For every task I want to automate, I write one sentence: what does this agent need to do, and what does it need to know to do it?
+
+### Step 2: Assign the prop
+
+News scanner — pure ball. Simple input, simple output, stateless.  
+Research synthesizer — club. Multi-source, long context, complex output.
+
+### Step 3: Count the slices
+
+News scanner: 1 slice.  
+Research synthesizer: 4 slices.
+
+### Step 4: Design the session windows
+
+**Morning cron window (07:00–09:00):**
+- Email triage (ball, 1 slice)
+- Security alert check (ball, 1 slice)
+- Wellness check (ball, 1 slice)
+- OKR status (ring, 2 slices)
+- Travel detection (ball, 1 slice)
+
+Total: 6/16 slices. Half a pizza. I have 10 slices available if something urgent comes in.
+
+**Deep work session:**
+- Research synthesizer (club, 4 slices)
+- Architecture reviewer (club, 4 slices)
+- Content drafter (ring, 2 slices)
+
+Total: 10/16 slices. Comfortable. Leaves room for one more ring or four more balls if I need them.
+
+**Revenue crew (proposal + invoicing):**
+- Proposal generator (club, 4 slices)
+- Invoice chaser (ring, 2 slices)
+- Client onboarding setup (ring, 2 slices)
+
+Total: 8/16 slices. Exactly half a pizza. I can run the morning cron and the revenue crew simultaneously without overlap.
+
+---
+
+## The Framework in One Table
+
+| Juggling prop | Agent type | Slices | When to use | When NOT to use |
+|---|---|---|---|---|
+| 🎱 Ball | Single-purpose, stateless | 1 | Scanners, classifiers, pings, checks | Tasks requiring reasoning, memory, or multi-step logic |
+| 🟠 Ring | Multi-step, short-term memory | 2 | Drafters, chasers, generators, formatters | Tasks requiring synthesis across many sources or autonomous decisions |
+| 🎪 Club | Long-context, complex synthesis | 4 | Research, proposals, architecture review | Anything that a ring can handle; anything triggered on a frequent schedule |
+| 🌀 Devil Stick | Autonomous, goal-directed | Variable | Tasks where you can define a goal but not all the steps | Production systems without guardrails; anything irreversible without human review |
+
+---
+
+## The Environment Rule
+
+One thing neither framework captures on its own: the same agent behaves differently in different environments.
+
+In juggling, a club routine that's solid indoors falls apart in wind. You don't perform it in rain. You adjust to the environment.
+
+For agents:
+- **Dev/staging:** Experiment freely. Let clubs run wild. Test the devil stick. This is practice space.
+- **Non-critical production:** Use rings where you'd normally use balls; add human review to clubs. Log everything.
+- **High-stakes production:** Start with balls and rings. Add clubs only with human checkpoints. Devil sticks only with explicit stop conditions and human-in-the-loop on any irreversible action.
+
+I've watched teams deploy club-level agents to production customer-facing systems with no guardrails. The agents aren't wrong — the environment is wrong for that prop.
+
+---
+
+## Using It on Your Own System
+
+Try this exercise:
+
+1. List every task you want to automate with AI agents
+2. For each task: ball, ring, club, or devil stick? Write one sentence justification.
+3. Count the slices for each agent
+4. Group agents by when they run (session windows)
+5. Sum the slices per window. Are you under 16? If not, where are you using clubs when rings would work?
+
+If you do this honestly, you'll end up with a right-sized agent team where you actually understand every design decision. Not because a framework told you to, but because you asked the right questions.
+
+---
+
+*The anchor post for the Juggling-Pizza Framework series.*  
+*[Post 1: The Pizza Agent Model](/blog/pizza-agent-model) · [Post 2: Balls, Clubs, and Rings](/blog/balls-clubs-rings-ai-agents) · [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure)*
+
+*Linda Mohamed is an AWS Hero and cloud consultant in Vienna. She runs the AWS User Groups in Vienna and Linz, builds AI agent systems on AWS Bedrock, juggles for real, and invented a pizza-based resource allocation framework while staring at billing reports. The juggling came first.*

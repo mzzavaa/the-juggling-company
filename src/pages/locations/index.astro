@@ -14,6 +14,7 @@ const mapLocations: MapLocation[] = locations.map((l) => ({
   lng: l.data.lng,
   type: l.data.type,
   notes: l.data.notes,
+  website: l.data.website,
 }));
 
 const typeLabel: Record<MapLocation["type"], string> = {
@@ -21,6 +22,7 @@ const typeLabel: Record<MapLocation["type"], string> = {
   "home-base": "Home base",
   available: "Available",
   workshop: "Workshop",
+  "juggling-shop": "Juggling shop",
 };
 
 const typeAccent: Record<MapLocation["type"], string> = {
@@ -28,6 +30,7 @@ const typeAccent: Record<MapLocation["type"], string> = {
   "home-base": "var(--color-brain)",
   available: "var(--color-tech)",
   workshop: "var(--color-change)",
+  "juggling-shop": "var(--color-brain-change)",
 };
 
 const grouped = locations.reduce(
@@ -54,6 +57,12 @@ const grouped = locations.reduce(
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
       {locations.length} {locations.length === 1 ? "location" : "locations"} on the map. Click a pin for details, or browse the list below.
     </p>
+    <a
+      href="/locations/juggling-shops"
+      class="mt-6 inline-flex items-center gap-2 rounded-lg border border-[var(--color-brain-change)] px-4 py-2 text-sm font-medium text-[var(--color-brain-change)] transition hover:bg-[var(--color-brain-change)] hover:text-white"
+    >
+      🎪 Juggling shops directory →
+    </a>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-12 md:px-6">

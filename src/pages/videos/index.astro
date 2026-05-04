@@ -1,50 +1,366 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import VideoFilter, { type VideoSummary } from "@/islands/VideoFilter";
+import Icon from "@/components/Icon.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
-import { getVideos, getIdeas } from "@/lib/content";
+import { getVideos } from "@/lib/content";
+import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
-const [videos, ideas] = await Promise.all([getVideos(), getIdeas()]);
+const videos = await getVideos();
 
-const ideaTitlesBySlug = Object.fromEntries(ideas.map((i) => [i.id, i.data.title]));
-
-const summaries: VideoSummary[] = videos.map((v) => ({
-  slug: v.id,
-  title: v.data.title,
-  source: v.data.source,
-  externalUrl: v.data.externalUrl,
-  externalId: v.data.externalId,
-  thumbUrl:
-    v.data.source === "youtube"
-      ? `https://i.ytimg.com/vi/${v.data.externalId}/hqdefault.jpg`
-      : "/images/3.png",
-  publishedAt: v.data.publishedAt.toISOString(),
-  durationSec: v.data.durationSec,
-  tags: v.data.tags,
-  pillars: v.data.pillars,
-  ideaSlugs: v.data.ideaSlugs.map((ref) => ref.id),
-  description: v.data.description,
-}));
+const jugglingVideos = videos.filter(
+  (v) => v.data.source === "youtube" && v.data.tags.includes("juggling"),
+);
+const techVideos = videos.filter(
+  (v) => v.data.source === "youtube" && !v.data.tags.includes("juggling"),
+);
+const tiktokVideos = videos.filter((v) => v.data.source === "tiktok");
+const instagramVideos = videos.filter((v) => v.data.source === "instagram");
 ---
 
 <BaseLayout
   title="Videos"
-  description="Talks, podcast appearances, AWS sessions, and juggling clips — colour-coded by pillar."
+  description="Juggling clips, conference talks, and short-form content — on YouTube, TikTok, and Instagram."
 >
+  <!-- Hero -->
   <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Videos</p>
     <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
       <span class="rgb-text">Watch the work.</span>
     </h1>
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Conference talks, podcast appearances, and AWS community sessions — filterable by pillar, source, or related idea.
+      Juggling, talks, and everything in between — on YouTube, TikTok, and Instagram.
     </p>
     <div class="mt-6">
       <SocialLinks />
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
-    <VideoFilter client:load videos={summaries} ideaTitlesBySlug={ideaTitlesBySlug} />
-  </section>
+  <!-- ── Juggling (YouTube) ─────────────────────────── -->
+  {jugglingVideos.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 pb-20 md:px-6">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain)]">Juggling</p>
+          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">On YouTube</h2>
+        </div>
+        <a
+          href="https://www.youtube.com/@mrs_lee_g"
+          class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[#ff0000] hover:underline"
+          rel="noopener"
+          target="_blank"
+        >
+          Subscribe <Icon name="external-link" size={14} />
+        </a>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {jugglingVideos.map((v) => {
+          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#9696b0";
+          return (
+            <div
+              class="yt-card overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
+              style={`--card-accent: ${accent};`}
+            >
+              <div class="aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${v.data.externalId}`}
+                  title={v.data.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"
+                  class="h-full w-full border-0"
+                />
+              </div>
+              <div class="p-5">
+                <h3 class="font-display text-base font-semibold leading-snug text-[var(--color-fg)]">
+                  {v.data.title}
+                </h3>
+                {v.data.description && (
+                  <p class="mt-2 line-clamp-2 text-sm text-[var(--color-muted)]">
+                    {v.data.description}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  )}
+
+  <!-- ── TikTok carousel ────────────────────────────── -->
+  {tiktokVideos.length > 0 && (
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-4 md:px-6">
+        <div class="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-fg)]">Short clips</p>
+            <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">TikTok</h2>
+          </div>
+          <a
+            href="https://www.tiktok.com/@mrs_lee_g_"
+            class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[var(--color-fg)] hover:underline"
+            rel="noopener"
+            target="_blank"
+          >
+            @mrs_lee_g_ <Icon name="external-link" size={14} />
+          </a>
+        </div>
+      </div>
+
+      <!-- Full-bleed scroll container with inner padding -->
+      <div
+        id="tiktok-carousel"
+        class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:px-6 scrollbar-thin"
+        style="scroll-padding-left: 1.5rem;"
+        aria-label="TikTok short clips"
+      >
+        <!-- leading spacer so first card aligns with max-w-6xl on wide screens -->
+        <div class="shrink-0 w-[max(0px,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
+
+        {tiktokVideos.map((v) => {
+          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#1d1d1f";
+          return (
+            <div
+              class="tiktok-hover-card snap-start relative flex-none w-52 rounded-2xl overflow-hidden cursor-pointer border border-[var(--color-border)] bg-[var(--color-bg-card)] group"
+              style={`aspect-ratio: 9/16; --card-accent: ${accent};`}
+              data-video-id={v.data.externalId}
+              data-url={v.data.externalUrl}
+              role="article"
+              aria-label={v.data.title}
+            >
+              <!-- Placeholder shown before hover -->
+              <div
+                class="tiktok-placeholder absolute inset-0 flex flex-col justify-end p-4"
+                style={`background: linear-gradient(160deg, color-mix(in oklab, ${accent} 80%, #000) 0%, #0d0d0d 100%);`}
+              >
+                <div class="mb-auto flex justify-end pt-3 opacity-40">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.27 8.27 0 0 0 4.84 1.54V6.76a4.85 4.85 0 0 1-1.07-.07z"/>
+                  </svg>
+                </div>
+                <!-- Play button -->
+                <div class="mb-3 flex items-center justify-center">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm ring-1 ring-white/20 transition group-hover:bg-white/25">
+                    <svg class="ml-1" width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+                <p class="line-clamp-3 text-xs font-medium leading-snug text-white/90">{v.data.title}</p>
+                <p class="mt-1.5 text-[10px] text-white/50">Hover to play</p>
+              </div>
+            </div>
+          );
+        })}
+
+        <!-- trailing spacer -->
+        <div class="shrink-0 w-[max(1rem,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Instagram carousel ──────────────────────────── -->
+  {instagramVideos.length > 0 && (
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-4 md:px-6">
+        <div class="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p
+              class="text-xs font-semibold uppercase tracking-widest"
+              style="color: #e1306c;"
+            >Reels</p>
+            <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Instagram</h2>
+          </div>
+          <a
+            href="https://www.instagram.com/mrs_lee_g/"
+            class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold hover:underline"
+            style="color: #e1306c;"
+            rel="noopener"
+            target="_blank"
+          >
+            @mrs_lee_g <Icon name="external-link" size={14} />
+          </a>
+        </div>
+      </div>
+
+      <div
+        id="ig-carousel"
+        class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:px-6"
+        style="scroll-padding-left: 1.5rem;"
+        aria-label="Instagram reels"
+      >
+        <div class="shrink-0 w-[max(0px,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
+
+        {instagramVideos.map((v) => (
+          <a
+            href={v.data.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ig-card snap-start relative flex-none w-52 rounded-2xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-card)] group"
+            style="aspect-ratio: 9/16;"
+            aria-label={`Watch on Instagram: ${v.data.title}`}
+          >
+            <div
+              class="absolute inset-0 flex flex-col justify-end p-4"
+              style="background: linear-gradient(160deg, #833ab4 0%, #fd1d1d 55%, #fcb045 100%);"
+            >
+              <div class="mb-auto flex justify-end pt-3 opacity-40">
+                <Icon name="instagram" size={20} class="text-white" />
+              </div>
+              <div class="mb-3 flex items-center justify-center">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm ring-1 ring-white/20 transition group-hover:bg-white/25">
+                  <svg class="ml-1" width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+              <p class="line-clamp-3 text-xs font-medium leading-snug text-white/90">{v.data.title}</p>
+              <p class="mt-1.5 text-[10px] text-white/50">Watch on Instagram</p>
+            </div>
+          </a>
+        ))}
+
+        <div class="shrink-0 w-[max(1rem,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Creative tech (YouTube) ───────────────────── -->
+  {techVideos.length > 0 && (
+    <section class="pb-24">
+      <div class="mx-auto max-w-6xl px-4 md:px-6">
+        <div class="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-tech)]">Talks & podcasts</p>
+            <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Creative tech</h2>
+          </div>
+          <a
+            href="https://www.youtube.com/@mrs_lee_g"
+            class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[#ff0000] hover:underline"
+            rel="noopener"
+            target="_blank"
+          >
+            YouTube <Icon name="external-link" size={14} />
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:px-6"
+        style="scroll-padding-left: 1.5rem;"
+        aria-label="Tech talks and podcasts"
+      >
+        <div class="shrink-0 w-[max(0px,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
+
+        {techVideos.map((v) => {
+          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#9696b0";
+          return (
+            <a
+              href={v.data.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tech-card snap-start flex-none w-72 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition hover:-translate-y-1"
+              style={`--card-accent: ${accent};`}
+              aria-label={v.data.title}
+            >
+              <div class="aspect-video overflow-hidden">
+                <img
+                  src={`https://img.youtube.com/vi/${v.data.externalId}/hqdefault.jpg`}
+                  alt={v.data.title}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition group-hover:scale-105"
+                />
+              </div>
+              <div class="p-4">
+                <p
+                  class="line-clamp-2 text-sm font-semibold leading-snug text-[var(--color-fg)]"
+                  style={`border-left: 2px solid ${accent}; padding-left: 8px;`}
+                >
+                  {v.data.title}
+                </p>
+                {v.data.description && (
+                  <p class="mt-2 line-clamp-2 text-xs text-[var(--color-muted)]">
+                    {v.data.description}
+                  </p>
+                )}
+              </div>
+            </a>
+          );
+        })}
+
+        <div class="shrink-0 w-[max(1rem,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
+      </div>
+    </section>
+  )}
 </BaseLayout>
+
+<script>
+  // TikTok hover-to-play: inject direct embed iframe on mouseenter, destroy on mouseleave
+  document.querySelectorAll<HTMLElement>(".tiktok-hover-card").forEach((card) => {
+    let frame: HTMLIFrameElement | null = null;
+
+    const destroy = () => {
+      frame?.remove();
+      frame = null;
+      card.querySelector<HTMLElement>(".tiktok-placeholder")!.style.opacity = "1";
+    };
+
+    card.addEventListener("mouseenter", () => {
+      if (frame) return;
+      const videoId = card.dataset.videoId;
+      if (!videoId) return;
+      card.querySelector<HTMLElement>(".tiktok-placeholder")!.style.opacity = "0";
+      frame = document.createElement("iframe");
+      frame.src = `https://www.tiktok.com/embed/v2/${videoId}?autoplay=1`;
+      frame.allow = "autoplay; encrypted-media; picture-in-picture";
+      frame.allowFullscreen = true;
+      frame.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0;z-index:10;";
+      card.appendChild(frame);
+    });
+
+    card.addEventListener("mouseleave", destroy);
+
+    // Mobile: tap opens TikTok instead of trying to embed
+    card.addEventListener("click", (e) => {
+      if (window.matchMedia("(hover: none)").matches) {
+        e.preventDefault();
+        const url = card.dataset.url;
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
+      }
+    });
+  });
+</script>
+
+<style>
+  .yt-card {
+    transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
+  }
+  .yt-card:hover {
+    border-color: var(--card-accent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
+      0 12px 36px -12px color-mix(in oklab, var(--card-accent) 60%, transparent);
+  }
+
+  .tech-card {
+    transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
+  }
+  .tech-card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--card-accent) 50%, transparent);
+  }
+
+  .tiktok-hover-card .tiktok-placeholder {
+    transition: opacity 150ms ease;
+  }
+
+  /* Hide default scrollbar on carousel rows but keep scrollability */
+  #tiktok-carousel,
+  #ig-carousel {
+    scrollbar-width: none;
+  }
+  #tiktok-carousel::-webkit-scrollbar,
+  #ig-carousel::-webkit-scrollbar {
+    display: none;
+  }
+</style>

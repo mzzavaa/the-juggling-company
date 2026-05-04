@@ -1,4 +1,3 @@
-import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import type { Map as MapLibreMap, Marker } from "maplibre-gl";
 
@@ -9,8 +8,9 @@ export interface MapLocation {
   country: string;
   lat: number;
   lng: number;
-  type: "past-performance" | "home-base" | "available" | "workshop";
+  type: "past-performance" | "home-base" | "available" | "workshop" | "juggling-shop";
   notes: string;
+  website?: string;
 }
 
 interface Props {
@@ -18,10 +18,11 @@ interface Props {
 }
 
 const typeColor: Record<MapLocation["type"], string> = {
-  "past-performance": "#d97706", // amber-600
-  "home-base": "#dc2626", // red-600
-  available: "#10b981", // emerald-500
-  workshop: "#2563eb", // blue-600
+  "past-performance": "#d97706",
+  "home-base": "#dc2626",
+  available: "#10b981",
+  workshop: "#2563eb",
+  "juggling-shop": "#9333ea",
 };
 
 const typeLabel: Record<MapLocation["type"], string> = {
@@ -29,51 +30,79 @@ const typeLabel: Record<MapLocation["type"], string> = {
   "home-base": "Home base",
   available: "Available",
   workshop: "Workshop",
+  "juggling-shop": "Juggling shop",
 };
 
 export default function LocationsMap({ locations }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const [selected, setSelected] = useState<MapLocation | null>(null);
+  const [mapError, setMapError] = useState<string | null>(null);
+
+  // Stable ref to avoid re-creating the map when the locations array identity changes
+  const locationsRef = useRef(locations);
+  locationsRef.current = locations;
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
     let cancelled = false;
     let markers: Marker[] = [];
 
+    // Inject MapLibre CSS dynamically so it never runs server-side
+    if (!document.getElementById("maplibre-css")) {
+      const link = document.createElement("link");
+      link.id = "maplibre-css";
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/maplibre-gl@5.1.0/dist/maplibre-gl.css";
+      document.head.appendChild(link);
+    }
+
     (async () => {
-      const maplibre = await import("maplibre-gl");
-      if (cancelled || !containerRef.current) return;
+      try {
+        const maplibre = await import("maplibre-gl");
+        if (cancelled || !containerRef.current) return;
 
-      const map = new maplibre.Map({
-        container: containerRef.current,
-        style: "https://tiles.openfreemap.org/styles/positron",
-        center: [10, 30],
-        zoom: 1.5,
-        attributionControl: { compact: true },
-      });
-      mapRef.current = map;
-      map.addControl(new maplibre.NavigationControl({ showCompass: false }), "top-right");
+        const map = new maplibre.Map({
+          container: containerRef.current,
+          style: "https://tiles.openfreemap.org/styles/positron",
+          center: [10, 30],
+          zoom: 1.5,
+          attributionControl: { compact: true },
+        });
+        mapRef.current = map;
+        map.addControl(new maplibre.NavigationControl({ showCompass: false }), "top-right");
 
-      map.on("load", () => {
-        markers = locations.map((loc) => {
-          const el = document.createElement("button");
-          el.type = "button";
-          el.setAttribute("aria-label", `${loc.name} (${typeLabel[loc.type]})`);
-          el.style.cssText = `width:18px;height:18px;border-radius:9999px;border:2px solid white;background:${typeColor[loc.type]};box-shadow:0 1px 3px rgba(0,0,0,0.3);cursor:pointer;`;
-          el.addEventListener("click", () => setSelected(loc));
-          const marker = new maplibre.Marker({ element: el })
-            .setLngLat([loc.lng, loc.lat])
-            .addTo(map);
-          return marker;
+        map.on("error", (e) => {
+          console.error("MapLibre error:", e);
         });
 
-        if (locations.length > 0) {
-          const bounds = new maplibre.LngLatBounds();
-          for (const loc of locations) bounds.extend([loc.lng, loc.lat]);
-          map.fitBounds(bounds, { padding: 60, maxZoom: 6, duration: 0 });
-        }
-      });
+        map.on("load", () => {
+          if (cancelled) return;
+          // Force correct canvas dimensions after hydration
+          map.resize();
+
+          const locs = locationsRef.current;
+          markers = locs.map((loc) => {
+            const el = document.createElement("button");
+            el.type = "button";
+            el.setAttribute("aria-label", `${loc.name} (${typeLabel[loc.type]})`);
+            el.style.cssText = `width:18px;height:18px;border-radius:9999px;border:2px solid white;background:${typeColor[loc.type]};box-shadow:0 1px 3px rgba(0,0,0,0.3);cursor:pointer;`;
+            el.addEventListener("click", () => setSelected(loc));
+            return new maplibre.Marker({ element: el })
+              .setLngLat([loc.lng, loc.lat])
+              .addTo(map);
+          });
+
+          if (locs.length > 0) {
+            const bounds = new maplibre.LngLatBounds();
+            for (const loc of locs) bounds.extend([loc.lng, loc.lat]);
+            map.fitBounds(bounds, { padding: 60, maxZoom: 6, duration: 0 });
+          }
+        });
+      } catch (err) {
+        console.error("Map init failed:", err);
+        setMapError("Map could not be loaded.");
+      }
     })();
 
     return () => {
@@ -82,11 +111,18 @@ export default function LocationsMap({ locations }: Props) {
       mapRef.current?.remove();
       mapRef.current = null;
     };
-  }, [locations]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="relative h-[70vh] w-full overflow-hidden rounded-lg border border-[var(--color-border)]">
-      <div ref={containerRef} className="absolute inset-0" />
+      {mapError ? (
+        <div className="flex h-full items-center justify-center text-muted">
+          {mapError}
+        </div>
+      ) : (
+        <div ref={containerRef} className="absolute inset-0" />
+      )}
       {selected && (
         <aside
           className="absolute right-4 top-4 z-10 max-w-sm rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 shadow-xl"
@@ -115,6 +151,17 @@ export default function LocationsMap({ locations }: Props) {
           </p>
           {selected.notes && (
             <p className="mt-2 text-sm text-[var(--color-fg)]">{selected.notes}</p>
+          )}
+          {selected.website && (
+            <a
+              href={selected.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-sm font-medium underline underline-offset-2"
+              style={{ color: typeColor[selected.type] }}
+            >
+              Visit website →
+            </a>
           )}
         </aside>
       )}

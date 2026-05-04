@@ -117,7 +117,7 @@ const personJsonLd = {
           <a
             href="/ideas"
             class="group inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold text-[var(--color-bg)] shadow-xl transition hover:shadow-2xl"
-            style="background: linear-gradient(100deg, var(--color-brain), var(--color-brain-change), var(--color-change), var(--color-tech-change), var(--color-tech)); background-size: 220% auto;"
+            style="background: linear-gradient(100deg, var(--color-brain), var(--color-brain-tech), var(--color-tech), var(--color-tech-change), var(--color-change)); background-size: 220% auto;"
           >
             Read the Ideas
             <Icon name="arrow-right" size={18} />
@@ -233,26 +233,6 @@ const personJsonLd = {
       }
     </ul>
 
-    <!-- Tiny additive-mixing legend -->
-    <div
-      class="mt-12 grid gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 sm:grid-cols-2 lg:grid-cols-4"
-    >
-      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-        Additive blends
-      </p>
-      <div class="flex items-center gap-2 text-sm">
-        <span class="legend-swatch" style="background: var(--color-brain-tech);"></span>
-        <span><strong style="color: var(--color-brain-tech);">Brain × Tech</strong> = AI &amp; cognition</span>
-      </div>
-      <div class="flex items-center gap-2 text-sm">
-        <span class="legend-swatch" style="background: var(--color-brain-change);"></span>
-        <span><strong style="color: var(--color-brain-change);">Brain × Change</strong> = workshops</span>
-      </div>
-      <div class="flex items-center gap-2 text-sm">
-        <span class="legend-swatch" style="background: var(--color-tech-change);"></span>
-        <span><strong style="color: var(--color-tech-change);">Tech × Change</strong> = leadership</span>
-      </div>
-    </div>
   </section>
 
   {
@@ -361,11 +341,4 @@ const personJsonLd = {
     transition: box-shadow 220ms ease, transform 220ms ease;
   }
 
-  .legend-swatch {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
 </style>

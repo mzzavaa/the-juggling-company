@@ -1,0 +1,100 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import LocationsMap, { type MapLocation } from "@/islands/LocationsMap";
+import { getLocations } from "@/lib/content";
+
+const allLocations = await getLocations();
+const shops = allLocations.filter((l) => l.data.type === "juggling-shop");
+
+const mapLocations: MapLocation[] = shops.map((l) => ({
+  slug: l.id,
+  name: l.data.name,
+  city: l.data.city,
+  country: l.data.country,
+  lat: l.data.lat,
+  lng: l.data.lng,
+  type: l.data.type,
+  notes: l.data.notes,
+  website: l.data.website,
+}));
+---
+
+<BaseLayout
+  title="Juggling Shops"
+  description="A growing directory of juggling shops around the world — reviewed, visited, and tested by Linda Mohamed."
+>
+  <section class="mx-auto max-w-6xl px-4 py-20 md:px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain-change)]">
+      Juggling Shops
+    </p>
+    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
+      <span class="rgb-text">Shops around the world.</span>
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
+      Wherever I travel, I look for juggling shops — to test balls, discover local gear, and meet the community. This is my growing directory of shops I've visited, rated, and reviewed.
+    </p>
+    <a
+      href="/locations"
+      class="mt-6 inline-flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-fg)] transition"
+    >
+      ← All locations
+    </a>
+  </section>
+
+  {mapLocations.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 pb-12 md:px-6">
+      <LocationsMap client:visible locations={mapLocations} />
+    </section>
+  )}
+
+  <section class="mx-auto max-w-6xl px-4 pb-24 md:px-6">
+    {shops.length === 0 ? (
+      <p class="text-[var(--color-muted)]">No shops listed yet — check back soon.</p>
+    ) : (
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {shops.map((shop) => (
+          <article
+            id={shop.id}
+            class="flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5"
+            style="border-top: 3px solid var(--color-brain-change);"
+          >
+            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain-change)]">
+              {shop.data.city}, {shop.data.country}
+            </p>
+            <h2 class="mt-1 font-display text-xl font-bold text-[var(--color-fg)]">
+              {shop.data.name}
+            </h2>
+            {shop.data.notes && (
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-muted)]">
+                {shop.data.notes}
+              </p>
+            )}
+            {shop.data.website && (
+              <a
+                href={shop.data.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-tech)] hover:underline"
+              >
+                Visit website →
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    )}
+
+    <div class="mt-16 rounded-xl border border-dashed border-[var(--color-border)] p-8 text-center">
+      <p class="font-display text-lg font-semibold text-[var(--color-fg)]">Know a juggling shop?</p>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">
+        I'm always looking for new places to discover. If you know a great juggling shop anywhere in the world, get in touch.
+      </p>
+      <a
+        href="/contact"
+        class="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--color-brain-change)] px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
+      >
+        Suggest a shop
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -28,14 +28,56 @@ const pillarForNav: Record<string, string> = {
       class="group inline-flex items-center gap-2.5 font-display text-base font-semibold tracking-tight text-[var(--color-fg)]"
       aria-label={`${site.name} — home`}
     >
-      <svg aria-hidden="true" class="h-7 w-auto" viewBox="0 0 260 130" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-width="4" d="M 70 65 C 56 50 34 32 20 40 C 6 48 10 70 34 70 C 54 70 64 65 70 65 C 80 65 114 50 154 34 C 188 20 238 22 244 52 C 250 82 230 104 192 102 C 155 100 124 86 106 74 C 96 66 100 57 120 56 C 148 54 210 64 244 56"/>
-        <rect x="146" y="26" width="16" height="16" stroke-width="2"/>
-        <circle cx="154" cy="34" r="6.5" fill="currentColor" stroke="none"/>
-        <rect x="98" y="66" width="16" height="16" stroke-width="2"/>
-        <circle cx="106" cy="74" r="6.5" fill="currentColor" stroke="none"/>
-        <rect x="128" y="82" width="16" height="16" stroke-width="2"/>
-        <circle cx="136" cy="90" r="6.5" fill="currentColor" stroke="none"/>
+      <svg aria-hidden="true" class="h-9 w-auto" viewBox="120 400 1900 1200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="logoYellow" cx="35%" cy="35%" r="70%">
+            <stop offset="0%" stop-color="#ffee88"/>
+            <stop offset="60%" stop-color="#ffcc00"/>
+            <stop offset="100%" stop-color="#cc9900"/>
+          </radialGradient>
+          <radialGradient id="logoGreen" cx="35%" cy="35%" r="70%">
+            <stop offset="0%" stop-color="#7fdf99"/>
+            <stop offset="60%" stop-color="#33cc66"/>
+            <stop offset="100%" stop-color="#0a8033"/>
+          </radialGradient>
+          <radialGradient id="logoBlue" cx="35%" cy="35%" r="70%">
+            <stop offset="0%" stop-color="#7fa3ff"/>
+            <stop offset="60%" stop-color="#3b6cff"/>
+            <stop offset="100%" stop-color="#0033cc"/>
+          </radialGradient>
+        </defs>
+
+        <path fill="currentColor" fill-rule="evenodd" d="M 1853 670 L 1846 649 L 1833 622 L 1813 593 L 1793 573 L 1775 559 L 1746 543 L 1726 535 L 1693 526 L 1656 521 L 1602 521 L 1534 530 L 1491 540 L 1398 569 L 1318 598 L 1223 636 L 1156 666 L 1008 740 L 940 776 L 823 842 L 689 922 L 629 956 L 586 914 L 531 866 L 500 846 L 462 828 L 428 819 L 414 817 L 387 817 L 359 821 L 329 831 L 301 846 L 276 865 L 247 896 L 221 936 L 210 959 L 199 996 L 196 1018 L 196 1048 L 200 1070 L 207 1090 L 215 1104 L 225 1117 L 244 1133 L 261 1142 L 279 1148 L 306 1152 L 327 1152 L 359 1148 L 382 1143 L 440 1123 L 502 1095 L 618 1034 L 667 1081 L 728 1129 L 765 1152 L 795 1167 L 834 1182 L 881 1195 L 923 1201 L 976 1201 L 997 1199 L 1038 1191 L 1071 1182 L 1115 1166 L 1117 1164 L 1138 1156 L 1201 1123 L 1231 1105 L 1269 1079 L 1322 1038 L 1332 1032 L 1336 1028 L 1336 1024 L 1331 1023 L 1327 1025 L 1318 1033 L 1283 1057 L 1243 1082 L 1220 1094 L 1217 1097 L 1174 1118 L 1133 1135 L 1104 1145 L 1063 1155 L 1016 1161 L 979 1162 L 942 1159 L 911 1153 L 867 1140 L 865 1138 L 838 1127 L 794 1102 L 756 1076 L 707 1035 L 674 1003 L 674 1001 L 1032 789 L 1127 736 L 1286 654 L 1350 625 L 1411 600 L 1470 579 L 1520 565 L 1565 556 L 1615 551 L 1656 552 L 1691 557 L 1731 570 L 1744 576 L 1766 590 L 1781 603 L 1798 622 L 1811 642 L 1821 663 L 1830 693 L 1834 716 L 1835 768 L 1829 819 L 1826 827 L 1821 853 L 1811 884 L 1797 919 L 1782 951 L 1744 1017 L 1713 1062 L 1663 1125 L 1626 1166 L 1557 1233 L 1492 1287 L 1430 1331 L 1353 1377 L 1281 1413 L 1221 1438 L 1169 1456 L 1079 1480 L 1029 1489 L 974 1495 L 930 1497 L 875 1496 L 848 1494 L 836 1491 L 813 1489 L 750 1475 L 678 1451 L 624 1427 L 570 1398 L 524 1369 L 480 1336 L 430 1289 L 377 1227 L 372 1228 L 369 1232 L 370 1236 L 419 1297 L 456 1334 L 510 1377 L 554 1406 L 613 1439 L 655 1459 L 717 1483 L 765 1497 L 790 1503 L 801 1504 L 809 1507 L 830 1509 L 840 1512 L 872 1514 L 878 1516 L 949 1517 L 1018 1512 L 1081 1502 L 1085 1500 L 1120 1493 L 1178 1477 L 1220 1463 L 1258 1448 L 1305 1427 L 1349 1405 L 1407 1372 L 1483 1322 L 1556 1264 L 1594 1230 L 1666 1156 L 1717 1094 L 1764 1027 L 1810 947 L 1835 889 L 1843 866 L 1844 859 L 1848 849 L 1850 836 L 1853 829 L 1855 812 L 1858 803 L 1860 775 L 1862 767 L 1862 719 Z M 571 985 L 569 989 L 483 1034 L 433 1057 L 382 1077 L 341 1087 L 309 1089 L 294 1087 L 285 1084 L 273 1077 L 265 1068 L 261 1061 L 256 1045 L 255 1014 L 261 985 L 269 963 L 287 932 L 301 914 L 315 900 L 329 889 L 355 875 L 376 869 L 408 868 L 420 870 L 443 878 L 467 891 L 491 908 L 537 950 Z"/>
+
+        <!-- Ball 1 — Brain (yellow) — shoulder of right oval -->
+        <g>
+          <rect x="1300" y="460" width="240" height="240" fill="none" stroke="#cc2222" stroke-width="22" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.4s" fill="freeze"/>
+          </rect>
+          <circle r="100" fill="url(#logoYellow)">
+            <animateMotion dur="2.5s" fill="freeze" path="M 1420 580 C 1680 545 1862 630 1862 760 C 1862 860 1820 1000 1720 1120 C 1620 1240 1500 1360 1370 1430 C 1240 1490 1080 1510 920 1505 C 760 1500 640 1450 600 1350 C 560 1250 620 1120 700 1015 C 680 988 660 970 640 960 C 600 940 490 895 390 940 C 290 985 265 1065 305 1130 C 345 1195 450 1165 545 1100 C 605 1050 635 1005 640 960 C 690 935 830 880 990 820 C 1140 768 1280 660 1420 580"/>
+          </circle>
+        </g>
+
+        <!-- Ball 2 — Tech (green) — outer right oval -->
+        <g>
+          <rect x="1680" y="820" width="240" height="240" fill="none" stroke="#cc2222" stroke-width="22" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.4s" fill="freeze"/>
+          </rect>
+          <circle r="100" fill="url(#logoGreen)">
+            <animateMotion dur="2.8s" fill="freeze" path="M 1800 940 C 1820 1000 1760 1080 1720 1120 C 1620 1240 1500 1360 1370 1430 C 1240 1490 1080 1510 920 1505 C 760 1500 640 1450 600 1350 C 560 1250 620 1120 700 1015 C 680 988 660 970 640 960 C 600 940 490 895 390 940 C 290 985 265 1065 305 1130 C 345 1195 450 1165 545 1100 C 605 1050 635 1005 640 960 C 690 935 830 880 990 820 C 1140 768 1280 660 1420 580 C 1680 545 1862 630 1862 760 C 1862 855 1845 910 1800 940"/>
+          </circle>
+        </g>
+
+        <!-- Ball 3 — Change (blue) — middle of diagonal -->
+        <g>
+          <rect x="880" y="690" width="240" height="240" fill="none" stroke="#cc2222" stroke-width="22" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.4s" fill="freeze"/>
+          </rect>
+          <circle r="100" fill="url(#logoBlue)">
+            <animateMotion dur="2.3s" fill="freeze" path="M 1000 810 C 890 870 780 930 700 1015 C 680 988 660 970 640 960 C 600 940 490 895 390 940 C 290 985 265 1065 305 1130 C 345 1195 450 1165 545 1100 C 605 1050 635 1005 640 960 C 690 935 830 880 990 820 C 1140 768 1280 660 1420 580 C 1680 545 1862 630 1862 760 C 1862 860 1820 1000 1720 1120 C 1620 1240 1500 1360 1370 1430 C 1240 1490 1080 1510 920 1505 C 760 1500 640 1450 600 1350 C 560 1250 620 1120 700 1015 C 700 1000 850 900 1000 810"/>
+          </circle>
+        </g>
       </svg>
       <span>The Juggling Co.</span>
     </a>

@@ -98,7 +98,7 @@ const product = defineCollection({
     }),
 });
 
-const locationType = z.enum(["past-performance", "home-base", "available", "workshop"]);
+const locationType = z.enum(["past-performance", "home-base", "available", "workshop", "juggling-shop"]);
 
 const location = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx,yaml,yml}", base: "./src/content/location" }),
@@ -112,6 +112,7 @@ const location = defineCollection({
     type: locationType,
     notes: z.string().default(""),
     photos: z.array(z.string()).default([]),
+    website: z.string().url().optional(),
   }),
 });
 

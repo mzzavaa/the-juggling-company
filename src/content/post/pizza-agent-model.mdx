@@ -1,0 +1,108 @@
+---
+title: "The Pizza Agent Model: How I Size My AI Agent Teams"
+slug: pizza-agent-model
+summary: "Amazon's 2-pizza rule remixed for AI agents — because you actually can measure compute capacity in pizza slices."
+date: 2026-02-19
+tags: ["ai-agents", "aws", "agentcore", "pizza-model", "architecture"]
+pillars: ["brain", "tech"]
+draft: false
+---
+
+Amazon has a rule: a team should be small enough that two large pizzas can feed everyone. The idea is that if you need more pizza, your team has too many people, which means too much coordination overhead.
+
+It's a metaphor that sounds clean until you try to apply it to actual humans. Do they eat pizza? Did they already have lunch? Is one person vegetarian and half the pizza doesn't count?
+
+You can't really measure a human team in pizza slices.
+
+But you know what you *actually* can measure in pizza slices? AI agents.
+
+---
+
+## Where this came from
+
+I've been automating my consulting business with AI agents — 64 crews running on an AgentCore runtime, handling everything from email triage to research synthesis to speaker coordination for meetups.
+
+At some point I needed a simple way to think about how many agents I can run concurrently without blowing my budget or hitting rate limits. The math is real: different model tiers cost very different amounts, and running too many heavy agents in parallel creates problems.
+
+I kept staring at the Amazon rule and thinking: *this applies here*. Not because my agents need to eat — obviously they don't — but because I needed the same kind of intuitive constraint.
+
+So I adapted it.
+
+---
+
+## The model
+
+Two large pizzas. Eight slices each. Sixteen slices total. That's your compute and cost budget for one concurrent agent session.
+
+Each agent "eats" slices based on how much model capacity it needs:
+
+| Agent size | Slices | What this means |
+|---|---|---|
+| Small (1 slice) | Lightweight, single-purpose | Short context, fast, cheap. Runs on a small or distilled model. Examples: news scanner, wellness ping, email classifier. |
+| Medium (2 slices) | Standard reasoning, multi-step | Mid-tier model. Can handle context, do chaining, write coherent output. Examples: content drafter, proposal generator, invoice chaser. |
+| Large (4 slices) | Heavy context, long chains, multi-doc | High-context setup. Examples: research synthesizer, architecture reviewer, complex demo builder. |
+
+Sixteen slices max per concurrent window. Go over and things get slow, expensive, or both.
+
+---
+
+## Why this actually works
+
+The 1-2-4 ratio isn't arbitrary. It reflects real pricing tiers. Haiku-class models cost roughly 4x less per token than Sonnet-class. Sonnet costs roughly 5x less than Opus. The slice counts track actual cost and compute weight.
+
+More importantly: **the constraint forces honest decisions.** When you only have 16 slices, you can't just add agents until it feels comprehensive. You have to ask whether a task actually needs a 4-slice agent or whether a 2-slice one would work. Those are the right questions. The pizza makes you ask them.
+
+---
+
+## What this looks like in practice
+
+Here are some real configurations from my own setup:
+
+**Morning cron window (07:00–09:00):**
+- Email triage — 1 slice
+- Security alert check — 1 slice
+- Wellness check — 1 slice
+- OKR status — 2 slices
+- Travel detection — 1 slice
+
+Total: 6/16 slices. Half a pizza. Leaves headroom if something urgent comes in.
+
+**Deep work session:**
+- Research agent — 4 slices
+- Architecture reviewer — 4 slices
+- Content drafter — 2 slices
+
+Total: 10/16 slices. Comfortable. Still 6 slices available for reactive tasks.
+
+**Revenue crew:**
+- Proposal generator — 4 slices
+- Invoice chaser — 2 slices
+- Client onboarding setup — 2 slices
+
+Total: 8/16 slices. Can run this and the morning cron simultaneously without conflict.
+
+---
+
+## Scaling beyond 16 slices
+
+If you genuinely need more than 16 slices running concurrently, you order more pizzas. But the constraint per pizza still holds. You don't eat 32 slices at once — you run two separate sessions, maybe in parallel queues, maybe with different budget owners.
+
+For a solo consultant, one pizza is usually enough. For a startup team, maybe two or three concurrent pizzas across departments. For an enterprise, you're running a full pizzeria.
+
+The model scales. The constraint per session stays.
+
+---
+
+## Try it on your next agent design
+
+Next time you're designing an agent team, draw two large pizzas. Cut them into 16 slices. Assign your agents. How many slices does each one eat? Can you fit the whole team?
+
+If you can't, something is too heavy. Rethink the design.
+
+If you can, you have a right-sized team. Start building.
+
+---
+
+*Post 1 in the Juggling-Pizza Framework series. Next: [Balls, Clubs, and Rings — How I Use Juggling Props to Explain AI Agents](/blog/balls-clubs-rings-ai-agents).*
+
+*Linda Mohamed is an AWS Hero and cloud consultant in Vienna. She invented a pizza-based resource allocation framework while staring at billing reports. The juggling came first.*

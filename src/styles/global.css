@@ -156,10 +156,10 @@ body {
   background-image: linear-gradient(
     100deg,
     var(--color-brain) 0%,
-    var(--color-brain-change) 25%,
-    var(--color-change) 50%,
+    var(--color-brain-tech) 25%,
+    var(--color-tech) 50%,
     var(--color-tech-change) 75%,
-    var(--color-tech) 100%
+    var(--color-change) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
