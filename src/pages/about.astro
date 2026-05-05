@@ -93,7 +93,7 @@ import { site } from "@/lib/site";
         </div>
 
         <!-- Three pillars -->
-        <div class="mt-10 overflow-hidden rounded-2xl">
+        <div class="prism-wrap relative mt-10 overflow-hidden rounded-2xl">
           <Image
             src={prismRgbLight}
             alt="A glass prism splitting white light into red, green, and blue beams - one source, three directions"
@@ -101,6 +101,15 @@ import { site } from "@/lib/site";
             height={450}
             class="w-full object-cover"
             loading="lazy"
+          />
+          <video
+            src="/videos/prism-rgb-light.mp4"
+            class="prism-vid absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-hidden="true"
           />
         </div>
         <div class="mt-6 grid gap-4 sm:grid-cols-3">
@@ -200,4 +209,30 @@ import { site } from "@/lib/site";
       </div>
     </div>
   </section>
+
+<style>
+  .prism-wrap:hover .prism-vid {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prism-vid {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const wrap = document.querySelector<HTMLDivElement>(".prism-wrap");
+  const vid = wrap?.querySelector<HTMLVideoElement>(".prism-vid");
+  if (wrap && vid) {
+    wrap.addEventListener("mouseenter", () => {
+      vid.currentTime = 0;
+      vid.play().catch(() => {});
+    });
+    wrap.addEventListener("mouseleave", () => {
+      vid.pause();
+      vid.currentTime = 0;
+    });
+  }
+</script>
 </BaseLayout>
