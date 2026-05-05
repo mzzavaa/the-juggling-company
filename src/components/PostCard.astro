@@ -22,15 +22,26 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
 >
   {
     post.data.cover && (
-      <div class="aspect-[16/9] overflow-hidden bg-black">
+      <div class="media-wrap aspect-[16/9] overflow-hidden bg-black">
         <Image
           src={post.data.cover}
           alt={post.data.coverAlt ?? post.data.title}
           width={800}
           height={450}
-          class="h-full w-full object-cover transition group-hover:scale-105"
+          class="media-img h-full w-full object-cover transition group-hover:scale-105"
           loading="lazy"
         />
+        {post.data.coverVideo && (
+          <video
+            src={post.data.coverVideo}
+            class="media-vid absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300"
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-hidden="true"
+          />
+        )}
       </div>
     )
   }
@@ -66,4 +77,36 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
       0 12px 36px -12px color-mix(in oklab, var(--card-accent) 60%, transparent);
     transform: translateY(-2px);
   }
+  .media-wrap {
+    position: relative;
+  }
+  .card:hover .media-vid {
+    opacity: 1;
+  }
+  .card:hover .media-img {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .media-vid {
+      display: none;
+    }
+    .media-img {
+      opacity: 1 !important;
+    }
+  }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>(".card").forEach((card) => {
+    const video = card.querySelector<HTMLVideoElement>(".media-vid");
+    if (!video) return;
+    card.addEventListener("mouseenter", () => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    });
+    card.addEventListener("mouseleave", () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  });
+</script>

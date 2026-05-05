@@ -1,0 +1,70 @@
+---
+title: "The Cascade Pattern in Distributed Systems"
+slug: cascade-pattern-distributed-systems
+summary: "The three-ball cascade is a self-sustaining loop where each output becomes the input for the next step. Distributed systems that work the same way are more resilient, more observable, and easier to reason about."
+date: 2026-04-15
+tags: ["distributed-systems", "architecture", "patterns", "aws", "cloud"]
+pillars: ["tech"]
+cover: ../../assets/images/green-infinity-cloud-nodes.png
+coverAlt: "Green glowing network nodes connected by flowing lines, forming a loop through cloud space"
+coverVideo: /videos/green-infinity-cloud-nodes.mp4
+draft: false
+---
+
+The three-ball cascade has a property that most systems architects would recognise immediately if they saw it described in a design doc.
+
+Each ball's arrival at one hand is the trigger for that hand's next throw. The output of step N is the input cue for step N+1. The loop is self-sustaining because each element is both a result and a signal. There is no external orchestrator holding the pattern together. The pattern holds itself together through the structure of its own feedback.
+
+This is event-driven architecture. In juggling form.
+
+## Why the cascade is resilient
+
+When one throw goes slightly wrong in the cascade - too high, too wide - the pattern does not immediately fail. It flexes.
+
+The too-high throw gives the other hand more time. That hand can wait, recalibrate, throw with better timing. The pattern absorbs the error and returns to stability. It has, built into its structure, a mechanism for recovering from small deviations without intervention.
+
+This property - graceful degradation in response to small errors - is one of the things distributed systems engineers spend enormous effort trying to achieve. Circuit breakers, exponential backoff, dead-letter queues: these are all attempts to build the cascade's natural elasticity into systems that would otherwise fail fast and hard.
+
+The cascade teaches that resilience is not a feature you bolt on. It is a property of the feedback structure. If your system's response to small errors is to create larger errors, the structure itself needs examining.
+
+## The self-cuing loop in practice
+
+Consider an event-driven pipeline: a message arrives on a queue, a Lambda function processes it and emits an event, that event triggers the next stage, and so on until the work is complete.
+
+This is the cascade. The output of each stage is the input signal for the next. No stage needs to know about the global state of the system. Each stage only needs to respond correctly to the signal it receives.
+
+When this pattern is implemented well, the pipeline becomes - like the cascade - self-sustaining and self-correcting. A slow stage backs up slightly; the queue absorbs the load. A failed invocation is retried by the queue. The work eventually completes without any stage needing to coordinate with any other stage directly.
+
+The failure mode of this pattern is also the same as the cascade's: interference from above. When a "controller" starts making decisions about what each stage should do, based on assumptions about the global state of the pipeline, the decoupling collapses. Now the controller knows too much and controls too much, and a failure in the controller stops everything.
+
+## Observability at the apex
+
+In juggling, experienced practitioners do not watch all three balls. They watch the apex - the top of the arc where each ball briefly slows. That single observation point gives them enough information to assess the whole pattern's health.
+
+Distributed systems need the same: not visibility into every message on every queue, but a small number of high-signal observation points that reveal whether the overall pattern is running well.
+
+For most event-driven systems, this means: queue depth over time, per-stage latency percentiles, and error rates per stage. If these three signals are healthy, the cascade is running. If one of them drifts, you know which stage to look at.
+
+Trying to observe everything produces noise. Choosing the right apex - the minimal set of signals that reveals systemic health - is an architectural decision as important as the topology itself.
+
+## Dwell time: the variable everyone ignores
+
+Juggling has a concept called dwell time: the proportion of each ball's cycle that it spends in the hand, versus in the air.
+
+In most cascade juggling, dwell time is around 50-60%. The ball spends about as much time in the hand as in the air. Experienced jugglers can vary this dramatically - running at very low dwell time (quick, sharp, precise) or very high dwell time (slow, spacious, relaxed). Different patterns require different dwell ratios.
+
+In distributed systems, the equivalent is processing time as a proportion of queue wait time. A stage with very low dwell time is throwing work on fast and moving on. A stage with very high dwell time is holding work for a long time before emitting output.
+
+The right dwell time depends on the pattern you are running. A pipeline that needs low latency needs low dwell time throughout. A pipeline that is doing heavy enrichment can have high dwell time in the middle, as long as downstream stages can absorb it.
+
+Most system designs specify the processing logic clearly and leave dwell time as an implicit consequence. Juggling suggests it deserves explicit attention.
+
+## The pattern is the architecture
+
+The cascade is not a trick. It is a structural principle.
+
+When you watch a skilled juggler run a clean three-ball cascade for five minutes, you are watching a masterclass in event-driven, self-sustaining, error-tolerant design. Every element does one thing, responds to one signal, and produces one output. No element knows about the whole.
+
+The whole emerges from the structure of the parts' relationships - not from any part controlling the others.
+
+That is the pattern worth building.

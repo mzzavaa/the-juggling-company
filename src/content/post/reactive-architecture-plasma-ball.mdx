@@ -1,0 +1,68 @@
+---
+title: "Reactive Architecture and the Plasma Ball"
+slug: reactive-architecture-plasma-ball
+summary: "A plasma ball responds instantly to whatever touches it - not because it is smart, but because it is reactive. The best distributed systems work the same way: no polling, no orchestration, just response to events."
+date: 2026-04-05
+tags: ["architecture", "reactive-systems", "aws", "event-driven", "cloud"]
+pillars: ["tech"]
+cover: ../../assets/images/plasma-ball-tech.png
+coverAlt: "Electric plasma ball with lightning tendrils reaching outward through dark space"
+coverVideo: /videos/plasma-ball-tech.mp4
+draft: false
+---
+
+Touch a plasma ball and the tendrils of light immediately reach toward your finger.
+
+There is no delay. No processing step. No request-response cycle. The charge moves to where the demand is - instantly, continuously, without any component deciding to do so.
+
+This is the most honest visual representation of reactive architecture I have found.
+
+## The difference between reactive and polling
+
+Most of the software running in the world today is not reactive. It is polling.
+
+A service checks a database table every 30 seconds to see if anything has changed. An agent requests the current state of a system every few minutes. A monitoring job runs on a cron schedule to scan for anomalies. None of these systems respond to events. They sample reality at intervals and catch up to whatever happened between samples.
+
+Polling works. But it is a compromise: you trade latency and resource efficiency for implementation simplicity. The tighter you make the polling interval, the more closely you approach real-time - but you pay for that with continuous load on the system being polled, regardless of whether anything has changed.
+
+Reactive systems flip the model. Instead of asking "has anything changed?", they receive "something changed." The event arrives. The handler responds. No polling. No waiting for the next interval. The tendrils move when the touch happens.
+
+## What reactive systems require
+
+Building reactive systems requires something that polling systems do not: a shared understanding of what constitutes an event, and a commitment to emitting those events reliably.
+
+In practice, this means:
+
+Every significant state change in your system should produce an event. Not just the ones you currently need to react to - all of them. Events you do not use today become the foundation for capabilities you will need tomorrow.
+
+Events should be immutable and ordered. Once emitted, an event is a historical fact. It cannot be corrected - only followed by another event that represents the correction. This immutability is what makes event logs queryable, replayable, and auditable in ways that mutable state cannot be.
+
+Consumers should be decoupled from producers. The system that emits a "user-created" event should not know or care which other systems are interested in that event. It emits. Whoever needs it subscribes. The wiring is in the event bus, not in the producer.
+
+## The plasma ball property
+
+What makes the plasma ball a useful image rather than just a pretty one is this: the response is proportional to proximity and immediate.
+
+You do not need to know what is inside the plasma ball - the physics, the gas mixture, the voltage. You interact at the surface, through the event (your touch), and the system responds to that event in the appropriate way.
+
+This is the interface contract of a reactive system. You do not need to understand the internals of every service. You need to understand what events it emits and what events it consumes. The internal logic is encapsulated. The interface is the event schema.
+
+When this is done well, the system becomes remarkably easy to extend. You want a new capability that responds when a user completes their profile? Subscribe to the "profile-completed" event. You do not need to modify the profile service. You do not need to coordinate a deployment. You add a consumer. The plasma ball grows a new tendril toward the new touchpoint.
+
+## Where it breaks down
+
+Reactive architectures have failure modes that polling systems do not.
+
+If events are dropped - because the event bus has an outage, because a consumer fails silently, because the network partitions at the wrong moment - the state of the system drifts from what the event log says it should be. Unlike polling, where the next poll will eventually catch up, a missed event leaves a permanent gap unless you have mechanisms to detect and replay it.
+
+This is where the plasma ball analogy is honest: if the connection breaks, the tendril disappears. The touch was real. The response did not happen. The plasma ball does not have a retry mechanism. Your system needs one.
+
+Dead-letter queues, idempotent consumers, event sourcing with replay capability, periodic reconciliation against ground truth: these are the tools that make reactive systems safe rather than just fast.
+
+## The juggling connection
+
+The cascade, run at full speed, is reactive. Each ball's arrival at the apex is the event. The throw is the response. There is no deliberation between event and response - only the trained reaction of a motor system that has processed this event thousands of times.
+
+This is not a metaphor. The cascade is an event-driven system in physical form, demonstrating that reactive architectures are not a modern invention. They are the natural structure of any system that needs to stay responsive under continuous load.
+
+Build your system so that it moves toward the demand when the demand appears. Like the plasma ball, like the cascade - immediate, proportional, and self-sustaining.

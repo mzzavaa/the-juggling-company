@@ -142,6 +142,7 @@ const post = defineCollection({
       pillars: z.array(pillar).default([]),
       cover: image().optional(),
       coverAlt: z.string().optional(),
+      coverVideo: z.string().optional(),
       draft: z.boolean().default(false),
     }),
 });
