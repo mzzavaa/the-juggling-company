@@ -28,13 +28,13 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
           alt={post.data.coverAlt ?? post.data.title}
           width={800}
           height={450}
-          class="media-img h-full w-full object-cover transition group-hover:scale-105"
+          class="media-img h-full w-full object-cover"
           loading="lazy"
         />
         {post.data.coverVideo && (
           <video
             src={post.data.coverVideo}
-            class="media-vid absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+            class="media-vid absolute inset-0 h-full w-full object-cover opacity-0"
             muted
             loop
             playsinline
@@ -80,11 +80,22 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   .media-wrap {
     position: relative;
   }
-  .card:hover .media-vid {
+
+  /* Video fades in only after JS confirms a real frame is ready */
+  .media-vid {
+    transition: opacity 400ms ease;
+  }
+  .media-vid.is-playing {
     opacity: 1;
   }
 
-  /* Fallback for cards with no video: accent-coloured gradient wash on hover */
+  /* No-video fallback: subtle image pan + accent gradient wash */
+  .no-vid .media-img {
+    transition: transform 400ms ease;
+  }
+  .card:hover .no-vid .media-img {
+    transform: scale(1.05);
+  }
   .no-vid {
     --accent: var(--card-accent, #9696b0);
   }
@@ -105,10 +116,10 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   .card:hover .no-vid::after {
     opacity: 1;
   }
+
   @media (prefers-reduced-motion: reduce) {
-    .media-vid {
-      display: none;
-    }
+    .media-vid { display: none; }
+    .no-vid .media-img { transition: none; }
   }
 </style>
 
@@ -116,11 +127,27 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   document.querySelectorAll<HTMLAnchorElement>(".card").forEach((card) => {
     const video = card.querySelector<HTMLVideoElement>(".media-vid");
     if (!video) return;
+
+    let active = false;
+
     card.addEventListener("mouseenter", () => {
+      active = true;
       video.currentTime = 0;
       video.play().catch(() => {});
+
+      // Only show the video once a real frame has been rendered.
+      // "playing" fires after the first frame is committed to the GPU -
+      // guarantees no black flash regardless of decode speed.
+      video.addEventListener(
+        "playing",
+        () => { if (active) video.classList.add("is-playing"); },
+        { once: true }
+      );
     });
+
     card.addEventListener("mouseleave", () => {
+      active = false;
+      video.classList.remove("is-playing");
       video.pause();
       video.currentTime = 0;
     });
