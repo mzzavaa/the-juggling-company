@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import prismRgbLight from "@/assets/images/prism-rgb-light.png";
+import lindaProfile from "@/assets/images/linda-mohamed-profile.jpg";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
@@ -17,11 +18,11 @@ import { site } from "@/lib/site";
     <div class="grid gap-10 md:grid-cols-[22rem_1fr] md:gap-16">
       <aside class="md:sticky md:top-24 md:self-start">
         <div class="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-1">
-          <img
-            src="/images/IMG_9810.jpg"
-            alt="Linda Mohamed"
-            width="360"
-            height="450"
+          <Image
+            src={lindaProfile}
+            alt="Linda Mohamed juggling"
+            width={360}
+            height={450}
             class="aspect-[4/5] w-full rounded-2xl object-cover"
             loading="eager"
           />
@@ -70,7 +71,7 @@ import { site } from "@/lib/site";
             "When you juggle, you are enough."
           </p>
           <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
-            Basketball, volleyball, so many sports - not for me, because I'm small. Ballet didn't feel like mine either, even after almost ten years of dancing, because I thought I was too big to be a ballerina. Juggling has no prerequisites. Whether you're big or small, old or young, throwing with your arms or your feet or a headband - the pattern works the same for everyone.
+            Almost every skill comes with an unspoken requirement. Basketball rewards height. Ballet has historically demanded a specific body type. Most sports carry a gatekeeping assumption - real or inherited - that makes people decide they're not for it before they even try. Juggling has none of these. Whether big or small, old or young, throwing with your arms or your feet or a headband - the pattern works the same for everyone.
           </p>
           <p class="mt-4 leading-relaxed text-[var(--color-fg)]">
             That's what I want people to feel: that they don't need to be quiet, or small, or different. That they don't have to meet expectations. That they can just be, and just do. Without needing to be tall. Without needing to adapt. Just as they are.

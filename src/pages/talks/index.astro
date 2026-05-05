@@ -108,7 +108,7 @@ function venueLine(t: CollectionEntry<"talk">) {
                     {t.data.slidesUrl && (
                       <a
                         href={t.data.slidesUrl}
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         class="inline-flex items-center gap-1 hover:underline"
                         style={`color: ${accent};`}
                       >
@@ -118,7 +118,7 @@ function venueLine(t: CollectionEntry<"talk">) {
                     {t.data.recordingUrl && (
                       <a
                         href={t.data.recordingUrl}
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         class="inline-flex items-center gap-1 hover:underline"
                         style={`color: ${accent};`}
                       >

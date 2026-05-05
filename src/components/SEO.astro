@@ -37,7 +37,10 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="2560" />
+<meta property="og:image:height" content="1428" />
 <meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content="en_GB" />
 {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
 
 <meta name="twitter:card" content="summary_large_image" />

@@ -67,7 +67,7 @@ const articleJsonLd = {
       post.data.cover && (
         <Image
           src={post.data.cover}
-          alt={post.data.coverAlt ?? ""}
+          alt={post.data.coverAlt ?? post.data.title}
           width={1280}
           height={720}
           class="mb-8 aspect-[16/9] w-full rounded-xl object-cover"

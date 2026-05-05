@@ -35,6 +35,9 @@
   --color-tech-change: #33ccff;
   --color-all: #f4f4f0;
 
+  /* Lighter variants for small text on dark card backgrounds (WCAG AA 4.5:1) */
+  --color-change-text: #6699ff;
+
   /* Surface — dark default */
   --color-bg: #0a0a12;
   --color-bg-elevated: #14141f;
@@ -106,7 +109,7 @@ body {
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   background: var(--color-brain);
-  color: white;
+  color: #0a0a12;
   font-weight: 600;
   transition: top 150ms ease;
 }

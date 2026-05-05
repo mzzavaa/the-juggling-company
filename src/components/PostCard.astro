@@ -25,7 +25,7 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
       <div class="aspect-[16/9] overflow-hidden bg-black">
         <Image
           src={post.data.cover}
-          alt={post.data.coverAlt ?? ""}
+          alt={post.data.coverAlt ?? post.data.title}
           width={800}
           height={450}
           class="h-full w-full object-cover transition group-hover:scale-105"

@@ -168,8 +168,8 @@ const personJsonLd = {
         <div class="mt-8 flex flex-wrap gap-3">
           <a
             href="/ideas"
-            class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-            style="background: var(--color-brain-tech);"
+            class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition hover:opacity-90"
+            style="background: var(--color-brain-tech); color: #0a0a12;"
           >
             <Icon name="arrow-right" size={14} />
             Read the full case
@@ -181,18 +181,19 @@ const personJsonLd = {
             Find a shop near you
           </a>
         </div>
+
+        <Image
+          src={everyoneBelongsHands}
+          alt="A child's hand, an elderly hand, and a hand beside a wheelchair wheel - each holding a glowing ball"
+          width={700}
+          height={394}
+          class="mt-6 w-full rounded-2xl object-cover"
+          loading="lazy"
+        />
       </div>
 
       <!-- Research cards -->
       <div class="flex flex-col gap-4">
-        <Image
-          src={everyoneBelongsHands}
-          alt="A child's hand, an elderly hand, and a hand beside a wheelchair wheel - each holding a glowing ball"
-          width={600}
-          height={338}
-          class="w-full rounded-2xl object-cover"
-          loading="lazy"
-        />
         <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-brain);">
           <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-brain);">Grey matter grows</p>
           <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
@@ -204,7 +205,7 @@ const personJsonLd = {
         </div>
 
         <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-change);">
-          <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-change);">Anxiety and depression</p>
+          <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-change-text);">Anxiety and depression</p>
           <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
             Regular juggling practice significantly reduces anxiety and depression scores. Studies on medical students during high-stress exam periods found measurable improvements after only weeks of practice.
           </p>

@@ -17,7 +17,11 @@ export default defineConfig({
     mdx(),
     react(),
     sitemap({
-      filter: (page) => !page.includes("/draft/") && !page.includes("/404"),
+      filter: (page) =>
+        !page.includes("/draft/") &&
+        !page.includes("/404") &&
+        !page.includes("/imprint") &&
+        !page.includes("/datenschutz"),
     }),
   ],
   vite: {
