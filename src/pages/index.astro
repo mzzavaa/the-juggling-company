@@ -4,6 +4,9 @@ import Icon from "@/components/Icon.astro";
 import VideoCard from "@/components/VideoCard.astro";
 import PostCard from "@/components/PostCard.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
+import { Image } from "astro:assets";
+import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
+import worldMapGlowing from "@/assets/images/world-map-glowing.png";
 import {
   getFeaturedVideos,
   getLatestPosts,
@@ -182,6 +185,14 @@ const personJsonLd = {
 
       <!-- Research cards -->
       <div class="flex flex-col gap-4">
+        <Image
+          src={everyoneBelongsHands}
+          alt="A child's hand, an elderly hand, and a hand beside a wheelchair wheel - each holding a glowing ball"
+          width={600}
+          height={338}
+          class="w-full rounded-2xl object-cover"
+          loading="lazy"
+        />
         <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" style="border-top: 3px solid var(--color-brain);">
           <p class="text-xs font-bold uppercase tracking-widest" style="color: var(--color-brain);">Grey matter grows</p>
           <p class="mt-2 leading-relaxed text-[var(--color-fg)]">
@@ -377,14 +388,14 @@ const personJsonLd = {
             </a>
           </div>
         </div>
-        <div
-          class="relative flex min-h-[280px] items-center justify-center overflow-hidden"
-          style="background: radial-gradient(ellipse at 60% 50%, rgb(51 204 255 / 0.35), transparent 65%), radial-gradient(ellipse at 30% 80%, rgb(204 51 255 / 0.25), transparent 60%), radial-gradient(ellipse at 80% 20%, rgb(255 204 51 / 0.20), transparent 60%);"
-        >
-          <Icon
-            name="map-pin"
-            size={140}
-            class="text-[var(--color-tech-change)] drop-shadow-[0_0_24px_rgba(51,204,255,0.6)]"
+        <div class="relative min-h-[280px] overflow-hidden">
+          <Image
+            src={worldMapGlowing}
+            alt="World map with glowing dots marking juggling locations"
+            width={700}
+            height={400}
+            class="h-full w-full object-cover opacity-90"
+            loading="lazy"
           />
         </div>
       </div>

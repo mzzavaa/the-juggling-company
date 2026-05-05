@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import prismRgbLight from "@/assets/images/prism-rgb-light.png";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
@@ -90,7 +92,17 @@ import { site } from "@/lib/site";
         </div>
 
         <!-- Three pillars -->
-        <div class="mt-10 grid gap-4 sm:grid-cols-3">
+        <div class="mt-10 overflow-hidden rounded-2xl">
+          <Image
+            src={prismRgbLight}
+            alt="A glass prism splitting white light into red, green, and blue beams - one source, three directions"
+            width={800}
+            height={450}
+            class="w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div class="mt-6 grid gap-4 sm:grid-cols-3">
           {[
             {
               pillar: "Brain",

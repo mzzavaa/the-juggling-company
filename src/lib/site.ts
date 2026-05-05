@@ -11,7 +11,7 @@ export const site = {
     role: "AWS Hero · Juggler · Founder",
     email: "hello@thejugglingcompany.com",
   },
-  defaultOgImage: "/images/IMG_9810.jpg",
+  defaultOgImage: "/images/og-juggling-hands-rgb-light.png",
 } as const;
 
 export type NavChild = {
