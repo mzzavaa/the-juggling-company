@@ -59,6 +59,25 @@ const isGroupActive = (item: (typeof primaryNav)[number]) => {
             <animateMotion dur="2.3s" fill="freeze" path="M 1000 810 C 890 870 780 930 700 1015 C 680 988 660 970 640 960 C 600 940 490 895 390 940 C 290 985 265 1065 305 1130 C 345 1195 450 1165 545 1100 C 605 1050 635 1005 640 960 C 690 935 830 880 990 820 C 1140 768 1280 660 1420 580 C 1680 545 1862 630 1862 760 C 1862 860 1820 1000 1720 1120 C 1620 1240 1500 1360 1370 1430 C 1240 1490 1080 1510 920 1505 C 760 1500 640 1450 600 1350 C 560 1250 620 1120 700 1015 C 700 1000 850 900 1000 810"/>
           </circle>
         </g>
+        <!-- AI detection boxes - appear after all balls settle at 3s -->
+        <g opacity="0" fill="none" stroke="#ff2222" stroke-width="22" stroke-linecap="square">
+          <animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.2s" fill="freeze"/>
+          <!-- yellow ball at (1420,580) -->
+          <path d="M 1350,450 L 1290,450 L 1290,510"/>
+          <path d="M 1490,450 L 1550,450 L 1550,510"/>
+          <path d="M 1290,650 L 1290,710 L 1350,710"/>
+          <path d="M 1550,650 L 1550,710 L 1490,710"/>
+          <!-- green ball at (1800,940) -->
+          <path d="M 1730,810 L 1670,810 L 1670,870"/>
+          <path d="M 1870,810 L 1930,810 L 1930,870"/>
+          <path d="M 1670,1010 L 1670,1070 L 1730,1070"/>
+          <path d="M 1930,1010 L 1930,1070 L 1870,1070"/>
+          <!-- blue ball at (1000,810) -->
+          <path d="M 930,680 L 870,680 L 870,740"/>
+          <path d="M 1070,680 L 1130,680 L 1130,740"/>
+          <path d="M 870,880 L 870,940 L 930,940"/>
+          <path d="M 1130,880 L 1130,940 L 1070,940"/>
+        </g>
       </svg>
       <span class="font-display text-sm font-bold tracking-tight text-[var(--color-fg)] transition-colors">
         <span class="text-[var(--color-muted)]">the</span>JugglingCompany<span class="text-[var(--color-muted)]">.com</span>
