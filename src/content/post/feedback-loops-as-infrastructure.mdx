@@ -1,0 +1,85 @@
+---
+title: "Feedback Loops as Infrastructure: Why Systems Need to Learn from Themselves"
+slug: feedback-loops-as-infrastructure
+summary: "A system that cannot observe itself cannot improve. The feedback loop is not a monitoring feature or a quality initiative. It is load-bearing infrastructure. Remove it and the system degrades without knowing it is degrading."
+date: 2026-05-15
+tags: ["architecture", "systems", "tech", "observability", "feedback"]
+pillars: ["tech"]
+cover: ../../assets/images/circuit-infinity-amber.png
+coverAlt: "An amber-orange circuit board pattern forming an infinity loop of interconnected pathways"
+draft: false
+---
+
+There is a failure mode that is unique to complex systems.
+
+In a simple system, failure is visible. A thing breaks. You can see that it broke. You fix it.
+
+In a complex system, failure can be invisible for a long time. The system continues to produce outputs. Those outputs degrade gradually. The degradation is within the noise floor of normal variation. No individual output is wrong enough to trigger an alert. The cumulative drift goes unnoticed until it has become severe enough to be obvious - at which point fixing it is much harder than it would have been if it had been caught earlier.
+
+This failure mode has a name: silent degradation. And the only defense against it is a feedback loop that is woven into the system, running continuously, with the specific purpose of detecting it.
+
+## What feedback loops actually do
+
+A feedback loop, in the systems sense, is a mechanism that takes a system's output and feeds it back as an input to the system itself.
+
+The most basic version of this is a thermostat. The thermostat measures the room temperature (output), compares it to the target temperature (reference), and adjusts the heating (input) accordingly. Without this loop, the heating runs until it is manually turned off.
+
+More complex systems have more complex feedback loops - but the structure is the same. The system observes something about itself, compares it to a reference state, and adjusts.
+
+The key word is "adjusts." A feedback loop without adjustment is telemetry. Useful, but passive. A true feedback loop closes: observation leads to comparison, comparison leads to decision, decision leads to action, action changes the state being observed.
+
+## The circuit in the image
+
+The circuit in the image for this post is a closed loop. The signal travels around. It does not terminate.
+
+This is the important property. An open circuit - a pathway with no return - carries a signal from source to destination and stops. The source cannot know what happened to the signal after it left. The destination cannot communicate back.
+
+A closed circuit - a loop - carries the signal around and brings information back to the source. The source can now act on the result of its previous output.
+
+In software terms: a service that emits events but never reads logs is an open circuit. A service that emits events, monitors the downstream effects, and adjusts behaviour based on observed outcomes is a closed circuit.
+
+The closed circuit can learn. The open circuit cannot.
+
+## Why this is infrastructure, not observability
+
+"Observability" is the term that usually covers monitoring, logging, and distributed tracing. These are necessary. They are also insufficient.
+
+Observability is the capacity to ask questions about a system and get answers. It requires instrumentation, tooling, and someone looking at dashboards.
+
+Feedback loops are different. They do not require someone looking at dashboards. They run automatically. The comparison and adjustment happen as part of the system's operation, not as a human-mediated review process.
+
+The distinction matters because human-mediated review scales poorly. As a system grows in complexity, the number of things that require review grows faster than the capacity of any team to review them. Observability tools help, but they still require human attention.
+
+Feedback loops transfer the review function into the system itself. The system observes, compares, and adjusts. It does not wait for a human to notice the drift and intervene.
+
+This is why feedback loops are infrastructure, not tooling. They are not a feature added on top of the system. They are part of what makes the system capable of sustained operation.
+
+## What juggling teaches about feedback
+
+The cascade is a feedback loop in physical form.
+
+Each throw produces a ball in the air. The ball's position at the apex is observed. The observation informs the next throw - how early, how high, in which direction. The next throw is adjusted based on the previous one. The loop runs at approximately three cycles per second.
+
+Remove the feedback loop - close your eyes while juggling - and the cascade degrades immediately. Without observation, each throw is made blindly. Small errors compound. The pattern collapses within seconds.
+
+This is not a failure of skill. It is a structural consequence of removing the feedback component from a system that requires it to maintain stability.
+
+High-ball jugglers train with visual feedback suppressed - not to operate without feedback, but to develop proprioceptive feedback (the body's internal sense of position and movement) as a supplementary channel. They are not removing feedback. They are building an additional feedback mechanism that does not depend on vision.
+
+The lesson: systems that must remain stable under conditions where the primary feedback channel may be disrupted need secondary feedback channels. The redundancy is not overhead. It is what makes the stability robust.
+
+## Building the closed circuit
+
+The design question for any system is: where is the loop?
+
+For each significant output the system produces, there should be a corresponding observation and a corresponding path from that observation back to something that can change. If no such path exists, the system is open-circuit for that output. It is operating without feedback.
+
+The specific design will vary: circuit breakers that detect failure rates and adjust routing, canary deployments that observe error rates before widening traffic, agents that monitor their own output quality and adjust prompting strategies, services that track latency percentiles and shed load when thresholds are exceeded.
+
+The form is less important than the structure: output observed, compared, adjustment path available.
+
+The amber circuit in the image runs around. The signal returns to where it started.
+
+Build systems that know what they produce, compare it to what they should produce, and can change based on that comparison.
+
+The open circuit carries a signal once and then stops. The closed circuit runs indefinitely, getting better as it goes.
