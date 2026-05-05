@@ -100,6 +100,8 @@ export const footerNav: readonly NavItem[] = [
   { label: "Contact", href: "/contact" },
   { label: "Search", href: "/search" },
   { label: "RSS", href: "/rss.xml" },
+  { label: "Imprint", href: "/imprint" },
+  { label: "Datenschutz", href: "/datenschutz" },
 ] as const;
 
 export type SocialIcon = "youtube" | "instagram" | "tiktok" | "linkedin" | "x" | "github" | "external-link";
