@@ -1,5 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke-width="1.8"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <radialGradient id="fy" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#ffee88"/>
+      <stop offset="60%" stop-color="#ffcc00"/>
+      <stop offset="100%" stop-color="#cc9900"/>
+    </radialGradient>
+    <radialGradient id="fg" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#7fdf99"/>
+      <stop offset="60%" stop-color="#33cc66"/>
+      <stop offset="100%" stop-color="#0a8033"/>
+    </radialGradient>
+    <radialGradient id="fb" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#7fa3ff"/>
+      <stop offset="60%" stop-color="#3b6cff"/>
+      <stop offset="100%" stop-color="#0033cc"/>
+    </radialGradient>
+  </defs>
+  <path stroke="currentColor" stroke-width="1.8"
     d="M 9 16
        C 7 13 4 8 2 10
        C 0 12 1 17 5 17
@@ -11,10 +28,7 @@
        C 11 16 12 14 14 14
        C 18 14 27 16 30 14"
   />
-  <rect x="16" y="5"  width="6" height="6" stroke-width="1.2"/>
-  <circle cx="19" cy="8"  r="2.2" fill="currentColor" stroke="none"/>
-  <rect x="9"  y="14" width="6" height="6" stroke-width="1.2"/>
-  <circle cx="12" cy="17" r="2.2" fill="currentColor" stroke="none"/>
-  <rect x="14" y="19" width="6" height="6" stroke-width="1.2"/>
-  <circle cx="17" cy="22" r="2.2" fill="currentColor" stroke="none"/>
+  <circle cx="19" cy="8"  r="2.5" fill="url(#fy)" stroke="none"/>
+  <circle cx="12" cy="17" r="2.5" fill="url(#fg)" stroke="none"/>
+  <circle cx="17" cy="22" r="2.5" fill="url(#fb)" stroke="none"/>
 </svg>
