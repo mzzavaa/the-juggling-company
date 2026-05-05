@@ -140,9 +140,9 @@ export const socialLinks: readonly SocialLink[] = [
   },
   {
     label: "GitHub",
-    href: "https://github.com/linda_mhmd",
+    href: "https://github.com/linda-mhmd",
     icon: "github",
-    handle: "@linda_mhmd",
+    handle: "@linda-mhmd",
   },
   {
     label: "AWS Hero profile",
