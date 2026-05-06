@@ -11,11 +11,24 @@ coverVideo: /videos/neural-synapse-infinity.mp4
 draft: false
 ---
 
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 The brain is often described as plastic - capable of change. This is true, but the description is vague in a way that makes it less useful than it could be.
 
 The brain does not change in response to wishes, intentions, or positive thinking. It changes in response to a specific set of conditions: repeated activation of specific neural pathways, followed by rest, followed by more activation.
 
 The mechanism is myelination.
+
+<StatGrid items={[
+  { value: "↑", label: "Signal speed", sub: "with more myelin", color: "brain" },
+  { value: "1000s", label: "Repetitions", sub: "to establish complex motor programs", color: "tech" },
+  { value: "Rest", label: "Required", sub: "myelination occurs during recovery", color: "change" },
+  { value: "↓", label: "Myelin over time", sub: "without continued practice", color: "yellow" }
+]} />
 
 ## The mechanism
 
@@ -29,6 +42,33 @@ The loop in the image for this post is the myelination loop: practice fires the 
 
 This is a compounding process. Early repetitions contribute relatively little. Later repetitions build on a pathway that is already partially myelinated. The gains accelerate.
 
+<Diagram caption="The myelination loop: practice, structural change, reliability, and more practice form a compounding cycle. Rest is the phase where the structural change actually occurs.">
+  <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#14141f;border-radius:8px;">
+    <defs>
+      <marker id="lry-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#6699ff"/>
+      </marker>
+    </defs>
+    <circle cx="100" cy="100" r="36" fill="#1b1b2a" stroke="#ff3366" stroke-width="2"/>
+    <text x="100" y="96" text-anchor="middle" font-family="monospace" font-size="10" fill="#ff3366">practice</text>
+    <text x="100" y="110" text-anchor="middle" font-family="monospace" font-size="10" fill="#ff3366">fires path</text>
+    <circle cx="280" cy="40" r="36" fill="#1b1b2a" stroke="#33cc66" stroke-width="2"/>
+    <text x="280" y="36" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">myelin</text>
+    <text x="280" y="50" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">deposited</text>
+    <circle cx="460" cy="100" r="36" fill="#1b1b2a" stroke="#6699ff" stroke-width="2"/>
+    <text x="460" y="96" text-anchor="middle" font-family="monospace" font-size="10" fill="#6699ff">pathway</text>
+    <text x="460" y="110" text-anchor="middle" font-family="monospace" font-size="10" fill="#6699ff">faster</text>
+    <circle cx="280" cy="160" r="36" fill="#1b1b2a" stroke="#ffcc33" stroke-width="2"/>
+    <text x="280" y="156" text-anchor="middle" font-family="monospace" font-size="10" fill="#ffcc33">easier to</text>
+    <text x="280" y="170" text-anchor="middle" font-family="monospace" font-size="10" fill="#ffcc33">practise</text>
+    <line x1="132" y1="72" x2="245" y2="52" stroke="#6699ff" stroke-width="1.5" marker-end="url(#lry-arrow)"/>
+    <line x1="316" y1="52" x2="427" y2="78" stroke="#6699ff" stroke-width="1.5" marker-end="url(#lry-arrow)"/>
+    <line x1="427" y1="122" x2="316" y2="148" stroke="#6699ff" stroke-width="1.5" marker-end="url(#lry-arrow)"/>
+    <line x1="244" y1="148" x2="133" y2="122" stroke="#6699ff" stroke-width="1.5" marker-end="url(#lry-arrow)"/>
+    <text x="185" y="47" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">rest</text>
+  </svg>
+</Diagram>
+
 ## What this means for how you practice
 
 The myelination mechanism has direct implications for how to design effective practice.
@@ -39,6 +79,10 @@ The myelination mechanism has direct implications for how to design effective pr
 
 **Rest is part of the practice.** Myelination happens during rest, not during practice. The practice creates the conditions for structural change. The rest is when the change occurs. Distributed practice - shorter sessions with rest between them - tends to produce better long-term retention than massed practice because it gives more time for the consolidation process.
 
+<Callout type="warning" title="Practising errors">
+Repeating an incorrect pattern does not eventually produce the correct one. It deepens the incorrect pathway. If your juggling throw is consistently going to the wrong spot, adding more repetitions without correcting the throw will make the wrong throw more automatic - not the right one. Fix the error before you increase volume.
+</Callout>
+
 ## The infinity loop
 
 The image that opens this post represents this as an infinity loop - the process that runs continuously without a terminal point.
@@ -48,6 +92,10 @@ This is accurate. Myelination does not stop when a skill is learned. It continue
 The loop also does not run in only one direction. Disuse leads to myelin degradation over long periods. Skills that are not maintained are not preserved at the same level indefinitely. The loop requires continuous running to maintain what it has built.
 
 This is not cause for anxiety - it is information for planning. The skills you want to keep require regular activation. The skills you want to develop require structured repetition over time. Neither state is free.
+
+<PullQuote>
+The brain changes when you do the thing, repeatedly, over time. That is the whole mechanism.
+</PullQuote>
 
 ## The practical implication
 
@@ -61,6 +109,22 @@ Sufficient repetitions, distributed over time, with rest. Not a weekend immersio
 
 Attention during early practice, automation as the goal. The explicit attention required in the early stages is not permanent. It is scaffolding while the pathway is being built. As myelination proceeds, the conscious attention is released. The goal is not permanent concentration. The goal is a pathway that runs without it.
 
+<Callout type="info" title="The compounding effect">
+Early repetitions build slowly on unmyelinated pathways. Later repetitions build on pathways that are already partially myelinated - they are faster, more reliable, and more available for further development. This is why consistent daily practice over months outperforms intensive weekend sessions. The compounding only works if the loop keeps running.
+</Callout>
+
 The loop that rewires you is not mysterious. It is specific and learnable. The structure is visible in the image: neural connections forming, strengthening, completing the loop, beginning again.
 
 The brain changes when you do the thing, repeatedly, over time. That is the whole mechanism.
+
+<Takeaways title="Key takeaways" color="brain" items={[
+  "Myelination is the physical mechanism behind skill acquisition: repeated pathway activation produces structural change.",
+  "Practising errors myelinates errors. Correct slow practice beats fast sloppy practice for establishing new patterns.",
+  "Rest is not recovery from practice - it is part of practice. Myelination happens during the rest phase.",
+  "Skills that are not maintained degrade. The loop requires continuous running to preserve what it has built.",
+  "The gains compound: later repetitions build on already-myelinated pathways and are more effective than early ones."
+]} />
+
+---
+
+Related reading: [Everything Starts with One Ball](/post/everything-starts-with-one-ball) - on why the foundation is the right level of challenge for the brain to begin building on. [The Gift of Beginning](/post/the-gift-of-beginning) - on what the brain is doing in the very first moments of learning a new skill.

@@ -1,0 +1,125 @@
+---
+title: "Same Prop or Different Prop"
+slug: same-prop-or-different-prop
+summary: "When you run out of capacity, you face a choice: add more of what you have, or add something different. In juggling and in infrastructure, these two paths look similar and are not."
+date: 2026-05-24
+tags: ["tech", "juggling", "scaling", "cloud", "horizontal", "vertical", "infrastructure"]
+pillars: ["tech"]
+cover: ../../assets/images/three-props-triptych.png
+coverAlt: "Three side-by-side panels: left shows a red ball in motion above an open hand, center shows a green club with neon trails held high, right shows a blue ring arcing above a reaching hand"
+coverVideo: /videos/three-props-triptych.mp4
+draft: false
+---
+
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+Every juggler who runs out of capacity faces the same question: do I add more of what I have, or do I add something different?
+
+More of the same - four balls instead of three - means a faster, tighter version of the same pattern. The same arc, the same catch position, the same fundamental throw, repeated at higher speed with more objects. Vertical scaling.
+
+Something different - a club or a ring alongside the balls - means a new prop with its own weight, its own rotation requirement, its own timing. The pattern is not the same pattern with more. It is a different pattern. Horizontal scaling.
+
+These two choices look similar when described in a planning document. In practice, they are not the same decision and they do not have the same consequences.
+
+<StatGrid items={[
+  { value: "1 ceiling", label: "Vertical scaling limit", sub: "Max machine size is finite - just like the max balls a juggler can track", color: "tech" },
+  { value: "N failure modes", label: "Horizontal scaling cost", sub: "Each new prop brings its own physics: latency, partition, state drift", color: "brain" },
+  { value: "2 questions", label: "Before you choose", sub: "What is saturated? And does the team know the new prop's physics?", color: "change" }
+]} />
+
+## Vertical - more of the same
+
+Adding a fourth ball to a three-ball cascade is demanding but knowable. The fundamental throw does not change. The catch position does not change. The rhythm is faster. The coordination is tighter. The skill required is a higher-intensity version of a skill you already have.
+
+Vertical scaling in infrastructure works the same way. More RAM on a server. A larger instance type. A faster CPU. More database connections. The architecture does not change. The deployment does not change. The team does not need to learn new patterns of coordination. The same system runs faster and handles more.
+
+The limit of vertical scaling is physical and financial: there is a maximum machine size. There is a maximum number of balls a single juggler can track without fundamentally changing how they process the pattern. You can push the ceiling, but the ceiling exists. Eventually, more of the same stops being an option.
+
+<Callout type="info" title="When vertical is the right answer">
+If the work fits on one machine and the bottleneck is raw compute or memory - vertical is simpler, faster, and does not change the coordination model. The same team runs the same pattern at higher intensity. Choose this until the ceiling is real, not imagined.
+</Callout>
+
+## Horizontal - something different
+
+Clubs and rings do not add to the pattern. They change it.
+
+A club must be thrown with consistent spin, caught with correct timing, and kept rotating at the right rate or it becomes uncatchable. A ring must be kept vertical throughout its flight or it wobbles off-axis. Neither behaves like a ball. Adding either to a balls-only routine requires learning new motor programs, new timing calibrations, new catch positions - while still keeping the existing balls in rhythm.
+
+This is why horizontal scaling is harder than it sounds, even when the architectural arguments for it are clear. Adding more instances, breaking a monolith into services, introducing a message queue between components - these do not extend the existing pattern. They introduce new props with their own physics. Latency between instances becomes a constraint that does not exist on a single machine. Network partitions become a failure mode. State that was trivially shared now requires coordination. Service discovery has to work before anything else can.
+
+The team that assumes adding more instances is just "adding more balls" will find that clubs fall differently than balls do. The pattern breaks in new ways that the team has not practiced.
+
+<PullQuote attribution="Same Prop or Different Prop">
+The team that assumes adding more instances is just "adding more balls" will find that clubs fall differently than balls do.
+</PullQuote>
+
+## The triptych makes the difference visible
+
+The image shows three separate panels. Left: a red ball and its arc above an open hand - forgiving, self-correcting, the prop that teaches you how to throw before anything else. Center: a green club with neon trails tracing its rotation path - precise, demanding, held at the correct angle or the catch fails. Right: a blue ring at the top of its arc above a reaching hand - kept vertical, trusted to maintain its orientation across the flight.
+
+Each prop solves a different problem. The ball is your general-purpose compute - handles most workloads, forgiving of small errors. The club is your specialized processing that requires specific handling, cannot be substituted for something more generic. The ring is your long-running loop, the feedback cycle that must never go flat.
+
+<Diagram caption="Three props, three scaling analogues - each with distinct physics, distinct failure modes, and distinct skill requirements">
+<svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:0 auto;">
+  <defs>
+    <marker id="sp-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#9696b0"/>
+    </marker>
+  </defs>
+  <rect x="10" y="10" width="200" height="200" rx="8" fill="#14141f" stroke="#ff3366" stroke-width="1.5"/>
+  <rect x="240" y="10" width="200" height="200" rx="8" fill="#14141f" stroke="#33cc66" stroke-width="1.5"/>
+  <rect x="470" y="10" width="200" height="200" rx="8" fill="#14141f" stroke="#6699ff" stroke-width="1.5"/>
+  <circle cx="110" cy="80" r="22" fill="none" stroke="#ff3366" stroke-width="2"/>
+  <circle cx="110" cy="80" r="8" fill="#ff3366" opacity="0.7"/>
+  <path d="M70,130 Q110,50 150,130" fill="none" stroke="#ff3366" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.5"/>
+  <text x="110" y="158" text-anchor="middle" fill="#f3f3f8" font-size="13" font-family="sans-serif" font-weight="600">Ball</text>
+  <text x="110" y="174" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">General-purpose compute</text>
+  <text x="110" y="188" text-anchor="middle" fill="#ff3366" font-size="10" font-family="sans-serif">Vertical scaling</text>
+  <rect x="300" y="48" width="12" height="50" rx="4" fill="#33cc66" opacity="0.8" transform="rotate(-20 306 73)"/>
+  <ellipse cx="305" cy="100" rx="7" ry="14" fill="#33cc66" opacity="0.5" transform="rotate(-20 305 100)"/>
+  <path d="M290,60 Q320,75 300,95" fill="none" stroke="#33cc66" stroke-width="1" opacity="0.4"/>
+  <path d="M295,55 Q325,70 305,90" fill="none" stroke="#33cc66" stroke-width="1" opacity="0.3"/>
+  <text x="340" y="158" text-anchor="middle" fill="#f3f3f8" font-size="13" font-family="sans-serif" font-weight="600">Club</text>
+  <text x="340" y="174" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Specialized processing</text>
+  <text x="340" y="188" text-anchor="middle" fill="#33cc66" font-size="10" font-family="sans-serif">Horizontal - new skill</text>
+  <ellipse cx="570" cy="78" rx="28" ry="10" fill="none" stroke="#6699ff" stroke-width="3"/>
+  <ellipse cx="570" cy="78" rx="28" ry="10" fill="none" stroke="#6699ff" stroke-width="1" opacity="0.3" transform="translate(0,6)"/>
+  <text x="570" y="158" text-anchor="middle" fill="#f3f3f8" font-size="13" font-family="sans-serif" font-weight="600">Ring</text>
+  <text x="570" y="174" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Long-running feedback loop</text>
+  <text x="570" y="188" text-anchor="middle" fill="#6699ff" font-size="10" font-family="sans-serif">Horizontal - new physics</text>
+</svg>
+</Diagram>
+
+The three panels are not interchangeable. You cannot replace the club with another ball and get the same result. You cannot spin the ring and expect it to behave like a ball. Choosing the wrong scaling direction for the problem means paying for props that do not fit the pattern you are running.
+
+## Which question to ask first
+
+Before deciding vertical or horizontal, the question is: what is actually saturated?
+
+If a single machine is at its compute or memory limit, and the work is structured so it can all live on one larger machine - vertical is the right answer. Same pattern, more capacity, simpler architecture.
+
+If requests are arriving faster than any single machine can process them, or if different parts of the workload have fundamentally different resource profiles, or if the ceiling of the largest available machine is not enough - horizontal becomes necessary. Not preferred. Necessary. And it comes with the full cost of a different pattern.
+
+<Callout type="warning" title="The hidden cost of the wrong prop">
+Teams that go horizontal before the ceiling is real often pay twice: once for the distributed architecture, and again for the coordination overhead that did not exist before. Verify the actual bottleneck - CPU, memory, throughput - before choosing the harder prop.
+</Callout>
+
+The triptych shows what it looks like when all three are available and running. Each prop in the air. Each following its own path, its own physics, its own timing. The juggler has learned all three. That took longer than learning one.
+
+Before adding a new prop, be certain you need what that prop does - and that you have accounted for what learning it requires.
+
+<Takeaways title="Same prop or different prop" color="tech" items={[
+  "Vertical scaling adds intensity to an existing pattern. Horizontal scaling introduces a new pattern with different physics.",
+  "The failure modes of distributed systems - latency, partitions, state drift - do not exist on a single machine. They are new props, not more balls.",
+  "Identify the actual bottleneck first. If the ceiling is not real yet, the simpler choice is almost always correct.",
+  "Each prop in the triptych requires its own learned skill set. Horizontal is not cheaper or faster, it is necessary when it is necessary.",
+  "The wrong scaling direction means running a pattern that does not fit the problem - and paying for props that cannot do the job."
+]} />
+
+---
+
+Related: [The Pattern Has a Budget](/post/the-pattern-has-a-budget) - on what happens when scaling exceeds the system's ability to track itself.

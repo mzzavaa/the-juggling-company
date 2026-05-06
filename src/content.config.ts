@@ -144,6 +144,7 @@ const post = defineCollection({
       coverAlt: z.string().optional(),
       coverVideo: z.string().optional(),
       draft: z.boolean().default(false),
+      personal: z.boolean().default(false),
     }),
 });
 

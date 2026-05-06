@@ -1,0 +1,170 @@
+---
+title: "Being the Training Data"
+slug: being-the-training-data
+summary: "When you build a computer vision model on your own body, something unusual happens: you become both the developer and the dataset. The model learns your specific technique. Then you have to decide how far that generalizes."
+date: 2026-06-04
+tags: ["tech", "brain", "ai", "computer-vision", "juggling", "otto", "personal"]
+pillars: ["tech", "brain"]
+cover: ../../assets/images/juggling-detection-code-vscode.jpg
+coverAlt: "VS Code editor showing Python juggling detection code alongside a Custom Vision prediction result with bounding boxes"
+coverVideo: /videos/juggling-detection-code-vscode.mp4
+draft: false
+personal: true
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+import AnalogyTable from "../../components/AnalogyTable.astro";
+
+Most people who build machine learning models are not in the training data.
+
+The dataset is collected from somewhere else - scraped from the internet, labeled by contractors, gathered from sensors. The person building the model is a step removed from the data. They work with it, shape it, evaluate it, but they are not in it.
+
+When I built OTTO, I was the dataset.
+
+Every frame the model trained on was a frame of me juggling. Every labeled bounding box was drawn around my body, my arms, my throws. The model learned what a juggling throw looks like by learning what my juggling throw looks like. This created something interesting and something to be careful about.
+
+<Diagram caption="The unusual loop: developer and dataset are the same person">
+<svg viewBox="0 0 560 220" width="560" height="220" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="220" fill="#14141f" rx="8"/>
+
+  <text x="280" y="28" text-anchor="middle" fill="#9696b0" font-size="10" font-weight="600" letter-spacing="1">TYPICAL ML PIPELINE</text>
+
+  <rect x="30" y="36" width="90" height="40" rx="6" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <text x="75" y="60" text-anchor="middle" fill="#9696b0" font-size="10">Someone</text>
+  <text x="75" y="72" text-anchor="middle" fill="#9696b0" font-size="10">else's data</text>
+
+  <path d="M122 56 L158 56" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+
+  <rect x="160" y="36" width="90" height="40" rx="6" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <text x="205" y="60" text-anchor="middle" fill="#9696b0" font-size="10">Labelers</text>
+  <text x="205" y="72" text-anchor="middle" fill="#9696b0" font-size="10">(contractors)</text>
+
+  <path d="M252 56 L288 56" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+
+  <rect x="290" y="36" width="90" height="40" rx="6" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <text x="335" y="60" text-anchor="middle" fill="#9696b0" font-size="10">Model</text>
+  <text x="335" y="72" text-anchor="middle" fill="#9696b0" font-size="10">developer</text>
+
+  <path d="M382 56 L418 56" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+
+  <rect x="420" y="36" width="90" height="40" rx="6" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <text x="465" y="60" text-anchor="middle" fill="#9696b0" font-size="10">Trained</text>
+  <text x="465" y="72" text-anchor="middle" fill="#9696b0" font-size="10">model</text>
+
+  <text x="280" y="118" text-anchor="middle" fill="#33cc66" font-size="10" font-weight="600" letter-spacing="1">OTTO PIPELINE</text>
+
+  <rect x="160" y="128" width="90" height="55" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="205" y="150" text-anchor="middle" fill="#33cc66" font-size="11" font-weight="600">Linda</text>
+  <text x="205" y="164" text-anchor="middle" fill="#9696b0" font-size="10">juggler</text>
+  <text x="205" y="176" text-anchor="middle" fill="#9696b0" font-size="10">+ labeler + dev</text>
+
+  <path d="M252 155 L355 155" stroke="#33cc66" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <rect x="357" y="128" width="90" height="55" rx="6" fill="#1b1b2a" stroke="#ffcc33" stroke-width="1.5"/>
+  <text x="402" y="150" text-anchor="middle" fill="#ffcc33" font-size="11" font-weight="600">OTTO</text>
+  <text x="402" y="164" text-anchor="middle" fill="#9696b0" font-size="10">trained on</text>
+  <text x="402" y="176" text-anchor="middle" fill="#9696b0" font-size="10">one person</text>
+
+  <path d="M402 183 Q402 205 205 205 Q160 205 160 183" fill="none" stroke="#33cc66" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-green)"/>
+  <text x="280" y="214" text-anchor="middle" fill="#33cc66" font-size="10">model learns your patterns</text>
+
+  <defs>
+    <marker id="arr-muted" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2a2a3d"/>
+    </marker>
+    <marker id="arr-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#33cc66"/>
+    </marker>
+  </defs>
+</svg>
+</Diagram>
+
+## What the model learned about me specifically
+
+A computer vision model trained on one person's throwing technique will learn that person's technique.
+
+My throws have a specific arc. My hands move in a way that reflects my particular body mechanics and the props I use. The model learned these things. It became, over many training iterations, quite good at detecting the specific kind of throw I make in the conditions I labeled.
+
+This is useful for a system designed to track one specific performer. It is a problem for a system meant to generalize.
+
+The failure mode appeared when I showed the model throws from other jugglers. The predictions degraded - not completely, but noticeably. The model had learned "juggling" with my body's definition of the word. Other jugglers threw differently enough that the model was less confident.
+
+<Callout type="info" title="The specificity trap">
+A model trained on one person's technique becomes an expert on that person. It learns their arc, their timing, their hand position. The more accurate it gets at that specific signature, the more it encodes that signature as the definition of the category.
+</Callout>
+
+## The personalization-generalization tradeoff
+
+Every model trained on specific data faces this tradeoff.
+
+<AnalogyTable domain="Machine Learning" caption="The same tradeoff appears in every supervised learning context" rows={[
+  { juggling: "Trained on my specific throwing arc", analogue: "Model trained on one writing style" },
+  { juggling: "Accurate on my throws, uncertain on others'", analogue: "Good at one person's patterns, worse on others'" },
+  { juggling: "Adding other jugglers' footage improves generalization", analogue: "Adding diverse training examples reduces overfitting" },
+  { juggling: "Enough data to be useful for one performer", analogue: "Enough data for the intended deployment context" },
+]} />
+
+The question is whether the intended use case is fine with that specificity or requires broader generalization. For OTTO, the question was: is this for tracking one performer, or for general juggling detection? The answer changes everything about how the training data needs to be structured.
+
+## What it is like to label your own body
+
+There is something specific about annotating frames of yourself that would be worth noting to anyone who tries it: you start noticing things about your own technique that you had not seen before.
+
+When you draw a bounding box around your own throw a thousand times, you notice that your right arm is lower than your left at release. You notice that your throws cluster to the right when you are tired. You notice your hand position changes between a standard throw and one you make when you are about to lose the pattern.
+
+<PullQuote>
+The labeling process was also, unexpectedly, a practice session. Looking at yourself from the outside - frame by frame, isolated from the flow - is a different kind of feedback than the usual throw-catch-throw.
+</PullQuote>
+
+The labeling process was also, unexpectedly, a practice session. Looking at yourself from the outside - frame by frame, isolated from the flow of the juggling - is a different kind of feedback than the usual throw-catch-throw. It is the kind of attention that is hard to sustain during performance but that reveals things that performance cannot.
+
+## The model knows your patterns before you do
+
+By the end of the labeling and training process, the model had a very accurate map of my throwing patterns. It could predict, with high confidence, where the ball would appear in the next frame.
+
+This raises a question worth sitting with: if a model trained on your behavior can predict your next move with high accuracy, what does that tell you about how predictable your patterns are? And when predictability is a limitation - when you need to be less legible to the system, or more varied in your approach - what does changing your training data actually require?
+
+You have to throw differently. The model learns from what you do.
+
+## The bias I accidentally built
+
+There was a more uncomfortable finding that took longer to surface.
+
+The model worked reliably on one specific type of person: a short woman juggling the way I juggle. Not just "juggling" - my technique, my body proportions, my arc height relative to my frame. The moment I tested it on anyone else, the confidence dropped. On tall men, on men in general, the model essentially failed. It did not just perform worse. It did not recognize what it was seeing as juggling at all.
+
+It even had trouble with me when I looked different. My hair changes constantly. When the visual signature shifted enough - different length, different color, different style - the model sometimes failed to confirm that the person juggling was a juggler. It had learned a composite: my technique plus something about my appearance, collapsed together into a single learned representation.
+
+<Callout type="warning" title="Accidental discrimination">
+The model did not fail on men because it had a bias against men built in by design. It failed on men because the training data contained no men. The model learned the boundary of the category it was shown, and the boundary I had drawn was the boundary of my own body.
+</Callout>
+
+This is usually how the bias conversation goes in the other direction. Most large training datasets contain more data from men than from women - particularly in professional and technical domains. The result is systems that work well on men and fail on women. I accidentally built the exact inverse: a model that worked on one short woman and discriminated against everyone else, including every man who tried it.
+
+The architecture of the failure was identical in both cases. The data reflected the collector. The model learned the collector's world. The people outside that world were invisible to it.
+
+<PullQuote>
+AI reflects the data we have. Most of the time, the data we have reflects who collected it. The bias is not in the algorithm. It is upstream.
+</PullQuote>
+
+The reason I find this useful to talk about is not the failure itself but the method that revealed it. I did not run an audit. I did not read a paper. I built a thing, tested it on different people, and watched it fail in a specific and informative way. The failure taught me something about bias in AI systems that no amount of reading had made concrete for me before.
+
+This is how I learn about architecture and technology: by building something real, putting it in front of conditions it was not designed for, and observing what breaks and how. The implication is in the failure pattern. The lesson is in the specificity of what did not work.
+
+I trained a model that could not see tall men. I now understand dataset balance in a way that is not abstract.
+
+<Takeaways color="tech" items={[
+  "When you are the training data, the model learns your specific signature - not the general category.",
+  "Labeling your own frames is a form of self-study. Frame-by-frame analysis reveals what performance flow conceals.",
+  "High accuracy on training data reflects the training distribution. Generalization requires data from beyond your own pattern.",
+  "A model that predicts your next move accurately is a mirror of your own predictability.",
+  "The model did not fail on men by design. It failed because there were no men in the data. Absence is bias.",
+  "The fastest way to understand a technology's failure modes is to build with it and observe what it cannot see."
+]} />
+
+---
+
+*Read next: [99 Percent](/blog/ninety-nine-percent) - the training metric that took weeks to reach and what it actually measures.*

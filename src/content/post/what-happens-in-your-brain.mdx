@@ -11,6 +11,19 @@ coverVideo: /videos/brain-ball-connection.mp4
 draft: false
 ---
 
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+<StatGrid items={[
+  { value: "2004", label: "Draganski study", sub: "first MRI evidence of juggling-induced grey matter growth", color: "brain" },
+  { value: "2", label: "Brain regions", sub: "mid-temporal area + left posterior intraparietal sulcus", color: "brain" },
+  { value: "~50%", label: "Reversal rate", sub: "grey matter gained partially reverses within 3 months of stopping", color: "yellow" },
+  { value: "11", label: "Studies reviewed", sub: "2022 systematic review confirming adult brain plasticity from juggling", color: "change" }
+]} />
+
 The headline version goes like this: juggling grows your brain. Grey matter increases. Studies prove it. Start juggling.
 
 That version is not wrong. But it is incomplete in ways that matter.
@@ -27,6 +40,73 @@ The control group, who did not juggle, showed no such changes.
 
 This is the study behind the headline. And it is real. But there are two things the headline usually omits.
 
+<Diagram caption="Where juggling changes the brain: grey matter density increases in visual-motion and visuospatial integration regions, with white matter connectivity improvements in the pathways between them.">
+<svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <radialGradient id="wh-brain-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff3366" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ff3366" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wh-spot-a" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff3366" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ff3366" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wh-spot-b" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffcc33" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffcc33" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="wh-arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#9696b0"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="280" rx="8" fill="#14141f"/>
+
+  <ellipse cx="210" cy="138" rx="110" ry="95" fill="url(#wh-brain-glow)"/>
+  <ellipse cx="210" cy="138" rx="108" ry="93" stroke="#ff3366" stroke-width="1" stroke-opacity="0.3" fill="none"/>
+
+  <path d="M 140 100 Q 155 80 175 85 Q 165 105 155 115 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 175 85 Q 195 70 215 78 Q 210 95 195 100 Q 185 95 175 85 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 215 78 Q 240 68 255 82 Q 248 98 232 100 Q 220 95 215 78 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 255 82 Q 275 80 285 96 Q 278 112 263 115 Q 252 108 255 82 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 120 130 Q 118 155 128 170 Q 140 162 148 148 Q 138 138 120 130 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 295 108 Q 308 125 305 148 Q 292 148 282 138 Q 283 122 295 108 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 155 115 Q 170 120 180 135 Q 165 142 150 138 Q 140 126 140 100 Q 148 108 155 115 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 180 135 Q 200 130 220 138 Q 215 158 200 162 Q 185 158 180 135 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 220 138 Q 240 132 258 140 Q 255 160 240 165 Q 225 162 220 138 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 258 140 Q 275 138 285 148 Q 282 168 265 172 Q 250 168 258 140 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 148 148 Q 158 158 165 172 Q 148 178 135 172 Q 128 162 128 170 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 200 162 Q 210 178 205 192 Q 188 194 175 185 Q 172 172 165 172 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 240 165 Q 248 178 242 192 Q 225 196 210 192 Q 210 178 200 162 Q 220 164 240 165 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+  <path d="M 265 172 Q 272 185 265 198 Q 248 200 242 192 Q 248 178 265 172 Z" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1"/>
+
+  <circle cx="268" cy="115" r="18" fill="url(#wh-spot-a)" opacity="0.85"/>
+  <circle cx="268" cy="115" r="9" fill="#ff3366" opacity="0.9"/>
+
+  <circle cx="185" cy="100" r="15" fill="url(#wh-spot-b)" opacity="0.8"/>
+  <circle cx="185" cy="100" r="7" fill="#ffcc33" opacity="0.9"/>
+
+  <path d="M 286 115 Q 340 90 370 80" stroke="#9696b0" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#wh-arr)"/>
+  <text x="374" y="76" font-family="monospace" font-size="10" fill="#ff3366">mid-temporal area</text>
+  <text x="374" y="88" font-family="monospace" font-size="9" fill="#9696b0">visual motion tracking</text>
+
+  <path d="M 198 88 Q 250 60 370 55" stroke="#9696b0" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#wh-arr)"/>
+  <text x="374" y="51" font-family="monospace" font-size="10" fill="#ffcc33">l. posterior IPS</text>
+  <text x="374" y="63" font-family="monospace" font-size="9" fill="#9696b0">visuospatial integration</text>
+
+  <path d="M 230 178 Q 310 200 370 210" stroke="#9696b0" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#wh-arr)"/>
+  <text x="374" y="206" font-family="monospace" font-size="10" fill="#33cc66">white matter tracts</text>
+  <text x="374" y="218" font-family="monospace" font-size="9" fill="#9696b0">visual-motor pathways</text>
+
+  <path d="M 185 118 L 248 115" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.6"/>
+
+  <rect x="60" y="240" width="14" height="14" rx="2" fill="#ff3366" opacity="0.8"/>
+  <text x="80" y="252" font-family="monospace" font-size="10" fill="#9696b0">grey matter increase (Draganski 2004)</text>
+  <rect x="260" y="240" width="14" height="14" rx="2" fill="#ffcc33" opacity="0.8"/>
+  <text x="280" y="252" font-family="monospace" font-size="10" fill="#9696b0">grey matter increase (left PPS)</text>
+</svg>
+</Diagram>
+
 ## What the headline leaves out
 
 First: the changes were specific to visual-motor processing. The study did not show general intelligence increases, or broad memory improvement, or enhanced executive function. It showed increased density in the specific regions that juggling exercises. The brain changed in response to the demand placed on it.
@@ -35,7 +115,11 @@ This is actually more interesting than the broad claim, because it tells you wha
 
 Second: the changes reversed. When participants stopped juggling, about half of the grey matter increase disappeared within three months. The brain adapted to the new demand, and when the demand stopped, the adaptation partially receded.
 
-"Use it or lose it" is not a cliché here. It is the mechanism.
+<Callout type="warning" title="Use it or lose it - literally">
+  "Use it or lose it" is not a cliche here. It is the mechanism. About half of the grey matter increase from juggling practice disappears within three months of stopping. The brain does not bank the adaptation indefinitely. It maintains what it continues to use.
+</Callout>
+
+"Use it or lose it" is not a cliche here. It is the mechanism.
 
 ## White matter too
 
@@ -45,6 +129,10 @@ They found that learning to juggle also produced changes in white matter structu
 
 White matter changes are associated with faster and more reliable signal transmission between brain regions. Faster, more reliable communication between visual tracking and motor control is exactly what juggling requires. The brain optimised for the task.
 
+<PullQuote>
+The brain was not just growing tissue in response to practice. It was also improving its wiring.
+</PullQuote>
+
 ## What this means for adults
 
 One of the most consistent findings across juggling studies is that adult brains - including older adult brains - respond to juggling practice in similar ways to younger brains.
@@ -53,6 +141,10 @@ A 2022 systematic review of eleven studies found that older adults (in some case
 
 The right kind of challenge, it turns out, is: novel, physically engaging, requiring sustained attention, with immediate feedback. Juggling is an unusually clean example of all four. The brain does not care about age. It responds to the demand.
 
+<Callout type="success" title="What makes a challenge brain-plastic">
+  Juggling hits all four criteria for neuroplastic challenge: it is novel, physically embodied, requires sustained attention, and gives immediate feedback on every throw. That combination - not the specific activity - is what drives the adaptation. Other activities with the same profile work through the same mechanism.
+</Callout>
+
 ## The honest version of the claim
 
 Juggling does change your brain. Specifically, it increases grey matter density and improves white matter connectivity in the visual-motor processing regions. It does this in response to the learning demand, not as a general boost. The changes persist with practice and partially reverse without it.
@@ -60,3 +152,15 @@ Juggling does change your brain. Specifically, it increases grey matter density 
 This is not a lesser claim than the headline. It is a more honest and more useful one. It tells you what you are training, how the training works, and what you need to do to keep the benefit.
 
 The brain changes because you asked it to do something new and difficult, repeatedly, with immediate feedback. That mechanism - not the specific activity - is the thing that transfers.
+
+<Takeaways title="What the research actually shows" color="brain" items={[
+  "Grey matter density increases in two specific brain regions - visual motion tracking and visuospatial integration - not across the brain generally.",
+  "White matter connectivity also improves: the communication pathways between visual and motor cortex become faster and more reliable.",
+  "About half the grey matter gain reverses within three months of stopping. The adaptation requires continued practice to maintain.",
+  "Adult brains - including those over 60 - respond to juggling practice comparably to younger brains. Plasticity does not disappear with age.",
+  "The mechanism that transfers is not juggling specifically: novelty + physical engagement + sustained attention + immediate feedback drives neuroplastic change."
+]} />
+
+---
+
+*Related: [What Flow Looks Like from the Outside](/post/what-flow-looks-like) - when the brain has automated juggling well enough, attention is freed for something else entirely.*

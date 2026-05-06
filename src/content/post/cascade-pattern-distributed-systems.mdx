@@ -11,6 +11,19 @@ coverVideo: /videos/green-infinity-cloud-nodes.mp4
 draft: false
 ---
 
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+<StatGrid items={[
+  { value: "0", label: "Central orchestrators", sub: "the cascade holds itself together through local feedback only", color: "tech" },
+  { value: "3", label: "Apex signals", sub: "queue depth, per-stage latency, error rate - minimal observability surface", color: "yellow" },
+  { value: "50-60%", label: "Dwell time", sub: "typical cascade ball time in hand - the distributed equivalent is processing vs queue wait", color: "tech" },
+  { value: "N+1", label: "Self-cuing", sub: "output of step N is the input signal for step N+1", color: "change" }
+]} />
+
 The three-ball cascade has a property that most systems architects would recognise immediately if they saw it described in a design doc.
 
 Each ball's arrival at one hand is the trigger for that hand's next throw. The output of step N is the input cue for step N+1. The loop is self-sustaining because each element is both a result and a signal. There is no external orchestrator holding the pattern together. The pattern holds itself together through the structure of its own feedback.
@@ -25,7 +38,70 @@ The too-high throw gives the other hand more time. That hand can wait, recalibra
 
 This property - graceful degradation in response to small errors - is one of the things distributed systems engineers spend enormous effort trying to achieve. Circuit breakers, exponential backoff, dead-letter queues: these are all attempts to build the cascade's natural elasticity into systems that would otherwise fail fast and hard.
 
+<Callout type="info" title="Resilience is structural, not bolted on">
+  The cascade does not need a resilience layer added on top. Its resilience emerges from the feedback structure itself - each stage responds to the actual state of the previous stage, not to a plan made before the run started. Distributed systems that inherit this property need less engineering effort to stay up. Systems that fight it need circuit breakers, retries, and dead-letter queues everywhere.
+</Callout>
+
 The cascade teaches that resilience is not a feature you bolt on. It is a property of the feedback structure. If your system's response to small errors is to create larger errors, the structure itself needs examining.
+
+<Diagram caption="The cascade as event-driven pipeline: each stage emits an event that is the trigger for the next. No stage coordinates with another directly. Resilience emerges from the feedback structure.">
+<svg viewBox="0 0 520 270" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <marker id="di-arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#33cc66"/>
+    </marker>
+    <marker id="di-arr-err" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ff3366"/>
+    </marker>
+    <radialGradient id="di-node-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#33cc66" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#33cc66" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="520" height="270" rx="8" fill="#14141f"/>
+
+  <rect x="30" y="100" width="80" height="50" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="70" y="121" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">INGEST</text>
+  <text x="70" y="136" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">queue</text>
+
+  <rect x="175" y="100" width="80" height="50" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="215" y="121" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">PROCESS</text>
+  <text x="215" y="136" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">lambda / fn</text>
+
+  <rect x="320" y="100" width="80" height="50" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="360" y="121" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">ENRICH</text>
+  <text x="360" y="136" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">transform</text>
+
+  <rect x="430" y="100" width="60" height="50" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="460" y="121" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">EMIT</text>
+  <text x="460" y="136" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">output</text>
+
+  <line x1="110" y1="125" x2="175" y2="125" stroke="#33cc66" stroke-width="1.5" marker-end="url(#di-arr)"/>
+  <line x1="255" y1="125" x2="320" y2="125" stroke="#33cc66" stroke-width="1.5" marker-end="url(#di-arr)"/>
+  <line x1="400" y1="125" x2="430" y2="125" stroke="#33cc66" stroke-width="1.5" marker-end="url(#di-arr)"/>
+
+  <text x="142" y="116" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">event</text>
+  <text x="287" y="116" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">event</text>
+  <text x="415" y="116" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">event</text>
+
+  <rect x="175" y="175" width="80" height="38" rx="5" fill="#1b1b2a" stroke="#ff3366" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="215" y="192" text-anchor="middle" font-family="monospace" font-size="9" fill="#ff3366">slow throw</text>
+  <text x="215" y="204" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">queue absorbs</text>
+  <line x1="215" y1="175" x2="215" y2="150" stroke="#ff3366" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#di-arr-err)"/>
+
+  <text x="260" y="240" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">no stage coordinates directly with another</text>
+  <text x="260" y="255" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">each responds only to the signal it receives</text>
+
+  <circle cx="70" cy="125" r="22" fill="url(#di-node-glow)" opacity="0.5"/>
+  <circle cx="215" cy="125" r="22" fill="url(#di-node-glow)" opacity="0.5"/>
+  <circle cx="360" cy="125" r="22" fill="url(#di-node-glow)" opacity="0.5"/>
+  <circle cx="460" cy="125" r="22" fill="url(#di-node-glow)" opacity="0.5"/>
+
+  <text x="260" y="30" text-anchor="middle" font-family="monospace" font-size="11" fill="#9696b0">self-cuing event-driven pipeline</text>
+  <text x="260" y="46" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">output(N) = signal for input(N+1)</text>
+</svg>
+</Diagram>
 
 ## The self-cuing loop in practice
 
@@ -37,6 +113,10 @@ When this pattern is implemented well, the pipeline becomes - like the cascade -
 
 The failure mode of this pattern is also the same as the cascade's: interference from above. When a "controller" starts making decisions about what each stage should do, based on assumptions about the global state of the pipeline, the decoupling collapses. Now the controller knows too much and controls too much, and a failure in the controller stops everything.
 
+<PullQuote>
+The failure mode of the event-driven pipeline is the same as the cascade's: interference from above. The controller knows too much, controls too much, and a failure in the controller stops everything.
+</PullQuote>
+
 ## Observability at the apex
 
 In juggling, experienced practitioners do not watch all three balls. They watch the apex - the top of the arc where each ball briefly slows. That single observation point gives them enough information to assess the whole pattern's health.
@@ -44,6 +124,10 @@ In juggling, experienced practitioners do not watch all three balls. They watch 
 Distributed systems need the same: not visibility into every message on every queue, but a small number of high-signal observation points that reveal whether the overall pattern is running well.
 
 For most event-driven systems, this means: queue depth over time, per-stage latency percentiles, and error rates per stage. If these three signals are healthy, the cascade is running. If one of them drifts, you know which stage to look at.
+
+<Callout type="warning" title="Observing everything produces noise">
+  The instinct in distributed systems monitoring is to instrument everything. But watching all three balls in the cascade does not help - it overloads the visual system. The right move is to find the apex: the minimal set of signals that reveal systemic health. For most event-driven pipelines, that is queue depth trend, per-stage latency percentiles, and error rate per stage. Three numbers. If they are clean, the cascade is running.
+</Callout>
 
 Trying to observe everything produces noise. Choosing the right apex - the minimal set of signals that reveals systemic health - is an architectural decision as important as the topology itself.
 
@@ -68,3 +152,15 @@ When you watch a skilled juggler run a clean three-ball cascade for five minutes
 The whole emerges from the structure of the parts' relationships - not from any part controlling the others.
 
 That is the pattern worth building.
+
+<Takeaways title="What the cascade teaches distributed systems engineers" color="tech" items={[
+  "Self-cuing loops - where output(N) is the signal for input(N+1) - sustain themselves without central coordination.",
+  "Resilience is structural: it emerges from the feedback design, not from bolted-on circuit breakers and retry logic.",
+  "Interference from a global controller is the primary failure mode of decoupled pipelines - the same way it drops the cascade.",
+  "Find the apex: three signals (queue depth, latency percentiles, error rate per stage) reveal systemic health without instrumenting everything.",
+  "Dwell time deserves explicit design attention - the ratio of processing time to queue wait time shapes pipeline latency as much as the logic itself."
+]} />
+
+---
+
+*Related: [The Cascade: Juggling's One True Pattern](/post/the-cascade) - the physical mechanics and self-correcting structure that distributed systems are replicating.*

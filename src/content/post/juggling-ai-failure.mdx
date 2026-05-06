@@ -11,6 +11,12 @@ coverVideo: /videos/infinity-balls-breaking.mp4
 draft: false
 ---
 
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 There's a moment in learning to juggle that nobody warns you about.
 
 You've been practicing for a week. Three balls, finally staying in the air for five, six, seven throws in a row. And then you get confident. You stop thinking so hard. You relax.
@@ -26,6 +32,13 @@ Here's what an experienced juggler knows: that's not failure. That's the practic
 Dropping is how you find your limits. Dropping is feedback. Dropping tells you exactly where the edge of your current skill level is, which is information you cannot get any other way. You can't learn it from watching. You can't reason your way to it. You have to run into it.
 
 I spent a lot of years in IT before I understood that software systems work the same way. And I spent even longer before I understood it about AI agents.
+
+<StatGrid items={[
+  { value: "3 types", label: "Drop categories", sub: "Reach, momentum, environmental", color: "brain" },
+  { value: "4 principles", label: "Controlled dropping", sub: "Design for recovery, not avoidance", color: "change" },
+  { value: "15 min", label: "Otto sync lag (before)", sub: "Now syncs within 15 min of event change", color: "tech" },
+  { value: "upstream", label: "Most agent failures", sub: "Are actually system failures, not agent failures", color: "yellow" }
+]} />
 
 ---
 
@@ -69,6 +82,10 @@ You can't fully anticipate failure in advance. Not in juggling, not in software,
 
 This is not recklessness. This is structured iteration. There's a difference between dropping balls in practice and dropping balls during a performance. The former is how you learn. The latter is a system design problem - it means you didn't practice enough in the right conditions.
 
+<Callout type="info" title="Practice space vs performance space">
+The difference between a staging environment and production isn't just data volume or user count - it's the cost of failure. In staging, failure is information. In production, failure is an incident. Design your staging environment to surface failures you need to know about, not to preview what success looks like. See also: <a href="/blog/the-sandbox-is-not-the-stage">The Sandbox Is Not the Stage</a>.
+</Callout>
+
 ---
 
 ## The Three Kinds of Drops (and What They Mean)
@@ -86,6 +103,60 @@ In agents: the agent was working fine, then started producing degraded outputs a
 **The environmental drop:** Something changed in the environment - a gust of wind, bad lighting, an unexpected noise - and it disrupted a pattern that was otherwise solid.
 
 In agents: the downstream API changed. The data schema shifted. The model got updated. The agent was fine; the environment changed. This is the hardest drop to catch before it happens, because you're not watching the right thing. You're watching the agent. You should be watching the environment too.
+
+<Diagram caption="Three drop types and their agent system equivalents. Each maps to a different root cause - and a different fix.">
+<svg viewBox="0 0 680 260" width="100%" style="max-width:680px;display:block;margin:0 auto;" aria-label="Three drop types mapped to AI agent failure modes">
+  <defs>
+    <linearGradient id="jaf-reach-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff3366" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#ff3366" stop-opacity="0.06" />
+    </linearGradient>
+    <linearGradient id="jaf-mom-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffcc33" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#ffcc33" stop-opacity="0.06" />
+    </linearGradient>
+    <linearGradient id="jaf-env-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6699ff" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#6699ff" stop-opacity="0.06" />
+    </linearGradient>
+  </defs>
+  <rect width="680" height="260" fill="#14141f" rx="12" />
+  <text x="340" y="26" text-anchor="middle" fill="#9696b0" font-size="11" font-family="sans-serif" font-weight="600" letter-spacing="0.1em">THREE DROP TYPES - ROOT CAUSE MAPPING</text>
+
+  <rect x="16" y="44" width="208" height="200" rx="10" fill="url(#jaf-reach-grad)" stroke="#ff3366" stroke-width="1" stroke-opacity="0.5" />
+  <text x="120" y="70" text-anchor="middle" fill="#ff3366" font-size="13" font-weight="700" font-family="sans-serif">REACH DROP</text>
+  <text x="120" y="92" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Throw was off, not the catch</text>
+  <line x1="40" y1="108" x2="200" y2="108" stroke="#2a2a3d" stroke-width="1" />
+  <text x="120" y="128" text-anchor="middle" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">In agents:</text>
+  <text x="120" y="146" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Malformed input or</text>
+  <text x="120" y="162" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">ambiguous prompt</text>
+  <text x="120" y="188" text-anchor="middle" fill="#ff3366" font-size="10" font-weight="700" font-family="sans-serif">FIX UPSTREAM -</text>
+  <text x="120" y="204" text-anchor="middle" fill="#ff3366" font-size="10" font-weight="700" font-family="sans-serif">NOT THE AGENT</text>
+  <text x="120" y="224" text-anchor="middle" fill="#9696b0" font-size="9" font-family="sans-serif">data pipeline / prompt</text>
+
+  <rect x="236" y="44" width="208" height="200" rx="10" fill="url(#jaf-mom-grad)" stroke="#ffcc33" stroke-width="1" stroke-opacity="0.5" />
+  <text x="340" y="70" text-anchor="middle" fill="#ffcc33" font-size="13" font-weight="700" font-family="sans-serif">MOMENTUM DROP</text>
+  <text x="340" y="92" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Anticipating, not reacting</text>
+  <line x1="260" y1="108" x2="420" y2="108" stroke="#2a2a3d" stroke-width="1" />
+  <text x="340" y="128" text-anchor="middle" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">In agents:</text>
+  <text x="340" y="146" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Context contamination</text>
+  <text x="340" y="162" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">after extended runs</text>
+  <text x="340" y="188" text-anchor="middle" fill="#ffcc33" font-size="10" font-weight="700" font-family="sans-serif">CLEAR CONTEXT -</text>
+  <text x="340" y="204" text-anchor="middle" fill="#ffcc33" font-size="10" font-weight="700" font-family="sans-serif">RESET SESSION</text>
+  <text x="340" y="224" text-anchor="middle" fill="#9696b0" font-size="9" font-family="sans-serif">don't fix in-flight</text>
+
+  <rect x="456" y="44" width="208" height="200" rx="10" fill="url(#jaf-env-grad)" stroke="#6699ff" stroke-width="1" stroke-opacity="0.5" />
+  <text x="560" y="70" text-anchor="middle" fill="#6699ff" font-size="13" font-weight="700" font-family="sans-serif">ENVIRONMENTAL DROP</text>
+  <text x="560" y="92" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">Conditions changed, not you</text>
+  <line x1="480" y1="108" x2="640" y2="108" stroke="#2a2a3d" stroke-width="1" />
+  <text x="560" y="128" text-anchor="middle" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">In agents:</text>
+  <text x="560" y="146" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">API changed, schema</text>
+  <text x="560" y="162" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">shifted, model updated</text>
+  <text x="560" y="188" text-anchor="middle" fill="#6699ff" font-size="10" font-weight="700" font-family="sans-serif">WATCH THE ENV -</text>
+  <text x="560" y="204" text-anchor="middle" fill="#6699ff" font-size="10" font-weight="700" font-family="sans-serif">NOT JUST THE AGENT</text>
+  <text x="560" y="224" text-anchor="middle" fill="#9696b0" font-size="9" font-family="sans-serif">monitor dependencies</text>
+</svg>
+</Diagram>
 
 ---
 
@@ -115,6 +186,10 @@ But in my experience, most agent failures are actually system failures: the wron
 
 Before you touch the agent, look at everything upstream of it.
 
+<PullQuote>
+Design your agent system to surface failure fast and cheaply. The goal isn't a juggling routine that never drops - it's a juggler who can drop, recover, and keep going without anyone in the audience noticing.
+</PullQuote>
+
 ---
 
 ## Otto's Most Embarrassing Drop (And What It Built)
@@ -135,6 +210,10 @@ But here's what that drop built: we now have an automatic sync. Every time an ev
 
 This is the compounding value of dropping in practice: each drop, handled well, builds something that makes the system more robust. Not just patched - genuinely better.
 
+<Callout type="success" title="What Otto's drop built">
+A single wrong answer from a Slack bot led to an automatic Notion-to-Bedrock sync that now keeps Otto current within 15 minutes of any event change. The drop didn't just get patched - it built infrastructure that didn't exist before. Every handled failure is a system improvement, not just a fix.
+</Callout>
+
 ---
 
 ## The One Thing I Tell Every Team Starting With Agents
@@ -153,6 +232,16 @@ The goal isn't a juggling routine that never drops. The goal is a juggler who ca
 
 ---
 
-*Post 3 in the Juggling-Pizza Framework series. [Post 2: Balls, Clubs, and Rings](/blog/balls-clubs-rings-ai-agents) · [Post 4: The Complete Framework](/blog/juggling-pizza-framework-ai-agent-teams)*
+<Takeaways title="Key takeaways" color="change" items={[
+  "Drops are information - not evidence of failure, but feedback about where your current limits are. The same is true for AI agent failures.",
+  "There are three drop types: reach (upstream input was wrong), momentum (context contamination after long runs), and environmental (the system around the agent changed). Each has a different fix.",
+  "Design for surfacing failure fast and cheaply, not for avoiding failure. Controlled dropping is a skill, not a shortcoming.",
+  "Before blaming the agent, look upstream. Most agent failures are system failures - wrong data, wrong context, wrong trigger.",
+  "Every handled failure builds something. Otto's stale-data drop created an automatic sync pipeline that now runs continuously. Drops compound into robustness if you handle them well."
+]} />
+
+---
+
+*Post 3 in the Juggling-Pizza Framework series. [Post 2: Balls, Clubs, and Rings](/blog/balls-clubs-rings-ai-agents) - [Post 4: The Complete Framework](/blog/juggling-pizza-framework-ai-agent-teams)*
 
 *Linda Mohamed is an AWS Hero in Vienna. She built Otto so she'd stop dropping the balls she couldn't afford to drop. She still drops things in practice. That's the point.*

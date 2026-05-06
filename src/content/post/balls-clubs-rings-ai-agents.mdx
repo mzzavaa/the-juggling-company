@@ -11,6 +11,12 @@ coverVideo: /videos/neural-network-nodes.mp4
 draft: false
 ---
 
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 I'm standing on a stage in Vienna with three juggling clubs spinning in the air, and I'm trying to explain to a room full of software engineers why their AI architecture is wrong.
 
 Not because I'm rude. Because the analogy is *right there*, and nobody in the room has picked it up yet.
@@ -20,6 +26,13 @@ Here's the thing about juggling: every prop teaches you something different. Bal
 I've been juggling for years - for real, not as a metaphor - and the longer I do it, the more I see it in my work. Especially now, when that work increasingly means designing and building teams of AI agents.
 
 So let me give you the prop-by-prop breakdown. Because when I'm explaining agent types to a client, I reach for this framework before I reach for any diagram.
+
+<StatGrid items={[
+  { value: "1 slice", label: "Ball agent", sub: "Haiku-class - stateless, single-purpose", color: "brain" },
+  { value: "2 slices", label: "Ring agent", sub: "Sonnet-class - multi-step, short memory", color: "yellow" },
+  { value: "4 slices", label: "Club agent", sub: "Opus-class - long-context, high-stakes", color: "tech" },
+  { value: "variable", label: "Devil stick", sub: "Autonomous - goal-directed, needs guardrails", color: "change" }
+]} />
 
 ---
 
@@ -165,6 +178,10 @@ My deep research agent is a club. When I ask it to synthesize the current state 
 
 The juggling principle: don't use a club when the trick calls for a ball.
 
+<Callout type="warning" title="The most expensive mistake in agent design">
+Using a club-class agent for a ball-class task. Opus running a simple RSS classifier costs 20-40x more than Haiku for the same job - with no improvement in output quality. Match the model tier to the complexity of the task, not to your anxiety about quality.
+</Callout>
+
 <div style="border: 2px solid #10b981; border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.75rem 0; background: color-mix(in oklab, #10b981 7%, transparent);">
   <p style="margin: 0 0 0.75rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #10b981;">Club Agent - at a glance</p>
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem 1.25rem; font-size: 0.875rem;">
@@ -243,9 +260,9 @@ The insight from this: **never make one agent smarter when you can give it a spe
 
 This mirrors how juggling actually scales. You don't start with a complicated prop and simplify down. You master one ball, add a second, add a third. When you can handle three balls cleanly, you introduce rings into the pattern - not to replace the balls, but because the mix becomes richer.
 
-<div style="border-left: 4px solid #6366f1; padding: 0.875rem 1.25rem; margin: 1.75rem 0; background: color-mix(in oklab, #6366f1 6%, transparent); border-radius: 0 8px 8px 0;">
-  <p style="margin: 0; font-style: italic; font-size: 1.05rem; line-height: 1.6;">"When you can handle three balls cleanly, you introduce rings into the pattern - not to replace the balls, but because the mix becomes richer."</p>
-</div>
+<PullQuote>
+Never make one agent smarter when you can give it a specialized colleague instead. The right question is never "can I make this agent handle more?" - it's "what's the minimum intelligence this task actually requires?"
+</PullQuote>
 
 Running a community works the same way. I started managing the AWS User Group Vienna entirely manually. Spreadsheets. Calendar reminders. DMs. I was the only agent in the system, and I was running at capacity. When I reached my limit, I didn't try to be a better human - I built a ball. Then a ring. Then gradually assembled a crew that handles the routine work so I can focus on the parts that genuinely require judgment.
 
@@ -256,6 +273,67 @@ The team model isn't about replacing human work. It's about right-sizing each ta
 ## The Ensemble Capacity Model
 
 A juggler has a total cognitive load they can sustain. Research into physical juggling suggests around 11 units of sustained attention. The unit cost varies by prop because they demand different kinds of focus:
+
+<Diagram caption="Prop taxonomy mapped to agent complexity, model tier, and session slice cost. The 1-2-4 ratio mirrors real pricing tiers across Haiku, Sonnet, and Opus.">
+<svg viewBox="0 0 680 320" width="100%" style="max-width:680px;display:block;margin:0 auto;" aria-label="Juggling prop to agent type mapping diagram">
+  <defs>
+    <linearGradient id="bcr-ball-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff3366" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ff3366" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="bcr-ring-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffcc33" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ffcc33" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="bcr-club-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#33cc66" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#33cc66" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="bcr-ds-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6699ff" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#6699ff" stop-opacity="0.05" />
+    </linearGradient>
+  </defs>
+  <rect width="680" height="320" fill="#14141f" rx="12" />
+  <text x="340" y="28" text-anchor="middle" fill="#9696b0" font-size="11" font-family="sans-serif" font-weight="600" letter-spacing="0.1em">PROP TAXONOMY - AGENT TYPE MAPPING</text>
+
+  <rect x="16" y="46" width="648" height="58" rx="8" fill="url(#bcr-ball-grad)" stroke="#ff3366" stroke-width="1" stroke-opacity="0.4" />
+  <text x="36" y="72" fill="#ff3366" font-size="12" font-weight="700" font-family="sans-serif">BALL</text>
+  <text x="36" y="89" fill="#9696b0" font-size="11" font-family="sans-serif">Stateless - single action</text>
+  <text x="190" y="72" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">Haiku-class</text>
+  <text x="190" y="89" fill="#9696b0" font-size="11" font-family="sans-serif">Fractions of a cent</text>
+  <text x="380" y="72" fill="#f3f3f8" font-size="11" font-family="sans-serif">Scanners, classifiers, pings</text>
+  <text x="570" y="72" fill="#ff3366" font-size="22" font-weight="800" font-family="sans-serif">1</text>
+  <text x="590" y="72" fill="#9696b0" font-size="11" font-family="sans-serif">slice</text>
+
+  <rect x="16" y="114" width="648" height="58" rx="8" fill="url(#bcr-ring-grad)" stroke="#ffcc33" stroke-width="1" stroke-opacity="0.4" />
+  <text x="36" y="140" fill="#ffcc33" font-size="12" font-weight="700" font-family="sans-serif">RING</text>
+  <text x="36" y="157" fill="#9696b0" font-size="11" font-family="sans-serif">Multi-step - short memory</text>
+  <text x="190" y="140" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">Sonnet-class</text>
+  <text x="190" y="157" fill="#9696b0" font-size="11" font-family="sans-serif">A few cents</text>
+  <text x="380" y="140" fill="#f3f3f8" font-size="11" font-family="sans-serif">Drafters, chasers, formatters</text>
+  <text x="570" y="140" fill="#ffcc33" font-size="22" font-weight="800" font-family="sans-serif">2</text>
+  <text x="590" y="140" fill="#9696b0" font-size="11" font-family="sans-serif">slices</text>
+
+  <rect x="16" y="182" width="648" height="58" rx="8" fill="url(#bcr-club-grad)" stroke="#33cc66" stroke-width="1" stroke-opacity="0.4" />
+  <text x="36" y="208" fill="#33cc66" font-size="12" font-weight="700" font-family="sans-serif">CLUB</text>
+  <text x="36" y="225" fill="#9696b0" font-size="11" font-family="sans-serif">Long-context - multi-source</text>
+  <text x="190" y="208" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">Opus-class</text>
+  <text x="190" y="225" fill="#9696b0" font-size="11" font-family="sans-serif">Dollars, not cents</text>
+  <text x="380" y="208" fill="#f3f3f8" font-size="11" font-family="sans-serif">Research, proposals, architecture</text>
+  <text x="570" y="208" fill="#33cc66" font-size="22" font-weight="800" font-family="sans-serif">4</text>
+  <text x="590" y="208" fill="#9696b0" font-size="11" font-family="sans-serif">slices</text>
+
+  <rect x="16" y="250" width="648" height="58" rx="8" fill="url(#bcr-ds-grad)" stroke="#6699ff" stroke-width="1" stroke-opacity="0.4" />
+  <text x="36" y="276" fill="#6699ff" font-size="12" font-weight="700" font-family="sans-serif">DEVIL STICK</text>
+  <text x="36" y="293" fill="#9696b0" font-size="11" font-family="sans-serif">Autonomous loop - goal-directed</text>
+  <text x="190" y="276" fill="#f3f3f8" font-size="11" font-family="sans-serif" font-weight="600">Variable</text>
+  <text x="190" y="293" fill="#9696b0" font-size="11" font-family="sans-serif">Set a ceiling</text>
+  <text x="380" y="276" fill="#f3f3f8" font-size="11" font-family="sans-serif">Orchestration, research loops</text>
+  <text x="560" y="276" fill="#6699ff" font-size="14" font-weight="700" font-family="sans-serif">~</text>
+  <text x="575" y="276" fill="#9696b0" font-size="11" font-family="sans-serif">variable</text>
+</svg>
+</Diagram>
 
 <div style="overflow-x: auto; margin: 1.5rem 0;">
   <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; border: 1px solid var(--color-border);">
@@ -316,6 +394,10 @@ I watched a team deploy an autonomous agent to their customer-facing production 
 
 Wrong prop for the environment.
 
+<Callout type="info" title="Environment-to-prop matching">
+Dev/staging is your practice space - run clubs and devil sticks freely. Non-critical production is your outdoor show - rings with logging. High-stakes production is the main stage - start with balls and rings, add clubs only with human checkpoints. The prop doesn't change; your environment strategy does.
+</Callout>
+
 ---
 
 ## The Prop Selection Checklist
@@ -332,6 +414,16 @@ Bounce and recover = ball. Noticeable but handleable = ring. Loud and visible = 
 Controlled dev = fine to experiment with clubs and devil sticks. Production with real consequences = start with balls and rings. Add complexity only when simpler props can't do the job.
 
 The patterns behind each of these questions are explored further in [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure) - where all three drop types map directly to root causes in AI systems.
+
+---
+
+<Takeaways title="Key takeaways" color="tech" items={[
+  "Every agent task maps to a prop: ball (stateless, cheap), ring (multi-step, short memory), club (long-context, expensive), or devil stick (autonomous, goal-directed).",
+  "The 1-2-4 slice ratio tracks real model pricing tiers - the constraint exists to force the right design questions, not as an arbitrary limit.",
+  "Never make one agent smarter when you can give it a specialized colleague - the right question is always: what is the minimum intelligence this task requires?",
+  "The same prop type behaves differently across environments. Design decisions that work in dev/staging may be wrong for high-stakes production.",
+  "Devil stick agents require guardrails by design: maximum iterations, stop conditions, and human-in-the-loop before any irreversible action."
+]} />
 
 ---
 

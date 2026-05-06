@@ -1,0 +1,48 @@
+---
+interface Stat {
+  value: string;
+  label: string;
+  sub?: string;
+  color?: "brain" | "tech" | "change" | "yellow" | "cyan" | "magenta" | "default";
+}
+
+interface Props {
+  items: Stat[];
+}
+
+const { items } = Astro.props;
+
+const colorMap: Record<NonNullable<Stat["color"]>, string> = {
+  brain: "border-[#ff3366] text-[#ff3366]",
+  tech: "border-[#33cc66] text-[#33cc66]",
+  change: "border-[#3b6cff] text-[#6699ff]",
+  yellow: "border-[#ffcc33] text-[#ffcc33]",
+  cyan: "border-[#33ccff] text-[#33ccff]",
+  magenta: "border-[#cc33ff] text-[#cc33ff]",
+  default: "border-[var(--color-border-strong)] text-[var(--color-fg)]",
+};
+---
+
+<div class="stat-grid my-8 grid gap-4 sm:grid-cols-3">
+  {
+    items.map((stat) => {
+      const colorClass = colorMap[stat.color ?? "default"];
+      return (
+        <div
+          class:list={[
+            "stat-card rounded-lg border-l-4 bg-[var(--color-bg-card)] p-5",
+            colorClass.split(" ")[0],
+          ]}
+        >
+          <div class:list={["stat-value font-display text-4xl font-bold leading-none", colorClass.split(" ")[1]]}>
+            {stat.value}
+          </div>
+          <div class="stat-label mt-2 text-sm font-semibold text-[var(--color-fg)]">{stat.label}</div>
+          {stat.sub && (
+            <div class="stat-sub mt-1 text-xs text-[var(--color-muted)]">{stat.sub}</div>
+          )}
+        </div>
+      );
+    })
+  }
+</div>

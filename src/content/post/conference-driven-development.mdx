@@ -11,13 +11,23 @@ coverVideo: /videos/globe-holographic.mp4
 draft: false
 ---
 
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
 There's a methodology I've been using for years that I only gave a name to recently. Philipp and I call it conference-driven development. The idea is exactly what it sounds like: you submit a talk about something you haven't built yet, and then you build it before the date.
 
 It sounds reckless. People hear it and get a little uncomfortable. Isn't that risky? What if it doesn't work? What if the demo fails?
 
 Yes. And that's the point.
 
----
+<StatGrid items={[
+  { value: "Submit", label: "Step one", sub: "Commit to a title before the thing exists - the CFP closes and now there's a room and a date", color: "change" },
+  { value: "Build", label: "Against the deadline", sub: "The fixed wall unlocks focus that no internal commitment produces - decisions get made", color: "tech" },
+  { value: "Show", label: "Before it's done", sub: "Standing in front of a room with something unfinished is honest - and the feedback is irreplaceable", color: "brain" }
+]} />
 
 ## The problem with building first
 
@@ -29,7 +39,49 @@ Ideas without deadlines are ambient. They live in Notion, in voice memos, in the
 
 The conference call for proposals creates a reason to start today.
 
----
+<Diagram caption="Conference-driven development loop: commit first, build under constraint, present honestly, improve">
+<svg viewBox="0 0 560 180" width="560" height="180" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="180" fill="#14141f" rx="8"/>
+
+  <rect x="20" y="55" width="105" height="60" rx="8" fill="#1b1b2a" stroke="#6699ff" stroke-width="1.5"/>
+  <text x="72" y="80" text-anchor="middle" fill="#6699ff" font-size="10" font-weight="700">Submit CFP</text>
+  <text x="72" y="94" text-anchor="middle" fill="#9696b0" font-size="8">title commits you</text>
+  <text x="72" y="106" text-anchor="middle" fill="#9696b0" font-size="8">idea = public</text>
+
+  <path d="M125 85 L153 85" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#cdd-arr)"/>
+
+  <rect x="155" y="55" width="105" height="60" rx="8" fill="#1b1b2a" stroke="#ffcc33" stroke-width="1.5"/>
+  <text x="207" y="80" text-anchor="middle" fill="#ffcc33" font-size="10" font-weight="700">Build</text>
+  <text x="207" y="94" text-anchor="middle" fill="#9696b0" font-size="8">deadline is fixed</text>
+  <text x="207" y="106" text-anchor="middle" fill="#9696b0" font-size="8">decisions get made</text>
+
+  <path d="M260 85 L288 85" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#cdd-arr)"/>
+
+  <rect x="290" y="55" width="105" height="60" rx="8" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="342" y="80" text-anchor="middle" fill="#33cc66" font-size="10" font-weight="700">Present</text>
+  <text x="342" y="94" text-anchor="middle" fill="#9696b0" font-size="8">show the reality</text>
+  <text x="342" y="106" text-anchor="middle" fill="#9696b0" font-size="8">including the pivots</text>
+
+  <path d="M395 85 L423 85" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#cdd-arr)"/>
+
+  <rect x="425" y="55" width="115" height="60" rx="8" fill="#1b1b2a" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="482" y="80" text-anchor="middle" fill="#ff3366" font-size="10" font-weight="700">Feedback</text>
+  <text x="482" y="94" text-anchor="middle" fill="#9696b0" font-size="8">real audience</text>
+  <text x="482" y="106" text-anchor="middle" fill="#9696b0" font-size="8">real time</text>
+
+  <path d="M482 115 Q482 155 280 155 Q78 155 72 115" fill="none" stroke="#6699ff" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#cdd-arr-b)"/>
+  <text x="280" y="170" text-anchor="middle" fill="#6699ff" font-size="8">loop repeats with next talk, at wider radius</text>
+
+  <defs>
+    <marker id="cdd-arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2a2a3d"/>
+    </marker>
+    <marker id="cdd-arr-b" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#6699ff"/>
+    </marker>
+  </defs>
+</svg>
+</Diagram>
 
 ## How it actually works
 
@@ -39,11 +91,11 @@ That room doesn't care that you haven't built the demo yet. It doesn't care that
 
 The deadline is fixed. You build.
 
+<Callout type="info" title="The external commitment unlocks a different kind of focus">
 What I've found, consistently, is that the external commitment unlocks a kind of focus that nothing internal produces. I can tell myself I'll build something by next month and believe it completely, and then next month arrives and I've found fourteen other things to do. But a conference date is a wall. You run into it. You have to have something by then.
 
-The thing you build under that pressure is almost always more interesting than the thing you would have built with unlimited time. Because you make decisions. You cut what doesn't matter. You find out quickly what works and what doesn't, because you're building against a real constraint, not an imaginary ideal.
-
----
+The thing you build under that pressure is almost always more interesting than the thing you would have built with unlimited time. Because you make decisions. You cut what doesn't matter.
+</Callout>
 
 ## Otto
 
@@ -59,9 +111,9 @@ Not the theoretical version. Not the fully polished version we'd been imagining.
 
 The AI landscape shifted substantially between submission and presentation. New models appeared. Best practices changed. We rebuilt parts of Otto mid-stream because what we'd originally designed was already outdated by the time we got to it. That was fine. The deadline didn't move. We adapted.
 
+<PullQuote>
 When you build under pressure, you also build honestly. You can't hide behind polish or "almost done." You stand in front of a room and show exactly where the system is. That feedback - from a real audience, in real time - is better than anything you get from building in isolation.
-
----
+</PullQuote>
 
 ## The juggling parallel
 
@@ -75,19 +127,24 @@ The talk you give at the end isn't just a presentation about what you built. It'
 
 That's the most honest version of the story. And the most useful to the people in the room.
 
----
-
 ## What this requires
 
-You have to be comfortable not having a safety net.
+<Callout type="warning" title="If the drop feels like failure, this doesn't work">
+You have to be comfortable not having a safety net. If you need the idea to be fully formed before you can commit to it, this doesn't work. If you're afraid of standing in front of a room with something unfinished, this doesn't work.
 
-If you need the idea to be fully formed before you can commit to it, this doesn't work. If you're afraid of standing in front of a room with something unfinished, this doesn't work. If the drop - the moment where the thing doesn't quite land - feels like failure rather than information, this doesn't work.
-
-But if you can treat the conference room the way a juggler treats practice - as a place where drops happen, where you pick things up and keep going, where imperfect execution in front of people is part of learning and not evidence of inadequacy - then conference-driven development is one of the most productive methodologies I know.
+But if you can treat the conference room the way a juggler treats practice - as a place where drops happen, where imperfect execution in front of people is part of learning and not evidence of inadequacy - then conference-driven development is one of the most productive methodologies I know.
+</Callout>
 
 Submit the talk. Build the thing. Show your work before it's done.
 
 That's the pattern.
+
+<Takeaways color="change" items={[
+  "Ideas without deadlines stay ambient. The CFP creates a reason to start today instead of tomorrow.",
+  "The thing built under deadline pressure is almost always more interesting than the thing built with unlimited time - because decisions get made.",
+  "The commitment creates the capability. You don't wait until you're capable enough to commit.",
+  "The talk is a record of how the building happened - including pivots and failures. That honest record is the most valuable thing to share."
+]} />
 
 ---
 

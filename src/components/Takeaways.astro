@@ -1,0 +1,44 @@
+---
+interface Props {
+  title?: string;
+  items: string[];
+  color?: "tech" | "brain" | "change";
+}
+
+const { title = "Key Takeaways", items, color = "tech" } = Astro.props;
+
+const accentMap = {
+  tech: "#33cc66",
+  brain: "#ff3366",
+  change: "#6699ff",
+};
+
+const accent = accentMap[color];
+---
+
+<aside
+  class="takeaways my-10 rounded-xl bg-[var(--color-bg-elevated)] p-6 md:p-8"
+  style={`border: 1px solid ${accent}33; box-shadow: 0 0 0 1px ${accent}22, 0 8px 32px -8px ${accent}44;`}
+>
+  <h3
+    class="mb-5 font-display text-base font-bold uppercase tracking-widest"
+    style={`color: ${accent};`}
+  >
+    {title}
+  </h3>
+  <ol class="space-y-3">
+    {
+      items.map((item, i) => (
+        <li class="flex gap-4">
+          <span
+            class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+            style={`background: ${accent}22; color: ${accent};`}
+          >
+            {i + 1}
+          </span>
+          <span class="text-[var(--color-fg)]">{item}</span>
+        </li>
+      ))
+    }
+  </ol>
+</aside>

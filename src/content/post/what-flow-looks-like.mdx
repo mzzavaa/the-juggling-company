@@ -11,6 +11,19 @@ coverVideo: /videos/juggling-hands-rgb-light.mp4
 draft: false
 ---
 
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+<StatGrid items={[
+  { value: "0", label: "Visible effort", sub: "no micro-corrections, no bracing, no surplus movement", color: "brain" },
+  { value: "1", label: "Gaze point", sub: "fixed on the apex zone, not moving with the balls", color: "yellow" },
+  { value: "~40%", label: "Conscious load", sub: "estimated reduction in prefrontal activity during flow (transient hypofrontality)", color: "brain" },
+  { value: "3", label: "Outer signals", sub: "economy of movement, steady gaze, absence of affect", color: "change" }
+]} />
+
 There is a specific quality to watching someone who is fully in the thing they are doing.
 
 Not performing it - doing it. There is a difference, and it is visible.
@@ -31,6 +44,67 @@ Absence of affect. Not absence of experience - but absence of the visible signs 
 
 You are watching a nervous system that has automated most of what is currently happening and freed its higher-level processing for the small remainder that still requires attention.
 
+<Diagram caption="The attention architecture of flow: conscious focus narrows to a single observation point (the apex), while automated motor programs handle the rest beneath awareness.">
+<svg viewBox="0 0 520 270" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <radialGradient id="fl-apex-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffcc33" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ffcc33" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="fl-ball-g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffcc33" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffcc33" stop-opacity="0.2"/>
+    </radialGradient>
+    <marker id="fl-arr-d" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#6699ff"/>
+    </marker>
+    <marker id="fl-arr-u" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#9696b0"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="270" rx="8" fill="#14141f"/>
+
+  <rect x="30" y="20" width="220" height="110" rx="8" fill="#1b1b2a" stroke="#6699ff" stroke-width="1.5"/>
+  <text x="140" y="42" text-anchor="middle" font-family="monospace" font-size="11" fill="#6699ff">CONSCIOUS ATTENTION</text>
+  <circle cx="140" cy="88" r="30" fill="url(#fl-apex-glow)"/>
+  <circle cx="140" cy="88" r="16" fill="#ffcc33" opacity="0.9"/>
+  <circle cx="140" cy="88" r="9" fill="#14141f"/>
+  <text x="140" y="143" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">apex zone only</text>
+
+  <rect x="30" y="150" width="220" height="100" rx="8" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1.5"/>
+  <text x="140" y="172" text-anchor="middle" font-family="monospace" font-size="11" fill="#9696b0">AUTOMATED PROGRAMS</text>
+  <text x="140" y="192" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">throw timing</text>
+  <text x="140" y="208" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">catch positioning</text>
+  <text x="140" y="224" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">error correction</text>
+  <text x="140" y="240" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">running below language</text>
+
+  <line x1="140" y1="130" x2="140" y2="150" stroke="#2a2a3d" stroke-width="2" stroke-dasharray="4,2"/>
+
+  <rect x="290" y="20" width="200" height="230" rx="8" fill="#1b1b2a" stroke="#2a2a3d" stroke-width="1.5"/>
+  <text x="390" y="44" text-anchor="middle" font-family="monospace" font-size="11" fill="#f3f3f8">VISIBLE SIGNALS</text>
+
+  <circle cx="320" cy="74" r="5" fill="#6699ff"/>
+  <text x="334" y="72" font-family="monospace" font-size="10" fill="#f3f3f8">Economy of movement</text>
+  <text x="334" y="84" font-family="monospace" font-size="9" fill="#9696b0">only throws and catches</text>
+
+  <circle cx="320" cy="116" r="5" fill="#6699ff"/>
+  <text x="334" y="114" font-family="monospace" font-size="10" fill="#f3f3f8">Steady gaze</text>
+  <text x="334" y="126" font-family="monospace" font-size="9" fill="#9696b0">fixed, not tracking balls</text>
+
+  <circle cx="320" cy="158" r="5" fill="#6699ff"/>
+  <text x="334" y="156" font-family="monospace" font-size="10" fill="#f3f3f8">Absence of affect</text>
+  <text x="334" y="168" font-family="monospace" font-size="9" fill="#9696b0">face relaxed, no effort</text>
+
+  <circle cx="320" cy="200" r="5" fill="#6699ff"/>
+  <text x="334" y="198" font-family="monospace" font-size="10" fill="#f3f3f8">Unhurried rhythm</text>
+  <text x="334" y="210" font-family="monospace" font-size="9" fill="#9696b0">pattern sets the pace</text>
+
+  <line x1="250" y1="88" x2="290" y2="88" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#fl-arr-d)"/>
+  <line x1="250" y1="120" x2="290" y2="120" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#fl-arr-d)"/>
+</svg>
+</Diagram>
+
 ## The RGB light
 
 The image that opens this post is a silhouette. You cannot see the face of the person juggling, or the expression, or the effort. You see the shape of hands in motion and the coloured light coming through.
@@ -43,11 +117,19 @@ The inside experience of flow has been described by athletes, musicians, program
 
 The outside experience is watching the shape and light of someone who is not there in the way they usually are. They are somewhere else entirely - somewhere in the problem, moving through it. The body continues. The person is following the pattern.
 
+<PullQuote>
+From the outside, flow is shape and light. It is the quality of movement, the rhythm of it, the absence of the small signals that indicate struggle.
+</PullQuote>
+
 ## Why this matters for anyone who teaches
 
 If you teach a skill, you have probably had the experience of not being able to explain something you can do well.
 
 The explanation fails because the skill has been automated. It is no longer in the part of your brain that produces verbal descriptions. It is in a motor program, running silently below language. You try to explain and what comes out is incomplete, because you are trying to describe a process you no longer have conscious access to.
+
+<Callout type="info" title="Why experts struggle to explain what they do">
+  When a skill is fully automated, it has moved out of the verbal-declarative system and into procedural memory. The expert genuinely cannot fully describe what they do - not because they are withholding information, but because the information is no longer in a part of the brain that language can access. This is not a failure of communication. It is evidence of mastery.
+</Callout>
 
 This is not a failure of communication. It is a sign that the skill has been properly learned. The automaticity that makes explanation hard is the same automaticity that makes performance good.
 
@@ -57,8 +139,24 @@ The practical consequence is that demonstration often teaches more than explanat
 
 Flow is not a talent. It is a state that is reached when the gap between the difficulty of the task and the skill of the practitioner is in a specific relationship - challenging enough to require engagement, not so difficult as to produce anxiety.
 
+<Callout type="success" title="The conditions for flow">
+  Flow requires a specific balance: the task must be challenging enough to demand full attention, but not so hard it produces anxiety. Juggling makes this relationship unusually visible - you can feel the moment the pattern tips from absorbing to overwhelming. That feedback is calibration data for finding the same balance in other domains.
+</Callout>
+
 The silhouette in the RGB light is not someone who was born moving that way. They are someone who practiced until the movement became the silhouette.
 
 That gap is closable. The path to it is repetition until the conscious mind can let go of what the hands already know.
 
 The light comes through when there is nothing in the way.
+
+<Takeaways title="What flow looks like - and what it means" color="brain" items={[
+  "Flow is externally visible: economy of movement, steady gaze fixed at the apex, absence of effort-signals in the face.",
+  "The inside experience is consistent across domains - time distortion, disappearance of self-monitoring, decisions that arrive before their reasoning.",
+  "Experts struggle to explain automated skills not from poor communication but because the skill has left the verbal system entirely.",
+  "Demonstration transmits what explanation cannot: the shape, rhythm, and economy of a skill running below conscious access.",
+  "Flow is not talent - it is a state available at the right challenge-to-skill ratio, reachable through repetition until the conscious mind can let go."
+]} />
+
+---
+
+*Related: [What Actually Happens in Your Brain When You Juggle](/post/what-happens-in-your-brain) - the neuroscience behind why practice moves skills out of conscious control.*

@@ -1,0 +1,258 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import JugglingPattern from "@/components/JugglingPattern.astro";
+import { Image } from "astro:assets";
+import VideoImage from "@/components/VideoImage.astro";
+import { getPosts } from "@/lib/content";
+
+import handsDna from "@/assets/images/hands-dna-light-helix.png";
+import handsCatsCradle from "@/assets/images/hands-cats-cradle-neon-strings.png";
+import twoHandsMagenta from "@/assets/images/two-hands-magenta-infinity-pass.png";
+import networkPeople from "@/assets/images/network-people-strings.png";
+
+const allPosts = await getPosts();
+const recommended = allPosts.filter(p =>
+  ["the-club-pass-is-a-contract", "the-cats-cradle-is-a-system", "the-change-has-a-structure", "what-passes-between-us"].includes(p.slug)
+).slice(0, 3);
+
+const analogues = [
+  { juggling: "Club pass", tech: "API contract", detail: "Timing, handoff point, and shared protocol must be agreed before the throw." },
+  { juggling: "Three-ball cascade", tech: "Round-robin load balancer", detail: "Equal distribution, no queue backup, predictable arc per slot." },
+  { juggling: "Cat's cradle", tech: "Service mesh / event mesh", detail: "Strings are dependencies. Pull one and all others shift." },
+  { juggling: "Drop and recover", tech: "Graceful degradation", detail: "The pattern keeps running. The dropped prop is retrieved on the next open beat." },
+  { juggling: "Siteswap notation", tech: "Async timing model", detail: "Each number is the number of beats before that object is thrown again." },
+  { juggling: "Multiplex throw", tech: "Batch processing", detail: "Two objects leave one hand at the same time - higher throughput, more complex catch." },
+];
+---
+
+<BaseLayout
+  title="Tech & Systems - Juggling and Distributed Systems | The Juggling Company"
+  description="Cloud architecture, distributed systems, and API contracts all have direct juggling equivalents. The club pass is a contract. The cascade is a load balancer. The drop is a graceful failure."
+>
+  <!-- HERO -->
+  <section class="concept-hero relative overflow-hidden" style="min-height: clamp(600px, 90vh, 940px);">
+    <div class="absolute inset-0">
+      <Image src={handsDna} alt="Two hands with intertwined DNA-like light helix between them, representing system architecture" width={1800} height={900} class="h-full w-full object-cover" />
+      <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(10,10,18,0.96) 0%, rgba(10,10,18,0.6) 60%, rgba(10,10,18,0.2) 100%);"></div>
+      <div class="absolute bottom-0 inset-x-0 h-48" style="background: linear-gradient(to top, var(--color-bg), transparent);"></div>
+    </div>
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-28 lg:px-10" style="min-height: inherit;">
+      <div class="max-w-2xl" data-reveal>
+        <span class="mb-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-tech) 14%, transparent); border: 1px solid color-mix(in oklab, var(--color-tech) 35%, transparent); color: var(--color-tech);">
+          <Icon name="cpu" size={13} />
+          <span class="text-xs font-semibold uppercase tracking-wider">Tech & Systems</span>
+        </span>
+        <h1 class="font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.92] tracking-tight">
+          Every distributed<br />system has already<br /><span style="color: var(--color-tech);">been thrown.</span>
+        </h1>
+        <p class="mt-7 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
+          The club pass is a contract. The cascade is a load balancer. The cat's cradle is a service mesh. Juggling notation was solving distributed timing problems before distributed systems had a name for them.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="/blog" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90" style="background: var(--color-tech); color: #0a0a12;">
+            Read the blog
+            <Icon name="arrow-right" size={14} />
+          </a>
+          <a href="/learn" class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-2.5 text-sm font-semibold text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-card)]">
+            All concepts
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALOGUE GRID -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
+    <div class="mb-10" data-reveal>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Direct mappings</p>
+      <h2 class="font-display text-3xl font-bold tracking-tight">The vocabulary already existed.</h2>
+      <p class="mt-4 max-w-xl leading-relaxed text-[var(--color-muted)]">Siteswap notation was invented in the 1980s to describe timing sequences across multiple concurrent objects. It is, in essence, an async timing model with handoff protocols.</p>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {analogues.map((a, i) => (
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5" data-reveal data-delay={i * 60}>
+          <div class="mb-3 flex items-center gap-3">
+            <span class="rounded-lg px-2 py-0.5 font-mono text-xs font-bold" style="background: color-mix(in oklab, var(--color-tech) 14%, transparent); color: var(--color-tech);">{a.juggling}</span>
+            <Icon name="arrow-right" size={12} class="text-[var(--color-muted)]" />
+            <span class="rounded-lg px-2 py-0.5 font-mono text-xs font-bold" style="background: color-mix(in oklab, var(--color-brain) 10%, transparent); color: var(--color-brain);">{a.tech}</span>
+          </div>
+          <p class="text-sm leading-relaxed text-[var(--color-muted)]">{a.detail}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- THE CLUB PASS -->
+  <section class="relative overflow-hidden py-24 md:py-32" style="background: var(--color-bg-elevated);">
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
+      <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
+        <div class="flex flex-col gap-10">
+          <div data-reveal>
+            <span class="mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-tech) 12%, transparent); border: 1px solid color-mix(in oklab, var(--color-tech) 30%, transparent); color: var(--color-tech);">
+              <Icon name="sparkles" size={13} />
+              <span class="text-xs font-semibold uppercase tracking-wider">API contracts in motion</span>
+            </span>
+            <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">The club pass is a contract.</h2>
+            <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+              In club passing, two jugglers exchange props at agreed intervals. The contract has three terms: the timing window (when the pass leaves), the arc height (what trajectory to expect), and the catch position (where the receiver will be). Violate any one term and the pattern breaks.
+            </p>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              API contracts work identically. The timing window is the SLA. The arc height is the payload structure. The catch position is the endpoint schema. When a service changes its payload without versioning the contract, the receiver is standing in the wrong place for a pass they did not know was coming.
+            </p>
+          </div>
+          <div data-reveal data-delay="100">
+            <h3 class="font-display text-xl font-semibold">What passes between us</h3>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              The most important moment in club passing is not the throw. It is the half-second before, when both jugglers have already confirmed the contract through eye contact and body position. The throw is just execution. The agreement was made earlier.
+            </p>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              In distributed systems, this is the handshake. The data in flight matters less than the protocol negotiated before the first packet left. Two services that speak the same protocol can drop packets gracefully. Two services that assumed agreement fail without knowing why.
+            </p>
+          </div>
+          <a href="/blog/what-passes-between-us" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-tech);" data-reveal data-delay="150">
+            Read: What Passes Between Us
+            <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+        <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
+          <Image src={twoHandsMagenta} alt="Two hands with a magenta infinity pass between them, tracing the handoff arc" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE CAT'S CRADLE -->
+  <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
+      <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
+        <Image src={handsCatsCradle} alt="Hands holding neon strings in a cat's cradle formation, showing interconnected dependencies" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
+      </div>
+      <div class="flex flex-col gap-8" data-reveal data-delay="100">
+        <div>
+          <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">The cat's cradle is a system.</h2>
+          <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+            Cat's cradle is a two-person string game where the pattern is transferred between hands while maintaining structural integrity. Pull one string incorrectly and the entire figure collapses. There is no partial failure - the topology either holds or it does not.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            This is the event mesh model. In a properly configured service mesh, every service is connected to every other through the mesh fabric - not point-to-point, but topologically. A single misconfigured route does not just break one connection. It changes the shape of the whole.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-display text-xl font-semibold">The cloud and the arc</h3>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Cloud architecture made the arc invisible. When your application runs on managed infrastructure, you do not see the throw. You see the catch - the result, the latency, the response code. The arc happened in someone else's data centre, behind an abstraction layer that hides the trajectory.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Juggling makes the arc visible by definition. You cannot hide it. The ball in the air is evidence of a decision made 400 milliseconds ago. Distributed tracing is juggling's visibility applied to invisible systems.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          {[
+            ["Siteswap 3", "Round-robin: equal arc, equal interval"],
+            ["Siteswap 0", "Zero: the hand is empty, no object scheduled"],
+            ["Siteswap 4", "Fountain: each hand runs its own independent loop"],
+            ["Multiplex", "Batch: two thrown simultaneously, complex catch"],
+          ].map(([notation, system]) => (
+            <div class="rounded-xl border border-[var(--color-border)] p-3">
+              <p class="font-mono text-xs font-semibold" style="color: var(--color-tech);">{notation}</p>
+              <p class="mt-0.5 text-xs text-[var(--color-muted)]">{system}</p>
+            </div>
+          ))}
+        </div>
+        <a href="/blog/the-cats-cradle-is-a-system" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-tech);">
+          Read: The Cat's Cradle is a System
+          <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NETWORK SECTION -->
+  <section class="relative overflow-hidden py-24 md:py-32" style="background: var(--color-bg-elevated);">
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
+      <div class="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
+        <div class="flex flex-col gap-8" data-reveal>
+          <div>
+            <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">The change has a structure.</h2>
+            <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+              DNA is a double helix: two strands, complementary, running antiparallel. The information in one strand determines the other. Neither is primary. Both are required. Change in any organisation has the same topology - a technical strand and a human strand, antiparallel, each defining the other.
+            </p>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              When cloud migrations fail, the technical strand usually worked. The failure was in the human strand - the teams that did not understand the new deployment model, the security teams that were not looped in, the product managers who kept shipping features while the foundation was being replaced.
+            </p>
+          </div>
+          <a href="/blog/the-change-has-a-structure" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-tech);">
+            Read: The Change Has a Structure
+            <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+        <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
+          <VideoImage src={networkPeople} videoSrc="/videos/network-people-strings.mp4" alt="Network of people connected by strings, showing the topology of human systems" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATTERN ANIMATION -->
+  <section class="border-t border-[var(--color-border)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+      <div class="mb-10" data-reveal>
+        <h2 class="font-display text-3xl font-bold tracking-tight">Patterns as system models</h2>
+        <p class="mt-3 max-w-xl text-[var(--color-muted)]">Siteswap notation was invented to solve distributed timing. Each number is the time-to-next-throw for that object. It is a scheduling algorithm expressed as a juggling pattern.</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div data-reveal><JugglingPattern pattern="3" title="Cascade (Siteswap 3)" description="Round-robin: each object takes 3 beats before returning. Equal load, equal distribution, no priority queue." pillar="tech" notation="3" /></div>
+        <div data-reveal data-delay="100"><JugglingPattern pattern="4" title="Fountain (Siteswap 4)" description="Each hand runs independently. Two parallel loops, no cross-traffic. The microservice model." pillar="tech" notation="4" slowdown={2.0} /></div>
+        <div data-reveal data-delay="200"><JugglingPattern pattern="534" title="Async Sequence (534)" description="Three different timing windows. The 5 is in flight while the 3 lands and the 4 is scheduled. Concurrent async operations." pillar="tech" notation="534" slowdown={2.5} /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDED POSTS -->
+  {recommended.length > 0 && (
+    <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+      <div class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+        <h2 class="font-display text-2xl font-bold" data-reveal>From the blog</h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          {recommended.map((post, i) => (
+            <a href={`/blog/${post.slug}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--color-tech)]/30" data-reveal data-delay={i * 80}>
+              <h3 class="font-semibold leading-snug text-[var(--color-fg)]">{post.data.title}</h3>
+              <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-2">{post.data.summary}</p>
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium" style="color: var(--color-tech);">Read <Icon name="arrow-right" size={11} /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-10 md:px-6 lg:px-10">
+      <div class="flex flex-wrap gap-3">
+        {[
+          { href: "/learn/brain", label: "Brain Science", icon: "brain" as const, accent: "var(--color-brain)" },
+          { href: "/learn/change", label: "Change Management", icon: "shuffle" as const, accent: "var(--color-change)" },
+          { href: "/learn/the-cascade", label: "The Cascade", icon: "cascade" as const, accent: "var(--color-tech-change)" },
+        ].map(link => (
+          <a href={link.href} class="group inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm font-medium text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-elevated)]">
+            <Icon name={link.icon} size={16} style={`color: ${link.accent}`} />
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  [data-reveal][data-direction="left"] { transform: translateX(-28px); }
+  [data-reveal][data-direction="right"] { transform: translateX(28px); }
+  [data-reveal].in-view { opacity: 1; transform: none; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+<script>
+  const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { const d = (e.target as HTMLElement).dataset.delay; d ? setTimeout(() => e.target.classList.add("in-view"), parseInt(d)) : e.target.classList.add("in-view"); } }), { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  document.querySelectorAll("[data-reveal]").forEach(el => obs.observe(el));
+</script>

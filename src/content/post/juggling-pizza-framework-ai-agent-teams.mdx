@@ -11,6 +11,13 @@ coverVideo: /videos/pizza-two-doughs.mp4
 draft: false
 ---
 
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+import AnalogyTable from '../../components/AnalogyTable.astro';
+
 I want to tell you about the two frameworks I use to design AI agent teams.
 
 Neither of them came from a research paper. Neither of them has a fancy acronym. One of them came from standing on a stage in Vienna throwing juggling clubs at an audience (metaphorically), and the other one came from staring at AWS pricing tables and thinking about pizza.
@@ -21,6 +28,13 @@ But together, they answer the two questions that every AI agent team design come
 2. **How many agents can I run concurrently without it blowing up?** (That's the pizza framework)
 
 If you can answer those two questions clearly, you can design a real agent system. Not a demo. Not a proof-of-concept. A system that runs in production, does real work, and doesn't cost you your entire cloud budget by Tuesday.
+
+<StatGrid items={[
+  { value: "16 slices", label: "Concurrent session budget", sub: "Two large pizzas - your total token ceiling", color: "yellow" },
+  { value: "4 props", label: "Agent types", sub: "Ball, ring, club, devil stick", color: "brain" },
+  { value: "1-2-4", label: "Slice ratio", sub: "Maps to real model pricing tiers", color: "tech" },
+  { value: "5 steps", label: "Design exercise", sub: "List, assign, count, group, sum", color: "change" }
+]} />
 
 ---
 
@@ -81,6 +95,17 @@ Autonomous agents are goal-directed rather than instruction-directed. You tell t
 
 These agents don't fit neatly into a slice count, because their complexity is determined at runtime. Which is exactly why they need guardrails: maximum iterations, stop conditions, human checkpoints before irreversible actions.
 
+<AnalogyTable
+  domain="Organizational change"
+  caption="The prop taxonomy applies wherever you're designing teams - human or AI."
+  rows={[
+    { juggling: "Ball - stateless, single-purpose, cheap to run", analogue: "Individual contributor with one clear role and no cross-team dependencies" },
+    { juggling: "Ring - multi-step, short memory, structured handoff", analogue: "Project manager who coordinates within a workstream but not across the org" },
+    { juggling: "Club - expensive, high-stakes, loud when it fails", analogue: "Senior specialist whose time costs real money and whose mistakes are visible" },
+    { juggling: "Devil stick - autonomous, goal-directed, needs guardrails", analogue: "Self-directed team given an outcome to own - with leadership checkpoints before irreversible decisions" }
+  ]}
+/>
+
 ---
 
 ## Part 2: The Pizza Model - How Many Agents Can Run at Once
@@ -116,6 +141,10 @@ When you sit down to design an agent crew and you have 16 slices to work with, y
 
 Those are the right questions. The pizza makes you ask them.
 
+<PullQuote>
+The 16-slice constraint isn't an engineering limit - it's a forcing function. You can't design a bloated agent team if you have to justify every slice. The pizza makes you ask the right questions before you write a single line of code.
+</PullQuote>
+
 ---
 
 ## Part 3: How They Fit Together
@@ -128,17 +157,17 @@ For every task I want to automate, I write one sentence: what does this agent ne
 
 ### Step 2: Assign the prop
 
-News scanner - pure ball. Simple input, simple output, stateless.  
+News scanner - pure ball. Simple input, simple output, stateless.
 Research synthesizer - club. Multi-source, long context, complex output.
 
 ### Step 3: Count the slices
 
-News scanner: 1 slice.  
+News scanner: 1 slice.
 Research synthesizer: 4 slices.
 
 ### Step 4: Design the session windows
 
-**Morning cron window (07:00–09:00):**
+**Morning cron window (07:00-09:00):**
 - Email triage (ball, 1 slice)
 - Security alert check (ball, 1 slice)
 - Wellness check (ball, 1 slice)
@@ -160,6 +189,79 @@ Total: 10/16 slices. Comfortable. Leaves room for one more ring or four more bal
 - Client onboarding setup (ring, 2 slices)
 
 Total: 8/16 slices. Exactly half a pizza. I can run the morning cron and the revenue crew simultaneously without overlap.
+
+<Diagram caption="Three session windows with slice budgets. Morning cron uses 6/16. Deep work uses 10/16. Revenue crew uses 8/16. Morning cron and revenue crew can run simultaneously within budget.">
+<svg viewBox="0 0 680 300" width="100%" style="max-width:680px;display:block;margin:0 auto;" aria-label="Session window slice budget diagram">
+  <defs>
+    <linearGradient id="pp-morning-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffcc33" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#ffcc33" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="pp-deep-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#33cc66" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#33cc66" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="pp-rev-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6699ff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#6699ff" stop-opacity="0.05" />
+    </linearGradient>
+  </defs>
+  <rect width="680" height="300" fill="#14141f" rx="12" />
+  <text x="340" y="26" text-anchor="middle" fill="#9696b0" font-size="11" font-family="sans-serif" font-weight="600" letter-spacing="0.1em">SESSION WINDOW SLICE BUDGETS</text>
+
+  <rect x="16" y="44" width="208" height="240" rx="10" fill="url(#pp-morning-grad)" stroke="#ffcc33" stroke-width="1" stroke-opacity="0.5" />
+  <text x="120" y="68" text-anchor="middle" fill="#ffcc33" font-size="12" font-weight="700" font-family="sans-serif">MORNING CRON</text>
+  <text x="120" y="85" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">07:00 - 09:00</text>
+  <line x1="36" y1="98" x2="204" y2="98" stroke="#2a2a3d" stroke-width="1" />
+  <text x="36" y="116" fill="#f3f3f8" font-size="10" font-family="sans-serif">Email triage</text>
+  <text x="196" y="116" text-anchor="end" fill="#ff3366" font-size="10" font-weight="700" font-family="sans-serif">1</text>
+  <text x="36" y="134" fill="#f3f3f8" font-size="10" font-family="sans-serif">Security check</text>
+  <text x="196" y="134" text-anchor="end" fill="#ff3366" font-size="10" font-weight="700" font-family="sans-serif">1</text>
+  <text x="36" y="152" fill="#f3f3f8" font-size="10" font-family="sans-serif">Wellness check</text>
+  <text x="196" y="152" text-anchor="end" fill="#ff3366" font-size="10" font-weight="700" font-family="sans-serif">1</text>
+  <text x="36" y="170" fill="#f3f3f8" font-size="10" font-family="sans-serif">OKR status</text>
+  <text x="196" y="170" text-anchor="end" fill="#ffcc33" font-size="10" font-weight="700" font-family="sans-serif">2</text>
+  <text x="36" y="188" fill="#f3f3f8" font-size="10" font-family="sans-serif">Travel detection</text>
+  <text x="196" y="188" text-anchor="end" fill="#ff3366" font-size="10" font-weight="700" font-family="sans-serif">1</text>
+  <line x1="36" y1="200" x2="204" y2="200" stroke="#2a2a3d" stroke-width="1" />
+  <text x="120" y="222" text-anchor="middle" fill="#ffcc33" font-size="22" font-weight="800" font-family="sans-serif">6</text>
+  <text x="120" y="240" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">of 16 slices</text>
+  <text x="120" y="258" text-anchor="middle" fill="#33cc66" font-size="9" font-family="sans-serif">10 slices free</text>
+  <text x="120" y="272" text-anchor="middle" fill="#9696b0" font-size="9" font-family="sans-serif">can run with revenue crew</text>
+
+  <rect x="236" y="44" width="208" height="240" rx="10" fill="url(#pp-deep-grad)" stroke="#33cc66" stroke-width="1" stroke-opacity="0.5" />
+  <text x="340" y="68" text-anchor="middle" fill="#33cc66" font-size="12" font-weight="700" font-family="sans-serif">DEEP WORK</text>
+  <text x="340" y="85" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">triggered manually</text>
+  <line x1="256" y1="98" x2="424" y2="98" stroke="#2a2a3d" stroke-width="1" />
+  <text x="256" y="116" fill="#f3f3f8" font-size="10" font-family="sans-serif">Research synthesizer</text>
+  <text x="416" y="116" text-anchor="end" fill="#33cc66" font-size="10" font-weight="700" font-family="sans-serif">4</text>
+  <text x="256" y="134" fill="#f3f3f8" font-size="10" font-family="sans-serif">Architecture reviewer</text>
+  <text x="416" y="134" text-anchor="end" fill="#33cc66" font-size="10" font-weight="700" font-family="sans-serif">4</text>
+  <text x="256" y="152" fill="#f3f3f8" font-size="10" font-family="sans-serif">Content drafter</text>
+  <text x="416" y="152" text-anchor="end" fill="#ffcc33" font-size="10" font-weight="700" font-family="sans-serif">2</text>
+  <line x1="256" y1="168" x2="424" y2="168" stroke="#2a2a3d" stroke-width="1" />
+  <text x="340" y="210" text-anchor="middle" fill="#33cc66" font-size="22" font-weight="800" font-family="sans-serif">10</text>
+  <text x="340" y="228" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">of 16 slices</text>
+  <text x="340" y="250" text-anchor="middle" fill="#ffcc33" font-size="9" font-family="sans-serif">6 slices free</text>
+  <text x="340" y="268" text-anchor="middle" fill="#9696b0" font-size="9" font-family="sans-serif">room for 1 ring or 4 balls</text>
+
+  <rect x="456" y="44" width="208" height="240" rx="10" fill="url(#pp-rev-grad)" stroke="#6699ff" stroke-width="1" stroke-opacity="0.5" />
+  <text x="560" y="68" text-anchor="middle" fill="#6699ff" font-size="12" font-weight="700" font-family="sans-serif">REVENUE CREW</text>
+  <text x="560" y="85" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">proposal + invoicing</text>
+  <line x1="476" y1="98" x2="644" y2="98" stroke="#2a2a3d" stroke-width="1" />
+  <text x="476" y="116" fill="#f3f3f8" font-size="10" font-family="sans-serif">Proposal generator</text>
+  <text x="636" y="116" text-anchor="end" fill="#33cc66" font-size="10" font-weight="700" font-family="sans-serif">4</text>
+  <text x="476" y="134" fill="#f3f3f8" font-size="10" font-family="sans-serif">Invoice chaser</text>
+  <text x="636" y="134" text-anchor="end" fill="#ffcc33" font-size="10" font-weight="700" font-family="sans-serif">2</text>
+  <text x="476" y="152" fill="#f3f3f8" font-size="10" font-family="sans-serif">Client onboarding</text>
+  <text x="636" y="152" text-anchor="end" fill="#ffcc33" font-size="10" font-weight="700" font-family="sans-serif">2</text>
+  <line x1="476" y1="168" x2="644" y2="168" stroke="#2a2a3d" stroke-width="1" />
+  <text x="560" y="210" text-anchor="middle" fill="#6699ff" font-size="22" font-weight="800" font-family="sans-serif">8</text>
+  <text x="560" y="228" text-anchor="middle" fill="#9696b0" font-size="10" font-family="sans-serif">of 16 slices</text>
+  <text x="560" y="250" text-anchor="middle" fill="#33cc66" font-size="9" font-family="sans-serif">8 slices free</text>
+  <text x="560" y="268" text-anchor="middle" fill="#9696b0" font-size="9" font-family="sans-serif">can run with morning cron</text>
+</svg>
+</Diagram>
 
 ---
 
@@ -187,6 +289,10 @@ For agents:
 
 I've watched teams deploy club-level agents to production customer-facing systems with no guardrails. The agents aren't wrong - the environment is wrong for that prop.
 
+<Callout type="warning" title="The environment is part of the design">
+A club agent in staging is an experiment. A club agent in production customer-facing systems without human checkpoints is a liability. The prop taxonomy tells you what to build. Your environment strategy tells you what's appropriate to run where. They are not the same question.
+</Callout>
+
 ---
 
 ## Using It on Your Own System
@@ -203,7 +309,17 @@ If you do this honestly, you'll end up with a right-sized agent team where you a
 
 ---
 
-*The anchor post for the Juggling-Pizza Framework series.*  
-*[Post 1: The Pizza Agent Model](/blog/pizza-agent-model) · [Post 2: Balls, Clubs, and Rings](/blog/balls-clubs-rings-ai-agents) · [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure)*
+<Takeaways title="Key takeaways" color="tech" items={[
+  "The juggling framework answers what to build (ball, ring, club, devil stick). The pizza model answers how much you can run at once (16 slices max per concurrent window).",
+  "The 1-2-4 slice ratio isn't arbitrary - it mirrors real pricing tiers across Haiku, Sonnet, and Opus model classes.",
+  "The constraint is the point. 16 slices force you to ask whether each task genuinely needs a club or whether a ring would do it.",
+  "Session window design is where the two frameworks combine - group agents by when they run, sum the slices, and verify you're under budget.",
+  "Apply the same prop taxonomy to human teams: ball contributors, ring project managers, club specialists, and devil stick self-directed teams with leadership checkpoints."
+]} />
+
+---
+
+*The anchor post for the Juggling-Pizza Framework series.*
+*[Post 1: The Pizza Agent Model](/blog/pizza-agent-model) - [Post 2: Balls, Clubs, and Rings](/blog/balls-clubs-rings-ai-agents) - [Post 3: Dropping the Ball Is the Point](/blog/juggling-ai-failure)*
 
 *Linda Mohamed is an AWS Hero and cloud consultant in Vienna. She runs the AWS User Groups in Vienna and Linz, builds AI agent systems on AWS Bedrock, juggles for real, and invented a pizza-based resource allocation framework while staring at billing reports. The juggling came first.*

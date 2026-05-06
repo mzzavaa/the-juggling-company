@@ -4,6 +4,7 @@ import Icon from "@/components/Icon.astro";
 import VideoCard from "@/components/VideoCard.astro";
 import PostCard from "@/components/PostCard.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
+import JugglingPattern from "@/components/JugglingPattern.astro";
 import { Image } from "astro:assets";
 import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
 import worldMapGlowing from "@/assets/images/world-map-glowing.png";
@@ -66,27 +67,51 @@ const personJsonLd = {
 ---
 
 <BaseLayout jsonLd={personJsonLd}>
-  <!-- HERO -->
-  <section class="hero relative overflow-hidden">
+  <!-- HERO: full-bleed video background -->
+  <section class="hero relative overflow-hidden" style="min-height: clamp(460px, 68vh, 760px);">
+    <!-- Background video -->
+    <video
+      class="absolute inset-0 h-full w-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+    >
+      <source src="/videos/hero-juggling-loop.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Gradient overlay: solid dark on left fading to semi-transparent on right -->
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(105deg, var(--color-bg) 30%, color-mix(in oklab, var(--color-bg) 75%, transparent) 58%, color-mix(in oklab, var(--color-bg) 30%, transparent) 100%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Bottom vignette: video fades into dark so page content below is always visible -->
+    <div
+      class="absolute bottom-0 inset-x-0 pointer-events-none"
+      style="height: 50%; background: linear-gradient(to top, var(--color-bg) 0%, var(--color-bg) 10%, color-mix(in oklab, var(--color-bg) 75%, transparent) 45%, transparent 100%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Pillar color accents (subtle, behind text) -->
     <div class="absolute inset-0 -z-10" aria-hidden="true">
       <div
-        class="blob-brain absolute -left-32 top-0 h-[28rem] w-[28rem] rounded-full opacity-40 blur-3xl"
+        class="blob-brain absolute -left-32 top-0 h-[28rem] w-[28rem] rounded-full opacity-25 blur-3xl"
         style="background: var(--color-brain);"
       ></div>
       <div
-        class="blob-tech absolute right-0 top-32 h-[26rem] w-[26rem] rounded-full opacity-35 blur-3xl"
-        style="background: var(--color-tech);"
-      ></div>
-      <div
-        class="blob-change absolute bottom-0 left-1/3 h-[30rem] w-[30rem] rounded-full opacity-40 blur-3xl"
+        class="blob-change absolute bottom-20 left-1/4 h-[24rem] w-[24rem] rounded-full opacity-20 blur-3xl"
         style="background: var(--color-change);"
       ></div>
     </div>
 
-    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:py-20 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:items-center">
-      <div>
+    <!-- Hero content -->
+    <div class="relative mx-auto flex max-w-[1400px] items-center px-4 py-20 md:px-8 md:py-28 lg:py-36" style="min-height: inherit;">
+      <div class="max-w-2xl">
         <p
-          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/80 px-3 py-1 text-xs font-medium uppercase tracking-widest text-[var(--color-fg)] backdrop-blur"
+          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)]/70 px-3 py-1 text-xs font-medium uppercase tracking-widest text-[var(--color-fg)] backdrop-blur"
         >
           <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-brain);"></span>
           <span class="inline-block h-2 w-2 rounded-full" style="background: var(--color-tech);"></span>
@@ -94,48 +119,140 @@ const personJsonLd = {
           AWS Hero · Juggler · Vienna
         </p>
 
-        <h1 class="mt-6 font-display text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
+        <h1 class="mt-6 font-display text-[clamp(3.25rem,8vw,6.5rem)] font-bold leading-[0.92] tracking-tight">
           <span class="block" style="color: var(--color-brain);">Brain.</span>
           <span class="block ml-[5%]" style="color: var(--color-tech);">Tech.</span>
           <span class="block ml-[10%]" style="color: var(--color-change);">Change.</span>
         </h1>
 
-        <p class="mt-8 max-w-md text-lg leading-relaxed text-[var(--color-fg)] md:text-xl">
+        <p class="mt-8 max-w-lg text-lg leading-relaxed text-[var(--color-fg)] md:text-xl" style="text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
           Juggling has no prerequisites. <strong>{site.author.name}</strong> - AWS Hero, keynote speaker, and juggler - explores what happens when you stop choosing between the technical and the human, and keep everything moving at once.
         </p>
 
-        <p class="mt-4 max-w-md text-base leading-relaxed text-[var(--color-muted)]">
+        <p class="mt-4 max-w-lg text-base leading-relaxed text-[var(--color-muted)]" style="text-shadow: 0 1px 2px rgba(0,0,0,0.4);">
           On stage from Las Vegas to Istanbul. In workshops, in conference rooms, and on the road - bringing the pattern that connects brain science, cloud systems, and the courage to change.
         </p>
 
         <div class="mt-10 flex flex-wrap gap-3">
           <a
             href="/ideas"
-            class="group inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold text-[var(--color-bg)] shadow-xl transition hover:shadow-2xl"
-            style="background: linear-gradient(100deg, var(--color-brain), var(--color-brain-tech), var(--color-tech), var(--color-tech-change), var(--color-change)); background-size: 220% auto;"
+            class="hero-btn-primary inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold tracking-wide text-[var(--color-bg)] transition-all"
+            style="background: linear-gradient(135deg, var(--color-brain) 0%, var(--color-change) 100%);"
           >
             Why juggle?
-            <Icon name="arrow-right" size={18} />
+            <Icon name="arrow-right" size={14} />
           </a>
           <a
             href={`mailto:${site.author.email}`}
-            class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-6 py-3.5 font-medium text-[var(--color-fg)] transition hover:border-[var(--color-brain-tech)] hover:text-[var(--color-brain-tech)]"
+            class="hero-btn-secondary inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-medium text-[var(--color-fg)] backdrop-blur transition-all"
+            style="border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.05);"
           >
-            <Icon name="mail" size={16} />
+            <Icon name="mail" size={14} />
             Work with me
           </a>
         </div>
       </div>
-
-      <div class="hidden md:flex md:items-center md:justify-center">
-        <JugglingCascade size={460} />
-      </div>
     </div>
   </section>
 
+  <!-- JUGGLING PATTERNS: powered by JugglingLab -->
+  <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">The language of the pattern</p>
+        <h2 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          Many patterns.<br /><span class="rgb-text">One practice.</span>
+        </h2>
+        <p class="mt-4 max-w-lg text-[var(--color-muted)]">
+          Every juggling pattern has a notation: <span class="font-mono text-sm text-[var(--color-tech)]">siteswap</span>.
+          A number is how many beats before that prop is thrown again.
+          Higher numbers mean more time in the air. These are six patterns worth knowing.
+        </p>
+      </div>
+      <p class="max-w-xs text-xs text-[var(--color-muted)] md:text-right">
+        Animations powered by
+        <a href="https://jugglinglab.org" target="_blank" rel="noopener noreferrer"
+          class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">JugglingLab</a>
+        by Jack Boyce —
+        <a href="https://github.com/jkboyce/jugglinglab" target="_blank" rel="noopener noreferrer"
+          class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">open source</a>,
+        free to use, a tool that has shaped how Linda understands and teaches patterns.
+      </p>
+    </div>
+
+    <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <li>
+        <JugglingPattern
+          pattern="3"
+          notation="3"
+          title="The Cascade"
+          description="The foundation. Three balls, two hands, one repeating arc. Every other pattern is built from understanding this one first."
+          pillar="all"
+        />
+      </li>
+      <li>
+        <JugglingPattern
+          pattern="531"
+          notation="531"
+          title="The Waterfall"
+          description="Three different heights cycling in sequence. The 5 is high, the 3 is medium, the 1 is a quiet hand-pass. Not all throws need to be equal."
+          pillar="change"
+          slowdown={2.2}
+        />
+      </li>
+      <li>
+        <JugglingPattern
+          pattern="(4,4)"
+          notation="(4,4)"
+          title="The Fountain"
+          description="Synchronous. Both hands throw at the same time, each pair stays on its own side. Two independent tracks running in parallel without crossing."
+          pillar="tech"
+          slowdown={2.0}
+        />
+      </li>
+      <li>
+        <JugglingPattern
+          pattern="5"
+          notation="5"
+          title="Five-Ball Cascade"
+          description="The same cascade as 3, but with two more balls. The arc is wider, the timing is tighter, the margin for error is smaller. Same pattern - higher stakes."
+          pillar="brain"
+          slowdown={1.6}
+        />
+      </li>
+      <li>
+        <JugglingPattern
+          pattern="753"
+          notation="753"
+          title="The High Waterfall"
+          description="Heights of 7, 5, and 3 cycling continuously. The 7 hangs in the air for a long time. The 3 is almost immediate. Different problems have different arcs."
+          pillar="change"
+          slowdown={2.5}
+        />
+      </li>
+      <li>
+        <JugglingPattern
+          pattern="7531"
+          notation="7531"
+          title="The Four-Level Waterfall"
+          description="Four balls, four heights: 7 hangs long, 5 is medium, 3 is quick, 1 is a quiet hand-to-hand pass. Every level is a different speed and arc. One pattern, four cadences."
+          pillar="tech"
+          slowdown={2.4}
+        />
+      </li>
+    </ul>
+
+    <p class="mt-8 text-center text-xs text-[var(--color-muted)]">
+      Siteswap notation: each digit = how many beats before that prop is thrown again.
+      Odd numbers cross to the opposite hand. Even numbers return to the same hand.
+      Parentheses indicate synchronous throws. — Explore all patterns at
+      <a href="https://jugglinglab.org" target="_blank" rel="noopener noreferrer"
+        class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">jugglinglab.org</a>
+    </p>
+  </section>
 
   <!-- NO PREREQUISITES: the mission -->
-  <section class="mx-auto max-w-7xl px-4 py-24 md:px-6">
+  <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
     <div class="grid gap-14 md:grid-cols-[1.1fr_1fr] md:items-start">
 
       <div>
@@ -238,7 +355,7 @@ const personJsonLd = {
   </section>
 
   <!-- THREE PILLARS -->
-  <section class="mx-auto max-w-7xl px-4 py-24 md:px-6">
+  <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
         <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
@@ -302,7 +419,7 @@ const personJsonLd = {
 
   {
     featuredVideos.length > 0 && (
-      <section class="mx-auto max-w-7xl px-4 py-16 md:px-6">
+      <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
         <div class="mb-8 flex items-end justify-between gap-4">
           <div>
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
@@ -330,7 +447,7 @@ const personJsonLd = {
 
   {
     latestPosts.length > 0 && (
-      <section class="mx-auto max-w-7xl px-4 py-16 md:px-6">
+      <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
         <div class="mb-8 flex items-end justify-between gap-4">
           <div>
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
@@ -357,7 +474,7 @@ const personJsonLd = {
   }
 
   <!-- LOCATIONS CTA -->
-  <section class="mx-auto max-w-7xl px-4 py-20 md:px-6">
+  <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
     <div
       class="locations-cta relative overflow-hidden rounded-3xl border-2 border-[var(--color-tech-change)] bg-[var(--color-bg-card)] p-1"
     >
@@ -411,5 +528,23 @@ const personJsonLd = {
   }
   .pillar-card {
     transition: box-shadow 220ms ease, transform 220ms ease;
+  }
+
+  .hero-btn-primary:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+  }
+  .hero-btn-primary:active {
+    transform: translateY(0);
+    filter: brightness(1.0);
+  }
+  .hero-btn-secondary:hover {
+    border-color: rgba(255,255,255,0.38) !important;
+    background: rgba(255,255,255,0.1) !important;
+    transform: translateY(-1px);
+  }
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    transition: filter 180ms ease, transform 180ms ease, background 180ms ease, border-color 180ms ease;
   }
 </style>

@@ -1,0 +1,199 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import { Image } from "astro:assets";
+import threePropsEnergy from "@/assets/images/three-props-energy-triptych.png";
+import womanNeural from "@/assets/images/woman-neural-juggling-trails.png";
+import handsDna from "@/assets/images/hands-dna-light-helix.png";
+import jugglerAllProps from "@/assets/images/juggler-all-props-motion-blur.png";
+import infiniteOrbit from "@/assets/images/infinite-game-figure-eight-orbit.png";
+import twoHandsGreen from "@/assets/images/two-hands-green-infinite-game.png";
+
+const concepts = [
+  {
+    title: "The Three Props",
+    slug: "the-three-props",
+    description: "Ball, club, and ring are not just juggling equipment. They are three positions every person holds in any change. Where you stand determines what you experience.",
+    image: threePropsEnergy,
+    accent: "var(--color-brain-change)",
+    icon: "layers" as const,
+    tag: "Foundation",
+  },
+  {
+    title: "Brain Science",
+    slug: "brain",
+    description: "Juggling grows grey matter. Three months of practice produces measurable structural changes in both hemispheres of the brain - at any age. This is not metaphor. This is MRI.",
+    image: womanNeural,
+    accent: "var(--color-brain)",
+    icon: "brain" as const,
+    tag: "Neuroscience",
+  },
+  {
+    title: "Tech & Systems",
+    slug: "tech",
+    description: "Cloud architecture, distributed systems, and API contracts all have direct juggling equivalents. The club pass is a contract. The cascade is a load balancer. The drop is a graceful failure.",
+    image: handsDna,
+    accent: "var(--color-tech)",
+    icon: "cpu" as const,
+    tag: "Systems",
+  },
+  {
+    title: "Change Management",
+    slug: "change",
+    description: "How teams absorb new work, recover from drops, and build the muscle memory to stay stable under pressure. The orbital geometry of who is closest to the change - and what that requires.",
+    image: jugglerAllProps,
+    accent: "var(--color-change)",
+    icon: "shuffle" as const,
+    tag: "Organisations",
+  },
+  {
+    title: "The Cascade",
+    slug: "the-cascade",
+    description: "The three-ball cascade is siteswap 3. Every other juggling pattern is built from understanding this one first. It is also the cleanest model for how attention, timing, and recovery actually work.",
+    image: infiniteOrbit,
+    accent: "var(--color-tech-change)",
+    icon: "cascade" as const,
+    tag: "Pattern",
+  },
+  {
+    title: "The Infinite Game",
+    slug: "the-infinite-game",
+    description: "Simon Sinek's infinite game - a game with no terminal point, no declared winner, and no end - is what juggling has always been. You do not age out. You do not finish. You continue.",
+    image: twoHandsGreen,
+    accent: "var(--color-brain-tech)",
+    icon: "infinite-game" as const,
+    tag: "Philosophy",
+  },
+];
+---
+
+<BaseLayout
+  title="Learn - The Juggling Company"
+  description="Six entry points into the juggling-as-change framework. Brain science, systems thinking, change management, patterns, and the infinite game - all through juggling."
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden pb-0 pt-28 md:pt-36">
+    <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute left-1/4 top-0 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-3xl" style="background: var(--color-brain);"></div>
+      <div class="absolute right-1/4 top-1/2 h-[24rem] w-[24rem] translate-x-1/2 rounded-full opacity-15 blur-3xl" style="background: var(--color-change);"></div>
+    </div>
+
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
+      <p class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+        <Icon name="layers" size={12} />
+        Start here
+      </p>
+      <h1 class="mt-6 font-display text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight">
+        Six ways in.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
+        Juggling is not the point. The point is what happens when you look at brain science, cloud systems, and organisational change through the same lens. Each concept below is an entry point. Each one leads deeper.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONCEPT GRID -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10 md:py-24">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {concepts.map((c, i) => (
+        <a
+          href={`/learn/${c.slug}`}
+          class="concept-card group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-all duration-300 hover:-translate-y-1"
+          style={`--accent: ${c.accent}; animation-delay: ${i * 80}ms`}
+          data-reveal
+        >
+          <!-- Image -->
+          <div class="relative h-52 overflow-hidden bg-[var(--color-bg)]">
+            <Image
+              src={c.image}
+              alt={c.title}
+              width={600}
+              height={400}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(to top, var(--color-bg-card) 0%, transparent 50%);"></div>
+            <!-- Tag pill -->
+            <span class="absolute left-4 top-4 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest backdrop-blur-sm"
+              style={`border-color: color-mix(in oklab, ${c.accent} 40%, transparent); background: color-mix(in oklab, ${c.accent} 12%, transparent); color: ${c.accent};`}>
+              {c.tag}
+            </span>
+          </div>
+
+          <!-- Body -->
+          <div class="flex flex-1 flex-col gap-3 p-6">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                style={`background: color-mix(in oklab, ${c.accent} 18%, var(--color-bg-elevated)); color: ${c.accent};`}>
+                <Icon name={c.icon} size={20} />
+              </span>
+              <h2 class="font-display text-xl font-semibold text-[var(--color-fg)]">{c.title}</h2>
+            </div>
+            <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)]">{c.description}</p>
+            <div class="mt-2 flex items-center gap-1.5 text-xs font-medium transition-colors"
+              style={`color: ${c.accent};`}>
+              Explore
+              <Icon name="arrow-right" size={13} />
+            </div>
+          </div>
+
+          <!-- Hover glow border -->
+          <div class="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={`box-shadow: inset 0 0 0 1px color-mix(in oklab, ${c.accent} 50%, transparent), 0 0 40px -8px color-mix(in oklab, ${c.accent} 30%, transparent);`}>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ECOSYSTEM STRIP -->
+  <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-12 md:px-6 lg:px-10">
+      <p class="mb-6 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Also from Linda Mohamed</p>
+      <div class="flex flex-wrap gap-4">
+        {[
+          { label: "Freelancer Templates", href: "https://freelancer-templates.org", color: "#4f9ef8", desc: "200+ free templates" },
+          { label: "AI Workshops", href: "https://ai-workshops.online", color: "#a855f7", desc: "Enterprise workshops" },
+          { label: "Freelancer Automation", href: "https://freelancer-automation.com", color: "#f59e0b", desc: "AgentCore framework" },
+          { label: "AI Solutions Wiki", href: "https://ai-solutions.wiki", color: "#10b981", desc: "AI tools directory" },
+        ].map(s => (
+          <a href={s.href} target="_blank" rel="noopener noreferrer"
+            class="group inline-flex items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 transition-all hover:border-transparent"
+            style={`--c: ${s.color};`}
+            onmouseover="this.style.background=`color-mix(in oklab, ${this.style.getPropertyValue('--c')} 8%, var(--color-bg))`"
+            onmouseout="this.style.background='var(--color-bg)'">
+            <span class="text-sm font-semibold text-[var(--color-fg)] group-hover:text-[var(--color-fg)]">{s.label}</span>
+            <span class="text-xs text-[var(--color-muted)]">{s.desc}</span>
+            <Icon name="arrow-up-right" size={12} class="text-[var(--color-muted)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .concept-card {
+    animation: card-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes card-rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+
+<script>
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach(e => e.isIntersecting && e.target.classList.add("in-view")),
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+  document.querySelectorAll("[data-reveal]").forEach(el => obs.observe(el));
+</script>

@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  videoSrc?: string;        // /videos/filename.mp4
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  style?: string;
+  objectFit?: "cover" | "contain";
+}
+
+const {
+  src,
+  videoSrc,
+  alt,
+  width = 700,
+  height = 560,
+  class: className = "",
+  style = "",
+  objectFit = "cover",
+} = Astro.props;
+---
+
+{videoSrc ? (
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    class={className}
+    style={style}
+    aria-label={alt}
+  >
+    <source src={videoSrc} type="video/mp4" />
+    <!-- Fallback for browsers that don't support video -->
+    <Image src={src} alt={alt} width={width} height={height} class={className} style={style} />
+  </video>
+) : (
+  <Image src={src} alt={alt} width={width} height={height} class={className} style={style} />
+)}

@@ -11,11 +11,24 @@ coverVideo: /videos/cupped-hands-light-ball.mp4
 draft: false
 ---
 
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 There is a specific moment that every juggler remembers.
 
 Not the first time they got three balls in the air. Not the first clean run, the first performance, the first time someone stopped and watched. Before any of that: the moment they picked up a single ball, threw it in a gentle arc from one hand to the other, and caught it.
 
 That throw accomplishes nothing. It looks like nothing. And yet it is the entire foundation of everything that follows.
+
+<StatGrid items={[
+  { value: "<1s", label: "Feedback loop", sub: "per throw", color: "brain" },
+  { value: "60+", label: "Age still shows gains", sub: "grey matter increases", color: "change" },
+  { value: "3mo", label: "Practice period", sub: "in landmark brain study", color: "tech" },
+  { value: "0", label: "Comparisons", sub: "the beginner has no standard to fall short of", color: "yellow" }
+]} />
 
 ## What your brain is doing in that moment
 
@@ -27,6 +40,34 @@ Each attempt creates a tiny update in the brain's motor model. Not a conscious o
 
 This is neuroplasticity in real time. Not a metaphor for it. The actual thing.
 
+<Diagram caption="The learning signal per throw: the cerebellum logs the error between prediction and outcome and updates the motor model before the next attempt. At the beginning, the error is large. The update is proportionally large too.">
+  <svg viewBox="0 0 580 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#14141f;border-radius:8px;">
+    <defs>
+      <marker id="gb-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#9696b0"/>
+      </marker>
+    </defs>
+    <text x="55" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#9696b0">throw</text>
+    <text x="200" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#9696b0">outcome</text>
+    <text x="360" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#9696b0">cerebellum</text>
+    <text x="510" y="28" text-anchor="middle" font-family="monospace" font-size="11" fill="#9696b0">next throw</text>
+    <rect x="15" y="80" width="80" height="40" rx="6" fill="#1b1b2a" stroke="#ff3366" stroke-width="1.5"/>
+    <text x="55" y="105" text-anchor="middle" font-family="monospace" font-size="10" fill="#ff3366">motor signal</text>
+    <rect x="160" y="80" width="80" height="40" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+    <text x="200" y="105" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">catch / drop</text>
+    <rect x="315" y="60" width="90" height="70" rx="6" fill="#1b1b2a" stroke="#6699ff" stroke-width="1.5"/>
+    <text x="360" y="90" text-anchor="middle" font-family="monospace" font-size="10" fill="#6699ff">log error</text>
+    <text x="360" y="104" text-anchor="middle" font-family="monospace" font-size="10" fill="#6699ff">update</text>
+    <text x="360" y="118" text-anchor="middle" font-family="monospace" font-size="10" fill="#6699ff">prediction</text>
+    <rect x="470" y="80" width="80" height="40" rx="6" fill="#1b1b2a" stroke="#ffcc33" stroke-width="1.5"/>
+    <text x="510" y="105" text-anchor="middle" font-family="monospace" font-size="10" fill="#ffcc33">adjusted</text>
+    <line x1="95" y1="100" x2="158" y2="100" stroke="#9696b0" stroke-width="1.5" marker-end="url(#gb-arrow)"/>
+    <line x1="240" y1="100" x2="313" y2="100" stroke="#9696b0" stroke-width="1.5" marker-end="url(#gb-arrow)"/>
+    <line x1="405" y1="100" x2="468" y2="100" stroke="#9696b0" stroke-width="1.5" marker-end="url(#gb-arrow)"/>
+    <text x="290" y="160" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">loop completes in under 1 second per throw</text>
+  </svg>
+</Diagram>
+
 ## Why beginners have an advantage
 
 There is something that experienced learners sometimes lose that beginners still have: zero expectations.
@@ -37,6 +78,10 @@ This state - where the brain is fully engaged with new input and has not yet dev
 
 Research consistently shows that the adult brain retains significant plasticity - the capacity to change and grow in response to new learning. Studies on juggling found that even participants over 60 showed measurable grey matter increases after three months of practice, comparable to younger learners. The gift is not reserved for the young. It belongs to anyone willing to pick up the ball.
 
+<Callout type="info" title="The naive learner advantage">
+Beginners learn from physics. Experienced learners often learn from self-concept - comparing performance to an internal standard and labelling the gap as failure. That comparison interferes with the feedback loop. The ball doesn't know what a good throw looks like either. It just goes where it goes.
+</Callout>
+
 ## The transfer beyond juggling
 
 None of this is exclusive to juggling. But juggling makes it unusually visible.
@@ -45,6 +90,26 @@ In most skills, the feedback loop is slow. You write code, you might not know if
 
 This is why learning to juggle can improve your relationship with learning itself - not just the skill. When you experience rapid, honest feedback and see yourself improve within a single session, it recalibrates your sense of what learning feels like. It is not slow. It is not linear. It is responsive.
 
+<PullQuote>
+The first throw is a gift. Not because it is good. Because it begins the conversation between your hands and your brain - a conversation that, once started, never really stops.
+</PullQuote>
+
+<Callout type="success" title="Plasticity across the lifespan">
+The research on adult learners is consistent: the brain retains the capacity for structural change at any age. What varies is not the ceiling of plasticity but the conditions required to activate it. For adults, the most important condition is willingness to be a beginner - to tolerate a learning curve that does not feel like competence yet.
+</Callout>
+
 The first throw is a gift. Not because it is good. Because it begins the conversation between your hands and your brain - a conversation that, once started, never really stops.
 
 Pick up a ball. Throw it once. That is all beginning requires.
+
+<Takeaways title="Key takeaways" color="change" items={[
+  "The first throw is the foundation - it looks like nothing, but it is where the brain starts building the motor model.",
+  "Beginners have an advantage: no expectations means no interference from self-comparison in the learning loop.",
+  "Juggling's sub-second feedback loop recalibrates your relationship with learning, not just the skill itself.",
+  "The adult brain retains plasticity throughout life. Grey matter increases have been documented in learners over 60.",
+  "Beginning requires only one action: picking up the ball and throwing it once."
+]} />
+
+---
+
+Related reading: [The Loop That Rewires You](/post/the-loop-that-rewires-you) - on the myelination mechanism that the first throw begins to activate. [Three Balls, Three Months](/post/three-balls-three-months) - on what the research on brain changes during juggling actually says.

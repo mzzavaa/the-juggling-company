@@ -60,7 +60,7 @@ const countryCount = new Set(performances.map((l) => l.data.country)).size;
   title="Locations"
   description="Where I've performed, where I'm based, and where I'm available next."
 >
-  <section class="mx-auto max-w-7xl px-4 py-20 md:px-6">
+  <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
     <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Locations</p>
     <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
       <span class="rgb-text">Where I am, where I've been.</span>
@@ -80,13 +80,13 @@ const countryCount = new Set(performances.map((l) => l.data.country)).size;
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-4 pb-12 md:px-6">
+  <section class="mx-auto max-w-[1400px] px-4 pb-12 md:px-6">
     <LocationsMap client:visible locations={mapLocations} />
   </section>
 
   <!-- Home Base -->
   {homeBase && (
-    <section class="mx-auto max-w-7xl px-4 pb-12 md:px-6">
+    <section class="mx-auto max-w-[1400px] px-4 pb-12 md:px-6">
       <div
         class="relative overflow-hidden rounded-3xl border-2 p-8 md:p-10"
         style="border-color: var(--color-brain); background: color-mix(in oklab, var(--color-brain) 8%, var(--color-bg-card));"
@@ -107,7 +107,7 @@ const countryCount = new Set(performances.map((l) => l.data.country)).size;
 
   <!-- Past Performances -->
   {performances.length > 0 && (
-    <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6">
+    <section class="mx-auto max-w-[1400px] px-4 pb-16 md:px-6">
       <div class="mb-6 flex items-baseline justify-between gap-4">
         <h2 class="font-display text-2xl font-bold tracking-tight">
           Performances &amp; events
@@ -141,7 +141,7 @@ const countryCount = new Set(performances.map((l) => l.data.country)).size;
 
   <!-- Workshops & Available -->
   {(workshops.length > 0 || available.length > 0) && (
-    <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6">
+    <section class="mx-auto max-w-[1400px] px-4 pb-16 md:px-6">
       <h2 class="mb-6 font-display text-2xl font-bold tracking-tight">Workshops &amp; upcoming</h2>
       <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {[...workshops, ...available].map((l) => (
@@ -167,7 +167,7 @@ const countryCount = new Set(performances.map((l) => l.data.country)).size;
   )}
 
   <!-- Juggling Shops CTA -->
-  <section class="mx-auto max-w-7xl px-4 pb-24 md:px-6">
+  <section class="mx-auto max-w-[1400px] px-4 pb-24 md:px-6">
     <div
       class="flex flex-col items-start gap-6 rounded-3xl border-2 p-8 md:flex-row md:items-center md:justify-between md:p-10"
       style="border-color: var(--color-brain-change); background: color-mix(in oklab, var(--color-brain-change) 6%, var(--color-bg-card));"

@@ -11,6 +11,12 @@ coverVideo: /videos/world-map-glowing.mp4
 draft: false
 ---
 
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 If you mapped every juggling club, every festival, every regular practice session that meets weekly in a park or a gym or a community centre - the map would have dots on every continent.
 
 It would look impressive. It would represent something real.
@@ -18,6 +24,13 @@ It would look impressive. It would represent something real.
 But the map is not the practice. The map is what happens when you try to represent the practice as data. The practice itself is made of specific things: a prop passed between hands, a pattern attempted and failed, a person watching and learning, a conversation between people who would otherwise not be in the same room.
 
 You cannot preserve a practice by mapping it. You preserve it by participating in it.
+
+<StatGrid items={[
+  { value: "7", label: "Continents", sub: "with active juggling communities", color: "change" },
+  { value: "Tacit", label: "Knowledge type", sub: "not transferable via video or text", color: "brain" },
+  { value: "1", label: "Dot to choose", sub: "show up to a specific place", color: "tech" },
+  { value: "↓", label: "Fragility", sub: "any dot disappears without people", color: "yellow" }
+]} />
 
 ## What the dots don't show
 
@@ -30,6 +43,10 @@ The age of the community - how long it has been gathering, which generation of j
 The knowledge that lives in the community - not the documented tricks, but the tacit understanding of how to teach, how to run a session, how to welcome a beginner without making them feel watched. This knowledge was passed from person to person. It is not recorded anywhere. It is transmitted through participation.
 
 The fragility - any dot on the map can disappear when the people who kept it alive stop coming. The community does not automatically persist. It persists because of decisions made repeatedly by people who have other options.
+
+<Callout type="warning" title="The persistence illusion">
+A community that appears on a map or in a directory feels permanent. It is not. It persists only as long as specific people make specific decisions to show up. The map does not update when the community stops meeting. It just shows where communities used to be, or currently are, without distinguishing between the two.
+</Callout>
 
 ## The problem with distributed knowledge
 
@@ -47,6 +64,25 @@ What they cannot carry is the tacit dimension of the practice. The way a specifi
 
 Tacit knowledge requires co-presence to transfer. The global map of dots is not the same as a connected network of living practices. It is a record of where the dots exist. The network is made of the face-to-face connections inside each dot.
 
+<Diagram caption="Explicit vs tacit knowledge: what travels over digital connections vs what requires physical co-presence. The gap between the two is where community health lives.">
+  <svg viewBox="0 0 580 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#14141f;border-radius:8px;">
+    <rect x="20" y="40" width="240" height="120" rx="8" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+    <text x="140" y="62" text-anchor="middle" font-family="monospace" font-size="11" fill="#33cc66">explicit knowledge</text>
+    <text x="140" y="82" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">tutorials, videos, forums</text>
+    <text x="140" y="98" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">documented tricks</text>
+    <text x="140" y="114" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">theory, notation</text>
+    <text x="140" y="130" text-anchor="middle" font-family="monospace" font-size="10" fill="#33cc66">travels digitally</text>
+    <rect x="320" y="40" width="240" height="120" rx="8" fill="#1b1b2a" stroke="#6699ff" stroke-width="1.5"/>
+    <text x="440" y="62" text-anchor="middle" font-family="monospace" font-size="11" fill="#6699ff">tacit knowledge</text>
+    <text x="440" y="82" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">teaching adjustments</text>
+    <text x="440" y="98" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">welcoming norms</text>
+    <text x="440" y="114" text-anchor="middle" font-family="monospace" font-size="10" fill="#9696b0">session rhythm</text>
+    <text x="440" y="130" text-anchor="middle" font-family="monospace" font-size="10" fill="#6699ff">requires co-presence</text>
+    <line x1="260" y1="100" x2="320" y2="100" stroke="#ff3366" stroke-width="2" stroke-dasharray="5,4"/>
+    <text x="290" y="92" text-anchor="middle" font-family="monospace" font-size="10" fill="#ff3366">gap</text>
+  </svg>
+</Diagram>
+
 ## Why this matters beyond juggling
 
 The same structure operates in any distributed community of practice.
@@ -61,6 +97,10 @@ This is not a criticism of the map. The map is useful. It shows you where to loo
 
 The health of a practice is not measured by the number of dots. It is measured by the quality and continuity of what happens inside each dot.
 
+<PullQuote>
+The map shows you where the practice is. The practice itself requires you to be in one of the dots.
+</PullQuote>
+
 ## Investing in the specific place
 
 The practical implication of this is local, not global.
@@ -69,6 +109,22 @@ If you want to support a community of practice - a juggling community, a technic
 
 Not follow the global accounts. Not subscribe to the newsletter. Show up to the Tuesday sessions, the annual festival, the weekly code review, the workshop. Be present in a way that is only possible in person, because that presence is what makes the tacit knowledge accessible and what maintains the community's ability to transmit it.
 
+<Callout type="info" title="The two questions to ask about any community">
+First: does it meet regularly, in person, in a specific place? Second: does it have a second generation - people who were newcomers and are now the ones keeping it going? If both answers are yes, the tacit knowledge is transmitting. If either is no, the community may appear on a map but the practice is not fully alive.
+</Callout>
+
 The map shows you where the practice is. The practice itself requires you to be in one of the dots.
 
 Pick a dot. Show up.
+
+<Takeaways title="Key takeaways" color="change" items={[
+  "The map represents practice as data - but the practice itself requires physical co-presence to remain alive.",
+  "Tacit knowledge (how to teach, welcome, run a session) cannot travel through video or text. It requires participation.",
+  "Any community can disappear when the people who kept it going stop coming. The map does not reflect this fragility.",
+  "The health of a practice is measured by what happens inside specific active nodes - not by the number of dots on the map.",
+  "The most effective support for any community of practice is showing up to the specific place where it meets."
+]} />
+
+---
+
+Related reading: [The Gift of Beginning](/post/the-gift-of-beginning) - on what it means to walk into a community as a newcomer, and what the brain does with that experience. [Three Balls, Three Months](/post/three-balls-three-months) - on what sustained practice actually changes, and why the practice has to be maintained.

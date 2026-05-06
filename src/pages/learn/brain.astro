@@ -1,0 +1,226 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import JugglingPattern from "@/components/JugglingPattern.astro";
+import { Image } from "astro:assets";
+import { getPosts } from "@/lib/content";
+
+import womanNeural from "@/assets/images/woman-neural-juggling-trails.png";
+import profileBrain from "@/assets/images/profile-brain-ball-arc-flow.png";
+import elderHands from "@/assets/images/elder-hands-red-infinity-juggle.png";
+import knowledgeTree from "@/assets/images/hands-neon-knowledge-tree.png";
+
+const allPosts = await getPosts();
+const recommended = allPosts.filter(p =>
+  ["the-practice-that-rewires-you", "what-grows-from-one-practice", "the-brain-throws-first", "you-do-not-age-out-of-the-pattern"].includes(p.slug)
+).slice(0, 3);
+
+const stats = [
+  { value: "3 months", label: "to grow measurable grey matter", sub: "Draganski et al., Nature 2004" },
+  { value: "Both hemispheres", label: "structural change, bilaterally", sub: "Mid-temporal cortex, visual motion" },
+  { value: "Ages 50-67", label: "neuroplasticity confirmed", sub: "Boyke et al., Journal of Neuroscience 2008" },
+];
+---
+
+<BaseLayout
+  title="Brain Science - Juggling and Neuroplasticity | The Juggling Company"
+  description="Three months of juggling practice produces measurable grey matter growth in both hemispheres of the brain. The neuroscience behind why physical practice changes the brain at any age."
+>
+  <!-- HERO -->
+  <section class="concept-hero relative overflow-hidden" style="min-height: clamp(600px, 90vh, 940px);">
+    <div class="absolute inset-0">
+      <video autoplay muted loop playsinline class="h-full w-full object-cover">
+        <source src="/videos/neural-synapse-infinity.mp4" type="video/mp4" />
+        <Image src={womanNeural} alt="Woman seen from behind with golden juggling arcs and neural tendrils spreading from her head simultaneously" width={1800} height={900} class="h-full w-full object-cover" />
+      </video>
+      <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(10,10,18,0.96) 0%, rgba(10,10,18,0.6) 60%, rgba(10,10,18,0.2) 100%);"></div>
+      <div class="absolute bottom-0 inset-x-0 h-48" style="background: linear-gradient(to top, var(--color-bg), transparent);"></div>
+    </div>
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-28 lg:px-10" style="min-height: inherit;">
+      <div class="max-w-2xl" data-reveal>
+        <span class="mb-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-brain) 14%, transparent); border: 1px solid color-mix(in oklab, var(--color-brain) 35%, transparent); color: var(--color-brain);">
+          <Icon name="brain" size={13} />
+          <span class="text-xs font-semibold uppercase tracking-wider">Brain Science</span>
+        </span>
+        <h1 class="font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.92] tracking-tight">
+          The arc outside<br />and the network<br /><span style="color: var(--color-brain);">inside are the</span><br /><span style="color: var(--color-brain);">same image.</span>
+        </h1>
+        <p class="mt-7 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
+          Three months of juggling practice produces measurable structural changes in both hemispheres of the adult brain. Not self-reported. MRI. At any age.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
+    <div class="grid gap-5 sm:grid-cols-3">
+      {stats.map((s, i) => (
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6" data-reveal data-delay={i * 80} style="background: color-mix(in oklab, var(--color-brain) 4%, var(--color-bg-card));">
+          <p class="font-display text-3xl font-bold" style="color: var(--color-brain);">{s.value}</p>
+          <p class="mt-1 font-semibold text-[var(--color-fg)]">{s.label}</p>
+          <p class="mt-1 text-xs text-[var(--color-muted)]">{s.sub}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHAT THE RESEARCH FOUND -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
+      <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
+        <Image src={profileBrain} alt="Side profile with glowing brain and blue balls arcing outward" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+      </div>
+      <div class="flex flex-col gap-10">
+        <div data-reveal data-delay="100">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">The research</p>
+          <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">The brain throws first.</h2>
+          <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+            The Draganski et al. study (Nature, 2004) recruited 24 non-jugglers. Half trained to juggle a three-ball cascade for three months. MRI scans before and after showed measurable gray matter increases in the mid-temporal cortex - the region that processes visual motion in all contexts, not only juggling.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            When participants stopped practicing, the gray matter partially receded. The brain built the tissue in response to the demand and withdrew it when the demand stopped. Use it or lose it, measured at the tissue level.
+          </p>
+        </div>
+        <div data-reveal data-delay="100">
+          <h3 class="font-display text-xl font-semibold">Why it transfers to everything</h3>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            The mid-temporal cortex does not process juggling. It processes visual motion - all visual motion. The juggler who grew this region did not develop a juggling-specific brain improvement. They developed enhanced capacity for anything that moves through their visual field.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Juggling is unusual because it simultaneously demands multi-object visual tracking, bilateral motor coordination, anticipatory error correction, and tolerance for the in-between state. This combination of simultaneous demands is what drives the adaptation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGING: the finding that changed everything -->
+  <section class="relative overflow-hidden py-24 md:py-32" style="background: var(--color-bg-elevated);">
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
+      <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
+        <div class="flex flex-col gap-10">
+          <div data-reveal>
+            <span class="mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-brain) 12%, transparent); border: 1px solid color-mix(in oklab, var(--color-brain) 30%, transparent); color: var(--color-brain);">
+              <Icon name="sparkles" size={13} />
+              <span class="text-xs font-semibold uppercase tracking-wider">The finding that changed the field</span>
+            </span>
+            <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">You do not age out of the pattern.</h2>
+            <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+              For most of the 20th century, the dominant neuroscience model held that the adult brain structure was largely fixed. Boyke et al. (2008) ran the same juggling protocol with adults aged 50-67, specifically because this was the age range where neural fixity was assumed to be strongest.
+            </p>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              The effect held. Same region. Same bilateral change. Same magnitude. The assumption was the problem. The brain was not fixed. It was waiting to be asked.
+            </p>
+          </div>
+          <a href="/blog/you-do-not-age-out-of-the-pattern" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-brain);" data-reveal data-delay="100">
+            Read: You Do Not Age Out of the Pattern
+            <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+        <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
+          <Image src={elderHands} alt="Weathered elderly hands juggling with red infinity light trails" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE TREE: knowledge transfer -->
+  <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
+      <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
+        <Image src={knowledgeTree} alt="Two open hands from which a glowing neon knowledge tree grows into juggling props, math symbols, and logic gates" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+      </div>
+      <div class="flex flex-col gap-8" data-reveal data-delay="100">
+        <div>
+          <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Depth generates breadth.</h2>
+          <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+            The T-shape model says depth and breadth are parallel tracks. The tree model shows something different: genuine depth in the right kind of skill generates breadth without being designed to. The root grows the branches.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Multi-object visual tracking. Anticipatory error correction. Bilateral motor coordination. Tolerance for the in-between state. Each of these capacities transfers to domains that have nothing to do with balls.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          {[
+            ["Visual tracking", "Debugging concurrent log streams"],
+            ["Anticipatory planning", "Managing parallel workstreams"],
+            ["Bilateral coordination", "Keyboard + mouse simultaneously"],
+            ["Gap tolerance", "Async systems waiting for callbacks"],
+          ].map(([juggling, analogue]) => (
+            <div class="rounded-xl border border-[var(--color-border)] p-3">
+              <p class="text-xs font-semibold" style="color: var(--color-brain);">{juggling}</p>
+              <p class="mt-0.5 text-xs text-[var(--color-muted)]">{analogue}</p>
+            </div>
+          ))}
+        </div>
+        <a href="/blog/what-grows-from-one-practice" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-brain);">
+          Read: What Grows From One Practice
+          <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATTERN ANIMATION -->
+  <section class="border-t border-[var(--color-border)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+      <div class="mb-10" data-reveal>
+        <h2 class="font-display text-3xl font-bold tracking-tight">The pattern the brain practices</h2>
+        <p class="mt-3 max-w-xl text-[var(--color-muted)]">The three-ball cascade (siteswap 3) is the pattern studied in the neuroplasticity research. Three months of this pattern produced measurable gray matter growth in 24 adults.</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div data-reveal><JugglingPattern pattern="3" title="The Cascade" description="The pattern that grew grey matter in both hemispheres. Three months. Measurable structural change." pillar="brain" notation="3" /></div>
+        <div data-reveal data-delay="100"><JugglingPattern pattern="5" title="Five-Ball Cascade" description="Same pattern, higher load. More anticipation required. The brain that can run this has more to work with." pillar="brain" notation="5" slowdown={1.6} /></div>
+        <div data-reveal data-delay="200"><JugglingPattern pattern="753" title="Variable Heights" description="Three different heights cycling. The brain plans the 7 while catching the 3. Anticipatory processing at full stretch." pillar="brain" notation="753" slowdown={2.5} /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDED POSTS -->
+  {recommended.length > 0 && (
+    <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+      <div class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+        <h2 class="font-display text-2xl font-bold" data-reveal>From the blog</h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          {recommended.map((post, i) => (
+            <a href={`/blog/${post.slug}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--color-brain)]/30" data-reveal data-delay={i * 80}>
+              <h3 class="font-semibold leading-snug text-[var(--color-fg)]">{post.data.title}</h3>
+              <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-2">{post.data.summary}</p>
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium transition-gap" style="color: var(--color-brain);">Read <Icon name="arrow-right" size={11} /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-10 md:px-6 lg:px-10">
+      <div class="flex flex-wrap gap-3">
+        {[
+          { href: "/learn/tech", label: "Tech & Systems", icon: "cpu" as const, accent: "var(--color-tech)" },
+          { href: "/learn/change", label: "Change Management", icon: "shuffle" as const, accent: "var(--color-change)" },
+          { href: "/learn/the-infinite-game", label: "The Infinite Game", icon: "infinite-game" as const, accent: "var(--color-brain-tech)" },
+        ].map(link => (
+          <a href={link.href} class="group inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm font-medium text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-elevated)]">
+            <Icon name={link.icon} size={16} style={`color: ${link.accent}`} />
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  [data-reveal][data-direction="left"] { transform: translateX(-28px); }
+  [data-reveal][data-direction="right"] { transform: translateX(28px); }
+  [data-reveal].in-view { opacity: 1; transform: none; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+<script>
+  const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { const d = (e.target as HTMLElement).dataset.delay; d ? setTimeout(() => e.target.classList.add("in-view"), parseInt(d)) : e.target.classList.add("in-view"); } }), { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  document.querySelectorAll("[data-reveal]").forEach(el => obs.observe(el));
+</script>

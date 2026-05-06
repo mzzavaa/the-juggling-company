@@ -11,6 +11,12 @@ coverVideo: /videos/brain-juggling-infinity.mp4
 draft: false
 ---
 
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 The most cited fact about juggling and the brain comes from a 2004 _Nature_
 paper by Draganski et al. The often-paraphrased version goes something like:
 "juggling makes your brain bigger." That's not quite what the paper says.
@@ -21,6 +27,13 @@ regions - and that those increases regressed when practice stopped. The
 mechanism isn't growth; it's structural plasticity in response to a sustained
 new demand.
 
+<StatGrid items={[
+  { value: "2004", label: "Draganski et al.", sub: "published in Nature", color: "brain" },
+  { value: "3mo", label: "Practice period", sub: "to produce measurable grey-matter change", color: "tech" },
+  { value: "↓", label: "Regresses", sub: "when practice stops", color: "yellow" },
+  { value: "2", label: "Brain regions", sub: "motion-processing areas affected", color: "change" }
+]} />
+
 Two things follow from that:
 
 1. The benefit is real but not permanent. Three months on the mat earns you a
@@ -30,4 +43,49 @@ Two things follow from that:
    substrate with juggling - tracking moving objects, fast motor planning,
    incremental skill acquisition.
 
+<Callout type="info" title="What the study actually measured">
+Draganski et al. used voxel-based morphometry to measure grey-matter density in specific regions. The increases appeared in the mid-temporal area and the left posterior intraparietal sulcus - regions involved in visual motion processing. These are not general intelligence regions. The specificity of the finding is as important as the finding itself.
+</Callout>
+
+<Diagram caption="Structural plasticity in response to demand: grey matter increases during the practice period, then regresses during rest. The brain responds to current demand - not to past effort.">
+  <svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#14141f;border-radius:8px;">
+    <text x="30" y="20" font-family="monospace" font-size="11" fill="#9696b0">grey matter density</text>
+    <line x1="60" y1="30" x2="60" y2="150" stroke="#2a2a3d" stroke-width="1.5"/>
+    <line x1="60" y1="150" x2="520" y2="150" stroke="#2a2a3d" stroke-width="1.5"/>
+    <text x="60" y="168" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">baseline</text>
+    <text x="200" y="168" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">3 months practice</text>
+    <text x="360" y="168" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">3 months rest</text>
+    <text x="480" y="168" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">end</text>
+    <polyline points="60,130 140,130 200,70 260,70 340,70 400,115 460,120 520,125" fill="none" stroke="#ff3366" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="60" cy="130" r="4" fill="#ff3366"/>
+    <circle cx="260" cy="70" r="4" fill="#33cc66"/>
+    <circle cx="460" cy="120" r="4" fill="#ff3366"/>
+    <text x="265" y="60" font-family="monospace" font-size="9" fill="#33cc66">peak increase</text>
+    <line x1="140" y1="30" x2="140" y2="150" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="340" y1="30" x2="340" y2="150" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,3"/>
+    <text x="240" y="48" text-anchor="middle" font-family="monospace" font-size="9" fill="#33cc66">practice phase</text>
+    <text x="420" y="48" text-anchor="middle" font-family="monospace" font-size="9" fill="#9696b0">regression</text>
+  </svg>
+</Diagram>
+
+<PullQuote>
+The mechanism isn't growth. It's structural plasticity in response to a sustained new demand. Stop the demand, and the structure returns toward baseline.
+</PullQuote>
+
 The longer essay is over in [Ideas](/ideas/juggling-and-the-brain).
+
+<Callout type="warning" title="The transfer myth">
+"Juggling makes you smarter" is a misread of the data. The grey-matter changes are region-specific and demand-specific. Juggling develops the neural substrate for visual motion tracking and motor sequencing. It does not provide a general cognitive upgrade. If you want to get better at something, practice that thing - juggling accelerates learning in domains that share those specific substrates.
+</Callout>
+
+<Takeaways title="Key takeaways" color="brain" items={[
+  "The Draganski 2004 study showed grey-matter increases in motion-processing regions, not general brain growth.",
+  "The changes regressed after 3 months without practice. The benefit is real but not permanent.",
+  "Brain-region specificity matters: juggling builds the substrate for visual motion tracking and motor planning.",
+  "Expect transfer to tasks sharing those specific substrates - not to unrelated cognitive domains.",
+  "Structural plasticity responds to current demand. Maintaining the change requires maintaining the practice."
+]} />
+
+---
+
+Related reading: [The Gift of Beginning](/post/the-gift-of-beginning) - on what happens in the brain from the very first throw. [The Loop That Rewires You](/post/the-loop-that-rewires-you) - on myelination, the structural mechanism behind skill acquisition.

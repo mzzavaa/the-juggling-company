@@ -11,6 +11,12 @@ coverVideo: /videos/prism-rgb-light.mp4
 draft: false
 ---
 
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
 A prism does not add anything to the light that passes through it.
 
 It reveals what was already there - the component frequencies that, when combined, look like white. The prism separates them. Each frequency bends at a slightly different angle. The spectrum appears.
@@ -18,6 +24,12 @@ It reveals what was already there - the component frequencies that, when combine
 The input is one thing. The output is many.
 
 This is a precise model for what happens in a well-designed learning experience.
+
+<StatGrid items={[
+  { value: "1 input", label: "Single experience", sub: "One skill, one practice, one well-designed session - the prism separates what was already inside it", color: "brain" },
+  { value: "Many outputs", label: "Fan-out effect", sub: "Hand-eye coordination, spatial reasoning, attention discipline, psychological calibration - all from juggling", color: "tech" },
+  { value: "Systems", label: "What drives fan-out", sub: "More cognitive systems activated by the same experience = wider spectrum = more transfers", color: "magenta" }
+]} />
 
 ## How learning fans out
 
@@ -31,19 +43,63 @@ None of these outputs are separable from each other during the learning. You acq
 
 One input. Many outputs. The prism effect.
 
+<Diagram caption="One practice, multiple cognitive systems activated simultaneously - each produces a different output">
+<svg viewBox="0 0 560 200" width="560" height="200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="200" fill="#14141f" rx="8"/>
+
+  <polygon points="80,100 140,55 140,145" fill="#1b1b2a" stroke="#f3f3f8" stroke-width="1.5"/>
+  <text x="70" y="90" text-anchor="end" fill="#f3f3f8" font-size="9">Juggling</text>
+  <text x="70" y="103" text-anchor="end" fill="#f3f3f8" font-size="9">Practice</text>
+  <text x="70" y="116" text-anchor="end" fill="#9696b0" font-size="8">one input</text>
+  <line x1="20" y1="100" x2="78" y2="100" stroke="#f3f3f8" stroke-width="2"/>
+
+  <line x1="142" y1="65" x2="540" y2="35" stroke="#ff3366" stroke-width="1.5" marker-end="url(#pm-arr-r)"/>
+  <line x1="142" y1="80" x2="540" y2="75" stroke="#33cc66" stroke-width="1.5" marker-end="url(#pm-arr-g)"/>
+  <line x1="142" y1="100" x2="540" y2="115" stroke="#6699ff" stroke-width="1.5" marker-end="url(#pm-arr-b)"/>
+  <line x1="142" y1="120" x2="540" y2="155" stroke="#ffcc33" stroke-width="1.5" marker-end="url(#pm-arr-y)"/>
+
+  <rect x="350" y="22" width="185" height="22" rx="4" fill="#ff336622" stroke="#ff3366" stroke-width="1"/>
+  <text x="442" y="36" text-anchor="middle" fill="#ff3366" font-size="8">hand-eye coordination - precision tasks</text>
+
+  <rect x="350" y="62" width="185" height="22" rx="4" fill="#33cc6622" stroke="#33cc66" stroke-width="1"/>
+  <text x="442" y="76" text-anchor="middle" fill="#33cc66" font-size="8">spatial reasoning - parabolic prediction</text>
+
+  <rect x="350" y="102" width="185" height="22" rx="4" fill="#6699ff22" stroke="#6699ff" stroke-width="1"/>
+  <text x="442" y="116" text-anchor="middle" fill="#6699ff" font-size="8">attention discipline - apex focus transfer</text>
+
+  <rect x="350" y="142" width="185" height="22" rx="4" fill="#ffcc3322" stroke="#ffcc33" stroke-width="1"/>
+  <text x="442" y="156" text-anchor="middle" fill="#ffcc33" font-size="8">psychological calibration - learning in public</text>
+
+  <text x="280" y="185" text-anchor="middle" fill="#9696b0" font-size="8">white light was already a spectrum - the prism reveals what was there</text>
+
+  <defs>
+    <marker id="pm-arr-r" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#ff3366"/>
+    </marker>
+    <marker id="pm-arr-g" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#33cc66"/>
+    </marker>
+    <marker id="pm-arr-b" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#6699ff"/>
+    </marker>
+    <marker id="pm-arr-y" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#ffcc33"/>
+    </marker>
+  </defs>
+</svg>
+</Diagram>
+
 ## Why single-output learning is wasteful
 
 Most of the learning that happens in formal education is designed for single-output transfer.
 
 You learn a formula to use that formula. You learn a procedure to execute that procedure. The scope of application is defined and narrow. The goal is performance on the specific assessed task.
 
-This is efficient if the assessed task is the actual goal. But if the goal is genuine capability - the ability to function in contexts that cannot be fully specified in advance - then single-output learning is wasteful by design. You invest significant time and cognitive load acquiring something that stays in a narrow lane.
+<Callout type="info" title="Practice-based skills fan out because automaticity frees cognitive resources">
+Practice-based skills tend to fan out. The reason is that practice builds automaticity - the skill moves out of conscious processing and into motor or procedural memory. This frees cognitive resources, which then become available for higher-level engagement with whatever is being learned.
 
-The alternative is not to teach more things. It is to teach things that fan out.
-
-Practice-based skills tend to fan out. The reason is that practice builds automaticity - the skill moves out of conscious processing and into motor or procedural memory. This frees cognitive resources, which then become available for higher-level engagement with whatever is being learned. The person who has internalized a skill can use it as a foundation for reasoning rather than as a target for concentration.
-
-This is the difference between knowing what letters look like and being able to read. Once reading becomes automatic, the cognitive resources that were used for decoding become available for comprehension. The reading skill fans out into the ability to acquire any knowledge encoded in text.
+The person who has internalised a skill can use it as a foundation for reasoning rather than as a target for concentration. This is the difference between knowing what letters look like and being able to read. Once reading becomes automatic, the cognitive resources used for decoding become available for comprehension.
+</Callout>
 
 ## The architecture analogy
 
@@ -51,11 +107,9 @@ In distributed systems, a single event fan-out is a standard pattern.
 
 One event is emitted. Multiple consumers receive it. Each consumer does something different with the same signal. The signal doesn't care how many consumers there are or what they do with it.
 
-This is the event-driven architecture equivalent of the prism. One emitted event becoming many different responses - a record created in one system, a notification sent in another, an analytics aggregate updated in a third.
-
-The systems analogy is useful here because it makes explicit what is happening in learning: a single experience is processed by multiple cognitive and neurological systems simultaneously. Each system does something different with the same input. The outputs are not coordinated - they emerge independently from the same initial stimulus.
-
-Good learning design thinks about which systems the experience reaches. A purely verbal explanation reaches language processing systems. A demonstration that the learner then physically replicates reaches motor, spatial, and proprioceptive systems as well. The prism effect is stronger the more systems the same experience activates.
+<PullQuote>
+Good learning design thinks about which systems the experience reaches. A purely verbal explanation reaches language processing. A demonstration that the learner then physically replicates reaches motor, spatial, and proprioceptive systems as well. The prism effect is stronger the more systems the same experience activates.
+</PullQuote>
 
 ## Designing for the spectrum
 
@@ -65,10 +119,21 @@ How many cognitive and experiential systems does this reach?
 
 A lecture activates language processing and declarative memory. A demonstration adds visual pattern recognition. A hands-on exercise adds motor learning and proprioceptive feedback. Discussion after the exercise adds social-emotional processing, the construction of shared language, the exposure to alternative framings.
 
-Each addition fans the experience out further. The spectrum becomes more complete.
-
+<Callout type="success" title="Each addition fans the experience further">
 The juggling keynote works as a learning intervention not just because juggling is interesting. It works because the experience activates systems that a verbal presentation does not: motor observation, spatial prediction, the surprise of physical limitation, the specific kind of attention required to watch someone juggle without losing the thread of what they are saying.
 
 The person in the audience is processing the same experience through multiple systems simultaneously. Each system produces a different output. The learning fans out.
+</Callout>
 
 The white light was already a spectrum. The prism just shows you what was there.
+
+<Takeaways color="brain" items={[
+  "One well-designed learning experience fans out across multiple cognitive systems simultaneously - hand-eye, spatial, attentional, social-emotional.",
+  "Automaticity is what enables fan-out: once a skill moves out of conscious processing, freed resources become available for higher-level engagement.",
+  "Single-output learning is efficient for narrow tasks. The prism effect requires activating more cognitive systems with the same input.",
+  "The question to ask about every design decision: how many cognitive and experiential systems does this reach?"
+]} />
+
+---
+
+*Read next: [Hands, Brain, Pattern](/blog/hands-brain-pattern) - the learning loop that builds the automaticity the prism requires.*

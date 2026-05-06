@@ -1,0 +1,139 @@
+---
+title: "The Wrong Number"
+slug: the-wrong-number
+summary: "There are two ways to have the wrong number of props. Four balls when you can juggle three. Five-ball technique on three balls. Both are planning failures - and they require opposite fixes."
+date: 2026-05-23
+tags: ["brain", "tech", "juggling", "scaling", "planning", "bottleneck", "resources", "skill"]
+pillars: ["brain", "tech"]
+cover: ../../assets/images/juggler-silhouette-three-props.png
+coverAlt: "A silhouette of a juggler with arms outstretched wide, a glowing red ball to the left, a green club rising above, and a blue ring to the right"
+coverVideo: /videos/juggler-silhouette-three-props.mp4
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+import AnalogyTable from "../../components/AnalogyTable.astro";
+
+There are two ways to have the wrong number of props, and they feel completely different from the inside.
+
+The first: you have four balls, but you can only juggle three. One ball stays in your hand or on the floor between attempts. The fourth prop is not helping. It is dead weight you are carrying for no reason, or it is adding drops you could avoid.
+
+The second: you can juggle five balls, but you only have three. The skill is there. The technique is calibrated for a larger pattern. But you are running a five-ball juggler's movements on three balls - which means you are either leaving capacity on the table, or more often, you are breaking the pattern because your timing is built for objects that are not there.
+
+Both are planning failures. Neither is a skill failure. And they require opposite solutions.
+
+<StatGrid items={[
+  { value: "4 balls", label: "Overprovisioned", sub: "Resources exceed the architecture's ability to use them - one sits idle", color: "brain" },
+  { value: "3 balls", label: "Underprovisioned", sub: "Skill exceeds resources - the technique is calibrated for a pattern that does not fit", color: "tech" },
+  { value: "Opposite", label: "Required fixes", sub: "One needs capability-building. The other needs more resources. Diagnosing wrong = wrong fix.", color: "yellow" }
+]} />
+
+## Having more than you can use
+
+Four balls, three in the air is the classic overprovisioning scenario.
+
+<Diagram caption="Overprovisioned (left) vs underprovisioned (right) - two different problems, two opposite fixes">
+<svg viewBox="0 0 560 220" width="560" height="220" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="220" fill="#14141f" rx="8"/>
+
+  <text x="130" y="24" text-anchor="middle" fill="#ff3366" font-size="11" font-weight="700" letter-spacing="1">OVERPROVISIONED</text>
+  <text x="420" y="24" text-anchor="middle" fill="#33cc66" font-size="11" font-weight="700" letter-spacing="1">UNDERPROVISIONED</text>
+
+  <line x1="280" y1="18" x2="280" y2="210" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <circle cx="80" cy="100" r="14" fill="#ff3366" fill-opacity="0.2" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="80" y="105" text-anchor="middle" fill="#ff3366" font-size="9">Ball 1</text>
+
+  <circle cx="130" cy="70" r="14" fill="#ff3366" fill-opacity="0.2" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="130" y="75" text-anchor="middle" fill="#ff3366" font-size="9">Ball 2</text>
+
+  <circle cx="180" cy="100" r="14" fill="#ff3366" fill-opacity="0.2" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="180" y="105" text-anchor="middle" fill="#ff3366" font-size="9">Ball 3</text>
+
+  <circle cx="130" cy="155" r="14" fill="#2a2a3d" stroke="#3d3d5a" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="130" y="160" text-anchor="middle" fill="#3d3d5a" font-size="9">Ball 4</text>
+  <text x="130" y="175" text-anchor="middle" fill="#3d3d5a" font-size="8">idle</text>
+
+  <text x="130" y="200" text-anchor="middle" fill="#ff3366" font-size="9">fix: build capability to use all 4</text>
+
+  <circle cx="360" cy="100" r="14" fill="#33cc66" fill-opacity="0.2" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="360" y="105" text-anchor="middle" fill="#33cc66" font-size="9">Ball 1</text>
+
+  <circle cx="415" cy="65" r="14" fill="#33cc66" fill-opacity="0.2" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="415" y="70" text-anchor="middle" fill="#33cc66" font-size="9">Ball 2</text>
+
+  <circle cx="470" cy="100" r="14" fill="#33cc66" fill-opacity="0.2" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="470" y="105" text-anchor="middle" fill="#33cc66" font-size="9">Ball 3</text>
+
+  <circle cx="415" cy="148" r="20" fill="none" stroke="#ffcc33" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="415" y="150" text-anchor="middle" fill="#ffcc33" font-size="8">Ball 4</text>
+  <text x="415" y="162" text-anchor="middle" fill="#ffcc33" font-size="8">missing</text>
+
+  <text x="415" y="200" text-anchor="middle" fill="#33cc66" font-size="9">fix: upgrade resources to match skill</text>
+</svg>
+</Diagram>
+
+In infrastructure terms: you have provisioned eight servers, but your application is single-threaded and uses one. Seven are idle, costing money, handling zero load. The resources are there. The architecture to distribute work across them is not built.
+
+The same happens with SaaS tier upgrades. An organization moves to an Enterprise plan for the features, then finds that most of those features require workflow changes, training, and configuration that have not happened. The capability is paid for. The pattern to use it has not been designed. The bill grows. The extra props sit on the floor.
+
+<Callout type="warning" title="The mis-diagnosis trap">
+Overprovisioning often gets diagnosed as needing even more resources. The team sees underperformance and assumes capacity is the problem. But the bottleneck is architecture and capability, not hardware. Adding more of what is already unused does not help. The fix is building the capability to use what you already have.
+</Callout>
+
+## Having less than you can use
+
+Can juggle five, have three is the less-discussed mismatch - and it is often harder to recognize because the visible symptom looks like the system is too slow, not that the team is too capable.
+
+A team with the expertise to run a highly distributed system, given budget for three short-memory instances, will be frustrated in ways that look like a technical limitation of the stack. But the stack is limited. The skill is not the constraint. The props are.
+
+The LLM version of this problem is recognizable once you see it: a team building a sophisticated agent architecture, capped at 10,000 tokens per minute by their API tier, watching responses cut off and requests queue up. The technique is sound. The quota is wrong. The answer is not to simplify the architecture. The answer is to upgrade the plan or redesign around the actual constraint - because the skill to use more is already there.
+
+<AnalogyTable domain="Infrastructure" caption="The wrong-number mismatch appears in every resource-planning context" rows={[
+  { juggling: "4 balls, can only juggle 3 - one idle", analogue: "8 servers provisioned, single-threaded app uses 1" },
+  { juggling: "Enterprise plan, patterns not built to use it", analogue: "SaaS Enterprise tier paid for, features unused" },
+  { juggling: "5-ball skill, 3-ball quota", analogue: "Expert team capped at wrong API tier" },
+  { juggling: "Fix: build capability to use all props", analogue: "Fix: architecture + workflow changes, not more resources" },
+  { juggling: "Fix: get more props matching the skill", analogue: "Fix: upgrade the plan or redesign around the real constraint" },
+]} />
+
+## The three different props in the image
+
+The silhouette in the image has three different objects in the air: a ball, a club, and a ring. Each behaves differently. The ball is forgiving - a slight mis-throw self-corrects. The club has weight and rotation requirements - wrong spin and the catch becomes impossible. The ring must stay vertical or it wobbles unpredictably out of the pattern.
+
+Running a club-passing technique with a ring in your hand is not the same as running it with three clubs. The props are not interchangeable without adjusting technique, timing, and catch position. Substituting one for another without making those adjustments produces a pattern that looks like it should work and consistently does not.
+
+The same principle applies to infrastructure substitutions. Replacing a dedicated message queue with a polling loop changes the timing physics of the pattern. Swapping an in-memory cache for a file system changes the latency profile. The architecture cannot be abstracted away from the props it runs on.
+
+## Reading the mismatch correctly
+
+<PullQuote>
+Simplifying the system to fit current resources makes the expertise less valuable, not the bottleneck less painful. You lose the capability you already have.
+</PullQuote>
+
+The diagnostic before any fix is: which direction is the mismatch?
+
+If skill exceeds resources, the answer is more resources. Simplifying the system to fit current resources makes the expertise less valuable, not the bottleneck less painful. You lose the capability you already have.
+
+If resources exceed skill, the answer is more capability - better tooling, architectural learning, workflow changes that unlock the tier you are paying for. Adding more resources to a system that cannot use the ones it has just increases the idle inventory.
+
+## Getting the count right
+
+The silhouette stands with arms wide, a different prop at each reach. It is a position that cannot be sustained if any one of the three is wrong - wrong weight, wrong timing, wrong technique. The pattern requires that the props match the skill and the skill match the props.
+
+Before scaling in either direction, the question is: which of these two mismatches do I actually have? The answer determines everything that comes next.
+
+<Takeaways color="tech" items={[
+  "There are two wrong-number failure modes: overprovisioned (resources exceed capability) and underprovisioned (capability exceeds resources). They require opposite fixes.",
+  "Overprovisioning is often mis-diagnosed as needing more resources. The bottleneck is architecture and capability, not quantity.",
+  "Underprovisioning frustrates teams in ways that look like technical limitations. The skill is there - the quota is wrong.",
+  "Props are not interchangeable without technique adjustment. Infrastructure substitutions change timing physics and latency profiles."
+]} />
+
+---
+
+*Read next: [Count Your Props Before You Start](/blog/count-your-props-before-you-start) - how to avoid the wrong-number problem from the start.*

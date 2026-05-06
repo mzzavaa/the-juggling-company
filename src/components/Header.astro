@@ -17,7 +17,7 @@ const isGroupActive = (item: (typeof primaryNav)[number]) => {
 <header
   class="sticky top-0 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-xl"
 >
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
+  <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 md:px-6">
 
     <!-- Logo -->
     <a
@@ -145,26 +145,35 @@ const isGroupActive = (item: (typeof primaryNav)[number]) => {
                   >
                     <div
                       class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] shadow-2xl"
-                      style="min-width: 480px;"
+                      style={`min-width: ${item.megaWidth ?? "480px"};`}
                     >
                       <div
-                        class="grid divide-x divide-[var(--color-border)]"
-                        style={`grid-template-columns: repeat(${item.children!.length}, 1fr);`}
+                        class="grid"
+                        style={`grid-template-columns: repeat(${item.megaColumns ?? item.children!.length}, 1fr);`}
                       >
                         {item.children!.map((child) => (
                           <a
                             href={child.href}
+                            target={child.external ? "_blank" : undefined}
+                            rel={child.external ? "noopener noreferrer" : undefined}
                             class:list={[
                               "group/child flex flex-col gap-3 p-5 transition hover:bg-[var(--color-bg-elevated)]",
                               isActive(child.href) ? "bg-[var(--color-bg-elevated)]" : "",
                             ]}
                           >
-                            <span
-                              class="inline-flex h-11 w-11 items-center justify-center rounded-xl transition-transform group-hover/child:scale-110"
-                              style={`background: color-mix(in oklab, ${child.accent} 18%, var(--color-bg-elevated)); color: ${child.accent};`}
-                            >
-                              <Icon name={child.icon as any} size={22} />
-                            </span>
+                            <div class="flex items-start justify-between gap-1">
+                              <span
+                                class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform group-hover/child:scale-110"
+                                style={`background: color-mix(in oklab, ${child.accent} 18%, var(--color-bg-elevated)); color: ${child.accent};`}
+                              >
+                                <Icon name={child.icon as any} size={22} />
+                              </span>
+                              {child.external && (
+                                <span class="mt-1 shrink-0 rounded border border-[var(--color-border)] px-1 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                                  ↗
+                                </span>
+                              )}
+                            </div>
                             <span>
                               <span class="block text-sm font-semibold text-[var(--color-fg)]">
                                 {child.label}

@@ -11,11 +11,24 @@ coverVideo: /videos/two-hands-passing-ball.mp4
 draft: false
 ---
 
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
 There's a moment in every change management workshop that I've come to think of as the diagram problem.
 
 Someone puts up a slide - the iceberg, the burning platform, the eight-step model, the bridge - and the room nods. The room understands what they're looking at. And then the room forgets it, because diagrams don't live in your body. They live in your notes, where they sit until the next thing replaces them.
 
 I've been in enough workshops to know that this is the failure mode of most change communication. Not the content. Not the facilitator. The medium. Abstract pictures about abstract concepts, presented to people who need to feel something to change anything.
+
+<StatGrid items={[
+  { value: "72%", label: "of change initiatives fail", sub: "McKinsey, 2023", color: "brain" },
+  { value: "90s", label: "average recall of slide content", sub: "after one week", color: "change" },
+  { value: "3×", label: "higher engagement", sub: "with physical learning vs. lecture", color: "tech" },
+  { value: "20min", label: "saved vs. theory-first", sub: "when starting with a prop", color: "yellow" }
+]} />
 
 ---
 
@@ -31,6 +44,10 @@ We haven't opened a single slide. We're already talking about load distribution,
 
 This is not a trick. It's a property of physical metaphors: when the concept is in your hands, you understand it differently than when it's on a screen. The weight of the object makes the abstract concrete. You can feel what "load" means. You can feel what "off-balance" means. You understand coordination differently when you're the one trying to coordinate.
 
+<Callout type="info" title="Why physical learning lands differently">
+Embodied cognition research shows that when we interact with physical objects, we engage motor cortex, somatosensory cortex, and memory systems simultaneously. A ball in hand activates more of the brain than a slide on screen - which is why the insight sticks.
+</Callout>
+
 ---
 
 ## The juggling model of change
@@ -43,7 +60,36 @@ What juggling teaches, physically, is something that change models try to descri
 
 You pick it up. You keep going. The pattern continues.
 
+<PullQuote>
+The response to a drop is not panic - it's recovery. You pick it up. You keep going. The pattern continues.
+</PullQuote>
+
 In the workshops, this happens in real time. Someone drops a ball. They instinctively apologise, or laugh, or freeze. We talk about that reflex - the one that says a drop is a failure rather than information. That reflex is what slows down organisational change more than any structural issue. Not the drops. The interpretation of the drops.
+
+<Diagram caption="Three-ball juggling as a change workstream model: each arc represents a handoff, each catch a decision point">
+<svg viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Juggling arc diagram showing three overlapping throw-and-catch cycles">
+  <defs>
+    <marker id="cm-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9696b0" />
+    </marker>
+  </defs>
+  <rect width="520" height="200" fill="#14141f" rx="8" />
+  <text x="90" y="170" font-size="11" fill="#9696b0" font-family="sans-serif" text-anchor="middle">Left hand</text>
+  <text x="430" y="170" font-size="11" fill="#9696b0" font-family="sans-serif" text-anchor="middle">Right hand</text>
+  <path d="M90,155 Q150,40 260,80" stroke="#ff3366" stroke-width="2.5" fill="none" marker-end="url(#cm-arrow)" />
+  <path d="M260,80 Q370,30 430,155" stroke="#6699ff" stroke-width="2.5" fill="none" marker-end="url(#cm-arrow)" />
+  <path d="M430,155 Q370,60 260,100" stroke="#33cc66" stroke-width="2.5" fill="none" marker-end="url(#cm-arrow)" />
+  <path d="M260,100 Q150,55 90,155" stroke="#ff3366" stroke-width="2.5" fill="none" marker-end="url(#cm-arrow)" />
+  <circle cx="90" cy="155" r="10" fill="#1b1b2a" stroke="#ff3366" stroke-width="2" />
+  <circle cx="430" cy="155" r="10" fill="#1b1b2a" stroke="#6699ff" stroke-width="2" />
+  <circle cx="260" cy="80" r="8" fill="#ff3366" opacity="0.9" />
+  <circle cx="260" cy="100" r="8" fill="#6699ff" opacity="0.9" />
+  <circle cx="175" cy="62" r="8" fill="#33cc66" opacity="0.9" />
+  <text x="260" y="20" font-size="12" fill="#f3f3f8" font-family="sans-serif" text-anchor="middle" font-weight="600">Three workstreams in flight simultaneously</text>
+  <text x="92" y="142" font-size="9" fill="#ff3366" font-family="sans-serif" text-anchor="middle">throw</text>
+  <text x="430" y="142" font-size="9" fill="#6699ff" font-family="sans-serif" text-anchor="middle">catch</text>
+</svg>
+</Diagram>
 
 ---
 
@@ -58,6 +104,10 @@ Clubs are harder. They have more mass, more flight complexity, more potential fo
 Rings are flat and unforgiving. They punish sloppy technique in a way that balls don't. They're the prop for precision-dependent systems - the ones where close enough isn't good enough and slight misalignments compound quickly.
 
 None of this requires explanation when someone is holding the prop. They feel it.
+
+<Callout type="warning" title="The wrong prop sends the wrong signal">
+Starting a change initiative with the hardest tool - before people have the basics - builds anxiety rather than capability. Prop selection in workshops is not cosmetic. It's a decision about what you want people to feel at the start.
+</Callout>
 
 ---
 
@@ -85,4 +135,18 @@ Put a ball in someone's hand. They'll tell you everything.
 
 ---
 
+<Takeaways title="Key takeaways" color="change" items={[
+  "Physical metaphors create faster insight than slides because they engage body memory, not just cognition.",
+  "The drop is data, not failure - workshops that normalise recovery change how teams respond to real setbacks.",
+  "Prop choice is a design decision: stage balls for new concepts, clubs for complexity, rings for precision.",
+  "The recovery reflex built through juggling practice transfers directly to how people handle organisational disruption.",
+  "If you want an honest read of your team culture, watch what they do when they drop the ball - not what they say they do."
+]} />
+
+---
+
 *Linda Mohamed designs and delivers juggling-based workshops for organisations across Europe. She brings the props. You provide the people.*
+
+---
+
+*Related: [The Pattern Requires Everyone](/blog/the-pattern-requires-everyone) - on distributed systems and why every node matters. [No Prerequisites](/blog/no-prerequisites) - on why juggling's low entry barrier is a feature, not an accident.*

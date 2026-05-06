@@ -11,10 +11,19 @@ coverVideo: /videos/four-balls-overlap-rgb.mp4
 draft: false
 ---
 
+import StatGrid from "../../components/StatGrid.astro";
+import Callout from "../../components/Callout.astro";
+
 The site got a rebuild. Same content, much faster, much simpler under the hood.
 The Ideas section is the new home for long-form essays - the first two are
 already live: [Juggling and the Brain](/ideas/juggling-and-the-brain) and
 [Juggling as a Tool for Change Management](/ideas/juggling-and-change-management).
+
+<StatGrid items={[
+  { value: "3", label: "Pillars", sub: "Brain, Tech, Change - three threads, one loop. Every post lives at the intersection of at least two.", color: "brain" },
+  { value: "Ideas", label: "Long-form essays", sub: "Deep dives into juggling, neuroscience, systems design, and community - the slow-read section", color: "tech" },
+  { value: "Blog", label: "Shorter posts", sub: "One idea per post - specific, concrete, and cross-linked to related reading", color: "change" }
+]} />
 
 A few things on the way:
 
@@ -22,6 +31,10 @@ A few things on the way:
 - A talks page with upcoming dates.
 - More videos, properly tagged so you can find the ones that match what you're
   looking for.
+
+<Callout type="info" title="Where to start">
+If you're new here: [Brain. Tech. Change. One Pattern.](/blog/brain-tech-change-one-pattern) explains the framework in one post. From there, follow the cross-links at the bottom of each page - they're deliberate.
+</Callout>
 
 If you spot anything broken, the [contact page](/contact) is the fastest way
 to reach me.

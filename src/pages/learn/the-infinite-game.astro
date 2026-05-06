@@ -1,0 +1,250 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import JugglingPattern from "@/components/JugglingPattern.astro";
+import { Image } from "astro:assets";
+import VideoImage from "@/components/VideoImage.astro";
+import { getPosts } from "@/lib/content";
+
+import twoHandsGreen from "@/assets/images/two-hands-green-infinite-game.png";
+import elderHands from "@/assets/images/elder-hands-red-infinity-juggle.png";
+import threeArcs from "@/assets/images/three-arcs-orange-infinity-purple.png";
+import inclusiveConvergence from "@/assets/images/inclusive-convergence-all-props.png";
+import greenInfinite from "@/assets/images/green-infinity-cascade.png";
+
+const allPosts = await getPosts();
+const recommended = allPosts.filter(p =>
+  ["juggling-is-an-infinite-game", "you-do-not-age-out-of-the-pattern", "the-inclusive-convergence"].includes(p.slug)
+).slice(0, 3);
+
+const infiniteMarkers = [
+  { finite: "Mastery declared", infinite: "Mastery is a direction, not a destination" },
+  { finite: "Skill ceiling reached", infinite: "The next pattern is always one level higher" },
+  { finite: "Age-out point", infinite: "Neuroplasticity confirmed at 50-67 (Boyke, 2008)" },
+  { finite: "Winner determined", infinite: "The only opponent is yesterday's throw" },
+];
+---
+
+<BaseLayout
+  title="The Infinite Game - Juggling as Philosophy | The Juggling Company"
+  description="Simon Sinek's infinite game - no declared winner, no end, just continuation. Juggling has always been this. You do not age out. You do not finish. You continue."
+>
+  <!-- HERO -->
+  <section class="concept-hero relative overflow-hidden" style="min-height: clamp(600px, 90vh, 940px);">
+    <div class="absolute inset-0">
+      <video autoplay muted loop playsinline class="h-full w-full object-cover">
+        <source src="/videos/green-infinity-cascade.mp4" type="video/mp4" />
+        <Image src={twoHandsGreen} alt="Two hands with a glowing green infinity loop between them, representing the infinite game of juggling" width={1800} height={900} class="h-full w-full object-cover" />
+      </video>
+      <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(10,10,18,0.97) 0%, rgba(10,10,18,0.65) 60%, rgba(10,10,18,0.2) 100%);"></div>
+      <div class="absolute bottom-0 inset-x-0 h-48" style="background: linear-gradient(to top, var(--color-bg), transparent);"></div>
+    </div>
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-28 lg:px-10" style="min-height: inherit;">
+      <div class="max-w-2xl" data-reveal>
+        <span class="mb-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-brain-tech) 14%, transparent); border: 1px solid color-mix(in oklab, var(--color-brain-tech) 35%, transparent); color: var(--color-brain-tech);">
+          <Icon name="infinite-game" size={13} />
+          <span class="text-xs font-semibold uppercase tracking-wider">Philosophy</span>
+        </span>
+        <h1 class="font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.92] tracking-tight">
+          There is no<br /><span style="color: var(--color-brain-tech);">last throw.</span>
+        </h1>
+        <p class="mt-7 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
+          Simon Sinek defined the infinite game as one with no declared winner, no fixed rules, and no terminal point. Juggling has always been this. You do not age out. You do not finish. You continue throwing until you choose to stop.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="/blog" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-[#0a0a12] transition-all hover:opacity-90" style="background: var(--color-brain-tech);">
+            Read the blog
+            <Icon name="arrow-right" size={14} />
+          </a>
+          <a href="/learn" class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-2.5 text-sm font-semibold text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-card)]">
+            All concepts
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINITE VS INFINITE -->
+  <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+    <div class="mb-12" data-reveal>
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">The framework</p>
+      <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Finite games end. Infinite games continue.</h2>
+      <p class="mt-5 max-w-2xl leading-relaxed text-[var(--color-muted)]">In a finite game, the goal is to win. There are fixed rules, fixed players, and a declared endpoint. In an infinite game, the goal is to keep playing. Rules can change. Players can change. There is no endpoint by definition.</p>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {infiniteMarkers.map((m, i) => (
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5" data-reveal data-delay={i * 70}>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Finite</p>
+          <p class="text-sm leading-relaxed line-through text-[var(--color-muted)] opacity-60">{m.finite}</p>
+          <p class="mt-3 mb-1 text-xs font-semibold uppercase tracking-widest" style="color: var(--color-brain-tech);">Infinite</p>
+          <p class="text-sm leading-relaxed text-[var(--color-fg)]">{m.infinite}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHAT SINEK GOT RIGHT -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
+      <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
+        <Image src={threeArcs} alt="Three arcs in orange, infinity loop, and purple showing different trajectory types in the infinite game" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+      </div>
+      <div class="flex flex-col gap-10">
+        <div data-reveal data-delay="100">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">The philosophy</p>
+          <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">Juggling is an infinite game.</h2>
+          <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+            Sinek's framing comes from James Carse's 1986 book "Finite and Infinite Games." A finite game is played for the purpose of winning. An infinite game is played for the purpose of continuing the play. The goals are structurally different, and so are the strategies.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Juggling has always been structurally infinite. There is no score. There is no opponent. There is no terminal state. The dropped ball is not a loss - it is information. The dropped ball says: that arc was not right. Adjust the arc. Continue.
+          </p>
+        </div>
+        <div data-reveal data-delay="150">
+          <h3 class="font-display text-xl font-semibold">The arc itself is infinite</h3>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            The cascade pattern, viewed from above, traces a figure-eight: a lemniscate, the mathematical symbol for infinity. This is not a designed metaphor. It is the geometry of alternating left-right throws under gravity. The shape is inherent.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            The infinite game is not a game about infinity. It is a game about orientation - choosing to see continuation as the point, rather than conclusion. The lemniscate of the cascade is what orientation looks like when it is expressed in physical motion.
+          </p>
+        </div>
+        <a href="/blog/juggling-is-an-infinite-game" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-brain-tech);" data-reveal data-delay="200">
+          Read: Juggling is an Infinite Game
+          <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- YOU DO NOT AGE OUT -->
+  <section class="relative overflow-hidden py-24 md:py-32" style="background: var(--color-bg-elevated);">
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
+      <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
+        <div class="flex flex-col gap-10">
+          <div data-reveal>
+            <span class="mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-brain-tech) 12%, transparent); border: 1px solid color-mix(in oklab, var(--color-brain-tech) 30%, transparent); color: var(--color-brain-tech);">
+              <Icon name="sparkles" size={13} />
+              <span class="text-xs font-semibold uppercase tracking-wider">The neuroscience of infinite play</span>
+            </span>
+            <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">You do not age out of the pattern.</h2>
+            <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+              For most of the 20th century, the dominant model held that adult neuroplasticity was fixed by middle age. The brain could not build new structural capacity. Learning could happen, but tissue-level change was done.
+            </p>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              Boyke et al. (2008) ran the same juggling protocol as Draganski (2004) with adults aged 50-67 specifically because this was where the assumption was strongest. The result was identical: grey matter growth in the mid-temporal cortex, bilaterally, measurable on MRI.
+            </p>
+          </div>
+          <div data-reveal data-delay="100">
+            <h3 class="font-display text-xl font-semibold">The assumption was the problem</h3>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              The brain was not fixed. It was waiting to be asked. The infinite game is not a metaphor for brain plasticity - it is a description of it. The brain does not have an endpoint built in. The endpoint was a cultural assumption that science has now falsified.
+            </p>
+            <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+              Anyone who has been told they are too old to learn to juggle has been given a finite game model applied to an infinite game situation. The pattern does not have an age limit. Neither does the brain that runs it.
+            </p>
+          </div>
+          <a href="/blog/you-do-not-age-out-of-the-pattern" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-brain-tech);" data-reveal data-delay="150">
+            Read: You Do Not Age Out of the Pattern
+            <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
+        <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
+          <Image src={elderHands} alt="Weathered elderly hands juggling with red infinity light trails" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INCLUSIVE CONVERGENCE -->
+  <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
+      <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
+        <VideoImage src={greenInfinite} videoSrc="/videos/green-infinity-cascade.mp4" alt="Green infinity cascade pattern looping endlessly - the visual of infinite play" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
+      </div>
+      <div class="flex flex-col gap-8" data-reveal data-delay="100">
+        <div>
+          <h2 class="font-display text-3xl font-bold tracking-tight md:text-4xl">The inclusive convergence.</h2>
+          <p class="mt-5 leading-relaxed text-[var(--color-muted)]">
+            In juggling, "inclusive" does not mean everyone juggles the same way. It means every person can find an entry point at their own level, with their own props, at their own pace. The cascade belongs to the person who just learned it as much as to the person who has run it for twenty years.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            The infinite game model is structurally inclusive because it has no gate at the end. You cannot be too late. There is no "too late." There is only the current throw, and the next throw, and the one after that. Every entry point is a valid starting point for an infinite path.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-display text-xl font-semibold">Juggling has no prerequisites.</h3>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            No prior athletic experience. No particular age window. No prerequisite coordination. What it requires is willingness to throw and to stand through the early pattern of drop-recover-adjust. The neuroplasticity research confirms what jugglers have always known: the brain adapts to the demand. Provide the demand. The brain handles the rest.
+          </p>
+        </div>
+        <a href="/blog/the-inclusive-convergence" class="group inline-flex items-center gap-2 text-sm font-medium" style="color: var(--color-brain-tech);">
+          Read: The Inclusive Convergence
+          <Icon name="arrow-right" size={14} class="transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATTERN ANIMATION -->
+  <section class="border-t border-[var(--color-border)]" style="background: var(--color-bg-elevated);">
+    <div class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+      <div class="mb-10" data-reveal>
+        <h2 class="font-display text-3xl font-bold tracking-tight">Patterns with no endpoint</h2>
+        <p class="mt-3 max-w-xl text-[var(--color-muted)]">Each pattern below runs continuously until interrupted. There is no final state. The pattern is the point.</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div data-reveal><JugglingPattern pattern="3" title="The Cascade" description="The infinite loop in its simplest form. Left throws right, right throws left, gravity returns. No end state." pillar="all" notation="3" /></div>
+        <div data-reveal data-delay="100"><JugglingPattern pattern="(4x,4)(4,4x)" title="Sync Fountain" description="Both hands throw simultaneously in a fountain pattern. Fully parallel, fully continuous, no terminal beat." pillar="all" notation="(4x,4)(4,4x)" slowdown={2.2} /></div>
+        <div data-reveal data-delay="200"><JugglingPattern pattern="b" title="Bounce Cascade" description="Gravity reversed - bouncing off the floor instead of falling. Same infinite structure, different physics." pillar="all" notation="b" slowdown={2.0} /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDED POSTS -->
+  {recommended.length > 0 && (
+    <section class="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
+      <div class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
+        <h2 class="font-display text-2xl font-bold" data-reveal>From the blog</h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          {recommended.map((post, i) => (
+            <a href={`/blog/${post.slug}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--color-brain-tech)]/30" data-reveal data-delay={i * 80}>
+              <h3 class="font-semibold leading-snug text-[var(--color-fg)]">{post.data.title}</h3>
+              <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-2">{post.data.summary}</p>
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium" style="color: var(--color-brain-tech);">Read <Icon name="arrow-right" size={11} /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-10 md:px-6 lg:px-10">
+      <div class="flex flex-wrap gap-3">
+        {[
+          { href: "/learn/brain", label: "Brain Science", icon: "brain" as const, accent: "var(--color-brain)" },
+          { href: "/learn/change", label: "Change Management", icon: "shuffle" as const, accent: "var(--color-change)" },
+          { href: "/learn/the-cascade", label: "The Cascade", icon: "cascade" as const, accent: "var(--color-tech-change)" },
+        ].map(link => (
+          <a href={link.href} class="group inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm font-medium text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-elevated)]">
+            <Icon name={link.icon} size={16} style={`color: ${link.accent}`} />
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  [data-reveal][data-direction="left"] { transform: translateX(-28px); }
+  [data-reveal][data-direction="right"] { transform: translateX(28px); }
+  [data-reveal].in-view { opacity: 1; transform: none; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+<script>
+  const obs = new IntersectionObserver((entries) => entries.forEach(e => { if (e.isIntersecting) { const d = (e.target as HTMLElement).dataset.delay; d ? setTimeout(() => e.target.classList.add("in-view"), parseInt(d)) : e.target.classList.add("in-view"); } }), { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  document.querySelectorAll("[data-reveal]").forEach(el => obs.observe(el));
+</script>

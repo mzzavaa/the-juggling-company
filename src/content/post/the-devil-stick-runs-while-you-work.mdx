@@ -1,0 +1,138 @@
+---
+title: "The Devil Stick Runs While You Work"
+slug: the-devil-stick-runs-while-you-work
+summary: "In one hand: balls. Your active work, your code, your decisions. In the other: a devil stick. The managed service, the automated pipeline, the agent crew - spinning on its own, needing only occasional correction. This is the modern knowledge worker's actual pattern."
+date: 2026-06-01
+tags: ["tech", "change", "juggling", "managed-services", "ai-agents", "cloud", "automation", "devil-stick"]
+pillars: ["change", "tech"]
+cover: ../../assets/images/hand-tech-tree-cloud.png
+coverAlt: "An upturned hand holding a glowing ball at its center, from which rise branches of juggling props - clubs, rings, balls - blooming into cloud icons and AI symbols"
+coverVideo: /videos/hand-tech-tree-cloud.mp4
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
+There is a juggling pattern that most people do not recognize as juggling.
+
+One hand holds a devil stick - a thin baton that spins horizontally, propelled and guided by two small hand sticks. You hit it left, it spins right. You hit it right, it spins left. At steady spin, it almost manages itself. You do not need to touch it constantly. You tap it, correct its angle when it starts to drift, and let it continue.
+
+The other hand is running a normal three-ball cascade. Throw, catch, throw, catch. Active work. Each ball requires attention and timing. The balls do not continue without you. They fall the moment you stop.
+
+Two hands. Two completely different relationships to continuity.
+
+<StatGrid items={[
+  { value: "Devil stick", label: "Runs without you", sub: "Needs a tap to correct drift, but continues spinning between touches - managed services, automated pipelines, agent crews", color: "tech" },
+  { value: "Balls", label: "Stops without you", sub: "Active work that requires continuous attention - your code, your decisions, your creative output", color: "brain" },
+  { value: "Both hands", label: "The modern pattern", sub: "The skill is maintaining both simultaneously - knowing when to tap the stick and when to trust the spin", color: "change" }
+]} />
+
+## What the devil stick is
+
+The devil stick does not require constant contact. Once you have set it spinning at the right speed and angle, it will continue for a while without your intervention. But it will drift. The angle will tilt. The spin will slow. If you wait too long to correct it, the spin dies and you have to restart from zero, which is harder than maintaining the spin that was already there.
+
+The skill of devil sticking is not in the continuous contact. It is in reading the spin, knowing when it needs correction, and making that correction small and precise rather than large and compensatory. A well-timed small tap keeps the spin clean. A late large correction often makes it worse.
+
+This is an exact description of how managed cloud services work.
+
+An AWS Lambda function, a fully managed database, a containerized API on App Runner, an AI agent crew running on a schedule - these continue operating when you are not touching them. They do not need you to watch them every second. They run. But they will drift: configurations that worked in one context become misaligned in another, costs that were predictable start growing in unexpected directions, models that were well-calibrated start encountering data patterns they were not trained on.
+
+The skill is not in constant monitoring. It is in reading the spin - watching the right signals - and correcting early while the correction is still small.
+
+<Diagram caption="Two-handed pattern: active work in one hand requires continuous attention, managed services in the other need periodic correction not constant contact">
+<svg viewBox="0 0 560 200" width="560" height="200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="200" fill="#14141f" rx="8"/>
+
+  <text x="130" y="20" text-anchor="middle" fill="#ff3366" font-size="10" font-weight="600">LEFT HAND - Active Work</text>
+  <text x="420" y="20" text-anchor="middle" fill="#33cc66" font-size="10" font-weight="600">RIGHT HAND - Managed Services</text>
+  <line x1="270" y1="14" x2="270" y2="188" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <circle cx="90" cy="90" r="12" fill="#ff336622" stroke="#ff3366" stroke-width="1.5"/>
+  <circle cx="140" cy="55" r="12" fill="#ff336622" stroke="#ff3366" stroke-width="1.5"/>
+  <circle cx="190" cy="90" r="12" fill="#ff336622" stroke="#ff3366" stroke-width="1.5"/>
+  <path d="M70,140 Q130,60 190,140" fill="none" stroke="#ff3366" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+
+  <text x="130" y="160" text-anchor="middle" fill="#9696b0" font-size="8">continuous throw-catch-throw cycle</text>
+  <text x="130" y="173" text-anchor="middle" fill="#ff3366" font-size="8">stops the moment you stop</text>
+
+  <rect x="360" y="100" width="120" height="14" rx="4" fill="#33cc6633" stroke="#33cc66" stroke-width="1"/>
+  <text x="420" y="111" text-anchor="middle" fill="#33cc66" font-size="8">spinning - autonomous</text>
+
+  <line x1="360" y1="107" x2="375" y2="95" stroke="#33cc66" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="480" y1="107" x2="465" y2="95" stroke="#33cc66" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <line x1="375" y1="95" x2="465" y2="95" stroke="#33cc66" stroke-width="2"/>
+
+  <circle cx="380" cy="62" r="6" fill="#33ccff" opacity="0.6"/>
+  <line x1="382" y1="68" x2="382" y2="92" stroke="#33ccff" stroke-width="1.5" stroke-dasharray="2,3"/>
+  <text x="382" y="55" text-anchor="middle" fill="#33ccff" font-size="7">tap</text>
+
+  <circle cx="450" cy="44" r="6" fill="#33ccff" opacity="0.6"/>
+  <line x1="452" y1="50" x2="452" y2="92" stroke="#33ccff" stroke-width="1.5" stroke-dasharray="2,3"/>
+  <text x="452" y="37" text-anchor="middle" fill="#33ccff" font-size="7">correct</text>
+
+  <text x="420" y="155" text-anchor="middle" fill="#9696b0" font-size="8">periodic small corrections</text>
+  <text x="420" y="168" text-anchor="middle" fill="#33cc66" font-size="8">continues without you between touches</text>
+  <text x="420" y="181" text-anchor="middle" fill="#9696b0" font-size="7">but drifts without them</text>
+</svg>
+</Diagram>
+
+## The balls in the left hand
+
+The three-ball cascade running in the left hand is your active work. The code you are writing. The architecture decisions you are making. The conversations you are having. The creative and strategic work that requires your continuous attention and does not continue when you look away.
+
+This work does not benefit from autonomy. It benefits from your presence - your judgment, your experience, your ability to read what is happening and respond in real time. The balls fall the moment you stop throwing.
+
+The relationship to these balls should not be automation. It should be depth. The left hand runs the active pattern because that is what it is for.
+
+<Callout type="info" title="Why both hands must be occupied differently">
+The instinct to automate everything misses what the two-handed pattern is teaching. Not everything that can be automated should be. Some work is valuable precisely because it requires your continuous presence - because the judgment involved is non-trivially human and the value comes from that.
+
+The devil stick frees up cognitive resources not so you can automate the left hand too, but so you can give the left hand fuller attention. The managed service handling the routine operations lets you focus more completely on the work that actually requires you.
+</Callout>
+
+## Reading the spin: what good monitoring looks like
+
+The most common failure in the two-handed pattern is neglecting the devil stick because the balls are demanding.
+
+The cascade in the left hand requires constant rhythm. The devil stick, because it does not fall immediately, is easy to deprioritize. You stop watching it. The spin slows. The angle tilts. By the time you notice, the correction is not a small tap - it is a full restart.
+
+In cloud infrastructure, this is the pattern behind most incidents involving managed services. The Lambda function was running fine for months. The costs drifted. The database connections quietly saturated. The agent's outputs started degrading as the model encountered new patterns. None of these required immediate intervention at the moment they began. All of them required a small correction before they became large corrections.
+
+<PullQuote>
+You do not monitor the devil stick by watching it every second. You monitor it by knowing what a healthy spin looks like, checking that what you see matches it, and correcting when it does not. The check takes a moment. The correction, when done early, takes a moment more. Neither interrupts the cascade.
+</PullQuote>
+
+## The combination is the skill
+
+Running balls in one hand is a skill. Running a devil stick in the other hand is a skill. Running both simultaneously is a third skill that is not simply the sum of the two.
+
+The combination requires a different kind of attention management. The balls demand rhythmic presence. The devil stick demands periodic peripheral awareness. Neither can receive all of your attention at once. Neither can be fully ignored.
+
+<Callout type="success" title="What the two-handed pattern requires">
+The two-handed pattern requires three things:
+First: automate what genuinely does not require you, and trust the automation to run.
+Second: keep the active work active - do not abdicate it to the automation because the automation is easier to measure.
+Third: build the peripheral monitoring that tells you, at a glance, whether the autonomous side is drifting without pulling your full attention from the active side.
+
+This is observability, alerting, and dashboards in their proper role - not as replacements for attention but as the peripheral vision that lets you keep the cascade running while the stick spins.
+</Callout>
+
+The image for this post shows a hand holding a glowing ball at its center, with branches growing upward - props, rings, clubs blooming into cloud icons and AI symbols. The ball in the hand is the active foundation. Everything branching outward is the autonomous layer that grew from it. The hand still holds the original ball. The branches run on their own.
+
+That is the pattern. Start with what you hold. Let what can run autonomously run. Keep your hands in both.
+
+<Takeaways color="tech" items={[
+  "The devil stick runs without continuous contact - periodic small corrections keep it spinning. This is the accurate model for managed services, automated pipelines, and agent crews.",
+  "The balls in the other hand require your continuous presence - they fall the moment you stop. Not everything should be automated. Some work is valuable precisely because it needs you.",
+  "The most common failure is neglecting the devil stick because the cascade is demanding. By the time you notice the drift, you need a full restart instead of a small correction.",
+  "Observability and alerting are peripheral vision - they tell you whether the autonomous side is drifting without interrupting the active pattern. Build them before you need them."
+]} />
+
+---
+
+*Read next: [The Change Is Always Juggling](/blog/the-change-is-always-juggling) - the structural pattern that runs through every major organisational change.*
