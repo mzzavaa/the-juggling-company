@@ -1,0 +1,244 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
+
+type Difficulty = "beginner" | "intermediate" | "advanced";
+type Pillar = "brain" | "tech" | "change" | "all";
+
+interface Pattern {
+  src: string;
+  title: string;
+  notation: string;
+  description: string;
+  difficulty: Difficulty;
+  pillar: Pillar;
+}
+
+const threeBall: Pattern[] = [
+  {
+    src: "/animations/pattern-3-cascade.gif",
+    title: "Three-Ball Cascade",
+    notation: "3",
+    description: "The foundation. Every juggler starts here. Each throw takes three beats to return.",
+    difficulty: "beginner",
+    pillar: "all",
+  },
+  {
+    src: "/animations/pattern-3-423.gif",
+    title: "The 423",
+    notation: "423",
+    description: "Cascade with a hold. One ball pauses while the others flow. The 4 buys time, the 2 is a held beat.",
+    difficulty: "beginner",
+    pillar: "change",
+  },
+  {
+    src: "/animations/pattern-3-441.gif",
+    title: "The 441",
+    notation: "441",
+    description: "A Mills' Mess building block. Cross-arm magic. The 1 hand-passes while the 4s arc high.",
+    difficulty: "intermediate",
+    pillar: "tech",
+  },
+  {
+    src: "/animations/pattern-3-531.gif",
+    title: "The 531",
+    notation: "531",
+    description: "Asymmetric beauty. High throw, low throw, hold. Three different timing windows in one cycle.",
+    difficulty: "intermediate",
+    pillar: "change",
+  },
+  {
+    src: "/animations/pattern-3-51.gif",
+    title: "The Shower",
+    notation: "51",
+    description: "All balls travel one direction in a circle. Visually iconic. Looks like more balls than there are.",
+    difficulty: "intermediate",
+    pillar: "tech",
+  },
+  {
+    src: "/animations/pattern-3-312.gif",
+    title: "The 312",
+    notation: "312",
+    description: "The box foundation. Square patterns from round throws. The 1 is a quiet hand-to-hand pass.",
+    difficulty: "intermediate",
+    pillar: "all",
+  },
+];
+
+const fourBall: Pattern[] = [
+  {
+    src: "/animations/pattern-4-fountain.gif",
+    title: "Four-Ball Fountain",
+    notation: "4",
+    description: "Four balls, two in each hand. Independent columns - each hand runs its own loop, no crossing.",
+    difficulty: "intermediate",
+    pillar: "tech",
+  },
+  {
+    src: "/animations/pattern-4-534.gif",
+    title: "The 534",
+    notation: "534",
+    description: "Four-ball half-shower. Asymmetric with a pause. Three different heights weave through each other.",
+    difficulty: "advanced",
+    pillar: "tech",
+  },
+  {
+    src: "/animations/pattern-4-633.gif",
+    title: "The 633",
+    notation: "633",
+    description: "Symmetric 4-ball with holds. Meditative rhythm. A high throw followed by two equal mediums.",
+    difficulty: "advanced",
+    pillar: "change",
+  },
+  {
+    src: "/animations/pattern-4-552.gif",
+    title: "The 552",
+    notation: "552",
+    description: "Four-ball cascade feel. Two highs and a hold. The 2 is the rest beat that makes it possible.",
+    difficulty: "advanced",
+    pillar: "change",
+  },
+];
+
+const fiveBall: Pattern[] = [
+  {
+    src: "/animations/pattern-5-cascade.gif",
+    title: "Five-Ball Cascade",
+    notation: "5",
+    description: "Five balls. The milestone. Same grammar as the three-ball, higher arcs, smaller margin.",
+    difficulty: "advanced",
+    pillar: "brain",
+  },
+];
+
+const groups = [
+  { id: "three", label: "Three balls", subtitle: "The foundation. Where every juggler starts.", patterns: threeBall, accent: "var(--color-tech-change)" },
+  { id: "four",  label: "Four balls",  subtitle: "Two parallel tracks. Each hand runs its own loop.", patterns: fourBall, accent: "var(--color-tech)" },
+  { id: "five",  label: "Five balls",  subtitle: "The milestone. The same pattern, the higher load.", patterns: fiveBall, accent: "var(--color-brain)" },
+];
+
+const totalPatterns = threeBall.length + fourBall.length + fiveBall.length;
+---
+
+<BaseLayout
+  title="Juggling Patterns - The Juggling Company"
+  description="Eleven juggling patterns animated and explained. From the three-ball cascade to the five-ball milestone, each shown with siteswap notation, difficulty, and a brief description."
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden pb-0 pt-28 md:pt-36">
+    <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute left-1/4 top-0 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-3xl" style="background: var(--color-tech-change);"></div>
+      <div class="absolute right-1/4 top-1/2 h-[24rem] w-[24rem] translate-x-1/2 rounded-full opacity-15 blur-3xl" style="background: var(--color-brain);"></div>
+    </div>
+
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
+      <p class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+        <Icon name="cascade" size={12} />
+        {totalPatterns} patterns
+      </p>
+      <h1 class="mt-6 font-display text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight">
+        The patterns,<br /><span style="color: var(--color-tech-change);">animated.</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
+        Each pattern below is an actual JugglingLab simulation - the same mathematics, the same gravity, the same physics every juggler runs through their hands. The notation is siteswap: a digit is how many beats before that prop is thrown again. Higher numbers mean higher throws.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-2">
+        {groups.map(g => (
+          <a href={`#${g.id}`} class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-2 text-sm font-medium text-[var(--color-fg)] transition-all hover:border-transparent hover:bg-[var(--color-bg-card)]" style={`--c: ${g.accent}`}>
+            <span class="inline-block h-2 w-2 rounded-full" style={`background: ${g.accent};`}></span>
+            {g.label}
+            <span class="text-xs text-[var(--color-muted)]">{g.patterns.length}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {groups.map((group, gi) => (
+    <section id={group.id} class="scroll-mt-24 mx-auto max-w-[1400px] px-4 py-16 md:px-6 md:py-20 lg:px-10">
+      <div class="mb-10 flex items-end justify-between gap-6 border-b border-[var(--color-border)] pb-6">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest" style={`color: ${group.accent};`}>
+            Section {gi + 1}
+          </p>
+          <h2 class="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">{group.label}</h2>
+          <p class="mt-2 max-w-xl text-[var(--color-muted)]">{group.subtitle}</p>
+        </div>
+        <p class="hidden text-sm font-medium text-[var(--color-muted)] md:block">
+          {group.patterns.length} {group.patterns.length === 1 ? "pattern" : "patterns"}
+        </p>
+      </div>
+
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {group.patterns.map((p, i) => (
+          <li data-reveal style={`animation-delay: ${i * 60}ms;`}>
+            <JugglingPatternGif {...p} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <!-- FOOTER NOTE -->
+  <section class="border-t border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+    <div class="mx-auto max-w-[1400px] px-4 py-14 md:px-6 lg:px-10">
+      <div class="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-start md:gap-16">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Reading siteswap</p>
+          <h2 class="mt-2 font-display text-2xl font-bold tracking-tight md:text-3xl">A digit is a duration.</h2>
+          <p class="mt-4 leading-relaxed text-[var(--color-muted)]">
+            Siteswap notation describes a pattern by what each throw does. Read each digit as: how many beats before this object is thrown again. A 3 means three beats. A 5 means five beats - higher, longer in the air. Odd numbers cross to the opposite hand. Even numbers return to the same hand. A 2 is a hold. A 1 is a quick hand-to-hand pass.
+          </p>
+          <p class="mt-3 leading-relaxed text-[var(--color-muted)]">
+            Average the digits in a pattern: the mean is the number of objects. Cascade "3" averages 3. The "531" averages 3 too - same number of balls, different rhythm. The "534" averages 4 - same idea, one more ball. The math always tells you what is in the air.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6">
+          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Want to learn the cascade first?</p>
+          <p class="mt-3 leading-relaxed text-[var(--color-fg)]">
+            Every pattern on this page assumes you have the three-ball cascade in your hands. It is the grammar of all juggling.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/learn/the-cascade" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-[#0a0a12] transition-all hover:opacity-90" style="background: var(--color-tech-change);">
+              The Cascade explained
+              <Icon name="arrow-right" size={13} />
+            </a>
+            <a href="/learn" class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-2 text-sm font-semibold text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-card)]">
+              All concepts
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-10 max-w-3xl text-xs leading-relaxed text-[var(--color-muted)]">
+        Pattern animations rendered with
+        <a href="https://jugglinglab.org" target="_blank" rel="noopener noreferrer" class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">JugglingLab</a>
+        by Jack Boyce -
+        <a href="https://github.com/jkboyce/jugglinglab" target="_blank" rel="noopener noreferrer" class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">open source</a>,
+        free to use, the tool that has shaped how Linda understands and teaches patterns.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+
+<script>
+  const obs = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in-view")),
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+  document.querySelectorAll("[data-reveal]").forEach((el) => obs.observe(el));
+</script>

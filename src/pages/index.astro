@@ -5,7 +5,7 @@ import VideoStrip from "@/components/VideoStrip.astro";
 import VideoStripCard from "@/components/VideoStripCard.astro";
 import PostCard from "@/components/PostCard.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
 import worldMapGlowing from "@/assets/images/world-map-glowing.png";
@@ -156,7 +156,7 @@ const personJsonLd = {
     </div>
   </section>
 
-  <!-- JUGGLING PATTERNS: powered by JugglingLab -->
+  <!-- JUGGLING PATTERNS -->
   <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
@@ -167,78 +167,44 @@ const personJsonLd = {
         <p class="mt-4 max-w-lg text-[var(--color-muted)]">
           Every juggling pattern has a notation: <span class="font-mono text-sm text-[var(--color-tech)]">siteswap</span>.
           A number is how many beats before that prop is thrown again.
-          Higher numbers mean more time in the air. These are six patterns worth knowing.
+          Higher numbers mean more time in the air. Three patterns worth knowing.
         </p>
       </div>
-      <p class="max-w-xs text-xs text-[var(--color-muted)] md:text-right">
-        Animations powered by
-        <a href="https://jugglinglab.org" target="_blank" rel="noopener noreferrer"
-          class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">JugglingLab</a>
-        by Jack Boyce —
-        <a href="https://github.com/jkboyce/jugglinglab" target="_blank" rel="noopener noreferrer"
-          class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">open source</a>,
-        free to use, a tool that has shaped how Linda understands and teaches patterns.
-      </p>
+      <a href="/patterns" class="inline-flex items-center gap-2 self-start rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-2 text-sm font-semibold text-[var(--color-fg)] transition-all hover:border-transparent hover:bg-[var(--color-bg-card)] md:self-auto">
+        See all 11 patterns
+        <Icon name="arrow-right" size={13} />
+      </a>
     </div>
 
     <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       <li>
-        <JugglingPattern
-          pattern="3"
+        <JugglingPatternGif
+          src="/animations/pattern-3-cascade.gif"
           notation="3"
           title="The Cascade"
           description="The foundation. Three balls, two hands, one repeating arc. Every other pattern is built from understanding this one first."
+          difficulty="beginner"
           pillar="all"
         />
       </li>
       <li>
-        <JugglingPattern
-          pattern="531"
+        <JugglingPatternGif
+          src="/animations/pattern-3-531.gif"
           notation="531"
-          title="The Waterfall"
-          description="Three different heights cycling in sequence. The 5 is high, the 3 is medium, the 1 is a quiet hand-pass. Not all throws need to be equal."
+          title="The 531"
+          description="Asymmetric beauty. High throw, low throw, hold. Three different timing windows in one cycle."
+          difficulty="intermediate"
           pillar="change"
-          slowdown={2.2}
         />
       </li>
       <li>
-        <JugglingPattern
-          pattern="(4,4)"
-          notation="(4,4)"
+        <JugglingPatternGif
+          src="/animations/pattern-4-fountain.gif"
+          notation="4"
           title="The Fountain"
-          description="Synchronous. Both hands throw at the same time, each pair stays on its own side. Two independent tracks running in parallel without crossing."
+          description="Four balls, two in each hand. Independent columns - each hand runs its own loop, no crossing."
+          difficulty="intermediate"
           pillar="tech"
-          slowdown={2.0}
-        />
-      </li>
-      <li>
-        <JugglingPattern
-          pattern="5"
-          notation="5"
-          title="Five-Ball Cascade"
-          description="The same cascade as 3, but with two more balls. The arc is wider, the timing is tighter, the margin for error is smaller. Same pattern - higher stakes."
-          pillar="brain"
-          slowdown={1.6}
-        />
-      </li>
-      <li>
-        <JugglingPattern
-          pattern="753"
-          notation="753"
-          title="The High Waterfall"
-          description="Heights of 7, 5, and 3 cycling continuously. The 7 hangs in the air for a long time. The 3 is almost immediate. Different problems have different arcs."
-          pillar="change"
-          slowdown={2.5}
-        />
-      </li>
-      <li>
-        <JugglingPattern
-          pattern="7531"
-          notation="7531"
-          title="The Four-Level Waterfall"
-          description="Four balls, four heights: 7 hangs long, 5 is medium, 3 is quick, 1 is a quiet hand-to-hand pass. Every level is a different speed and arc. One pattern, four cadences."
-          pillar="tech"
-          slowdown={2.4}
         />
       </li>
     </ul>
@@ -246,9 +212,6 @@ const personJsonLd = {
     <p class="mt-8 text-center text-xs text-[var(--color-muted)]">
       Siteswap notation: each digit = how many beats before that prop is thrown again.
       Odd numbers cross to the opposite hand. Even numbers return to the same hand.
-      Parentheses indicate synchronous throws. — Explore all patterns at
-      <a href="https://jugglinglab.org" target="_blank" rel="noopener noreferrer"
-        class="text-[var(--color-tech)] underline underline-offset-2 hover:text-[var(--color-fg)]">jugglinglab.org</a>
     </p>
   </section>
 

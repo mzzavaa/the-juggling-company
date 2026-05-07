@@ -67,6 +67,13 @@ export const primaryNav: readonly NavItem[] = [
         icon: "cascade",
       },
       {
+        label: "All Patterns",
+        href: "/patterns",
+        description: "Eleven juggling patterns animated and explained, from cascade to five-ball.",
+        accent: "var(--color-tech)",
+        icon: "cascade",
+      },
+      {
         label: "Change Management",
         href: "/learn/change",
         description: "How teams absorb new work, recover from drops, and stay stable.",
