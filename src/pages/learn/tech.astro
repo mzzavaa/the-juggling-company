@@ -13,7 +13,7 @@ import networkPeople from "@/assets/images/network-people-strings.png";
 
 const allPosts = await getPosts();
 const recommended = allPosts.filter(p =>
-  ["the-club-pass-is-a-contract", "the-cats-cradle-is-a-system", "the-change-has-a-structure", "what-passes-between-us"].includes(p.slug)
+  ["the-club-pass-is-a-contract", "the-cats-cradle-is-a-system", "the-change-has-a-structure", "what-passes-between-us"].includes(p.id)
 ).slice(0, 3);
 
 const analogues = [
@@ -216,7 +216,7 @@ const analogues = [
         <h2 class="font-display text-2xl font-bold" data-reveal>From the blog</h2>
         <div class="mt-6 grid gap-4 md:grid-cols-3">
           {recommended.map((post, i) => (
-            <a href={`/blog/${post.slug}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--color-tech)]/30" data-reveal data-delay={i * 80}>
+            <a href={`/blog/${post.id}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 transition-all hover:-translate-y-0.5 hover:border-[var(--color-tech)]/30" data-reveal data-delay={i * 80}>
               <h3 class="font-semibold leading-snug text-[var(--color-fg)]">{post.data.title}</h3>
               <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-2">{post.data.summary}</p>
               <span class="inline-flex items-center gap-1.5 text-xs font-medium" style="color: var(--color-tech);">Read <Icon name="arrow-right" size={11} /></span>

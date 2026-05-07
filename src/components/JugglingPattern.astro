@@ -260,7 +260,7 @@ function simulate(
 }
 
 function initCanvas(canvas: HTMLCanvasElement) {
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d")!;
   if (!ctx) return;
 
   // Canvas is rendered at 2x resolution for sharpness, CSS size is half

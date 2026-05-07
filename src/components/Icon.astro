@@ -56,9 +56,10 @@ interface Props {
   size?: number;
   class?: string;
   label?: string;
+  style?: string;
 }
 
-const { name, size = 20, class: className, label } = Astro.props;
+const { name, size = 20, class: className, label, style } = Astro.props;
 
 const paths: Record<IconName, string> = {
   menu: '<line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>',
@@ -155,6 +156,7 @@ const aria = label
   stroke-linecap="round"
   stroke-linejoin="round"
   class={className}
+  style={style}
   set:html={paths[name]}
   {...aria}
 ></svg>

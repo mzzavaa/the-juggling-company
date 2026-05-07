@@ -14,7 +14,7 @@ import jugglerAllProps from "@/assets/images/juggler-all-props-motion-blur.png";
 
 const allPosts = await getPosts();
 const recommended = allPosts.filter(p =>
-  ["everything-in-the-air-at-once", "what-each-prop-asks-of-you", "the-inclusive-convergence", "the-two-modes-of-juggling"].includes(p.slug)
+  ["everything-in-the-air-at-once", "what-each-prop-asks-of-you", "the-inclusive-convergence", "the-two-modes-of-juggling"].includes(p.id)
 ).slice(0, 3);
 ---
 
@@ -292,7 +292,7 @@ const recommended = allPosts.filter(p =>
         <h2 class="mt-3 font-display text-3xl font-bold tracking-tight" data-reveal data-delay="80">From the blog</h2>
         <div class="mt-8 grid gap-5 md:grid-cols-3">
           {recommended.map((post, i) => (
-            <a href={`/blog/${post.slug}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-all hover:border-[var(--color-fg)]/20 hover:-translate-y-0.5" data-reveal data-delay={i * 80}>
+            <a href={`/blog/${post.id}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-all hover:border-[var(--color-fg)]/20 hover:-translate-y-0.5" data-reveal data-delay={i * 80}>
               <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">{new Date(post.data.date).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}</p>
               <h3 class="font-display text-lg font-semibold leading-snug text-[var(--color-fg)]">{post.data.title}</h3>
               <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.summary}</p>

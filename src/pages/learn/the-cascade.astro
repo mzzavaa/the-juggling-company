@@ -13,7 +13,7 @@ import brainCircuitClubs from "@/assets/images/juggler-brain-circuit-clubs.png";
 
 const allPosts = await getPosts();
 const recommended = allPosts.filter(p =>
-  ["you-are-the-center-of-the-pattern", "the-two-modes-of-juggling", "three-ways-the-arc-can-travel"].includes(p.slug)
+  ["you-are-the-center-of-the-pattern", "the-two-modes-of-juggling", "three-ways-the-arc-can-travel"].includes(p.id)
 ).slice(0, 3);
 ---
 
@@ -192,7 +192,7 @@ const recommended = allPosts.filter(p =>
         <h2 class="font-display text-2xl font-bold" data-reveal>From the blog</h2>
         <div class="mt-6 grid gap-4 md:grid-cols-3">
           {recommended.map((post, i) => (
-            <a href={`/blog/${post.slug}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 transition-all hover:-translate-y-0.5" style={`--hover-border: color-mix(in oklab, var(--color-tech-change) 40%, transparent);`} data-reveal data-delay={i * 80}>
+            <a href={`/blog/${post.id}`} class="group flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 transition-all hover:-translate-y-0.5" style={`--hover-border: color-mix(in oklab, var(--color-tech-change) 40%, transparent);`} data-reveal data-delay={i * 80}>
               <h3 class="font-semibold leading-snug text-[var(--color-fg)]">{post.data.title}</h3>
               <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-2">{post.data.summary}</p>
               <span class="inline-flex items-center gap-1.5 text-xs font-medium" style="color: var(--color-tech-change);">Read <Icon name="arrow-right" size={11} /></span>
