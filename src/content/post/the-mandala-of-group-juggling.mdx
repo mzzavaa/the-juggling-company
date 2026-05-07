@@ -1,0 +1,158 @@
+---
+title: "The Mandala of Group Juggling"
+slug: the-mandala-of-group-juggling
+summary: "When six jugglers gather in a circle and pass props to each other simultaneously, something emerges that no individual juggler creates. The overhead view shows it: a mandala of intersecting arcs, a geometric pattern that exists only in the shared space between all six people."
+date: 2026-05-06
+tags: ["group-juggling", "passing", "community", "complexity", "science", "emergence", "coordination"]
+pillars: ["change", "tech"]
+cover: ../../assets/images/group-juggling-overhead-mandala.png
+coverAlt: "Six people photographed from directly above, standing in a circle, all passing juggling props toward the center simultaneously - the props and their light trails form a complete mandala pattern in the space between the jugglers"
+draft: false
+---
+
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+import AnalogyTable from '../../components/AnalogyTable.astro';
+
+<StatGrid items={[
+  { value: "6", label: "Jugglers in the image", sub: "the minimum for a symmetric full-circle passing pattern - each juggler passes to both neighbors simultaneously", color: "change" },
+  { value: "15", label: "Simultaneous throw-catch events per second", sub: "at standard passing tempo with 6 jugglers each making 2.5 passes/second", color: "tech" },
+  { value: "n(n-1)/2", label: "Possible pair connections for n jugglers", sub: "for 6 jugglers: 15 possible passing channels. Not all are active simultaneously, but the coordination space grows combinatorially", color: "brain" },
+  { value: "0.1s", label: "Synchronization tolerance", sub: "passing patterns require throws to arrive within approximately 100ms of the target timing window or the receiving juggler cannot catch", color: "yellow" }
+]} />
+
+Look at the image from above. Six people. Between them, a perfect mandala - the props' arcs forming a geometry that none of the six individuals could produce alone. No single person sees this pattern from outside. Each sees only their own hands and their immediate neighbors. The mandala exists only in the overhead view.
+
+This is emergence: a pattern that exists at the group level and is absent at the individual level. The mathematics of how it works, and the coordination science of how six people maintain it in real time, is the subject of this post.
+
+## The geometry of n-person passing
+
+For `n` jugglers arranged in a circle, the passing geometry depends on the angle between each juggler's throw targets. For 6 jugglers evenly spaced, each separated by 60 degrees, the geometry has hexagonal symmetry.
+
+In a standard 6-person star feed, each juggler passes alternately to two specific partners - typically the juggler directly across the circle (180 degrees) and a neighbor. The crossing passes trace the hexagram (Star of David) pattern visible in group juggling overhead photos.
+
+**The combinatorial structure:** With `n` jugglers, there are `n(n-1)/2` possible passing pairs. For 6 jugglers: 15 pairs. At any moment, only `floor(n/2)` passes can occur simultaneously (each juggler can only throw once per beat). For 6 jugglers: 3 simultaneous passes per beat.
+
+The 6-person juggling mandala represents a temporal sequence: over one full cycle, all 15 possible pass directions are covered, rotating through the pattern. The mandala is the superposition of all these directions, captured in a single long-exposure photograph.
+
+<Diagram caption="Overhead geometry of a 6-person juggling circle. Each line represents a passing channel. The hexagram pattern emerges from simultaneous passes between non-adjacent jugglers.">
+<svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <marker id="mg-arr" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#9696b0" opacity="0.6"/>
+    </marker>
+  </defs>
+  <rect width="560" height="280" rx="8" fill="#0d0d1a"/>
+
+  <text x="280" y="22" fill="#9696b0" font-size="10" font-family="sans-serif" text-anchor="middle">6-person circle: juggler positions and primary passing channels</text>
+
+  <circle cx="280" cy="80" r="12" fill="#1a1a2e" stroke="#ff3366" stroke-width="2"/>
+  <text x="280" y="85" fill="#ff3366" font-size="9" font-family="monospace" text-anchor="middle">A</text>
+
+  <circle cx="393" cy="145" r="12" fill="#1a1a2e" stroke="#ff8c00" stroke-width="2"/>
+  <text x="393" y="150" fill="#ff8c00" font-size="9" font-family="monospace" text-anchor="middle">B</text>
+
+  <circle cx="393" cy="215" r="12" fill="#1a1a2e" stroke="#ffcc33" stroke-width="2"/>
+  <text x="393" y="220" fill="#ffcc33" font-size="9" font-family="monospace" text-anchor="middle">C</text>
+
+  <circle cx="280" cy="260" r="12" fill="#1a1a2e" stroke="#33cc66" stroke-width="2"/>
+  <text x="280" y="265" fill="#33cc66" font-size="9" font-family="monospace" text-anchor="middle">D</text>
+
+  <circle cx="167" cy="215" r="12" fill="#1a1a2e" stroke="#3b6cff" stroke-width="2"/>
+  <text x="167" y="220" fill="#3b6cff" font-size="9" font-family="monospace" text-anchor="middle">E</text>
+
+  <circle cx="167" cy="145" r="12" fill="#1a1a2e" stroke="#cc44ff" stroke-width="2"/>
+  <text x="167" y="150" fill="#cc44ff" font-size="9" font-family="monospace" text-anchor="middle">F</text>
+
+  <line x1="280" y1="92" x2="280" y2="248" stroke="#ff3366" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="5 3"/>
+  <line x1="381" y1="153" x2="179" y2="207" stroke="#ff8c00" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="5 3"/>
+  <line x1="381" y1="207" x2="179" y2="153" stroke="#ffcc33" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="5 3"/>
+
+  <line x1="292" y1="88" x2="383" y2="137" stroke="#9696b0" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="382" y1="157" x2="382" y2="203" stroke="#9696b0" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="383" y1="223" x2="292" y2="252" stroke="#9696b0" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="268" y1="252" x2="179" y2="223" stroke="#9696b0" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="178" y1="203" x2="178" y2="157" stroke="#9696b0" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="179" y1="137" x2="268" y2="88" stroke="#9696b0" stroke-width="1" stroke-opacity="0.3"/>
+
+  <circle cx="280" cy="170" r="3" fill="#f3f3f8" opacity="0.3"/>
+
+  <text x="430" y="90" fill="#9696b0" font-size="9" font-family="monospace">Solid: cross-circle passes</text>
+  <text x="430" y="104" fill="#9696b0" font-size="9" font-family="monospace">(A-D, B-E, C-F)</text>
+  <text x="430" y="120" fill="#9696b0" font-size="9" font-family="monospace">Faint: neighbor passes</text>
+  <text x="430" y="134" fill="#9696b0" font-size="9" font-family="monospace">Together: full mandala</text>
+</svg>
+</Diagram>
+
+## How 6 people synchronize without a conductor
+
+The group juggling mandala has no conductor. No one coordinates the timing explicitly. Yet 15 throws and catches per second happen in synchrony. How?
+
+Research on interpersonal coordination by Richardson, Marsh, and Schmidt (2005-2015) identifies three mechanisms:
+
+**1. Perceptual-motor coupling.** Each juggler sees the props flying toward them and adjusts their throw timing based on what they perceive arriving. The visual information is the synchronization signal. This is bottom-up coordination: each person responds to their immediate perceptual input.
+
+**2. Predictive modeling.** Experienced passing groups develop shared mental models of the collective pattern. Each person knows not just their own throws but the expected timing of every other juggler. This is top-down coordination: each person acts on an internal model.
+
+**3. Error propagation damping.** In stable passing groups, timing errors propagate outward but are absorbed. If juggler A throws slightly early, juggler B receives early, catches early, and has the choice to throw back to the pattern timing or follow A's error. Experienced passers throw back to the correct timing (damping the error) rather than following it (amplifying the error).
+
+The stability of the mandala depends on the balance between these three mechanisms. New groups rely almost entirely on mechanism 1, making them vulnerable to error propagation. Expert groups use all three, making the pattern robust to individual errors.
+
+<AnalogyTable
+  headers={["Group size", "Primary coordination mechanism", "Failure mode"]}
+  rows={[
+    ["2 jugglers", "Perceptual coupling + prediction", "One person's error directly disrupts the other"],
+    ["3 jugglers (feed)", "Feeder as timing anchor", "Feeder error propagates to both feedees simultaneously"],
+    ["4-5 jugglers", "Distributed prediction + recovery", "Recovery requires explicit communication (verbal cues)"],
+    ["6+ jugglers (circle)", "Shared pattern model + damping", "Phase drift - the circle gradually falls out of sync"]
+  ]}
+/>
+
+## The mathematics of circle passing
+
+A 6-person circle juggling pattern with objects passed across the circle (as in the image) can be analyzed using the same siteswap framework extended to multiple jugglers.
+
+For a symmetric 6-person circle where each juggler passes to the juggler directly opposite (3 simultaneous cross-circle passes per beat), the system has hexagonal symmetry. The combined state of all 6 jugglers must satisfy the passing siteswap validity condition: the multi-juggler state graph must have a valid cycle that visits each juggler's state in the correct sequence.
+
+For 6 jugglers each with 3 balls passing in a star pattern: total 18 objects in the system, 6 independent 3-ball cascades that are coupled at the passing moments. The combined system period is `lcm(individual period, 6) = 6` for most standard patterns, meaning the full group pattern repeats every 6 beats.
+
+<PullQuote>
+"The mandala is not drawn - it is computed in real time by six people each solving a local problem. The geometry of the full pattern is a consequence of six local decisions made simultaneously, constrained by shared rhythm. No one person has to understand the mandala to produce it."
+</PullQuote>
+
+## Emergence and scale
+
+The mandala is an example of emergence: a macro-level pattern that does not exist at the micro level and cannot be predicted from individual behavior alone.
+
+Each juggler sees: their own hands, the props arriving toward them, their immediate neighbors' positions. No juggler sees the mandala. The mandala is visible only from above - from outside the system.
+
+This is structurally identical to other emergent collective phenomena: ant colony foraging patterns (no ant has a map), murmuration of starlings (no bird plans the flock shape), traffic flow dynamics (no driver intends the stop-and-go wave). The macro pattern emerges from local interactions following simple rules.
+
+The simple rules in group juggling:
+1. Throw at the correct value (height/timing)
+2. Throw to the designated target
+3. Maintain the group tempo
+
+From these three rules, applied locally by each person, the mandala emerges globally.
+
+## Further reading
+
+- **Richardson, M.J., Marsh, K.L., and Schmidt, R.C.** (2005). "Effects of visual and verbal interaction on unintentional interpersonal coordination." *Journal of Experimental Psychology: Human Perception and Performance*, 31(1), 62-79.
+- **Beek, P.J., and Lewbel, A.** (2007). "The scientific study of juggling." *International Journal of Sport Psychology*, 38, 195-222.
+- **Kelso, J.A.S.** (1995). *Dynamic Patterns: The Self-Organization of Brain and Behavior*. MIT Press. Covers coordination dynamics directly applicable to group juggling synchronization.
+- **International Juggling Association Festival Archive** - juggling.org. Annual festival records and documentation of group patterns including large-circle passing records.
+
+<Takeaways items={[
+  "The overhead mandala is a superposition of all passing channels over time - no single person sees it. It exists only at the group level, a textbook example of emergent behavior from local coordination rules.",
+  "Six-person circle passing involves three coordination mechanisms: perceptual coupling (reacting to incoming props), predictive modeling (knowing the shared timing), and error damping (throwing back to correct timing rather than following errors).",
+  "A 6-person symmetric circle has n(n-1)/2 = 15 possible passing channels. The star pattern (cross-circle passes) uses all three simultaneous-pass slots per beat, producing hexagonal symmetry visible from above.",
+  "The system's mathematical structure is multi-juggler passing siteswap: each juggler's state sequence must form a valid cycle in the combined state graph. For 6 jugglers with 3 balls each, the full pattern repeats every 6 beats.",
+  "The three local rules that produce the mandala: throw at the correct height/timing, throw to the designated target, maintain the group tempo. From these three constraints applied locally, the global pattern emerges."
+]} />
+
+---
+
+*On this site: [The Mathematics of Passing](/post/the-mathematics-of-passing) covers Prechac notation and the formal mathematics behind group passing patterns - the notation system that describes the mandala's structure. [The Mathematics of Siteswap](/post/the-mathematics-of-siteswap) is the solo foundation that multi-juggler patterns extend. [Juggling in Science and Public Life](/post/juggling-in-science-and-public-life) covers the Richardson-Marsh coordination research on inter-juggler synchronization in its historical context.*

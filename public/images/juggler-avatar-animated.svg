@@ -1,0 +1,277 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300">
+  <defs>
+    <style>
+      /* Juggling arm animation - cascade pattern */
+      @keyframes leftArmJuggle {
+        0%, 100% { transform: rotate(-15deg) translateY(0); }
+        25% { transform: rotate(-35deg) translateY(-8px); }
+        50% { transform: rotate(-20deg) translateY(2px); }
+        75% { transform: rotate(-5deg) translateY(-4px); }
+      }
+      
+      @keyframes rightArmJuggle {
+        0%, 100% { transform: rotate(15deg) translateY(-4px); }
+        25% { transform: rotate(5deg) translateY(2px); }
+        50% { transform: rotate(35deg) translateY(-8px); }
+        75% { transform: rotate(20deg) translateY(0); }
+      }
+      
+      @keyframes leftHandJuggle {
+        0%, 100% { transform: rotate(10deg); }
+        25% { transform: rotate(-20deg); }
+        50% { transform: rotate(5deg); }
+        75% { transform: rotate(15deg); }
+      }
+      
+      @keyframes rightHandJuggle {
+        0%, 100% { transform: rotate(-10deg); }
+        25% { transform: rotate(-5deg); }
+        50% { transform: rotate(20deg); }
+        75% { transform: rotate(-15deg); }
+      }
+      
+      @keyframes subtleBodySway {
+        0%, 100% { transform: translateX(0) rotate(0deg); }
+        25% { transform: translateX(1px) rotate(0.3deg); }
+        50% { transform: translateX(0) rotate(0deg); }
+        75% { transform: translateX(-1px) rotate(-0.3deg); }
+      }
+      
+      @keyframes headFollow {
+        0%, 100% { transform: translateX(0) rotate(0deg); }
+        25% { transform: translateX(2px) rotate(2deg); }
+        50% { transform: translateX(0) rotate(0deg); }
+        75% { transform: translateX(-2px) rotate(-2deg); }
+      }
+      
+      .left-arm {
+        transform-origin: 85px 95px;
+        animation: leftArmJuggle 0.8s ease-in-out infinite;
+      }
+      
+      .right-arm {
+        transform-origin: 115px 95px;
+        animation: rightArmJuggle 0.8s ease-in-out infinite;
+      }
+      
+      .left-hand {
+        transform-origin: 45px 65px;
+        animation: leftHandJuggle 0.8s ease-in-out infinite;
+      }
+      
+      .right-hand {
+        transform-origin: 155px 65px;
+        animation: rightHandJuggle 0.8s ease-in-out infinite;
+      }
+      
+      .body {
+        transform-origin: 100px 150px;
+        animation: subtleBodySway 1.6s ease-in-out infinite;
+      }
+      
+      .head {
+        transform-origin: 100px 55px;
+        animation: headFollow 0.8s ease-in-out infinite;
+      }
+      
+      .figure {
+        fill: rgba(255, 255, 255, 0.15);
+      }
+      
+      .figure-stroke {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.25);
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  
+  <!-- Background (transparent) -->
+  <rect width="200" height="300" fill="transparent"/>
+  
+  <!-- Body group with subtle sway -->
+  <g class="body">
+    <!-- Torso -->
+    <path class="figure" d="
+      M88 95
+      Q78 107 80 125
+      Q82 143 86 157
+      L92 183
+      L108 183
+      L114 157
+      Q118 143 120 125
+      Q122 107 112 95
+      Z
+    "/>
+    <path class="figure-stroke" d="
+      M88 95
+      Q78 107 80 125
+      Q82 143 86 157
+      L92 183
+      L108 183
+      L114 157
+      Q118 143 120 125
+      Q122 107 112 95
+      Z
+    "/>
+    
+    <!-- Neck -->
+    <rect class="figure" x="94" y="82" width="12" height="15" rx="3"/>
+    
+    <!-- Skirt/Dress -->
+    <path class="figure" d="
+      M88 180
+      Q74 203 66 247
+      Q62 270 58 290
+      L76 290
+      Q80 267 88 245
+      L100 223
+      L112 245
+      Q120 267 124 290
+      L142 290
+      Q138 270 134 247
+      Q126 203 112 180
+      Z
+    "/>
+    <path class="figure-stroke" d="
+      M88 180
+      Q74 203 66 247
+      Q62 270 58 290
+      L76 290
+      Q80 267 88 245
+      L100 223
+      L112 245
+      Q120 267 124 290
+      L142 290
+      Q138 270 134 247
+      Q126 203 112 180
+      Z
+    "/>
+  </g>
+  
+  <!-- Head group -->
+  <g class="head">
+    <!-- Head -->
+    <ellipse class="figure" cx="100" cy="62" rx="18" ry="21"/>
+    <ellipse class="figure-stroke" cx="100" cy="62" rx="18" ry="21"/>
+    
+    <!-- Hair (flowing, feminine) -->
+    <path class="figure" d="
+      M82 52
+      Q74 60 76 78
+      Q78 90 84 96
+      L82 82
+      Q80 66 84 54
+      Z
+    " opacity="0.7"/>
+    <path class="figure" d="
+      M118 52
+      Q126 60 124 78
+      Q122 90 116 96
+      L118 82
+      Q120 66 116 54
+      Z
+    " opacity="0.7"/>
+    
+    <!-- Ponytail -->
+    <path class="figure" d="
+      M100 42
+      Q105 35 108 25
+      Q112 15 118 12
+      Q115 20 114 30
+      Q112 40 108 48
+      Q105 42 100 42
+      Z
+    " opacity="0.6"/>
+  </g>
+  
+  <!-- Left arm (animated) -->
+  <g class="left-arm">
+    <!-- Upper arm -->
+    <path class="figure" d="
+      M88 95
+      Q75 90 65 80
+      Q58 72 50 68
+      L52 62
+      Q62 68 70 78
+      Q80 88 88 92
+      Z
+    "/>
+    <path class="figure-stroke" d="
+      M88 95
+      Q75 90 65 80
+      Q58 72 50 68
+    "/>
+    
+    <!-- Forearm -->
+    <path class="figure" d="
+      M50 68
+      Q42 62 38 55
+      Q35 50 32 48
+      L36 44
+      Q40 48 44 55
+      Q48 62 52 66
+      Z
+    "/>
+    <path class="figure-stroke" d="
+      M50 68
+      Q42 62 38 55
+      Q35 50 35 45
+    "/>
+    
+    <!-- Left hand -->
+    <g class="left-hand">
+      <ellipse class="figure" cx="35" cy="45" rx="8" ry="6"/>
+      <ellipse class="figure-stroke" cx="35" cy="45" rx="8" ry="6"/>
+      <!-- Fingers hint -->
+      <path class="figure" d="M28 43 Q25 40 27 37 Q30 39 32 42 Z" opacity="0.6"/>
+      <path class="figure" d="M30 46 Q26 45 26 42 Q29 43 32 45 Z" opacity="0.6"/>
+    </g>
+  </g>
+  
+  <!-- Right arm (animated) -->
+  <g class="right-arm">
+    <!-- Upper arm -->
+    <path class="figure" d="
+      M112 95
+      Q125 90 135 80
+      Q142 72 150 68
+      L148 62
+      Q138 68 130 78
+      Q120 88 112 92
+      Z
+    "/>
+    <path class="figure-stroke" d="
+      M112 95
+      Q125 90 135 80
+      Q142 72 150 68
+    "/>
+    
+    <!-- Forearm -->
+    <path class="figure" d="
+      M150 68
+      Q158 62 162 55
+      Q165 50 168 48
+      L164 44
+      Q160 48 156 55
+      Q152 62 148 66
+      Z
+    "/>
+    <path class="figure-stroke" d="
+      M150 68
+      Q158 62 162 55
+      Q165 50 165 45
+    "/>
+    
+    <!-- Right hand -->
+    <g class="right-hand">
+      <ellipse class="figure" cx="165" cy="45" rx="8" ry="6"/>
+      <ellipse class="figure-stroke" cx="165" cy="45" rx="8" ry="6"/>
+      <!-- Fingers hint -->
+      <path class="figure" d="M172 43 Q175 40 173 37 Q170 39 168 42 Z" opacity="0.6"/>
+      <path class="figure" d="M170 46 Q174 45 174 42 Q171 43 168 45 Z" opacity="0.6"/>
+    </g>
+  </g>
+</svg>

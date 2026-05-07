@@ -51,7 +51,12 @@ const year = new Date().getFullYear();
   <div
     class="border-t border-[var(--color-border)] px-4 py-6 text-center text-xs text-[var(--color-muted)] md:px-6"
   >
-    &copy; {year} {site.name} · Built with Astro · <span class="rgb-text font-semibold">brain · tech · change</span>
+    <p>&copy; {year} {site.name} · Built with Astro · <span class="rgb-text font-semibold">brain · tech · change</span></p>
+    <p class="mt-2">
+      Pattern animations adapted from
+      <a href="https://jugglinglab.org" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-[var(--color-fg)]">JugglingLab</a>
+      by Jack Boyce (open source) - custom figure and dark theme by The Juggling Company.
+    </p>
   </div>
 </footer>
 

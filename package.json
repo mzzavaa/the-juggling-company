@@ -6,11 +6,15 @@
   "description": "The Juggling Company — static site built with Astro.",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "tsx scripts/generate-animations.ts",
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
     "linkcheck": "lychee --cache --max-cache-age 1d --no-progress --base ./dist './dist/**/*.html'",
-    "format": "prettier --write \"src/**/*.{ts,tsx,astro,md,mdx,json,css}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,astro,md,mdx,json,css}\"",
+    "anim:generate": "tsx scripts/generate-animations.ts",
+    "anim:regenerate": "tsx scripts/generate-animations.ts --force",
+    "anim:single": "tsx scripts/generate-animations.ts --pattern"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
@@ -34,6 +38,7 @@
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
     "prettier": "3.4.2",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "tsx": "^4.21.0"
   }
 }

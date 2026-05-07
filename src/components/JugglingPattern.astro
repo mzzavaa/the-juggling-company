@@ -1,12 +1,9 @@
 ---
 /**
- * Displays a live juggling pattern animation powered by JugglingLab
- * (https://jugglinglab.org | https://github.com/jkboyce/jugglinglab).
- *
- * The GIF animation is fetched from the JugglingLab public server using
- * siteswap notation. Ball colors use the site's RGB pillar palette.
- *
- * Attribution: JugglingLab by Jack Boyce, open-source juggling pattern tool.
+ * Juggling pattern card with custom canvas ball animation.
+ * The animated SVG juggler silhouette stays as the visual base;
+ * the canvas overlays glowing siteswap-accurate balls on top.
+ * No external requests — fully self-contained, paused when off-screen.
  */
 interface Props {
   pattern: string;
@@ -30,7 +27,6 @@ const {
   slowdown = 1.8,
 } = Astro.props;
 
-// Pillar accent color for glow and border
 const pillarColor: Record<string, string> = {
   brain: "#ff3366",
   tech: "#33cc66",
@@ -38,33 +34,34 @@ const pillarColor: Record<string, string> = {
   all: "#f3f3f8",
 };
 const accent = pillarColor[pillar];
-
-// JugglingLab GIF server - uses semicolons as param separators
-// colors=mixed applies a pre-defined colorful mix (red/orange/blue/etc.)
-// bgcolor is not a supported param - omit to avoid rendering errors
-const params = [
-  `pattern=${encodeURIComponent(pattern)}`,
-  `redirect=true`,
-  `width=${width}`,
-  `height=${height}`,
-  `fps=30`,
-  `slowdown=${slowdown}`,
-  `colors=mixed`,
-].join(";");
-
-const gifUrl = `https://jugglinglab.org/anim?${params}`;
 ---
 
 <div class="juggling-pattern-card group" style={`--accent: ${accent};`}>
-  <div class="img-wrap">
-    <img
-      src={gifUrl}
-      alt={`Juggling pattern animation: ${title} (${notation ?? pattern})`}
-      width={width}
-      height={height}
-      loading="lazy"
-      class="pattern-gif"
-    />
+  <div class="img-wrap" style={`min-height: ${height}px;`}>
+    <!-- Woman silhouette -->
+    <div class="juggler-silhouette" aria-hidden="true">
+      <img
+        src="/images/juggler-woman-silhouette.png"
+        alt=""
+        width="1920"
+        height="1080"
+        class="juggler-svg"
+      />
+    </div>
+
+    <!-- Canvas ball animation (transparent, overlaid on juggler) -->
+    <canvas
+      class="pattern-canvas"
+      data-jc
+      data-pattern={pattern}
+      data-pillar={pillar}
+      data-slowdown={slowdown}
+      width={width * 2}
+      height={height * 2}
+      style={`width:${width}px;height:${height}px;`}
+      aria-label={`Juggling pattern: ${title}`}
+    ></canvas>
+
     <div class="glow-overlay" aria-hidden="true"></div>
   </div>
 
@@ -87,7 +84,6 @@ const gifUrl = `https://jugglinglab.org/anim?${params}`;
     overflow: hidden;
     transition: box-shadow 240ms ease, transform 240ms ease, border-color 240ms ease;
   }
-
   .juggling-pattern-card:hover {
     border-color: color-mix(in oklab, var(--accent) 60%, var(--color-border));
     box-shadow:
@@ -99,42 +95,50 @@ const gifUrl = `https://jugglinglab.org/anim?${params}`;
 
   .img-wrap {
     position: relative;
-    background: var(--color-bg);
+    background: linear-gradient(180deg, #080810 0%, #0d0d1a 100%);
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 220px;
   }
 
-  .pattern-gif {
-    display: block;
-    position: relative;
+  .juggler-silhouette {
+    position: absolute;
+    inset: 0;
     z-index: 1;
-    filter:
-      drop-shadow(0 0 8px color-mix(in oklab, var(--accent) 50%, transparent))
-      drop-shadow(0 0 24px color-mix(in oklab, var(--accent) 25%, transparent))
-      brightness(1.15)
-      saturate(1.3);
-    transition: filter 240ms ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .juggler-svg {
+    /* Fill the card area; the PNG is 16:9 landscape so cover crops to the
+       center where the woman figure sits. mix-blend-mode:screen makes the
+       black areas of the PNG transparent against the dark card background. */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 48%;
+    mix-blend-mode: screen;
+    opacity: 0.82;
+    transition: opacity 300ms ease;
+  }
+  .juggling-pattern-card:hover .juggler-svg {
+    opacity: 1;
   }
 
-  .juggling-pattern-card:hover .pattern-gif {
-    filter:
-      drop-shadow(0 0 12px color-mix(in oklab, var(--accent) 70%, transparent))
-      drop-shadow(0 0 32px color-mix(in oklab, var(--accent) 40%, transparent))
-      brightness(1.25)
-      saturate(1.5);
+  .pattern-canvas {
+    position: relative;
+    z-index: 2;
+    display: block;
+    /* Canvas background is transparent — SVG juggler shows through */
   }
 
-  /* Subtle radial glow behind the animation */
   .glow-overlay {
     position: absolute;
     inset: 0;
     z-index: 0;
     background: radial-gradient(
       ellipse 70% 60% at 50% 50%,
-      color-mix(in oklab, var(--accent) 8%, transparent),
+      color-mix(in oklab, var(--accent) 6%, transparent),
       transparent 70%
     );
     pointer-events: none;
@@ -147,7 +151,6 @@ const gifUrl = `https://jugglinglab.org/anim?${params}`;
     gap: 0.25rem;
     flex: 1;
   }
-
   .siteswap {
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -157,7 +160,6 @@ const gifUrl = `https://jugglinglab.org/anim?${params}`;
     color: var(--accent);
     opacity: 0.8;
   }
-
   .card-title {
     font-family: var(--font-display);
     font-size: 1rem;
@@ -165,7 +167,6 @@ const gifUrl = `https://jugglinglab.org/anim?${params}`;
     color: var(--color-fg);
     margin-top: 0.25rem;
   }
-
   .card-desc {
     font-size: 0.8125rem;
     line-height: 1.55;
@@ -173,3 +174,366 @@ const gifUrl = `https://jugglinglab.org/anim?${params}`;
     margin-top: 0.25rem;
   }
 </style>
+
+<script>
+// One script instance handles all juggling canvases on the page.
+// Astro deduplicates this module so it only runs once even with many cards.
+
+const PALETTES: Record<string, string[]> = {
+  brain:  ["#ff3366", "#ff6699", "#cc1144"],
+  tech:   ["#33cc66", "#66dd88", "#22aa55"],
+  change: ["#3b6cff", "#6688ff", "#2244dd"],
+  all:    ["#ff3366", "#33cc66", "#3b6cff"],
+};
+
+function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+function lcm(a: number, b: number): number  { return a * b / gcd(a, b); }
+
+// Parse siteswap string → array of throw values.
+// Strips sync notation (parens, commas, x) and maps letters to numbers.
+// 'b' (bounce) is treated as 3 visually.
+function parsePattern(str: string): number[] {
+  return [...str]
+    .filter(c => /[0-9a-z]/i.test(c) && c.toLowerCase() !== "x")
+    .map(c => {
+      if (c === "b" || c === "B") return 3;
+      const n = parseInt(c, 36);
+      return isNaN(n) ? 3 : Math.min(n, 9);
+    });
+}
+
+interface Flight {
+  ballId: number;
+  t0: number; t1: number;
+  x0: number; x1: number;
+  v: number;
+}
+
+function simulate(
+  seq: number[], numBalls: number, LX: number, RX: number,
+  animPeriod: number
+): Flight[] {
+  const flights: Flight[] = [];
+  const queues: Array<Array<{ballId: number; readyAt: number}>> = [[], []];
+
+  // Standard siteswap initialization: ball i in hand (i%2) ready at beat i
+  for (let i = 0; i < numBalls; i++) {
+    queues[i % 2].push({ ballId: i, readyAt: i });
+  }
+
+  const P = seq.length;
+  const SETTLE = animPeriod * 4;
+  const maxV = Math.max(...seq);
+  // Record flights that start at or after (SETTLE - maxV) so we catch any
+  // that are mid-flight when the display window begins.
+  const RECORD_FROM = Math.max(0, SETTLE - maxV);
+  const TOTAL = SETTLE + animPeriod + maxV + 4;
+
+  for (let b = 0; b < TOTAL; b++) {
+    const hand = b % 2;
+    const v = seq[b % P];
+
+    // Find a ball in this hand that's ready
+    const idx = queues[hand].findIndex(e => e.readyAt <= b);
+    if (idx === -1) continue;
+
+    const { ballId } = queues[hand].splice(idx, 1)[0];
+
+    if (v === 0) {
+      queues[hand].push({ ballId, readyAt: b + 1 });
+      continue;
+    }
+
+    const toHand = (hand + v) % 2;
+    const x0 = hand === 0 ? LX : RX;
+    const x1 = toHand === 0 ? LX : RX;
+    const t1 = b + v;
+
+    if (b >= RECORD_FROM) {
+      flights.push({ ballId: ballId % 3, t0: b, t1, x0, x1, v });
+    }
+
+    queues[toHand].push({ ballId, readyAt: t1 });
+  }
+
+  return flights;
+}
+
+function initCanvas(canvas: HTMLCanvasElement) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  // Canvas is rendered at 2x resolution for sharpness, CSS size is half
+  const W = canvas.width;   // actual pixel width (2x)
+  const H = canvas.height;  // actual pixel height (2x)
+
+  const patternStr = canvas.dataset.pattern ?? "3";
+  const pillar     = canvas.dataset.pillar  ?? "all";
+  const slowdown   = parseFloat(canvas.dataset.slowdown ?? "1.8");
+
+  const colors = PALETTES[pillar] ?? PALETTES.all;
+
+  // Ball positions match the arm hand targets (below shoulder, like JugglingLab)
+  const HAND_Y = H * 0.74;
+  const LX     = W * 0.20;
+  const RX     = W * 0.80;
+  const BALL_R = Math.max(10, W * 0.042);
+
+  const seq = parsePattern(patternStr);
+  if (seq.length === 0) return;
+
+  const P = seq.length;
+  const numBalls = Math.max(1, Math.round(seq.reduce((a, b) => a + b, 0) / P));
+  const animPeriod = lcm(P, numBalls);
+
+  // Peak height for a throw value — capped so balls stay mostly on screen
+  const peakH = (v: number) => Math.min(v * H * 0.135, H * 0.62);
+
+  const SETTLE   = animPeriod * 4;
+  const flights  = simulate(seq, numBalls, LX, RX, animPeriod);
+  if (flights.length === 0) return;
+
+  // Animation speed
+  const BPS     = 2.6 / slowdown;
+  const BEAT_MS = 1000 / BPS;
+
+  // ── Drawing helpers ─────────────────────────────────────────────────────
+
+  function drawArc(fl: Flight) {
+    const color = colors[fl.ballId];
+    ctx.save();
+    ctx.strokeStyle = color + "22";
+    ctx.lineWidth   = 2;
+    ctx.setLineDash([6, 10]);
+    ctx.lineDashOffset = 0;
+    ctx.beginPath();
+    for (let i = 0; i <= 28; i++) {
+      const p  = i / 28;
+      const ax = fl.x0 + (fl.x1 - fl.x0) * p;
+      const ay = HAND_Y - peakH(fl.v) * Math.sin(Math.PI * p);
+      i === 0 ? ctx.moveTo(ax, ay) : ctx.lineTo(ax, ay);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawBall(x: number, y: number, colorIdx: number) {
+    const color = colors[colorIdx];
+
+    // Outer haze glow
+    const hazeR = BALL_R * 3.8;
+    const haze  = ctx.createRadialGradient(x, y, 0, x, y, hazeR);
+    haze.addColorStop(0,   color + "55");
+    haze.addColorStop(0.4, color + "1a");
+    haze.addColorStop(1,   "transparent");
+    ctx.fillStyle = haze;
+    ctx.beginPath();
+    ctx.arc(x, y, hazeR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Core ball with highlight
+    const bx     = x - BALL_R * 0.35;
+    const by     = y - BALL_R * 0.35;
+    const ballG  = ctx.createRadialGradient(bx, by, BALL_R * 0.06, x, y, BALL_R);
+    ballG.addColorStop(0,    "#ffffff");
+    ballG.addColorStop(0.22, color + "ee");
+    ballG.addColorStop(1,    color + "88");
+    ctx.fillStyle = ballG;
+    ctx.beginPath();
+    ctx.arc(x, y, BALL_R, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawHands() {
+    [LX, RX].forEach(hx => {
+      // Subtle platform glow
+      const g = ctx.createRadialGradient(hx, HAND_Y + 6, 0, hx, HAND_Y + 6, 28);
+      g.addColorStop(0, "rgba(140,140,200,0.16)");
+      g.addColorStop(1, "transparent");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(hx, HAND_Y + 6, 28, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  // ── Arm drawing ──────────────────────────────────────────────────────────
+  // Shoulder attachment points (PNG anatomy at 2× canvas scale)
+  const L_SHX = W * 0.371;
+  const L_SHY = H * 0.675;
+  const R_SHX = W * 0.642;
+  const R_SHY = H * 0.677;
+
+  // Hand positions matching JugglingLab geometry: throws are BELOW shoulder height
+  // (JugglingLab: PATTERN_Y=30 < SHOULDER_H=40), arms hang down naturally.
+  // Throw: outward and slightly below shoulder. Catch: slightly inward, more below.
+  const L_THROW = { x: W * 0.180, y: H * 0.720 };
+  const L_CATCH = { x: W * 0.220, y: H * 0.780 };
+  const R_THROW = { x: W * 0.820, y: H * 0.720 };
+  const R_CATCH = { x: W * 0.780, y: H * 0.780 };
+
+  // Arm dimensions — upper and forearm nearly equal (JugglingLab: UPPER=41, LOWER=40 cm).
+  // Forearm slightly longer (includes hand reach), matching user's observation.
+  const ULEN = 90, FLEN = 95;
+  const UW = 24, FW = 18, WW = 13, HR = 16;
+
+  // JugglingLab IK (ported from Juggler.kt findJugglerCoordinates).
+  // Elbow height Lr is the triangle altitude from Heron's formula: Lr = 2*Area/D.
+  // The elbow always drops BELOW the shoulder-hand line (gravity-consistent),
+  // with no elbowDir needed — the 3D→2D projection handles direction naturally.
+  function computeElbow(
+    sh: {x:number,y:number}, wr: {x:number,y:number},
+    U: number, L: number
+  ): {x:number,y:number} {
+    const dx = wr.x - sh.x;
+    const dy = wr.y - sh.y;           // canvas: positive = downward
+    const D = Math.sqrt(dx*dx + dy*dy);
+    if (D < 0.1) return { x: sh.x, y: sh.y + U };
+    const D2 = D * D, UU = U*U, LL = L*L;
+    // Perpendicular distance from shoulder-hand line to elbow (Heron's formula)
+    const Lr = Math.sqrt(Math.max(0, 4*UU*LL - Math.pow(UU+LL-D2, 2)) / (4*D2));
+    // Convert to JugglingLab y-up convention (their formula uses y-up coordinates)
+    const dyYup = -dy;
+    const Lalpha = Math.asin(Math.max(-1, Math.min(1, dyYup / D)));
+    const cosLa  = Math.cos(Lalpha);
+    const f0     = Math.sqrt(Math.max(0, UU - Lr*Lr)) / D;
+    const fAdj   = f0 > 1e-4 ? 1 + Lr * Math.tan(Lalpha) / (f0 * D) : 1;
+    // Elbow in canvas coordinates (y-up relative negated back to y-down)
+    return {
+      x: sh.x + f0 * dx * fAdj,
+      y: sh.y + f0 * dy + Lr * cosLa   // +Lr*cos drops elbow downward in canvas
+    };
+  }
+
+  function drawTwoSegArm(
+    sh: {x:number,y:number}, el: {x:number,y:number}, wr: {x:number,y:number}
+  ) {
+    const CREAM = 'rgba(244,236,216,0.93)';
+    const SHADOW = 'rgba(0,0,0,0.30)';
+    function seg(a: {x:number,y:number}, b: {x:number,y:number}, wA: number, wB: number, col: string, oy = 0) {
+      const dx = b.x-a.x, dy = b.y-a.y, len = Math.sqrt(dx*dx+dy*dy);
+      if (len < 1) return;
+      const nx = -dy/len, ny = dx/len;
+      ctx.beginPath();
+      ctx.moveTo(a.x+nx*wA/2, a.y+ny*wA/2+oy); ctx.lineTo(b.x+nx*wB/2, b.y+ny*wB/2+oy);
+      ctx.lineTo(b.x-nx*wB/2, b.y-ny*wB/2+oy); ctx.lineTo(a.x-nx*wA/2, a.y-ny*wA/2+oy);
+      ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+    }
+    // Shadow
+    seg(sh, el, UW+5, FW+5, SHADOW, 3); seg(el, wr, FW+5, WW+5, SHADOW, 3);
+    ctx.beginPath(); ctx.arc(el.x, el.y+3, FW/2+2, 0, Math.PI*2); ctx.fillStyle = SHADOW; ctx.fill();
+    ctx.beginPath(); ctx.arc(wr.x, wr.y+3, HR+2, 0, Math.PI*2); ctx.fillStyle = SHADOW; ctx.fill();
+    // Arm
+    ctx.fillStyle = CREAM;
+    ctx.beginPath(); ctx.arc(sh.x, sh.y, UW/2, 0, Math.PI*2); ctx.fill();
+    seg(sh, el, UW, FW, CREAM);
+    ctx.beginPath(); ctx.arc(el.x, el.y, FW/2+1, 0, Math.PI*2); ctx.fill();
+    seg(el, wr, FW, WW, CREAM);
+    ctx.beginPath(); ctx.arc(wr.x, wr.y, HR, 0, Math.PI*2); ctx.fill();
+  }
+
+  function drawArms(elapsed: number) {
+    function armK(phase: number): { k: number; scoop: number } {
+      const throwEnd = 0.38;
+      let k: number;
+      if (phase < throwEnd) {
+        const t = phase / throwEnd;
+        k = 1 - Math.pow(1-t, 2);    // ease-out: fast throw
+      } else {
+        const t = (phase - throwEnd) / (1 - throwEnd);
+        k = 1 - t*t;                  // ease-in: slow return
+      }
+      const scoop = phase < 0.24 ? Math.sin(Math.PI * phase / 0.24) * 14 : 0;
+      return { k, scoop };
+    }
+
+    const ab = (elapsed / BEAT_MS) % 2;
+    const rPhase = ab < 1 ? ab : 2 - ab;
+    const lPhase = ab < 1 ? 1 - ab : ab - 1;
+    const rA = armK(rPhase), lA = armK(lPhase);
+
+    const lWr = {
+      x: L_CATCH.x + (L_THROW.x - L_CATCH.x) * lA.k,
+      y: L_CATCH.y + (L_THROW.y - L_CATCH.y) * lA.k + lA.scoop
+    };
+    const rWr = {
+      x: R_CATCH.x + (R_THROW.x - R_CATCH.x) * rA.k,
+      y: R_CATCH.y + (R_THROW.y - R_CATCH.y) * rA.k + rA.scoop
+    };
+
+    const lSh = { x: L_SHX, y: L_SHY }, rSh = { x: R_SHX, y: R_SHY };
+    const lEl = computeElbow(lSh, lWr, ULEN, FLEN);
+    const rEl = computeElbow(rSh, rWr, ULEN, FLEN);
+
+    drawTwoSegArm(lSh, lEl, lWr);
+    drawTwoSegArm(rSh, rEl, rWr);
+  }
+
+  // ── Animation loop ───────────────────────────────────────────────────────
+
+  let animId: number | null = null;
+  let startMs: number | null = null;
+
+  function frame(ts: number) {
+    if (!startMs) startMs = ts;
+
+    const elapsed    = ts - startMs;
+    const beatTime   = (elapsed / BEAT_MS) % animPeriod;
+    const currentBeat = SETTLE + beatTime;
+
+    // Find flights active right now
+    const active = flights.filter(f => f.t0 <= currentBeat && f.t1 > currentBeat);
+
+    // Clear — transparent so woman silhouette shows through
+    ctx.clearRect(0, 0, W, H);
+
+    // Arc guides (draw before arms/balls so they're furthest back)
+    active.forEach(drawArc);
+
+    drawArms(elapsed);
+    drawHands();
+
+    // Draw each ball (one per unique ballId)
+    const seen = new Set<number>();
+    for (const fl of active) {
+      if (seen.has(fl.ballId)) continue;
+      seen.add(fl.ballId);
+      const p = (currentBeat - fl.t0) / (fl.t1 - fl.t0);
+      const x = fl.x0 + (fl.x1 - fl.x0) * p;
+      const y = HAND_Y - peakH(fl.v) * Math.sin(Math.PI * p);
+      drawBall(x, y, fl.ballId);
+    }
+
+    animId = requestAnimationFrame(frame);
+  }
+
+  // Pause when scrolled off-screen — big performance win with many cards
+  const obs = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        if (!animId) {
+          startMs = null; // smooth restart
+          animId  = requestAnimationFrame(frame);
+        }
+      } else {
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+      }
+    }
+  }, { threshold: 0.1 });
+
+  obs.observe(canvas);
+}
+
+// Initialise all canvases — runs once even when component appears many times
+function initAll() {
+  document.querySelectorAll<HTMLCanvasElement>("canvas[data-jc]").forEach(el => {
+    if (el.dataset.initialized) return;
+    el.dataset.initialized = "1";
+    initCanvas(el);
+  });
+}
+
+document.readyState === "loading"
+  ? document.addEventListener("DOMContentLoaded", initAll)
+  : initAll();
+</script>
