@@ -1,0 +1,106 @@
+---
+title: "Drop Recovery: What Incident Response Can Learn from Jugglers"
+slug: drop-recovery-incident-response
+summary: "When a juggler drops a ball, the instinct is to chase it. Experts know to keep the pattern running first. The same instinct - chase the symptom rather than stabilise the system - is the failure mode of most production incident response."
+date: 2026-05-07
+tags: ["incident-response", "operations", "change-management", "workshops"]
+pillars: ["change", "tech"]
+cover: ../../assets/images/hand-dropping-glowing-club.png
+coverAlt: "A hand mid-motion with a glowing club falling away, light trail still tracing the rest of the pattern"
+draft: false
+---
+
+import Callout from '../../components/Callout.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+There is a moment, in any sustained juggling pattern, when a ball drops. New jugglers respond the way most humans respond to a falling object: they reach for it. Eyes track the ball, body leans, attention collapses to the dropping point.
+
+What this guarantees is that the next two balls also drop.
+
+Experienced jugglers do something else. The dropped ball is, for the moment, lost. The pattern in the air is not. The first action is not to chase the drop - it is to keep the remaining balls moving, find a stable ending point for them, and only then go retrieve the one on the floor.
+
+This sequence - stabilise the pattern, then recover the dropped element - is the single instinct that distinguishes recoverable juggling failures from cascading ones. It is also, almost exactly, the operating principle that distinguishes good incident response from bad.
+
+<StatGrid items={[
+  { value: "1", label: "Dropped ball", sub: "the visible failure", color: "change" },
+  { value: "2", label: "Balls still in air", sub: "the system to stabilise first", color: "tech" },
+  { value: "0", label: "Time to think", sub: "the response is already happening", color: "yellow" },
+  { value: "Order", label: "What matters most", sub: "stabilise, then recover", color: "brain" }
+]} />
+
+## Why the instinct is wrong
+
+The instinct to chase the dropped ball is not stupid. It is the natural response to the loudest signal in the system. The ball that just hit the floor is the most visible failure. Everything else in the pattern is, by comparison, fine.
+
+The problem is that "fine" is a moving target. The other two balls are in flight. They will land in approximately one second. If your attention has shifted to the floor, your hands are not in position to catch them. The visible failure has captured the cognitive resource needed to prevent the next two failures.
+
+This is the same shape as the most common pattern of incident escalation. An alert fires. An engineer focuses on the symptom. While they are debugging the symptom, the underlying instability propagates to two more services. By the time the original symptom is understood, the incident has spread to systems that were healthy when the alert fired.
+
+The juggler's protocol prevents this. Eyes do not leave the pattern. Hands keep working. The dropped ball stays on the floor until the remaining balls have somewhere safe to go.
+
+## What "stabilise the pattern" looks like in operations
+
+The juggling instruction is concrete: when a ball drops, the remaining balls need a controlled landing. You do not try to maintain the original pattern with two balls - that is unstable. You bring the pattern to a controlled stop, holding the two balls in the same hand if needed, and then go pick up the third.
+
+In operations, the parallel is service degradation rather than service protection. When part of the system fails, the question is not "how do we restore the original capability immediately." It is "what is the smallest stable subset of the system we can hold while we fix the broken part."
+
+This often means deliberately reducing functionality. Disabling a non-critical feature to remove load. Routing traffic to a smaller set of healthy nodes. Accepting degraded user experience as the temporary stable point. These are uncomfortable choices because they look like additional failures - users will notice the disabled feature, the slower response, the regional outage.
+
+They are not additional failures. They are the controlled landing.
+
+<Callout type="info" title="What changes when you do this">
+Teams that practise stabilise-first incident response report fewer cascading failures and shorter total incident durations - even though the initial response feels slower. The reason is identical to the juggling case: the time you save by not chasing the symptom is paid back many times over by the failures you prevent in the rest of the system.
+</Callout>
+
+## The dropped ball is not always the first thing to pick up
+
+Once the pattern is stable, there is a second decision: which problem to solve first.
+
+In juggling, this is usually trivial - you pick up the dropped ball and resume. In operations, the dropped ball is rarely the most important problem. The visible failure is often a downstream symptom of an upstream cause. The service that paged is not always the service that needs the fix.
+
+This requires a discipline that incident response teams develop over time: separating "what failed loudest" from "what failed first." The loudest failure is the alert. The first failure is the root cause. They are often the same; in mature systems with good monitoring, they are increasingly often not.
+
+The juggling metaphor is useful here precisely because it forces the order. Stabilise. Then look at all the visible elements. Then decide which one to handle next. The order is not negotiable - if you skip the stabilisation step, the rest of the protocol does not save you.
+
+<PullQuote>
+The visible failure is rarely the first failure. Stabilise the system, then diagnose. The loud signal and the root cause are increasingly different things.
+</PullQuote>
+
+## The workshop format
+
+This metaphor is concrete enough to teach physically. A juggling-as-incident-response workshop runs about ninety minutes with twenty participants. The format I have used:
+
+Round one: each participant learns a basic three-ball cascade with coloured balls. Each colour represents a service - red is auth, green is the API, blue is the database. The point of round one is just to establish that the participant has a sustainable pattern.
+
+Round two: a deliberate drop is introduced. The facilitator calls out which ball - which service - has just failed. The participant must keep the remaining two balls moving, bring them to a stable hold, and only then retrieve the dropped one. The drop is repeated several times across the round.
+
+Round three: pairs work together passing balls between them, simulating service-to-service dependencies. When a drop happens, both participants have to coordinate the stabilisation. This introduces the communication problem that is the actual hard part of multi-team incident response.
+
+The workshop teaches one thing physically that no slide can teach: the instinct to chase the drop is wrong, and changing the instinct requires repeated controlled practice. Twenty minutes of deliberate drops is enough for most participants to feel the new instinct take hold. They report the same shift back at work, the next time something pages.
+
+## The point is not the metaphor
+
+The juggling exercise is not just an analogy. It is a way to put the lesson into the body, where it can be retrieved under pressure. People who have done the workshop describe a specific experience the next time an alert fires: the urge to chase the symptom is still there, and the trained instinct to stabilise first is now there alongside it. Which one wins depends on which one is more recent.
+
+This is consistent with the literature on motor learning under pressure. Trained physical responses survive stress better than verbal rules. A team that has been told "stabilise the system before debugging" remembers the rule when calm. A team that has practised it physically retrieves the response when paged at three in the morning.
+
+That is the actual claim. Not that juggling teaches incident response in some abstract sense. That juggling provides a fast, embodied, repeatable way to install a counter-instinct that is otherwise hard to train.
+
+<Takeaways title="The drop-recovery protocol" color="change" items={[
+  "When something fails visibly, do not chase the symptom. The visible failure has already happened; the remaining system is what you can still protect.",
+  "Stabilise the rest of the pattern first. This often means deliberate degradation - disabling features, routing around, accepting reduced capability as the temporary stable point.",
+  "The dropped ball is not always the first thing to pick up. The loud failure is often a downstream symptom; the upstream cause needs to be found.",
+  "Physical practice installs the counter-instinct. Repeated drops in a workshop produce a trained response that survives the pressure of a live incident.",
+  "The order is not negotiable. Skip the stabilisation step and the rest of the protocol does not protect you."
+]} />
+
+---
+
+## Further reading
+
+- **Beilock, S.L., and Carr, T.H.** (2001). "On the fragility of skilled performance: What governs choking under pressure?" *Journal of Experimental Psychology: General*, 130(4), 701-725. Why trained physical responses outperform verbal rules under stress.
+- **Allspaw, J.** (2015). "Incidents as fundamentally retrospective constructs." Web Operations Research. The operational case for separating loud failures from root causes.
+- **Klein, G.** (1998). *Sources of Power: How People Make Decisions*. MIT Press. The recognition-primed decision model that underlies expert response under pressure.
+- **Schmidt, R.A., and Lee, T.D.** (2011). *Motor Control and Learning: A Behavioral Emphasis*. Human Kinetics. Foundational work on motor skill acquisition and retrieval under pressure.

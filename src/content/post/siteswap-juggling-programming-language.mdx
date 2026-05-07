@@ -1,0 +1,96 @@
+---
+title: "Siteswap: When Juggling Invented Its Own Programming Language"
+slug: siteswap-juggling-programming-language
+summary: "In 1985 three groups of jugglers, working independently, arrived at the same mathematical notation. Forty years later, siteswap reads like scheduling theory - because that is essentially what it is."
+date: 2026-05-07
+tags: ["mathematics", "siteswap", "patterns", "scheduling", "computer-science"]
+pillars: ["tech", "brain"]
+cover: ../../assets/images/circuit-infinity-amber.png
+coverAlt: "Amber circuit traces forming an infinity loop, suggesting both code and the cascade pattern"
+draft: false
+---
+
+import Callout from '../../components/Callout.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+In 1985, three independent groups of jugglers - Bruce Tiemann at Caltech, Paul Klimek in California, and Mike Day with Adam Chalcraft in Cambridge - converged on the same mathematical notation for describing juggling patterns. None of them knew the others were working on the problem. The notation came to be called siteswap.
+
+What they had discovered, without setting out to, was a small domain-specific programming language for scheduling objects in time. Read with a software engineer's eyes, the notation looks remarkably familiar.
+
+<StatGrid items={[
+  { value: "1985", label: "Independent discovery", sub: "by three separate groups", color: "tech" },
+  { value: "n", label: "Number = throw height", sub: "in beats, not metres", color: "brain" },
+  { value: "avg", label: "Average of digits", sub: "equals the number of objects", color: "yellow" },
+  { value: "0", label: "Collisions allowed", sub: "valid patterns are collision-free", color: "change" }
+]} />
+
+## The notation in one paragraph
+
+A siteswap pattern is a sequence of non-negative integers. Each number is a throw, and its value is the number of beats before that ball will land in the opposite hand. A `3` means the ball lands three beats later in the other hand. A `5` means five beats later. A `0` means no ball is thrown - an empty hand.
+
+The cascade is `3`. Continuous threes in alternating hands. Three balls in steady state.
+
+The fountain - balls cycling within their own hand - is `4`. Each ball comes back to the same hand four beats later. The shower, where one hand throws high and the other passes low, is `51`. Five-ball cascade is `5`. The famous tricks `441`, `531`, `753` are exactly what the digits say they are.
+
+## Why the average gives the ball count
+
+The cleanest result in siteswap is also the most obviously computer-sciency: the average of the digits in any valid steady-state pattern equals the number of balls in play.
+
+`3` averages to 3. `441` averages to (4+4+1)/3 = 3. `531` averages to (5+3+1)/3 = 3. All three-ball patterns. The shower `51` averages to 3 - still three balls. The five-ball `97531` averages to 5.
+
+This is not a coincidence. It falls out of the conservation of throws over time. Each ball spends some number of beats in flight, and the total time-in-flight summed across all balls equals the average flight time multiplied by the ball count. Ball-count emerges as the mean.
+
+<Callout type="info" title="Why this matters beyond the trick">
+The average-equals-balls property turns siteswap into a checkable language. Given any sequence of digits, you can verify in O(n) time whether it could be a valid juggling pattern - long before you try it. A non-integer average is an immediate disqualification.
+</Callout>
+
+## The collision-free condition
+
+The deeper theorem - proved formally by Buhler, Eisenbud, Graham, and Wright in their 1994 *American Mathematical Monthly* paper "Juggling Drops and Descents" - is that a sequence is a valid juggling pattern if and only if it is collision-free.
+
+Collision-free means: no two balls land on the same beat in the same hand. Given a sequence `s_0, s_1, s_2, ...`, ball thrown on beat `i` lands on beat `i + s_i`. The pattern is valid exactly when `i + s_i mod n` is a permutation of `0, 1, ..., n-1` over a period of length `n`.
+
+This is, almost word-for-word, the validity condition for a round-robin scheduling algorithm. Each task (ball) is assigned a slot (landing beat). The schedule is valid if and only if no two tasks contend for the same slot.
+
+## The patterns map to scheduling primitives
+
+Once you see siteswap as scheduling, the standard juggling patterns map cleanly to standard distributed-system shapes.
+
+The cascade `3` is round-robin load balancing. Two workers (hands) alternate identical-cost tasks (balls), each task taking the same fixed time. The fountain `4` is parallel independent processes - each hand maintains its own queue with no cross-traffic. The shower `51` is a producer-consumer pipeline with a buffer: one hand produces high throws, the other consumes and forwards via a short connection.
+
+The familiar trick `441` is two streams operating at different rates with a synchronisation point on the `1`. Five-ball cascade `5` is a round-robin with a deeper queue. Patterns like `97531` are explicit demonstrations that varying-cost tasks can still be scheduled without conflict, given the right offsets.
+
+<PullQuote>
+A juggling pattern is a schedule for moving objects through hands across time. The validity rules are scheduling rules. Siteswap is a notation for collision-free scheduling that happens to be human-readable.
+</PullQuote>
+
+## What jugglers and engineers stumbled on together
+
+The independent discovery in 1985 is itself worth pausing on. Three groups, none collaborating, arrived at the same encoding of the problem. Why?
+
+Because the problem has a unique well-formed solution. Once you decide that you want a notation that is finite, ordered, and respects the timing structure of throws, you end up at integer sequences indexing flight times. The space of reasonable encodings is small enough that converging on the same one is not a coincidence.
+
+This is the same reason that distributed schedulers - cron tables, Kubernetes pod schedulers, real-time embedded systems - all eventually look similar. They are all solving the same constraint: assign work to slots over time without collision. Siteswap is the same shape, applied to balls.
+
+The notation has continued to evolve. Multiplex throws (multiple balls released at once) extend siteswap with bracketed digits. Synchronous patterns where both hands throw on every beat use a parallel notation. Passing patterns between multiple jugglers extend further still. Each extension corresponds to a real generalisation in scheduling theory.
+
+What started as three groups of jugglers wanting to write down what they were doing turned out to be a small but well-formed corner of computer science.
+
+<Takeaways title="What siteswap teaches" color="tech" items={[
+  "Each digit is a throw height in beats, equal to the time before that ball lands in the other hand.",
+  "The average of the digits equals the number of balls in play - a O(n) sanity check on any sequence.",
+  "A sequence is a valid pattern if and only if it is collision-free: no two balls land on the same beat in the same hand.",
+  "Standard juggling patterns map directly to scheduling primitives: round-robin (cascade), parallel processes (fountain), pipeline (shower).",
+  "Three groups independently discovered the notation in 1985, because the problem space has a small set of well-formed solutions."
+]} />
+
+---
+
+## Further reading
+
+- **Buhler, J., Eisenbud, D., Graham, R., and Wright, C.** (1994). "Juggling Drops and Descents." *The American Mathematical Monthly*, 101(6), 507-519. The formal proof of the collision-free validity condition.
+- **Polster, B.** (2003). *The Mathematics of Juggling*. Springer. The standard book-length treatment.
+- **Magnusson, B., and Tiemann, B.** (1991). "The physics of juggling." *The Physics Teacher*, 29(9), 584-589. Tiemann's account of the original discovery period.
+- **Beek, P.J., and Lewbel, A.** (1995). "The science of juggling." *Scientific American*, 273(5), 92-97. Accessible introduction to siteswap and juggling dynamics.
