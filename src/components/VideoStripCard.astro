@@ -33,7 +33,11 @@ const sourceColor: Record<typeof source, string> = {
   instagram: "#e1306c",
 };
 
-const posterUrl =
+// Real poster baked at build time by scripts/generate-video-posters.mjs.
+// Falls back to a remote YouTube thumbnail (hqdefault is always present)
+// when the local file is missing for any reason.
+const localPoster = `/posters/${video.id}.jpg`;
+const remoteFallback =
   source === "youtube" ? `https://i.ytimg.com/vi/${externalId}/hqdefault.jpg` : null;
 
 const aspectClass = orientation === "portrait" ? "aspect-[9/16]" : "aspect-video";
@@ -56,23 +60,24 @@ const ytEmbedSrc =
   data-yt-src={ytEmbedSrc}
 >
   <div class:list={["media relative w-full overflow-hidden bg-black", aspectClass]}>
-    {posterUrl ? (
-      <img
-        src={posterUrl}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        class="poster absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-      />
-    ) : (
-      <div
-        class="poster absolute inset-0 flex items-center justify-center transition duration-500 group-hover:scale-105"
-        style={`background: linear-gradient(140deg, ${sourceColor[source]} 0%, ${accent} 100%);`}
-        aria-hidden="true"
-      >
-        <Icon name={sourceIcon[source]} size={orientation === "portrait" ? 44 : 56} />
-      </div>
-    )}
+    <div
+      class="fallback absolute inset-0 flex items-center justify-center"
+      style={`background: linear-gradient(140deg, ${sourceColor[source]} 0%, ${accent} 100%);`}
+      aria-hidden="true"
+    >
+      <Icon name={sourceIcon[source]} size={orientation === "portrait" ? 44 : 56} />
+    </div>
+
+    <img
+      src={localPoster}
+      data-fallback={remoteFallback ?? ""}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      class="poster absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+    />
+
+    <span class="poster-overlay absolute inset-0" aria-hidden="true"></span>
 
     <span class="badge platform absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
       <Icon name={sourceIcon[source]} size={10} />
@@ -121,6 +126,24 @@ const ytEmbedSrc =
     transform: translateY(-2px);
   }
 
+  /* Subtle dark gradient over the poster so the platform/duration badges
+     and the hover play icon stay legible against any background frame. */
+  .poster-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.05) 38%,
+      rgba(0, 0, 0, 0.05) 62%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+    pointer-events: none;
+  }
+  /* Fallback gradient sits beneath the poster; the poster's onerror handler
+     hides the broken image so the gradient + icon become visible again. */
+  .strip-card .poster.is-broken {
+    display: none;
+  }
+
   /* Hover-iframe is injected by JS for YouTube cards.
      Hide play-pulse once iframe is mounted to avoid double-icon. */
   .strip-card.is-playing .play-pulse {
@@ -155,6 +178,21 @@ const ytEmbedSrc =
 </style>
 
 <script>
+  // Poster fallback chain: local /posters/<slug>.jpg → remote (YouTube hqdefault)
+  // → hidden, revealing the gradient+icon underneath.
+  document.querySelectorAll<HTMLImageElement>(".strip-card .poster").forEach((img) => {
+    let triedRemote = false;
+    img.addEventListener("error", () => {
+      const fallback = img.dataset.fallback;
+      if (!triedRemote && fallback) {
+        triedRemote = true;
+        img.src = fallback;
+        return;
+      }
+      img.classList.add("is-broken");
+    });
+  });
+
   // Hover-to-play for YouTube strip cards. We only mount the iframe once,
   // on first hover, and toggle .is-playing for opacity transitions.
   const cards = document.querySelectorAll<HTMLAnchorElement>(".strip-card[data-source='youtube']");
