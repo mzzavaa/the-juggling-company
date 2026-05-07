@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "prebuild": "tsx scripts/generate-animations.ts",
     "build": "astro build",
+    "posters": "node scripts/generate-video-posters.mjs",
     "preview": "astro preview",
     "typecheck": "astro check",
     "linkcheck": "lychee --cache --max-cache-age 1d --no-progress --base ./dist './dist/**/*.html'",
