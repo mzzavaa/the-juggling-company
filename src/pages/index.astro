@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import VideoCard from "@/components/VideoCard.astro";
+import VideoStrip from "@/components/VideoStrip.astro";
+import VideoStripCard from "@/components/VideoStripCard.astro";
 import PostCard from "@/components/PostCard.astro";
 import JugglingCascade from "@/components/JugglingCascade.astro";
 import JugglingPattern from "@/components/JugglingPattern.astro";
@@ -419,8 +420,8 @@ const personJsonLd = {
 
   {
     featuredVideos.length > 0 && (
-      <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
-        <div class="mb-8 flex items-end justify-between gap-4">
+      <section class="py-16">
+        <div class="mx-auto mb-6 flex max-w-[1400px] items-end justify-between gap-4 px-4 md:px-6 lg:px-10">
           <div>
             <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
               Watch
@@ -434,13 +435,18 @@ const personJsonLd = {
             All videos <Icon name="arrow-right" size={14} />
           </a>
         </div>
-        <ul class="grid gap-6 md:grid-cols-3">
+        <VideoStrip label="Featured videos" speed={20}>
           {featuredVideos.map((v) => (
-            <li>
-              <VideoCard video={v} />
-            </li>
+            <VideoStripCard
+              video={v}
+              orientation={
+                v.data.source === "tiktok" || v.data.source === "instagram"
+                  ? "portrait"
+                  : "landscape"
+              }
+            />
           ))}
-        </ul>
+        </VideoStrip>
       </section>
     )
   }

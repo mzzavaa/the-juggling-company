@@ -1,0 +1,173 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  /** Aria-label for the scroll region. */
+  label: string;
+  /** Pixels per second for the slow drift. */
+  speed?: number;
+}
+
+const { label, speed = 18 } = Astro.props;
+---
+
+<div class="strip-wrap relative" data-speed={speed}>
+  <button
+    type="button"
+    class="strip-nav strip-nav-prev hidden md:inline-flex"
+    aria-label={`Scroll ${label} left`}
+    data-dir="-1"
+  >
+    <Icon name="chevron-left" size={18} />
+  </button>
+
+  <div
+    class="strip flex gap-3 overflow-x-auto px-4 pb-3 md:px-6"
+    role="region"
+    aria-label={label}
+    tabindex="0"
+  >
+    <slot />
+  </div>
+
+  <button
+    type="button"
+    class="strip-nav strip-nav-next hidden md:inline-flex"
+    aria-label={`Scroll ${label} right`}
+    data-dir="1"
+  >
+    <Icon name="chevron-right" size={18} />
+  </button>
+</div>
+
+<style>
+  .strip {
+    scroll-snap-type: x proximity;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+  }
+  .strip::-webkit-scrollbar {
+    height: 8px;
+  }
+  .strip::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-fg) 12%, transparent);
+    border-radius: 999px;
+  }
+
+  .strip-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+    color: var(--color-fg);
+    box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease;
+  }
+  .strip-nav:hover {
+    transform: translateY(-50%) scale(1.06);
+    border-color: var(--color-fg);
+  }
+  .strip-nav-prev {
+    left: 8px;
+  }
+  .strip-nav-next {
+    right: 8px;
+  }
+</style>
+
+<script>
+  // Slow auto-drift with manual override.
+  // - Auto-scrolls right at `speed` px/sec via rAF.
+  // - Pauses on pointerover, focus-within, manual scroll, or document hidden.
+  // - Loops back to 0 when reaching the end.
+  // - Respects prefers-reduced-motion (no auto-drift, manual still works).
+  const wraps = document.querySelectorAll<HTMLElement>(".strip-wrap");
+  wraps.forEach((wrap) => {
+    const strip = wrap.querySelector<HTMLElement>(".strip");
+    if (!strip) return;
+
+    const speed = Number(wrap.dataset.speed ?? 18);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Manual nav buttons
+    wrap.querySelectorAll<HTMLButtonElement>(".strip-nav").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const dir = Number(btn.dataset.dir ?? 1);
+        const card = strip.querySelector<HTMLElement>("a, .strip-card");
+        const step = (card?.offsetWidth ?? 240) + 12;
+        strip.scrollBy({ left: dir * step, behavior: "smooth" });
+        pauseFor(2500);
+      });
+    });
+
+    if (reduced) return;
+
+    let paused = false;
+    let pauseUntil = 0;
+    let last = performance.now();
+
+    const pauseFor = (ms: number) => {
+      pauseUntil = performance.now() + ms;
+    };
+
+    strip.addEventListener("pointerenter", () => {
+      paused = true;
+    });
+    strip.addEventListener("pointerleave", () => {
+      paused = false;
+      last = performance.now();
+    });
+    strip.addEventListener("focusin", () => {
+      paused = true;
+    });
+    strip.addEventListener("focusout", () => {
+      paused = false;
+      last = performance.now();
+    });
+
+    // Manual user scroll temporarily pauses drift so we don't fight the user
+    let driftMoved = false;
+    strip.addEventListener(
+      "scroll",
+      () => {
+        if (driftMoved) {
+          driftMoved = false;
+          return;
+        }
+        pauseFor(2500);
+      },
+      { passive: true },
+    );
+
+    document.addEventListener("visibilitychange", () => {
+      last = performance.now();
+    });
+
+    const tick = (now: number) => {
+      const dt = Math.min(64, now - last);
+      last = now;
+      if (!paused && now > pauseUntil && !document.hidden) {
+        const max = strip.scrollWidth - strip.clientWidth - 1;
+        if (max > 0) {
+          let next = strip.scrollLeft + (speed * dt) / 1000;
+          if (next >= max) next = 0;
+          driftMoved = true;
+          strip.scrollLeft = next;
+        }
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+</script>

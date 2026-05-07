@@ -2,23 +2,22 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
+import VideoStrip from "@/components/VideoStrip.astro";
+import VideoStripCard from "@/components/VideoStripCard.astro";
 import { getVideos } from "@/lib/content";
-import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 const videos = await getVideos();
 
-const jugglingVideos = videos.filter(
-  (v) => v.data.source === "youtube" && v.data.tags.includes("juggling"),
+// Portrait sources: TikTok and Instagram reels (9:16). Landscape: YouTube (16:9).
+const portraitVideos = videos.filter(
+  (v) => v.data.source === "tiktok" || v.data.source === "instagram",
 );
-const techVideos = videos.filter(
-  (v) => v.data.source === "youtube" && !v.data.tags.includes("juggling"),
-);
-const tiktokVideos = videos.filter((v) => v.data.source === "tiktok");
+const landscapeVideos = videos.filter((v) => v.data.source === "youtube");
 ---
 
 <BaseLayout
   title="Videos"
-  description="Juggling clips, conference talks, and short-form content - on YouTube and TikTok."
+  description="Juggling clips, conference talks, and short-form content - on YouTube, TikTok, and Instagram."
 >
   <!-- Hero -->
   <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
@@ -27,234 +26,77 @@ const tiktokVideos = videos.filter((v) => v.data.source === "tiktok");
       <span class="rgb-text">Watch the work.</span>
     </h1>
     <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Juggling, talks, and everything in between - on YouTube and TikTok.
+      Juggling, talks, and everything in between - on YouTube, TikTok, and Instagram.
+    </p>
+    <p class="mt-3 text-sm text-[var(--color-muted)]">
+      Hover a clip to preview. Strips drift on their own - scroll or use the arrows to take over.
     </p>
     <div class="mt-6">
       <SocialLinks />
     </div>
   </section>
 
-  <!-- Juggling (YouTube) -->
-  {jugglingVideos.length > 0 && (
-    <section class="mx-auto max-w-[1400px] px-4 pb-20 md:px-6">
-      <div class="mb-8 flex items-end justify-between gap-4">
+  <!-- Short-form / portrait -->
+  {portraitVideos.length > 0 && (
+    <section class="pb-16">
+      <div class="mx-auto mb-5 flex max-w-[1400px] items-end justify-between gap-4 px-4 md:px-6 lg:px-10">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain)]">Juggling</p>
-          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">On YouTube</h2>
+          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-fg)]">
+            Short clips
+          </p>
+          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Reels and TikToks</h2>
+        </div>
+        <div class="flex shrink-0 items-center gap-4 text-sm font-semibold">
+          <a
+            href="https://www.tiktok.com/@mrs_lee_g_"
+            class="inline-flex items-center gap-1 text-[var(--color-fg)] hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            TikTok <Icon name="external-link" size={14} />
+          </a>
+          <a
+            href="https://www.instagram.com/mrs_lee_g/"
+            class="inline-flex items-center gap-1 text-[#e1306c] hover:underline"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Instagram <Icon name="external-link" size={14} />
+          </a>
+        </div>
+      </div>
+      <VideoStrip label="Short-form video clips" speed={16}>
+        {portraitVideos.map((v) => (
+          <VideoStripCard video={v} orientation="portrait" />
+        ))}
+      </VideoStrip>
+    </section>
+  )}
+
+  <!-- Long-form / landscape -->
+  {landscapeVideos.length > 0 && (
+    <section class="pb-24">
+      <div class="mx-auto mb-5 flex max-w-[1400px] items-end justify-between gap-4 px-4 md:px-6 lg:px-10">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-[#ff0033]">YouTube</p>
+          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">
+            Talks, podcasts, and full clips
+          </h2>
         </div>
         <a
           href="https://www.youtube.com/@mrs_lee_g"
-          class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[#ff0000] hover:underline"
+          class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[#ff0033] hover:underline"
           rel="noopener noreferrer"
           target="_blank"
         >
           Subscribe <Icon name="external-link" size={14} />
         </a>
       </div>
-      <div class="grid gap-6 md:grid-cols-2">
-        {jugglingVideos.map((v) => {
-          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#9696b0";
-          return (
-            <div
-              class="yt-card overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
-              style={`--card-accent: ${accent};`}
-            >
-              <div class="aspect-video">
-                <iframe
-                  src={`https://www.youtube.com/embed/${v.data.externalId}`}
-                  title={v.data.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  loading="lazy"
-                  class="h-full w-full border-0"
-                />
-              </div>
-              <div class="p-5">
-                <h3 class="font-display text-base font-semibold leading-snug text-[var(--color-fg)]">
-                  {v.data.title}
-                </h3>
-                {v.data.description && (
-                  <p class="mt-2 line-clamp-2 text-sm text-[var(--color-muted)]">
-                    {v.data.description}
-                  </p>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  )}
-
-  <!-- TikTok -->
-  {tiktokVideos.length > 0 && (
-    <section class="mx-auto max-w-[1400px] px-4 pb-20 md:px-6">
-      <div class="mb-8 flex items-end justify-between gap-4">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-fg)]">Short clips</p>
-          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">TikTok</h2>
-        </div>
-        <a
-          href="https://www.tiktok.com/@mrs_lee_g_"
-          class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[var(--color-fg)] hover:underline"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          @mrs_lee_g_ <Icon name="external-link" size={14} />
-        </a>
-      </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {tiktokVideos.map((v) => {
-          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#9696b0";
-          return (
-            <div
-              class="tiktok-card overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
-              style={`--card-accent: ${accent};`}
-            >
-              {v.data.localVideo ? (
-                <div class="aspect-[9/16] bg-black">
-                  <video
-                    src={v.data.localVideo}
-                    controls
-                    playsinline
-                    preload="metadata"
-                    class="h-full w-full object-contain"
-                  />
-                </div>
-              ) : (
-                <div class="aspect-[9/16] flex items-center justify-center bg-[var(--color-bg-card)]">
-                  <a
-                    href={v.data.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex flex-col items-center gap-3 p-6 text-center"
-                    style={`color: ${accent};`}
-                  >
-                    <Icon name="external-link" size={32} />
-                    <span class="text-sm font-medium text-[var(--color-fg)]">{v.data.title}</span>
-                    <span class="text-xs text-[var(--color-muted)]">Watch on TikTok</span>
-                  </a>
-                </div>
-              )}
-              <div class="p-4">
-                <h3 class="font-display text-sm font-semibold leading-snug text-[var(--color-fg)]">
-                  {v.data.title}
-                </h3>
-                {v.data.description && (
-                  <p class="mt-1 line-clamp-2 text-xs text-[var(--color-muted)]">
-                    {v.data.description}
-                  </p>
-                )}
-                <a
-                  href={v.data.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mt-2 inline-flex items-center gap-1 text-xs hover:underline"
-                  style={`color: ${accent};`}
-                >
-                  TikTok <Icon name="external-link" size={12} />
-                </a>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  )}
-
-  <!-- Creative tech (YouTube) -->
-  {techVideos.length > 0 && (
-    <section class="pb-24">
-      <div class="mx-auto max-w-[1400px] px-4 md:px-6">
-        <div class="mb-6 flex items-end justify-between gap-4">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-tech)]">Talks and podcasts</p>
-            <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Creative tech</h2>
-          </div>
-          <a
-            href="https://www.youtube.com/@mrs_lee_g"
-            class="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-[#ff0000] hover:underline"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            YouTube <Icon name="external-link" size={14} />
-          </a>
-        </div>
-      </div>
-
-      <div
-        class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:px-6"
-        style="scroll-padding-left: 1.5rem;"
-        aria-label="Tech talks and podcasts"
-      >
-        <div class="shrink-0 w-[max(0px,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
-
-        {techVideos.map((v) => {
-          const accent = PILLAR_HEX[blendKey(v.data.pillars)] ?? "#9696b0";
-          return (
-            <a
-              href={v.data.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="tech-card snap-start flex-none w-72 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition hover:-translate-y-1"
-              style={`--card-accent: ${accent};`}
-              aria-label={v.data.title}
-            >
-              <div class="aspect-video overflow-hidden">
-                <img
-                  src={`https://img.youtube.com/vi/${v.data.externalId}/hqdefault.jpg`}
-                  alt={v.data.title}
-                  loading="lazy"
-                  class="h-full w-full object-cover transition group-hover:scale-105"
-                />
-              </div>
-              <div class="p-4">
-                <p
-                  class="line-clamp-2 text-sm font-semibold leading-snug text-[var(--color-fg)]"
-                  style={`border-left: 2px solid ${accent}; padding-left: 8px;`}
-                >
-                  {v.data.title}
-                </p>
-                {v.data.description && (
-                  <p class="mt-2 line-clamp-2 text-xs text-[var(--color-muted)]">
-                    {v.data.description}
-                  </p>
-                )}
-              </div>
-            </a>
-          );
-        })}
-
-        <div class="shrink-0 w-[max(1rem,calc((100vw-72rem)/2))]" aria-hidden="true"></div>
-      </div>
+      <VideoStrip label="Long-form videos and talks" speed={20}>
+        {landscapeVideos.map((v) => (
+          <VideoStripCard video={v} orientation="landscape" />
+        ))}
+      </VideoStrip>
     </section>
   )}
 </BaseLayout>
-
-<style>
-  .yt-card {
-    transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
-  }
-  .yt-card:hover {
-    border-color: var(--card-accent);
-    box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
-      0 12px 36px -12px color-mix(in oklab, var(--card-accent) 60%, transparent);
-  }
-
-  .tiktok-card {
-    transition: border-color 200ms ease, box-shadow 220ms ease;
-  }
-  .tiktok-card:hover {
-    border-color: var(--card-accent);
-    box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--card-accent) 50%, transparent);
-  }
-
-  .tech-card {
-    transition: border-color 200ms ease, box-shadow 220ms ease, transform 220ms ease;
-  }
-  .tech-card:hover {
-    border-color: var(--card-accent);
-    box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--card-accent) 50%, transparent);
-  }
-</style>

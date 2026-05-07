@@ -1,0 +1,195 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Icon from "./Icon.astro";
+import { formatDuration } from "@/lib/format";
+import { blendKey, PILLAR_HEX } from "@/lib/pillar";
+
+interface Props {
+  video: CollectionEntry<"video">;
+  /** "portrait" for reels/TikTok (9:16), "landscape" for YouTube (16:9). */
+  orientation: "portrait" | "landscape";
+}
+
+const { video, orientation } = Astro.props;
+const { source, externalId, externalUrl, title, durationSec, pillars } = video.data;
+
+const accent = pillars.length > 0 ? PILLAR_HEX[blendKey(pillars)] : "#9696b0";
+
+const sourceLabel: Record<typeof source, string> = {
+  youtube: "YouTube",
+  tiktok: "TikTok",
+  instagram: "Instagram",
+};
+
+const sourceIcon: Record<typeof source, "youtube" | "music" | "instagram"> = {
+  youtube: "youtube",
+  tiktok: "music",
+  instagram: "instagram",
+};
+
+const sourceColor: Record<typeof source, string> = {
+  youtube: "#ff0033",
+  tiktok: "#000000",
+  instagram: "#e1306c",
+};
+
+const posterUrl =
+  source === "youtube" ? `https://i.ytimg.com/vi/${externalId}/hqdefault.jpg` : null;
+
+const aspectClass = orientation === "portrait" ? "aspect-[9/16]" : "aspect-video";
+const widthClass = orientation === "portrait" ? "w-44 sm:w-52" : "w-72 sm:w-80";
+
+const ytEmbedSrc =
+  source === "youtube"
+    ? `https://www.youtube-nocookie.com/embed/${externalId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${externalId}&modestbranding=1&playsinline=1&rel=0`
+    : null;
+---
+
+<a
+  href={externalUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={["strip-card group relative shrink-0 snap-start overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)]", widthClass]}
+  style={`--card-accent: ${accent};`}
+  aria-label={`${title} - watch on ${sourceLabel[source]}`}
+  data-source={source}
+  data-yt-src={ytEmbedSrc}
+>
+  <div class:list={["media relative w-full overflow-hidden bg-black", aspectClass]}>
+    {posterUrl ? (
+      <img
+        src={posterUrl}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="poster absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+      />
+    ) : (
+      <div
+        class="poster absolute inset-0 flex items-center justify-center transition duration-500 group-hover:scale-105"
+        style={`background: linear-gradient(140deg, ${sourceColor[source]} 0%, ${accent} 100%);`}
+        aria-hidden="true"
+      >
+        <Icon name={sourceIcon[source]} size={orientation === "portrait" ? 44 : 56} />
+      </div>
+    )}
+
+    <span class="badge platform absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+      <Icon name={sourceIcon[source]} size={10} />
+      {sourceLabel[source]}
+    </span>
+
+    <span class="badge duration absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-white backdrop-blur">
+      {formatDuration(durationSec)}
+    </span>
+
+    <span
+      class="play-pulse absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100"
+      aria-hidden="true"
+    >
+      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur">
+        <Icon name="play" size={20} />
+      </span>
+    </span>
+  </div>
+
+  <div class="p-3">
+    <h3 class="line-clamp-2 font-display text-sm font-semibold leading-snug text-[var(--color-fg)]">
+      {title}
+    </h3>
+    <span
+      class="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium"
+      style={`color: ${accent};`}
+    >
+      Watch on {sourceLabel[source]} <Icon name="external-link" size={10} />
+    </span>
+  </div>
+</a>
+
+<style>
+  .strip-card {
+    transition:
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      transform 220ms ease;
+  }
+  .strip-card:hover {
+    border-color: var(--card-accent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--card-accent) 30%, transparent),
+      0 14px 28px -16px color-mix(in oklab, var(--card-accent) 60%, transparent);
+    transform: translateY(-2px);
+  }
+
+  /* Hover-iframe is injected by JS for YouTube cards.
+     Hide play-pulse once iframe is mounted to avoid double-icon. */
+  .strip-card.is-playing .play-pulse {
+    opacity: 0;
+  }
+  .strip-card .yt-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    pointer-events: none;
+  }
+  .strip-card.is-playing .yt-frame {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .strip-card,
+    .strip-card .poster {
+      transition: none;
+    }
+    .strip-card:hover {
+      transform: none;
+    }
+    .strip-card .yt-frame {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Hover-to-play for YouTube strip cards. We only mount the iframe once,
+  // on first hover, and toggle .is-playing for opacity transitions.
+  const cards = document.querySelectorAll<HTMLAnchorElement>(".strip-card[data-source='youtube']");
+  cards.forEach((card) => {
+    const src = card.dataset.ytSrc;
+    if (!src) return;
+    const media = card.querySelector<HTMLDivElement>(".media");
+    if (!media) return;
+
+    let frame: HTMLIFrameElement | null = null;
+    let mounted = false;
+
+    const ensureFrame = () => {
+      if (mounted) return;
+      mounted = true;
+      frame = document.createElement("iframe");
+      frame.className = "yt-frame";
+      frame.src = src;
+      frame.title = card.getAttribute("aria-label") ?? "Video preview";
+      frame.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+      frame.setAttribute("loading", "lazy");
+      frame.setAttribute("tabindex", "-1");
+      frame.setAttribute("aria-hidden", "true");
+      media.appendChild(frame);
+    };
+
+    card.addEventListener("mouseenter", () => {
+      ensureFrame();
+      // Defer class flip a tick so the iframe has begun loading
+      requestAnimationFrame(() => card.classList.add("is-playing"));
+    });
+    card.addEventListener("mouseleave", () => {
+      card.classList.remove("is-playing");
+      // Reset src to stop network/audio when leaving
+      if (frame) frame.src = src;
+    });
+  });
+</script>
