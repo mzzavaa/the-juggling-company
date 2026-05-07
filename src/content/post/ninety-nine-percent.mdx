@@ -1,0 +1,164 @@
+---
+title: "99 Percent"
+slug: ninety-nine-percent
+summary: "The laptop screen shows 99 percent precision. This is the number the model reached after training on labeled frames of juggling throws. What that number means, what it cost, and what it still does not tell you."
+date: 2026-06-09
+tags: ["tech", "brain", "ai", "machine-learning", "precision", "otto", "personal"]
+pillars: ["tech", "brain"]
+cover: ../../assets/images/custom-vision-99-precision.jpg
+coverAlt: "A laptop screen showing Azure Custom Vision training results with 99 percent precision displayed"
+coverVideo: /videos/custom-vision-99-precision.mp4
+draft: false
+personal: true
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
+The number on the screen is 99 percent.
+
+It took weeks to reach it - weeks of labeling frames, retraining the model, evaluating on held-out data, finding the categories where precision was low, labeling more examples in those categories, retraining again. The loop ran until the number stopped improving meaningfully and stabilized at 99.
+
+<StatGrid items={[
+  { value: "99%", label: "Precision", sub: "When it reports a detection, it is right 99% of the time", color: "tech" },
+  { value: "87%", label: "Recall", sub: "Of all real juggling events, this fraction was detected", color: "yellow" },
+  { value: "94%", label: "Average Precision", sub: "Area under the precision-recall curve", color: "cyan" }
+]} />
+
+This is what a training result looks like: a number on a screen that summarizes weeks of work and means exactly one thing, precisely defined, and does not mean several other things that are easy to assume it means.
+
+## What precision means
+
+Precision answers one question: of all the times the model said it found the target, what fraction was it right?
+
+A model with 99 percent precision is almost never wrong when it reports a detection. When it draws a bounding box and labels it "juggling ball," there is a 99 percent chance there is actually a juggling ball there.
+
+<Callout type="warning" title="What precision does not tell you">
+How many juggling balls the model failed to find. A model can have 99% precision by only reporting detections it is extremely confident about and ignoring everything it is even slightly uncertain of. The precision is high. The coverage is low.
+</Callout>
+
+The other metric that matters is recall: of all the juggling balls that were actually in the frames, what fraction did the model find? Precision and recall are in tension. Pushing one higher typically pushes the other lower.
+
+<Diagram caption="The precision-recall tradeoff: moving the confidence threshold changes both metrics simultaneously">
+<svg viewBox="0 0 560 280" width="560" height="280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="280" fill="#14141f" rx="8"/>
+
+  <line x1="60" y1="220" x2="500" y2="220" stroke="#2a2a3d" stroke-width="1.5"/>
+  <line x1="60" y1="20" x2="60" y2="220" stroke="#2a2a3d" stroke-width="1.5"/>
+
+  <text x="280" y="250" text-anchor="middle" fill="#9696b0" font-size="11">Confidence threshold (low → high)</text>
+  <text x="18" y="120" text-anchor="middle" fill="#9696b0" font-size="11" transform="rotate(-90,18,120)">Score (%)</text>
+
+  <text x="52" y="224" text-anchor="end" fill="#9696b0" font-size="10">0</text>
+  <text x="52" y="174" text-anchor="end" fill="#9696b0" font-size="10">50</text>
+  <text x="52" y="124" text-anchor="end" fill="#9696b0" font-size="10">75</text>
+  <text x="52" y="74" text-anchor="end" fill="#9696b0" font-size="10">100</text>
+  <line x1="57" y1="170" x2="63" y2="170" stroke="#2a2a3d" stroke-width="1"/>
+  <line x1="57" y1="120" x2="63" y2="120" stroke="#2a2a3d" stroke-width="1"/>
+  <line x1="57" y1="70" x2="63" y2="70" stroke="#2a2a3d" stroke-width="1"/>
+
+  <polyline
+    points="60,195 120,185 180,165 240,135 300,100 360,78 420,68 480,66"
+    fill="none" stroke="#33cc66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <polyline
+    points="60,72 120,76 180,88 240,110 300,140 360,165 420,192 480,215"
+    fill="none" stroke="#ffcc33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="310" cy="120" r="5" fill="none" stroke="#f3f3f8" stroke-width="1.5"/>
+  <text x="318" y="116" fill="#f3f3f8" font-size="10">Balanced</text>
+
+  <circle cx="440" cy="68" r="6" fill="#33cc66" fill-opacity="0.3" stroke="#33cc66" stroke-width="2"/>
+  <text x="448" y="65" fill="#33cc66" font-size="10" font-weight="600">99% precision</text>
+  <circle cx="440" cy="190" r="6" fill="#ffcc33" fill-opacity="0.3" stroke="#ffcc33" stroke-width="2"/>
+  <text x="448" y="194" fill="#ffcc33" font-size="10" font-weight="600">87% recall</text>
+
+  <line x1="70" y1="248" x2="90" y2="248" stroke="#33cc66" stroke-width="2.5"/>
+  <text x="95" y="252" fill="#33cc66" font-size="11" font-weight="600">Precision</text>
+  <line x1="170" y1="248" x2="190" y2="248" stroke="#ffcc33" stroke-width="2.5"/>
+  <text x="195" y="252" fill="#ffcc33" font-size="11" font-weight="600">Recall</text>
+</svg>
+</Diagram>
+
+## Why 99 percent feels like a finish line
+
+There is a specific experience of seeing a metric reach a number that sounds like completion. 99 percent sounds like it is practically 100 percent, which sounds like done.
+
+<PullQuote>
+99 percent is a real number. It is earned. It also reflects the training distribution more than it reflects the world.
+</PullQuote>
+
+It is not done. It is a milestone in a loop.
+
+The model was trained on specific data, in specific conditions, at a specific point in time. It performs at 99 percent precision on the evaluation set, which was sampled from the same distribution as the training data. The same model, deployed on footage from a different venue with different lighting, or on a juggler with different technique, or on props of a different color, will perform at a different precision.
+
+The gap between those two things is what deployment teaches.
+
+## The number as a starting point
+
+99 percent was not the end of the project. It was the point at which the model was good enough to deploy into a test environment and see what happened when it encountered real-world conditions it had not trained on.
+
+<Diagram caption="The MLOps loop that turns a training metric into a production model">
+<svg viewBox="0 0 560 200" width="560" height="200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="200" fill="#14141f" rx="8"/>
+
+  <rect x="20" y="70" width="100" height="60" rx="8" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="70" y="97" text-anchor="middle" fill="#33cc66" font-size="11" font-weight="600">Label</text>
+  <text x="70" y="111" text-anchor="middle" fill="#9696b0" font-size="10">frames</text>
+
+  <rect x="150" y="70" width="100" height="60" rx="8" fill="#1b1b2a" stroke="#ffcc33" stroke-width="1.5"/>
+  <text x="200" y="97" text-anchor="middle" fill="#ffcc33" font-size="11" font-weight="600">Train</text>
+  <text x="200" y="111" text-anchor="middle" fill="#9696b0" font-size="10">model</text>
+
+  <rect x="280" y="70" width="100" height="60" rx="8" fill="#1b1b2a" stroke="#33ccff" stroke-width="1.5"/>
+  <text x="330" y="97" text-anchor="middle" fill="#33ccff" font-size="11" font-weight="600">Evaluate</text>
+  <text x="330" y="111" text-anchor="middle" fill="#9696b0" font-size="10">on held-out</text>
+
+  <rect x="410" y="70" width="100" height="60" rx="8" fill="#1b1b2a" stroke="#cc33ff" stroke-width="1.5"/>
+  <text x="460" y="97" text-anchor="middle" fill="#cc33ff" font-size="11" font-weight="600">Deploy</text>
+  <text x="460" y="111" text-anchor="middle" fill="#9696b0" font-size="10">observe failures</text>
+
+  <path d="M120 100 L148 100" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M250 100 L278 100" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M380 100 L408 100" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <path d="M460 70 Q460 30 280 30 Q130 30 70 70" fill="none" stroke="#33cc66" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-green)"/>
+  <text x="280" y="22" text-anchor="middle" fill="#33cc66" font-size="10">add failure cases to training set</text>
+
+  <defs>
+    <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2a2a3d"/>
+    </marker>
+    <marker id="arr-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#33cc66"/>
+    </marker>
+  </defs>
+
+  <rect x="288" y="140" width="84" height="32" rx="6" fill="#33cc661a" stroke="#33cc66" stroke-width="1"/>
+  <text x="330" y="160" text-anchor="middle" fill="#33cc66" font-size="12" font-weight="700">99% here</text>
+</svg>
+</Diagram>
+
+The failures in that phase were instructive in a way the training metrics could not be. Frames where precision dropped told me specifically what the model had not seen enough of - specific angles, specific distances, specific lighting conditions. Each failure was a training example I had not yet added.
+
+The loop continued: deploy, observe failure cases, label them, retrain, redeploy. This is the MLOps loop in practice. Not as a theoretical framework but as the actual daily work of keeping a model performing in the world it is deployed in rather than the world it was trained on.
+
+## What the laptop screen shows about the work
+
+The photo is a laptop screen in what looks like an ordinary working environment - not a lab, not a server room. The model training interface is open because training was happening here, in this space, in the course of regular work.
+
+Building a custom AI model is no longer specialized work that requires a research team. It is work that happens on a laptop, in the same environment as everything else. The tools are accessible. The difficulty is not in accessing the tools - it is in building the dataset, running the loop enough times, and understanding what the metrics actually mean.
+
+<Takeaways color="tech" items={[
+  "Precision and recall measure different things. A model can score 99% on one while performing poorly on the other.",
+  "Training metrics reflect the training distribution - not the real world. The gap between these is what deployment reveals.",
+  "99% is a starting point for the MLOps loop, not an end state. Each deployment surfaces the next set of training examples.",
+  "The tools for training custom computer vision models are now accessible on a standard laptop. The hard work is the dataset, not the infrastructure."
+]} />
+
+---
+
+*Read next: [Being the Training Data](/blog/being-the-training-data) - what it means to label frames of yourself.*

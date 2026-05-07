@@ -1,0 +1,176 @@
+---
+title: "Distance From the Change"
+slug: distance-from-the-change
+summary: "Distance from the change is not a judgment about a department's capability or commitment. It is a measurement - the gap between existing movement patterns and what the change requires. The change manager's job is to build bridges calibrated to each distance, not to pretend the distances are equal."
+date: 2026-06-02
+tags: ["change", "juggling", "distance", "departments", "methodology", "change-management", "proximity", "props"]
+pillars: ["change"]
+cover: ../../assets/images/rings-orbital-cyan.png
+coverAlt: "Cyan luminous rings in concentric orbital layers, each at a different distance from a glowing center point"
+coverVideo: /videos/rings-orbital-cyan.mp4
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+import AnalogyTable from "../../components/AnalogyTable.astro";
+
+The image shows rings at different orbital distances from a center.
+
+Not stacked. Not equal. Each ring traces its own path around the same point, but at a different radius. The innermost ring is tight to the center - its orbit is short, its return is fast, the center is always visible. The outermost ring is slow and wide. It follows the same gravitational pull but its distance means the same arc takes far longer to complete.
+
+This is the geometry of any major change programme, mapped correctly.
+
+<StatGrid items={[
+  { value: "Near", label: "Short orbit", sub: "Departments whose existing movements are close to what the change requires - short re-learning arc, fast return, the change is legible from the start", color: "brain" },
+  { value: "Mid-range", label: "New technique", sub: "Relevant expertise that needs rebuilding in the new context - the orbit is familiar but the body language is different", color: "tech" },
+  { value: "Far", label: "Different arc", sub: "Departments starting from near-zero technique transfer - longer orbit, different support, and a clear answer to why this change matters for what they do", color: "change" }
+]} />
+
+## Distance is a measurement, not a verdict
+
+When we say a department is far from the change, we are not saying they are less capable, less committed, or less valuable. We are saying something specific: the gap between their current movement patterns and what the change requires is large.
+
+A finance team in a cloud migration is not slow. Their existing expertise - budgeting cycles, cost centres, variance analysis, audit trails - is real and hard-won. But none of it maps directly to consumption-based billing, reserved instance economics, or cloud cost allocation tags. They are not starting from zero knowledge. They are starting from a large distance. The gap is not about them. It is about the specific change and where it sits relative to their world.
+
+Distance is a property of the relationship between a department and a particular change. It is not a property of the department.
+
+<Diagram caption="Concentric orbital distances from the change center - near departments orbit fast, distant departments take longer, all follow the same gravitational pull">
+<svg viewBox="0 0 560 340" width="560" height="340" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="340" fill="#14141f" rx="8"/>
+
+  <circle cx="280" cy="170" r="38" fill="#33ccff11" stroke="#33ccff" stroke-width="1.5"/>
+  <circle cx="280" cy="170" r="80" fill="none" stroke="#33ccff" stroke-width="1" stroke-dasharray="5,4" opacity="0.7"/>
+  <circle cx="280" cy="170" r="128" fill="none" stroke="#33ccff" stroke-width="1" stroke-dasharray="3,5" opacity="0.45"/>
+
+  <rect x="242" y="152" width="76" height="36" rx="5" fill="#33ccff22" stroke="#33ccff" stroke-width="1.5"/>
+  <text x="280" y="169" text-anchor="middle" fill="#33ccff" font-size="9" font-weight="700">Change</text>
+  <text x="280" y="182" text-anchor="middle" fill="#9696b0" font-size="7.5">the cascade</text>
+
+  <rect x="22" y="155" width="90" height="30" rx="5" fill="#ff336622" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="67" y="169" text-anchor="middle" fill="#ff3366" font-size="8.5" font-weight="600">Inner orbit</text>
+  <text x="67" y="181" text-anchor="middle" fill="#9696b0" font-size="7.5">tech, data, infra</text>
+  <line x1="112" y1="170" x2="200" y2="170" stroke="#ff3366" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <rect x="226" y="22" width="108" height="30" rx="5" fill="#33cc6622" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="280" y="36" text-anchor="middle" fill="#33cc66" font-size="8.5" font-weight="600">Middle orbit</text>
+  <text x="280" y="48" text-anchor="middle" fill="#9696b0" font-size="7.5">security, product, PM</text>
+  <line x1="280" y1="90" x2="280" y2="132" stroke="#33cc66" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <rect x="448" y="155" width="100" height="30" rx="5" fill="#6699ff22" stroke="#6699ff" stroke-width="1.5"/>
+  <text x="498" y="169" text-anchor="middle" fill="#6699ff" font-size="8.5" font-weight="600">Outer orbit</text>
+  <text x="498" y="181" text-anchor="middle" fill="#9696b0" font-size="7.5">finance, legal, ITIL</text>
+  <line x1="408" y1="170" x2="448" y2="170" stroke="#6699ff" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <rect x="176" y="285" width="208" height="30" rx="5" fill="#9696b011" stroke="#9696b0" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="280" y="299" text-anchor="middle" fill="#9696b0" font-size="8.5">Beyond visibility</text>
+  <text x="280" y="311" text-anchor="middle" fill="#9696b0" font-size="7.5">departments not yet in scope - arriving later</text>
+
+  <text x="140" y="145" fill="#ff3366" font-size="7.5" opacity="0.7">r = 38 - fast orbit</text>
+  <text x="158" y="96" fill="#33cc66" font-size="7.5" opacity="0.7">r = 80 - medium orbit</text>
+  <text x="22" y="53" fill="#6699ff" font-size="7.5" opacity="0.7">r = 128 - slow orbit</text>
+</svg>
+</Diagram>
+
+## What near distance looks like
+
+A department in the inner orbit does not experience the change as foreign.
+
+They may not welcome every aspect of it. They may have strong opinions about the implementation. But the fundamental vocabulary of the change is already part of how they work. When the change talks about containers, latency, deployment pipelines, infrastructure as code - they have mental models for these already. The change is reconfiguring familiar terrain, not asking them to learn to walk on a new planet.
+
+The inner orbit benefits from this. Their re-learning time is short. They can demonstrate the new pattern to others before others have even understood what the pattern is. They are the most useful early resource in any change programme - not because they are more motivated, but because they can translate between the change language and the organisation's existing language.
+
+<Callout type="info" title="The inner orbit's hidden job">
+Departments in the inner orbit have a second job in any change programme: making the change legible to departments further out. If the inner orbit only works on their own transition, the programme loses its most powerful communication resource. People learn change from other people who have already been through it - not from communications teams.
+
+The inner orbit is not just a faster adopter. It is the change programme's best educator.
+</Callout>
+
+## What middle distance looks like
+
+A department in the middle orbit carries relevant experience, but the change asks for it in a different shape.
+
+This is the club-throwing problem. A club must be thrown with a specific spin, caught at a precise point in the rotation. The throwing motion is similar to a ball throw - but "similar" is exactly what makes it tricky. The club thrower who relies entirely on ball-throwing muscle memory will drop the club consistently, because the critical difference - the spin, the grip, the catch point - is exactly where the technique diverges.
+
+Security teams in a cloud migration hold this position. They understand threat modeling, access control, incident response, and compliance. All of it transfers in concept. None of it transfers in practice without rebuilding technique for cloud-native tooling, shared responsibility models, and the new attack surfaces that virtualised infrastructure creates. Their knowledge is a foundation. It is not a shortcut.
+
+<PullQuote>
+The middle orbit does not need more enthusiasm. It needs practice time in the new technique. The existing knowledge is not the problem - it is valuable. The problem is treating that knowledge as a substitute for the new body language rather than a foundation for it.
+</PullQuote>
+
+## What far distance looks like
+
+A department in the outer orbit arrives at the change with essentially no directly transferable technique.
+
+This is not unusual. In a cloud migration, the finance team is in the outer orbit. In a psychological safety culture programme, senior leadership is in the outer orbit. In a digital transformation, the operations team is in the outer orbit. The pattern shifts with every change - but every change has an outer orbit.
+
+Departments here face a specific challenge that is not about capability: they have to build an entirely new motion pattern from near-zero, while continuing to run all of their existing work. The inner orbit can practice the new throw in their spare time. The outer orbit is still fully occupied with the old pattern when the change asks them to start learning the new one.
+
+<Callout type="warning" title="What the outer orbit is not">
+The outer orbit is not where resistant departments end up. Resistance is a response to pressure, uncertainty, or poor communication - it is psychological. Distance is geometric. A highly motivated finance team in a cloud migration is still in the outer orbit. Their motivation changes the speed of their learning. It does not change how much technique they have to build from scratch.
+
+Treating outer-orbit departments as resistant because they are slow misdiagnoses the problem. The slowness is physics. The support required is technique-building, not pressure.
+</Callout>
+
+## The departments beyond the outer orbit
+
+There is a fourth category: departments that are not yet in orbit at all.
+
+Every change programme has a leading edge and a trailing edge. The tech team is in the inner orbit on day one of a cloud migration. The manufacturing team, the customer service team, the regional offices in markets where the migration hasn't started - they are not yet part of the orbit.
+
+This is not a problem. It becomes one when the change programme assumes they will arrive at the same pace and with the same preparation as departments that have been in orbit longer.
+
+The distance from the change is not fixed from the moment the programme launches. Departments enter the orbital pattern at different times, and when they do, their starting distance still reflects the gap between their existing movements and what the change asks for.
+
+<AnalogyTable domain="Distance from the change" caption="Same change event, different orbital distances - what each position requires from the programme" rows={[
+  { juggling: "Inner orbit - familiar motion, short re-learning arc", analogue: "Fast-track paths, demonstrate the change to others, early ownership of new tools and methods" },
+  { juggling: "Middle orbit - relevant knowledge, new technique needed", analogue: "Technique-specific retraining, enough practice time to rebuild methods in new context, explicit recognition of what transfers and what does not" },
+  { juggling: "Outer orbit - near-zero direct technique transfer", analogue: "Longer timeline, different learning approach, clear answer to 'why does this matter for what we do', protected time to build from scratch" },
+  { juggling: "Beyond visibility - not yet in scope", analogue: "Prepare the entry point before they arrive - know their starting distance and have the support structure ready when they join the programme" },
+]} />
+
+## Building bridges, not shortcuts
+
+The work of change management at each orbital distance is different because the distances require different interventions.
+
+Inner orbit departments need acceleration and responsibility. The change should lean on them early and use their experience to build the programme's credibility with departments further out.
+
+Middle orbit departments need the right kind of practice. Not just information about the change - structured practice time in the new technique, with enough tolerance for the early drop rate that club-learning always produces. Reducing the practice time to speed up the programme is how technique fails to form.
+
+Outer orbit departments need something the change programme rarely builds correctly: a bridge from their existing world to the change's requirements. Not "here is what the change is" but "here is why the change matters for the specific work you do, and here is the specific new motion you need to build."
+
+<Callout type="success" title="What calibrated support actually looks like">
+A cloud migration programme with calibrated distance support looks like three concurrent workstreams:
+
+The inner workstream accelerates the tech and infrastructure teams, makes them the change's visible demonstration, and uses their early wins to build momentum for the rest of the organisation.
+
+The middle workstream runs technique-rebuilding sessions for the security and project management teams - not information transfer but practice with real systems, real scenarios, and enough repetitions to establish the new body language.
+
+The outer workstream starts earlier than feels necessary. It begins with a genuine answer to "what does this change mean for the way finance runs today?" - not a translation of the technical change into finance language, but a redesign of the finance team's relationship to cost, compliance, and audit that the new platform makes necessary.
+
+Three concurrent programmes. One shared goal. Each calibrated to the actual distance.
+</Callout>
+
+## The distance changes
+
+This is worth repeating from [Which Prop Are You Holding?](/blog/which-prop-are-you-holding): the orbital assignment is not permanent.
+
+A finance team that is in the outer orbit of a cloud migration is in the inner orbit of a financial planning platform migration. The same tech team that holds the inner orbit in a cloud migration may find themselves in the outer orbit of a customer-centricity programme. Distance is a relationship between the department and the specific change, not a fixed property of the department.
+
+The change manager who assumes that inner-orbit departments will always be the fast movers has made a category error. They are fast movers in this change. The next change may put them exactly where the finance team is now.
+
+The cascade is the same. The props change. The distances shift. The programme has to be rebuilt for each change rather than copied from the last one.
+
+<Takeaways color="change" items={[
+  "Distance from the change is the gap between a department's existing movement patterns and what the change requires. It is a geometric measurement, not a judgment about capability or commitment.",
+  "Inner orbit departments (short distance) need fast-track paths and responsibility for demonstrating the change to others. Middle orbit departments need technique-specific retraining and practice time. Outer orbit departments need a fundamentally different approach, longer timelines, and a clear answer to why the change matters for their specific work.",
+  "The outer orbit is not where resistant departments end up. Resistance is psychological. Distance is geometric. Treating outer-orbit departments as resistant misdiagnoses the problem and applies the wrong solution.",
+  "The distances shift with every change. The same department can be in the inner orbit for one programme and the outer orbit for the next. Design the programme for this change, not from the pattern of the last one."
+]} />
+
+---
+
+*Read next: [The Change Is Always Juggling](/blog/the-change-is-always-juggling) - why every major organisational change follows the same underlying cascade.*

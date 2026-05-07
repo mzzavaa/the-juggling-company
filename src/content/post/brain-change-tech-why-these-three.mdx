@@ -1,0 +1,118 @@
+---
+title: "Brain. Change. Tech. Why These Three?"
+slug: brain-change-tech-why-these-three
+summary: "The three pillars of this site are not a random selection. Brain, change, and tech each explain something the others cannot. Together they describe a complete picture of how people and systems develop."
+date: 2026-06-11
+tags: ["brain", "change", "tech", "juggling", "meta", "pillars", "personal"]
+pillars: ["brain", "change"]
+cover: ../../assets/images/brain-change-tech-illustration.png
+coverAlt: "A three-panel illustration showing the Brain, Change, and Tech pillars: a figure with neural network imagery, a figure mid-leap representing change, and a figure at a keyboard representing tech"
+coverVideo: /videos/brain-change-tech-illustration.mp4
+draft: false
+personal: true
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
+Every post on this site is tagged with at least one of three pillars: Brain, Change, and Tech.
+
+This is not a convenience for filtering. It is a claim about the three domains that matter most when thinking about how people learn, how organizations transform, and how technology actually gets used - as opposed to how it is marketed.
+
+Each pillar covers something the others cannot. And juggling connects to all three.
+
+<Diagram caption="The three pillars overlap like RGB light - each pair creates something new, all three together create white">
+<svg viewBox="0 0 560 300" width="560" height="300" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="300" fill="#14141f" rx="8"/>
+
+  <circle cx="230" cy="110" r="80" fill="#ff3366" fill-opacity="0.18" stroke="#ff3366" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="330" cy="110" r="80" fill="#33cc66" fill-opacity="0.18" stroke="#33cc66" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="280" cy="185" r="80" fill="#3b6cff" fill-opacity="0.18" stroke="#6699ff" stroke-width="1.5" stroke-opacity="0.6"/>
+
+  <text x="280" y="112" text-anchor="middle" fill="#ffcc33" font-size="9" font-weight="600">yellow</text>
+  <text x="236" y="168" text-anchor="middle" fill="#cc33ff" font-size="9" font-weight="600">magenta</text>
+  <text x="324" y="168" text-anchor="middle" fill="#33ccff" font-size="9" font-weight="600">cyan</text>
+  <text x="280" y="148" text-anchor="middle" fill="#f3f3f0" font-size="9" font-weight="600">white</text>
+
+  <text x="193" y="75" text-anchor="middle" fill="#ff3366" font-size="14" font-weight="700">Brain</text>
+  <text x="193" y="90" text-anchor="middle" fill="#ff3366" font-size="9">how learning works</text>
+
+  <text x="367" y="75" text-anchor="middle" fill="#33cc66" font-size="14" font-weight="700">Tech</text>
+  <text x="367" y="90" text-anchor="middle" fill="#33cc66" font-size="9">how tools work</text>
+
+  <text x="280" y="245" text-anchor="middle" fill="#6699ff" font-size="14" font-weight="700">Change</text>
+  <text x="280" y="260" text-anchor="middle" fill="#6699ff" font-size="9">how systems transform</text>
+
+  <text x="280" y="148" text-anchor="middle" fill="#f4f4f0" font-size="8" font-weight="700">juggling</text>
+
+  <text x="20" y="290" fill="#9696b0" font-size="9">Like light: overlapping pillars blend additively. Brain+Tech=Yellow. Brain+Change=Magenta. Tech+Change=Cyan. All three=White.</text>
+</svg>
+</Diagram>
+
+## Brain
+
+The Brain pillar is about how learning actually happens at the level of the nervous system.
+
+Not learning in the motivational sense - not "how to stay motivated" or "the mindset for success." Learning in the mechanistic sense: what changes in the brain when a skill is acquired, what the optimal conditions for skill acquisition are, what deliberate practice actually does compared to repetition without intention.
+
+<Callout type="info" title="Why juggling is useful for the Brain pillar">
+Juggling is a learning process that is visible, measurable, and well-studied. The brain changes during juggling practice - increases in grey matter in specific regions, changes in white matter connectivity - have been documented by neuroimaging research. These changes follow the same pattern as every other learning process: challenge at the edge of ability, sufficient repetition, sleep to consolidate.
+</Callout>
+
+The brain pillar exists because most conversations about learning skip the mechanism and go straight to the output. Understanding the mechanism changes what you do.
+
+## Change
+
+The Change pillar is about how systems - organizations, teams, practices, communities - transform over time.
+
+Not change in the motivational sense - not "change starts with you" or "the courage to transform." Change in the structural sense: what makes transformation stick, what resistance to change actually consists of, how new ways of working replace established ones, what distributed communities look like compared to hub-and-spoke structures.
+
+<Callout type="success" title="Why juggling is useful for the Change pillar">
+Juggling is a demonstrable transformation. A person who cannot juggle and then can juggle has changed in a specific, observable way. The process that produced that change - repeated practice, feedback, gradual increasing of challenge - is the same process that produces organizational change, just at a different scale and a different speed.
+</Callout>
+
+The Change pillar exists because most conversations about organizational change focus on the surface behaviors and skip the structural conditions that make those behaviors stable or unstable.
+
+## Tech
+
+The Tech pillar is about how the tools actually work and what knowing how they work changes about how you use them.
+
+Not tech in the announcement sense - not "the future of AI" or "what this new tool will do." Tech in the operational sense: how distributed systems fail and recover, what context windows actually mean for LLM performance, what the difference is between precision and recall, what horizontal versus vertical scaling actually requires.
+
+<Callout type="warning" title="Why juggling is useful for the Tech pillar">
+Juggling is a system with clear mechanics - physics, timing, coordination - that can be analyzed and optimized. The same analytical stance that makes juggling teachable and improvable applies to technical systems: understand the mechanics, understand the failure modes, design for the right tradeoffs.
+</Callout>
+
+The Tech pillar exists because tools work better when the people using them understand how they work.
+
+## Why all three together
+
+Each pillar on its own is incomplete.
+
+<StatGrid items={[
+  { value: "Brain", label: "without Change", sub: "Better learners who cannot operate in organizations that resist new approaches", color: "brain" },
+  { value: "Change", label: "without Tech", sub: "Transformation methodology that does not engage with the actual capabilities being built", color: "change" },
+  { value: "Tech", label: "without Brain", sub: "Capability that nobody knows how to use because the learning process was not considered", color: "tech" }
+]} />
+
+<PullQuote>
+The intersection - where learning mechanisms inform how technical skills are taught, where change methodology engages with what technology makes possible - is where the work that matters happens.
+</PullQuote>
+
+The three panels in the illustration show this: three separate figures, three separate domains, each contributing something specific. The visual language of the image places them side by side, not in a hierarchy. None of the three is the foundation. They support each other.
+
+That is why these three.
+
+<Takeaways color="tech" items={[
+  "Brain covers the mechanism of learning - not the motivation, but the neuroscience of how skills are actually acquired.",
+  "Change covers the structural conditions for transformation - not the surface behaviors, but what makes new patterns stable.",
+  "Tech covers operational understanding - not announcements, but how tools actually work and fail.",
+  "Each pillar is incomplete without the others. The intersection is where the useful work lives."
+]} />
+
+---
+
+*Explore the pillars: [Brain posts](/blog?pillar=brain) · [Change posts](/blog?pillar=change) · [Tech posts](/blog?pillar=tech)*

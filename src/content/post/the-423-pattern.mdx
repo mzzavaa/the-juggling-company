@@ -1,0 +1,156 @@
+---
+title: "423: The Hold That Changes Everything"
+slug: the-423-pattern
+summary: "The 423 pattern uses the same three balls as the cascade and the same period length as 531, but it introduces something neither of those patterns contains: a beat where one hand does nothing. The 2 is not a throw. It is a hold. This changes the timing structure of the entire pattern."
+date: 2026-05-14
+tags: ["423", "patterns", "siteswap", "mathematics", "technique", "three-balls", "science"]
+pillars: ["brain", "tech"]
+cover: ../../assets/images/cupped-hands-blue-world-ball.png
+coverAlt: "Two cupped hands holding a glowing blue world ball between them, lit from within, resting still in the palm"
+draft: false
+---
+
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+
+<StatGrid items={[
+  { value: "423", label: "Siteswap notation", sub: "mean = (4+2+3)/3 = 3 balls. Mod-3 values: (1, 2, 0) - all distinct. The Buhler-Graham theorem confirms this pattern is valid.", color: "tech" },
+  { value: "hold", label: "What the 2 means", sub: "A throw of value 2 in a two-hand pattern means the ball stays in the same hand for 2 beats without being thrown. It is the first non-throw in the typical juggling progression.", color: "brain" },
+  { value: "self", label: "What the 4 means", sub: "A throw of value 4 is even, so it returns to the throwing hand. The ball arcs high and comes back to the same side - the first time a juggler throws without crossing the pattern.", color: "change" },
+  { value: "2", label: "States visited per cycle", sub: "Unlike the cascade (1 state, self-loop) or 531 (3 states), the 423 cycle passes through only 2 distinct states before returning to its start.", color: "yellow" }
+]} />
+
+In the cascade, every throw crosses. In 531, every throw still crosses - all three values are odd. `423` breaks that rule for the first time in the typical three-ball progression.
+
+The `4` throw is even. It goes up and comes back to the same hand. The `2` is not thrown at all - it is a hold, a beat where one hand simply retains its ball while the other side of the pattern continues. The `3` is a familiar cascade cross.
+
+The result is a pattern with an asymmetric internal rhythm: one hand throws a high arc to itself, the other hand sits still, then they swap roles and do it again. The pause is not an absence of skill. It is a separate and distinct motor demand.
+
+## The mathematics of 423
+
+The Buhler-Graham-Eisenbud-Wright theorem (1994) states that a sequence is a valid juggling pattern if and only if all values `(t_k mod n)` are distinct, where `n` is the period length. For `423`:
+
+- Period: n = 3
+- Values: 4, 2, 3
+- Values mod 3: (4 mod 3, 2 mod 3, 3 mod 3) = (1, 2, 0)
+- All distinct: yes. **Valid.**
+- Mean: (4+2+3)/3 = 3 balls required.
+
+The average theorem confirms that `423` uses exactly three balls - the same count as the cascade and 531.
+
+The values are not all odd. `4` and `2` are both even. In siteswap with alternating hand throws, an even throw means the ball returns to the same hand that threw it. An odd throw crosses to the other hand. This is why `423` looks and feels different from both the cascade and `531`: it contains throws that do not cross, and a beat that is not a throw at all.
+
+<Callout type="info" title="Even and odd in siteswap">
+In a two-hand alternating pattern, the hand that throws on beat k will throw again on beat k+2, k+4, and so on. A throw of value v scheduled from hand A will land v beats later - which is hand A again if v is even (A throws on even-numbered beats from A's perspective), or hand B if v is odd. This is why all cascade throws (value 3, odd) cross, and why a 4-throw returns to the same hand.
+</Callout>
+
+## The state cycle
+
+In the siteswap state diagram for 3-ball patterns with maximum throw value 4, states are represented as 4-bit binary strings where bit i = 1 means a ball lands i beats from now.
+
+The cascade ground state in 4-bit notation is `1110` - the next three beats each have a ball, and beat four is empty. The `423` cycle visits exactly two distinct states:
+
+Starting from `1110` (ground state), throwing a `4` moves the system to `1101`. Throwing a `2` from `1101` returns the system directly to `1110`. Throwing a `3` from `1110` keeps the system at `1110` (the ground state is a valid position for the `3` throw, consistent with the cascade).
+
+The two-state cycle `1110 → 1101 → 1110 → 1110 → ...` repeats every three beats. Unlike `531`, which visits three distinct states, `423` passes through only two: the cascade ground state and one excursion state produced by the high self-throw. The `3`-throw beat is a return to familiar ground at every cycle.
+
+This is also why `423` is directly accessible from the cascade without transition throws: the cascade's ground state is one of the two states in the `423` cycle.
+
+## The three throws and their physical character
+
+**The 4:** At a standard juggling tempo of approximately 0.35 seconds per beat, the `4` throw has a flight time of `4 * 0.35 = 1.4 seconds`. Using the parabolic height formula `h = g * t² / 8`, this gives a peak height of approximately `9.81 * (1.4)² / 8 ≈ 2.4m`. In practice, the `4` throw reaches approximately 1.5-2.5m above the hands. It is noticeably higher than a cascade throw but lower than the `5` in `531`. Crucially, it returns to the throwing hand: the same hand that releases the ball will catch it 4 beats later.
+
+**The 2:** A throw of value 2 has a theoretical flight time of `2 * 0.35 = 0.7 seconds`. But in practice, a `2` in a two-hand alternating pattern is executed as a hold - the ball is not thrown at all. The hand retains the ball for the duration of that beat and the next, then either throws or holds again. The height is zero. The required action is inaction. This is the first time in the standard juggling progression that a hand is explicitly asked to do nothing for a beat while the pattern continues.
+
+**The 3:** Identical to a standard cascade throw. Approximately 1.0m peak height at standard tempo. The `3` beat is the rhythm anchor and the only crossing throw in the cycle - the moment where `423` resembles the cascade.
+
+<Diagram caption="The 423 cycle: one self-throw (4), one hold (2), one cascade cross (3). Only the 3 crosses the centerline. Both hands do the same sequence, offset by 3 beats.">
+<svg viewBox="0 0 560 210" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <marker id="fp-arr" markerWidth="7" markerHeight="5" refX="5" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#9696b0"/>
+    </marker>
+  </defs>
+  <rect width="560" height="210" rx="8" fill="#0d0d1a"/>
+
+  <line x1="30" y1="180" x2="540" y2="180" stroke="#2a2a3d" stroke-width="1"/>
+  <text x="80" y="198" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">R hand</text>
+  <text x="200" y="198" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">L hand</text>
+  <text x="320" y="198" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">R hand</text>
+  <text x="440" y="198" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">L hand</text>
+
+  <path d="M80 180 Q80 30 200 180" stroke="#33ccff" stroke-width="2.5" fill="none"/>
+  <text x="95" y="28" fill="#33ccff" font-size="13" font-family="monospace" text-anchor="middle" font-weight="bold">4</text>
+  <circle cx="80" cy="180" r="6" fill="#33ccff"/>
+  <circle cx="200" cy="180" r="6" fill="#33ccff" opacity="0.4"/>
+  <text x="100" y="120" fill="#33ccff" font-size="8" font-family="monospace">self-throw</text>
+  <text x="100" y="131" fill="#33ccff" font-size="8" font-family="monospace">returns to R</text>
+
+  <line x1="200" y1="155" x2="200" y2="180" stroke="#ffcc33" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="178" y="148" width="44" height="20" rx="3" fill="#1a1a2e" stroke="#ffcc33" stroke-width="1.5"/>
+  <text x="200" y="162" fill="#ffcc33" font-size="10" font-family="monospace" text-anchor="middle" font-weight="bold">2</text>
+  <text x="200" y="143" fill="#ffcc33" font-size="8" font-family="monospace" text-anchor="middle">hold</text>
+
+  <path d="M320 180 Q380 105 440 180" stroke="#33cc66" stroke-width="2" fill="none"/>
+  <text x="380" y="100" fill="#33cc66" font-size="13" font-family="monospace" text-anchor="middle" font-weight="bold">3</text>
+  <circle cx="320" cy="180" r="6" fill="#33cc66"/>
+
+  <line x1="30" y1="25" x2="70" y2="25" stroke="#33ccff" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="75" y="29" fill="#33ccff" font-size="8" font-family="monospace">4: self-throw, ~2.4m peak, same hand catches</text>
+  <line x1="30" y1="40" x2="70" y2="40" stroke="#ffcc33" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="75" y="44" fill="#ffcc33" font-size="8" font-family="monospace">2: hold, no throw, ball stays in hand</text>
+  <line x1="30" y1="55" x2="70" y2="55" stroke="#33cc66" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="75" y="59" fill="#33cc66" font-size="8" font-family="monospace">3: cascade cross, normal height, rhythm anchor</text>
+  <text x="30" y="78" fill="#9696b0" font-size="8" font-family="monospace">Only the 3 crosses. The 4 self-throws and the 2 is a hold.</text>
+</svg>
+</Diagram>
+
+## Why the hold is harder than it looks
+
+Schmidt's schema theory (1975) describes motor control in terms of a generalized motor program parameterized by force, timing, and direction. Every active throw - the `5` in `531`, the `4` in `423`, the cascade `3` - requires a specific parameterization of this program. The hands generate force; the brain monitors the outcome.
+
+The `2`-hold requires something different: the suppression of the throw command. The hand must maintain its grip on the ball, stay in position within the pattern, and produce no ballistic output - all while the rhythm continues. Research on motor timing (Wing and Kristofferson, 1973) demonstrates that maintaining a consistent inter-event interval is an active process, not a passive one. The hand holding a ball in a `2`-beat is still participating in the timing structure; it is simply not launching anything.
+
+This is why beginners often turn the `2` into an unintended throw - flipping the ball forward slightly, or releasing it and catching it immediately. The motor system defaults to action. The explicit suppression of that default is itself a learned skill.
+
+<PullQuote>
+"423 is where the juggler learns that not throwing is a skill. The 2-hold requires the hand to remain in the pattern without contributing a throw - a different demand from any active throw, and one that the motor system has to be specifically trained for."
+</PullQuote>
+
+## What 423 introduces structurally
+
+The cascade runs on one throw type, repeated. `531` runs on three different throw types per cycle, all active, all crossing. `423` runs on two active throw types and one non-throw - and one of the active throws is a self-throw that never crosses the centerline.
+
+This makes `423` the first pattern in the standard progression that breaks the "every throw crosses" rule of the cascade. It is also the first pattern where hand activity is explicitly asymmetric per beat: on the hold beat, one hand is doing something (holding) and the other is doing something different (throwing a `3` or setting up for the `4`).
+
+The cross at beat 3 (the `3`-throw) is the glue that keeps the pattern recognizable. Jugglers describe `423` as feeling like a cascade with one hand repeatedly "pausing" while the other hand throws a high arc. The `3` is where both sides synchronize again before the next self-throw.
+
+## Practical technique notes
+
+The most common error in `423` is releasing the `2`-hold ball prematurely - accidentally throwing it forward while intending to hold. The fix is deliberate: consciously close the fingers around the ball on the hold beat and wait.
+
+The `4` throw is the second source of errors. Because it does not cross, beginners often aim it incorrectly - throwing it too far across the centerline (turning it effectively into a `3` or `5`) or not far enough (dropping it in front of the throwing hand's column). The `4` should go straight up from the throwing hand and fall back toward the same hand, not toward the opposite side.
+
+Once both are stable, the `3` beat provides the reset: it is exactly a cascade throw and reestablishes the shared rhythm before the next cycle.
+
+## Further reading
+
+- **Buhler, J., Eisenbud, D., Graham, R., and Wright, C.** (1994). "Juggling Drops and Descents." *The American Mathematical Monthly*, 101(6), 507-519. The validity theorem that confirms 423 is valid: mod-3 values (1, 2, 0) are all distinct, guaranteeing no two balls land on the same beat.
+- **Polster, B.** (2003). *The Mathematics of Juggling*. Springer. Chapter 2 covers the state diagram for 3-ball patterns, including the two-state cycle that 423 traces through the ground state and the excursion state produced by the 4-throw.
+- **Schmidt, R.A.** (1975). "A schema theory of discrete motor skill learning." *Psychological Review*, 82(4), 225-260. Schema theory explains why the hold (value 2) requires its own learned suppression routine, distinct from the parameterization of active throws.
+- **Wing, A.M. and Kristofferson, A.B.** (1973). "Response delays and the timing of discrete motor responses." *Perception and Psychophysics*, 14(1), 5-12. Establishes that maintaining a timing interval is an active cognitive process - directly relevant to the hold beat, which requires the juggler to maintain rhythm without throwing.
+
+<Takeaways items={[
+  "423 is valid by the Buhler-Graham theorem: mean = 3, mod-3 values (1, 2, 0) are all distinct. It uses exactly three balls - the same as the cascade and 531.",
+  "The 4 is even: it returns to the throwing hand. The 2 is a hold: the ball stays in the hand without being thrown. The 3 is a standard cascade cross. Only the 3 crosses the centerline.",
+  "423 cycles through 2 states (1110 and 1101), passing through the cascade ground state on every cycle. It is directly accessible from the cascade without transition throws.",
+  "The hold (value 2) is cognitively distinct from an active throw: it requires the suppression of a throw command while maintaining the shared timing structure. Motor control research shows this is an active skill, not passivity.",
+  "Most common errors: releasing the hold ball accidentally, and aiming the 4-throw across the centerline instead of straight up and back to the same hand. The 3-beat is the rhythm anchor and reset point."
+]} />
+
+---
+
+*On this site: [The Mathematics of Siteswap](/post/the-mathematics-of-siteswap) covers the validity theorem and the even/odd rule that explains why the 4 self-throws and the 3 crosses. [531: The First Trick After the Cascade](/post/the-531-pattern) is the other standard first pattern after the cascade - all odd values, all crossing, three distinct heights. [The Cascade](/post/the-cascade) is the ground state from which 423 is directly accessible.*

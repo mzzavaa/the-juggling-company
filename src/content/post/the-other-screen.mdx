@@ -1,0 +1,153 @@
+---
+title: "The Other Screen"
+slug: the-other-screen
+summary: "The laptop is open. The RGB balls are on the desk beside it. Two kinds of interface, side by side. What each one offers that the other cannot."
+date: 2026-06-10
+tags: ["brain", "tech", "juggling", "coding", "tools", "personal"]
+pillars: ["brain", "tech"]
+cover: ../../assets/images/glowing-balls-dark-laptop.jpg
+coverAlt: "A MacBook laptop open in the dark with four glowing RGB LED juggling balls resting beside it, the balls' colors reflecting off the desk"
+coverVideo: /videos/glowing-balls-dark-laptop.mp4
+draft: false
+personal: true
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
+The laptop is the primary tool. Most of the day's work happens on it or through it. It connects to everything, runs everything, displays everything that matters in the course of a working day.
+
+The juggling balls are beside it. They are not decoration.
+
+<StatGrid items={[
+  { value: "~0.1s", label: "Juggling feedback loop", sub: "Ball lands or drops - the body knows before the mind does", color: "brain" },
+  { value: "2-30s", label: "Screen feedback loop", sub: "Read output, interpret error, infer what changed", color: "tech" },
+  { value: "15 min", label: "Reset time", sub: "Typical juggling break that returns attention to screen work", color: "yellow" }
+]} />
+
+## What the screen offers
+
+The screen is where abstraction lives.
+
+Everything on a screen is a representation of something - text is a representation of logic, an interface is a representation of state, a dashboard is a representation of a system that exists somewhere else. The screen is the medium through which abstract work gets done.
+
+This is enormously powerful. You can model a system, write a simulation, visualize a dataset, coordinate with people on three continents, all through the same glass surface. The work of the screen has no spatial limit and no physical weight.
+
+<Callout type="info" title="The mediation cost">
+Screen feedback is always one step removed from the thing being built. You do not feel whether code is working. You read whether it is working, infer from output whether it worked, interpret error messages about what might have gone wrong. The feedback loop is cognitive - fast, but never direct.
+</Callout>
+
+## What the balls offer
+
+The balls are where embodied feedback lives.
+
+When you juggle, the feedback is direct. The ball either lands in your hand or it lands on the floor. The difference is not a log entry - it is physical, immediate, and unambiguous. The body knows before the mind does whether the catch worked.
+
+This is not a minor advantage. Direct feedback is faster and more complete than mediated feedback. The adjustment the hand makes in response to a slightly off-arc throw happens below the level of conscious thought, faster than language. The learning that results from this tight feedback loop is different in kind from the learning that comes from reading a console output.
+
+<Diagram caption="Two feedback loops, two timescales, two types of information">
+<svg viewBox="0 0 560 260" width="560" height="260" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="260" fill="#14141f" rx="8"/>
+
+  <text x="140" y="28" text-anchor="middle" fill="#33cc66" font-size="11" font-weight="700" letter-spacing="1">SCREEN</text>
+
+  <rect x="40" y="40" width="90" height="44" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="85" y="60" text-anchor="middle" fill="#f3f3f8" font-size="10" font-weight="600">Write code</text>
+  <text x="85" y="74" text-anchor="middle" fill="#9696b0" font-size="9">abstract intent</text>
+
+  <path d="M130 62 L168 62" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="170" y="40" width="90" height="44" rx="6" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="215" y="60" text-anchor="middle" fill="#f3f3f8" font-size="10" font-weight="600">Run</text>
+  <text x="215" y="74" text-anchor="middle" fill="#9696b0" font-size="9">machine executes</text>
+
+  <path d="M215 84 L215 115 L85 115 L85 84" fill="none" stroke="#33cc66" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr2-green)"/>
+  <text x="150" y="130" text-anchor="middle" fill="#33cc66" font-size="9">read output → interpret → adjust (2-30s)</text>
+
+  <text x="420" y="28" text-anchor="middle" fill="#ff3366" font-size="11" font-weight="700" letter-spacing="1">JUGGLING</text>
+
+  <rect x="320" y="40" width="90" height="44" rx="6" fill="#1b1b2a" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="365" y="60" text-anchor="middle" fill="#f3f3f8" font-size="10" font-weight="600">Throw</text>
+  <text x="365" y="74" text-anchor="middle" fill="#9696b0" font-size="9">physical intent</text>
+
+  <path d="M410 62 L448 62" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+  <rect x="450" y="40" width="90" height="44" rx="6" fill="#1b1b2a" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="495" y="60" text-anchor="middle" fill="#f3f3f8" font-size="10" font-weight="600">Catch / Drop</text>
+  <text x="495" y="74" text-anchor="middle" fill="#9696b0" font-size="9">physics decides</text>
+
+  <path d="M495 84 L495 115 L365 115 L365 84" fill="none" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr2-red)"/>
+  <text x="430" y="130" text-anchor="middle" fill="#ff3366" font-size="9">direct body feedback (&lt;0.1s)</text>
+
+  <line x1="280" y1="40" x2="280" y2="150" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <rect x="20" y="155" width="520" height="20" rx="0" fill="#1b1b2a"/>
+  <text x="30" y="169" fill="#9696b0" font-size="10" font-weight="600">FEEDBACK TYPE</text>
+  <text x="140" y="169" fill="#33cc66" font-size="10">Mediated (cognitive)</text>
+  <text x="300" y="169" fill="#9696b0" font-size="10" font-weight="600">→</text>
+  <text x="325" y="169" fill="#ff3366" font-size="10">Direct (embodied)</text>
+
+  <rect x="20" y="178" width="520" height="20" rx="0" fill="#14141f"/>
+  <text x="30" y="192" fill="#9696b0" font-size="10" font-weight="600">SPEED</text>
+  <text x="140" y="192" fill="#33cc66" font-size="10">2-30 seconds</text>
+  <text x="325" y="192" fill="#ff3366" font-size="10">&lt;100 milliseconds</text>
+
+  <rect x="20" y="200" width="520" height="20" rx="0" fill="#1b1b2a"/>
+  <text x="30" y="214" fill="#9696b0" font-size="10" font-weight="600">INFORMATION</text>
+  <text x="140" y="214" fill="#33cc66" font-size="10">Symbolic (text, numbers)</text>
+  <text x="325" y="214" fill="#ff3366" font-size="10">Proprioceptive + visual</text>
+
+  <rect x="20" y="222" width="520" height="20" rx="0" fill="#14141f"/>
+  <text x="30" y="236" fill="#9696b0" font-size="10" font-weight="600">ADJUSTMENT</text>
+  <text x="140" y="236" fill="#33cc66" font-size="10">Requires deliberate thought</text>
+  <text x="325" y="236" fill="#ff3366" font-size="10">Happens below consciousness</text>
+
+  <defs>
+    <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2a2a3d"/>
+    </marker>
+    <marker id="arr2-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#33cc66"/>
+    </marker>
+    <marker id="arr2-red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#ff3366"/>
+    </marker>
+  </defs>
+</svg>
+</Diagram>
+
+## The contrast as a useful diagnostic
+
+Working with both tools in the same day reveals something about the state of attention.
+
+When the screen work becomes looping - the same code read three times without new information, the same bug approached from the same angle - the switch to the physical practice is fast and productive. The body engages, the pattern runs or drops, the feedback is clear. The cognitive state that returns to the screen after fifteen minutes of juggling is different from the one that left it.
+
+<PullQuote>
+Two tools. Two kinds of light in the dark. The work that happens in both is the same work - building systems that hold under pressure - expressed through different media.
+</PullQuote>
+
+When juggling is going well, the pattern runs without friction, the catches are accurate, and the mind that returns to the screen has had a break from representing-and-inferring and is ready to represent-and-infer again with fresh capacity.
+
+The two tools are not alternatives. They are complements that serve different functions in the same working day.
+
+## Both in the dark
+
+The photo was taken in low light - the RGB balls are the brightest objects in the frame, the screen the second brightest. Both the laptop and the balls are tools that produce their own light.
+
+The work that happens in both kinds of light is the same work, expressed through different media. Building systems that function. Developing patterns that hold under pressure. Iterating through failures until the precision is high enough to be useful.
+
+The other screen is on the desk. It is part of the practice.
+
+<Takeaways color="brain" items={[
+  "Screen feedback is mediated - fast but cognitive, always one step removed from the physical thing being built.",
+  "Juggling feedback is direct - the body processes a catch or drop before language can describe it.",
+  "Switching between abstraction and embodied practice is not distraction. It is cognitive state management.",
+  "Tools that give different kinds of feedback are complements, not competitors. The contrast is the diagnostic."
+]} />
+
+---
+
+*Read next: [Brain. Change. Tech. Why These Three?](/blog/brain-change-tech-why-these-three) - the framework behind this site's three pillars.*

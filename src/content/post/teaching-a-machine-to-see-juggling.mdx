@@ -1,0 +1,126 @@
+---
+title: "Teaching a Machine to See Juggling"
+slug: teaching-a-machine-to-see-juggling
+summary: "I trained a computer vision model to detect juggling balls in real time. Then I tested it while actually juggling. The machine watched, drew boxes around what it found, and reached 99 percent precision."
+date: 2026-06-03
+tags: ["tech", "brain", "ai", "computer-vision", "juggling", "otto", "personal"]
+pillars: ["tech", "brain"]
+cover: ../../assets/images/linda-otto-detection-vienna.jpg
+coverAlt: "A juggler mid-throw in front of a window, with Azure Custom Vision bounding boxes visible around the body and ball in the detection overlay"
+coverVideo: /videos/linda-otto-detection-vienna.mp4
+draft: false
+personal: true
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
+The question that started the project was simple: can a machine learn to recognize a juggling throw?
+
+Not in a laboratory setup with controlled lighting and a fixed camera. In real conditions - different backgrounds, different lighting, different throws. The kind of variation that makes object detection interesting and hard.
+
+The tool was Azure Custom Vision. The dataset was me - throwing, catching, juggling in different spaces. The labeled training data was built frame by frame: here is the ball, here is the arc, here is what a throw looks like at the moment of release.
+
+<StatGrid items={[
+  { value: "Frame", label: "Unit of training data", sub: "Each frame labeled with bounding boxes around balls and body positions", color: "tech" },
+  { value: "99%", label: "Final precision", sub: "When the model reports a detection, it is right 99% of the time", color: "tech" },
+  { value: "Loop", label: "The method", sub: "Label, train, evaluate, find failures, label more, retrain", color: "brain" }
+]} />
+
+## What Custom Vision required
+
+Training a Custom Vision model is a loop - the same loop as juggling practice, applied to machine learning.
+
+You start with a few labeled examples and train. The model makes predictions. You review what it got right and what it missed. You add more examples in the categories where it is failing - different angles, different lighting, edge cases the model has not seen. You retrain. You evaluate again.
+
+<Diagram caption="The Custom Vision training loop - the same structure as deliberate juggling practice">
+<svg viewBox="0 0 560 200" width="560" height="200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="200" fill="#14141f" rx="8"/>
+
+  <rect x="20" y="70" width="110" height="55" rx="8" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="75" y="95" text-anchor="middle" fill="#33cc66" font-size="11" font-weight="600">Label frames</text>
+  <text x="75" y="110" text-anchor="middle" fill="#9696b0" font-size="9">bounding boxes</text>
+
+  <path d="M132 97 L158 97" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr-tm)"/>
+
+  <rect x="160" y="70" width="110" height="55" rx="8" fill="#1b1b2a" stroke="#ffcc33" stroke-width="1.5"/>
+  <text x="215" y="95" text-anchor="middle" fill="#ffcc33" font-size="11" font-weight="600">Train model</text>
+  <text x="215" y="110" text-anchor="middle" fill="#9696b0" font-size="9">Custom Vision</text>
+
+  <path d="M272 97 L298 97" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr-tm)"/>
+
+  <rect x="300" y="70" width="110" height="55" rx="8" fill="#1b1b2a" stroke="#33ccff" stroke-width="1.5"/>
+  <text x="355" y="95" text-anchor="middle" fill="#33ccff" font-size="11" font-weight="600">Evaluate</text>
+  <text x="355" y="110" text-anchor="middle" fill="#9696b0" font-size="9">find failure cases</text>
+
+  <path d="M412 97 L438 97" stroke="#2a2a3d" stroke-width="1.5" marker-end="url(#arr-tm)"/>
+
+  <rect x="440" y="70" width="100" height="55" rx="8" fill="#1b1b2a" stroke="#cc33ff" stroke-width="1.5"/>
+  <text x="490" y="95" text-anchor="middle" fill="#cc33ff" font-size="11" font-weight="600">Test in field</text>
+  <text x="490" y="110" text-anchor="middle" fill="#9696b0" font-size="9">real conditions</text>
+
+  <path d="M490 125 Q490 165 215 165 Q100 165 75 125" fill="none" stroke="#33cc66" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-tm-green)"/>
+  <text x="280" y="178" text-anchor="middle" fill="#33cc66" font-size="9">add failure cases to training set, repeat</text>
+
+  <defs>
+    <marker id="arr-tm" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2a2a3d"/>
+    </marker>
+    <marker id="arr-tm-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#33cc66"/>
+    </marker>
+  </defs>
+</svg>
+</Diagram>
+
+The model improves not because it is getting smarter in any general sense but because the training data is covering more of the space of real-world variation. Each round of labeling and retraining is a correction cycle - the same feedback loop as adjusting your throw when the ball keeps going too far left.
+
+<Callout type="info" title="Training loop = practice loop">
+The structure of model improvement is identical to the structure of skill improvement: attempt, observe result, identify the specific failure, practice that specific case, attempt again. The mechanism is the same. The medium is different.
+</Callout>
+
+## Testing in the field
+
+The real test is always the one outside the training environment.
+
+The Vienna test was the first time the model ran on video I had not used in training - in a space it had not seen, with lighting conditions it had not been calibrated on. The bounding boxes in the image are the model's output in real time: here is where I think the juggler's body is, here is where I think the ball is.
+
+The model worked. Not perfectly - edge cases and fast motion still produced misses. But the precision was high enough to be useful, and more importantly, to be improvable. The error cases were informative: specific angles, specific distances, specific lighting conditions where the model needed more training examples.
+
+## What the 99 percent means and does not mean
+
+<PullQuote>
+High precision means that when the model says it found something, it is usually right. It does not mean the model finds everything.
+</PullQuote>
+
+High precision means that when the model says it found something, it is usually right. It does not mean the model finds everything. A model can have 99 percent precision and still miss many throws - it is just being conservative, only flagging what it is very confident about.
+
+<Callout type="warning" title="Precision vs recall - know which one you need">
+High precision, low recall: the model only reports what it is sure about, misses a lot. Right for alarm systems.
+High recall, low precision: the model finds most targets but fires many false positives. Right for coverage-first use cases like performance tracking.
+The right balance depends entirely on what you are building the detector for.
+</Callout>
+
+This tradeoff between precision and recall is one of the first things anyone building a detection system has to understand. The right balance depends entirely on what you are building it for. For juggling detection in a performance context, you probably want high recall - find every throw. For a system that triggers an alarm, you want high precision - do not fire unless very confident.
+
+## The feedback loop never ends
+
+The model reached 99 percent precision, and that was the milestone for this phase of the project. But the loop does not stop there.
+
+Every new environment, every new performer, every new kind of prop the model encounters is new training data. A model trained entirely on one juggler's throws in one kind of space will degrade when deployed in a fundamentally different context. The loop continues: deploy, monitor, identify failure cases, retrain.
+
+The cascade pattern applies to MLOps just as it applies to juggling practice. You do not reach a level and then stop. You reach a level and that level becomes the floor you build from.
+
+<Takeaways color="tech" items={[
+  "Training a computer vision model is a loop: label, train, evaluate, find failures, label more. It is the same structure as deliberate practice.",
+  "Real-world performance will differ from training performance. The first field test is where the actual model improvement begins.",
+  "Precision and recall measure different things. Know which one matters for your specific deployment context before you start training.",
+  "99% is a milestone, not a finish line. Every new environment is the start of the next training cycle."
+]} />
+
+---
+
+*Read next: [Being the Training Data](/blog/being-the-training-data) - what it means when the developer and the dataset are the same person.*
