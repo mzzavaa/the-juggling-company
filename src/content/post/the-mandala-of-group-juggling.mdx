@@ -1,7 +1,7 @@
 ---
 title: "The Mandala of Group Juggling"
 slug: the-mandala-of-group-juggling
-summary: "When six jugglers gather in a circle and pass props to each other simultaneously, something emerges that no individual juggler creates. The overhead view shows it: a mandala of intersecting arcs, a geometric pattern that exists only in the shared space between all six people."
+summary: "When six jugglers gather in a circle and pass props simultaneously, the group produces a geometric pattern no individual creates or sees - a mandala of intersecting arcs that exists only at the group level. The mathematics is exact: 15 possible passing channels, 3 simultaneous passes per beat, hexagonal symmetry, full pattern repeats every 6 beats."
 date: 2026-05-06
 tags: ["group-juggling", "passing", "community", "complexity", "science", "emergence", "coordination"]
 pillars: ["change", "tech"]
@@ -18,13 +18,13 @@ import Takeaways from '../../components/Takeaways.astro';
 import AnalogyTable from '../../components/AnalogyTable.astro';
 
 <StatGrid items={[
-  { value: "6", label: "Jugglers in the image", sub: "the minimum for a symmetric full-circle passing pattern - each juggler passes to both neighbors simultaneously", color: "change" },
+  { value: "6", label: "Jugglers in a symmetric circle", sub: "the minimum for a symmetric full-circle passing pattern - each juggler passes to both neighbors simultaneously", color: "change" },
   { value: "15", label: "Simultaneous throw-catch events per second", sub: "at standard passing tempo with 6 jugglers each making 2.5 passes/second", color: "tech" },
   { value: "n(n-1)/2", label: "Possible pair connections for n jugglers", sub: "for 6 jugglers: 15 possible passing channels. Not all are active simultaneously, but the coordination space grows combinatorially", color: "brain" },
   { value: "0.1s", label: "Synchronization tolerance", sub: "passing patterns require throws to arrive within approximately 100ms of the target timing window or the receiving juggler cannot catch", color: "yellow" }
 ]} />
 
-Look at the image from above. Six people. Between them, a perfect mandala - the props' arcs forming a geometry that none of the six individuals could produce alone. No single person sees this pattern from outside. Each sees only their own hands and their immediate neighbors. The mandala exists only in the overhead view.
+A six-person passing circle viewed from above forms a mandala: a geometry of intersecting arcs that none of the six individuals could produce alone. No single person sees this pattern from inside. Each sees only their own hands and their immediate neighbours. The mandala exists only in the overhead view.
 
 This is emergence: a pattern that exists at the group level and is absent at the individual level. The mathematics of how it works, and the coordination science of how six people maintain it in real time, is the subject of this post.
 
@@ -36,7 +36,7 @@ In a standard 6-person star feed, each juggler passes alternately to two specifi
 
 **The combinatorial structure:** With `n` jugglers, there are `n(n-1)/2` possible passing pairs. For 6 jugglers: 15 pairs. At any moment, only `floor(n/2)` passes can occur simultaneously (each juggler can only throw once per beat). For 6 jugglers: 3 simultaneous passes per beat.
 
-The 6-person juggling mandala represents a temporal sequence: over one full cycle, all 15 possible pass directions are covered, rotating through the pattern. The mandala is the superposition of all these directions, captured in a single long-exposure photograph.
+The full mandala represents a temporal sequence: over one full cycle, all 15 possible pass directions are covered, rotating through the pattern. What a long-exposure photograph captures is the superposition of all these directions in a single frame.
 
 <Diagram caption="Overhead geometry of a 6-person juggling circle. Each line represents a passing channel. The hexagram pattern emerges from simultaneous passes between non-adjacent jugglers.">
 <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" fill="none">
@@ -113,7 +113,7 @@ The stability of the mandala depends on the balance between these three mechanis
 
 ## The mathematics of circle passing
 
-A 6-person circle juggling pattern with objects passed across the circle (as in the image) can be analyzed using the same siteswap framework extended to multiple jugglers.
+A 6-person circle juggling pattern with objects passed across the circle can be analyzed using the same siteswap framework extended to multiple jugglers.
 
 For a symmetric 6-person circle where each juggler passes to the juggler directly opposite (3 simultaneous cross-circle passes per beat), the system has hexagonal symmetry. The combined state of all 6 jugglers must satisfy the passing siteswap validity condition: the multi-juggler state graph must have a valid cycle that visits each juggler's state in the correct sequence.
 

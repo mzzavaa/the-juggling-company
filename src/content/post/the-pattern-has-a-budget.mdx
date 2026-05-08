@@ -31,13 +31,11 @@ Scale has the same structure. When you add resources faster than the system can 
   { value: "12 services", label: "Without tracing = 12 untracked clubs", sub: "The clubs are in the air. The system does not know where they are going.", color: "change" }
 ]} />
 
-## The brain in the image
+## The brain is the bottleneck
 
-The image shows a woman juggling clubs. Above her, traced in red and green light along the same paths as a circuit diagram, is the shape of a brain.
+Every prop a juggler throws follows a circuit: released from one hand, tracked across space, caught by the other, rethrown. The brain handles multiple circuits simultaneously, and the cognitive cost of doing so is what George Miller (1956) framed as the limit of immediate memory - the famous "magical number seven, plus or minus two" - and what Nelson Cowan (2001) refined down to about four chunks of independent information.
 
-This is not decoration. Every prop she throws follows a circuit: released from one hand, tracked across space, caught by the other, rethrown. The brain handles multiple circuits simultaneously, and the light painting makes visible the shape of that cognitive load. The circuit and the juggling arc are the same thing, rendered in different media.
-
-What the image also shows: the juggler is the bottleneck. Not the clubs. The clubs fly fine. The question is whether the system running the pattern can track all of them accurately enough to correct in time for the next catch.
+The juggler is the bottleneck. Not the clubs. The clubs fly fine. The question is whether the system running the pattern can track all of them accurately enough to correct in time for the next catch.
 
 <Diagram caption="Cognitive load as circuit: each trajectory is a live signal that must be tracked, predicted, and corrected - simultaneously">
 <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;margin:0 auto;">
@@ -120,9 +118,7 @@ Observability, distributed tracing, and circuit breakers are not technical debt 
 
 ## The budget is the real constraint
 
-The juggler in the image is tracking several things simultaneously: two clubs in the air, one transitioning between hands, the circuit pattern that connects them, and the timing of the next throw. The light painting shows exactly how much is in motion.
-
-That is the budget. Every prop she adds has to fit inside it, and the budget itself has to be grown deliberately if more props are coming.
+A juggler running a club pattern is tracking several things simultaneously: two clubs in the air, one transitioning between hands, the circuit that connects them, and the timing of the next throw. That is the attention budget. Every prop added has to fit inside it, and the budget itself has to be grown deliberately if more props are coming.
 
 Before adding the next service, the next model, the next instance - ask whether the system that tracks all of this can handle one more thing. Not the infrastructure. The coordination layer. The observability. The human and architectural attention budget.
 
@@ -137,5 +133,7 @@ The clubs fly fine. The pattern is the question.
 ]} />
 
 ---
+
+*References: Miller GA, "The magical number seven, plus or minus two: some limits on our capacity for processing information," Psychological Review 63(2): 81-97, 1956. Cowan N, "The magical number 4 in short-term memory: a reconsideration of mental storage capacity," Behavioral and Brain Sciences 24(1): 87-114, 2001.*
 
 Related: [Same Prop or Different Prop](/post/same-prop-or-different-prop) - on choosing between vertical and horizontal scaling before the pattern breaks.

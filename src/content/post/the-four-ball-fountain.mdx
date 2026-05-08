@@ -24,11 +24,9 @@ import AnalogyTable from '../../components/AnalogyTable.astro';
   { value: "80%", label: "Jugglers who find 4 harder than 5", sub: "counterintuitively, many jugglers find the mathematical simplicity of 4 harder to learn than 5 - for reasons rooted in coordination neuroscience", color: "yellow" }
 ]} />
 
-The image is almost symmetrical. Two cyan balls, two orange. Their trajectories cross in the image but in opposite directions - each color staying on its own side. This symmetry is not a visual choice. It is the mathematical structure of the 4-ball fountain made visible.
+The four-ball fountain is structurally a different animal from the three-ball cascade. The cascade has three balls crossing continuously from hand to hand. The fountain has four balls that never cross: each hand throws only to itself, maintaining two independent circular loops simultaneously. The siteswap is `4` - a constant sequence. The throw value 4 means the ball returns to the same hand after 4 beats, because 4 is even.
 
-The cascade has three balls crossing continuously from hand to hand. The fountain has four balls that never cross: each hand throws only to itself, maintaining two independent circular loops simultaneously. The siteswap is `4` - a constant sequence. The throw value 4 means the ball returns to the same hand after 4 beats, because 4 is even.
-
-This single mathematical difference - odd versus even - changes the cognitive and neural demands of the pattern substantially.
+This single mathematical difference - odd versus even - changes the cognitive and neural demands of the pattern substantially. Buhler, Eisenbud, Graham and Wright (1994) gave the formal account of why: in their treatment of siteswap as a combinatorial system, parity controls which hand catches each throw, and that single bit reorganises the entire coordination problem.
 
 ## Odd versus even: the mathematical divide
 
@@ -112,7 +110,7 @@ Wing, A.M., and Kristofferson, A.B. (1973). "Response delays and the timing of d
 
 ## The crossing fountain: (4x,4)(4,4x)
 
-The image shows trails that cross - this is not the standard fountain. It is the **crossing fountain**, siteswap `(4x,4)(4,4x)` in synchronous notation.
+A close cousin of the standard fountain produces trails that cross instead of running parallel. This is the **crossing fountain**, siteswap `(4x,4)(4,4x)` in synchronous notation.
 
 In the crossing fountain, throws alternate between crossing to the opposite hand and returning to the same hand. The pattern uses synchronous throws (both hands throw simultaneously) with the `x` modifier indicating a crossing throw.
 
@@ -122,7 +120,7 @@ Visually: the crossing fountain looks more like a cascade, with balls weaving ac
 
 ![Two people facing each other, clubs and light trails forming a symmetric grid between them, showing the mathematical structure of passing patterns](../../assets/images/two-jugglers-passing-grid.png)
 
-The symmetric grid in this passing image shows the same mathematical structure at a larger scale: two independent circuits (one per juggler) that cross at a fixed exchange point. The mathematics of individual patterns and passing patterns share the same underlying graph structure - the difference is which nodes in the graph belong to which performer.
+The same structure appears at a larger scale in two-person passing: two independent circuits (one per juggler) that cross at a fixed exchange point. The mathematics of individual patterns and passing patterns share the same underlying graph structure - the difference is which nodes in the graph belong to which performer.
 
 ## The neurological boundary at 4
 

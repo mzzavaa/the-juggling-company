@@ -1,7 +1,7 @@
 ---
 title: "The Web Is Not Built Alone"
 slug: the-web-is-not-built-alone
-summary: "The geometric web in the image is not a metaphor for connection - it is a structure that requires three people to hold it. Shared infrastructure, distributed ownership, and team-built systems have the same load-bearing requirement."
+summary: "Shared infrastructure is a structure that requires every node to hold it. Distributed ownership, team-built systems, and resilient platforms all share the same load-bearing requirement: remove any single owner and the whole thing collapses unless the geometry was built to redistribute."
 date: 2026-05-26
 tags: ["change", "tech", "juggling", "community", "team", "distributed", "infrastructure"]
 pillars: ["change", "tech"]
@@ -17,11 +17,9 @@ import StatGrid from '../../components/StatGrid.astro';
 import PullQuote from '../../components/PullQuote.astro';
 import Takeaways from '../../components/Takeaways.astro';
 
-The web in the image is not decorative.
+A web is not a cord. A cord runs from one anchor to another - if either anchor lets go, the whole thing falls. A web crosses, redirects, distributes. Tension at any one point is held by the geometry of the others.
 
-Three people stand in a dark concrete room. The two on the outside are holding handles. The structure between them - a rigid geometric lattice of cyan light - is stretched taut. The person in the center is inside it. If anyone lets go, the structure collapses. Not onto one person. Everywhere at once.
-
-This is what shared ownership of infrastructure actually looks like. Not a nice diagram of interconnected boxes. A structure that requires active participation from every node to remain a structure at all.
+This is what shared ownership of infrastructure actually requires. Not a nice diagram of interconnected boxes. A structure that requires active participation from every node to remain a structure at all. Remove any one node and the geometry has to either redistribute or collapse.
 
 <StatGrid items={[
   { value: "3 nodes", label: "Minimum for a web", sub: "Two points make a cord. Three make a geometry with load distribution.", color: "cyan" },
@@ -31,7 +29,7 @@ This is what shared ownership of infrastructure actually looks like. Not a nice 
 
 ## The geometry of shared systems
 
-The web between the three women is not a cord running from one to another. It is a network - multiple crossing paths, multiple load-bearing points, no single thread that carries all the tension. Remove any one of the three people and the geometry changes completely. The web does not sag or simplify. It collapses.
+A web is a network - multiple crossing paths, multiple load-bearing points, no single thread that carries all the tension. Remove any one of the load-bearing nodes and the geometry changes completely. The web does not sag or simplify. It collapses or redistributes - depending on whether the other nodes are actually carrying load or merely holding handles.
 
 This is the difference between a shared system and a system that is used by multiple people.
 
@@ -88,7 +86,7 @@ A shared system distributes ownership across the nodes. Each team has a portion 
 
 ## What distributed ownership requires
 
-The web works because the three people in the image are not just touching it. They are actively holding it at the tension the geometry requires.
+A web only works when every node is actively holding it at the tension the geometry requires. Touching the structure is not the same as bearing its load.
 
 Distributed ownership of infrastructure requires the same active participation. It is not enough to name owners in a document and consider the responsibility assigned. Each owner has to be capable of holding their portion at the tension the whole pattern requires - meaning they have to understand the system well enough to operate, debug, and modify it without help from the other nodes.
 
@@ -100,9 +98,7 @@ Watch for the signs: only one person is paged when the system fails, only one pe
 
 ## The person in the center
 
-In the image, the person in the center is not separate from the web. She is inside it. The structure surrounds her. She is not above it or below it - she is part of the geometry.
-
-Teams that build shared infrastructure sometimes have a person in this position: the one who is most deeply embedded in the system, the one the web is most built around. This is not inherently wrong. Complex systems often have a center of gravity.
+Teams that build shared infrastructure sometimes have a person in the center of the web - the one who is most deeply embedded in the system, the one the web is most built around. They are not above the structure or below it. They are part of the geometry. This is not inherently wrong. Complex systems often have a center of gravity.
 
 The question is whether the center is load-bearing in a way that makes the whole structure fragile, or whether the edges are strong enough to remain stable if the center changes.
 
@@ -114,11 +110,9 @@ A healthy web allows the center to change without collapse. The geometry redistr
 
 ## Building toward distributed resilience
 
-The concrete room in the image is not glamorous. The light source is the web itself. The space is unfinished, industrial, not designed for performance. This looks like where a system gets built, not where it gets shown.
+Distributed ownership is built in unglamorous places. In the documentation that actually reflects how the system works, runbooks that other teams can follow, post-mortems that distribute knowledge rather than just recording what happened, on-call rotations that give multiple people real experience with the failure modes of the system.
 
-Distributed ownership is built in spaces like this - in the unglamorous work of documentation that actually reflects how the system works, runbooks that other teams can follow, post-mortems that distribute knowledge rather than just recording what happened, on-call rotations that give multiple people real experience with the failure modes of the system.
-
-None of this is visible when the web is working. What is visible is the pattern - the whole, held taut, the cyan light tracing the structure that took effort to build and requires effort to maintain.
+None of this is visible when the web is working. What is visible is the pattern - the whole, held taut by the structure that took effort to build and requires effort to maintain.
 
 <Callout type="success" title="What building the web looks like">
 Documentation that reflects how the system actually works - not how it was designed. Runbooks written for the person who has never touched this system before. On-call rotations that give everyone real exposure to failure modes. Post-mortems that spread knowledge, not just record events. This is what tensioning the edges looks like.

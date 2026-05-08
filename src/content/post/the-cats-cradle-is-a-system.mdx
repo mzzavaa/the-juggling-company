@@ -1,7 +1,7 @@
 ---
 title: "The Cat's Cradle Is a System"
 slug: the-cats-cradle-is-a-system
-summary: "The image shows multiple hands holding a complex cat's cradle of neon strings - orange and purple lines weaving an intricate structure across the space between them. Every strand is load-bearing. Remove one, and the geometry changes. This is the architecture of every real system: not a clean diagram but a web of dependencies where nothing is truly independent."
+summary: "Every strand in a cat's cradle is load-bearing. Remove one and the geometry rearranges. Real systems work the same way: the architecture diagram shows direct dependencies, but the structural ones - shared platforms, foundational infrastructure, the senior engineer who left - are doing most of the work to keep the shape."
 date: 2026-06-10
 tags: ["tech", "change", "juggling", "dependencies", "systems", "architecture", "teams", "infrastructure"]
 pillars: ["tech", "change"]
@@ -16,11 +16,9 @@ import StatGrid from "../../components/StatGrid.astro";
 import PullQuote from "../../components/PullQuote.astro";
 import Takeaways from "../../components/Takeaways.astro";
 
-The cat's cradle is a structure of pure tension.
+A cat's cradle is a structure of pure tension. No strand exists independently. Each is kept in position by the tension in the lines adjacent to it, which are kept in position by the lines adjacent to them, all the way back to the fingers that hold the perimeter. The geometry emerges from the web of relationships, not from any single strand.
 
-Each strand in the image runs from one pair of fingers to another. None of the orange and purple lines exists independently - each is kept in position by the tension in the lines adjacent to it, which are kept in position by the lines adjacent to them, all the way back to the fingers that hold the perimeter. The geometry emerges from the web of relationships, not from any single strand.
-
-Remove one finger. The whole structure rearranges.
+Remove one finger and the whole structure rearranges. The same constraint logic shows up in the formal treatments of juggling: Buhler, Eisenbud, Graham, and Wright (1994) showed that a siteswap sequence is a valid pattern only when every throw height is consistent with every other one. Change one throw and you change the legality of the whole sequence. Real systems - whether string figures, juggling patterns, or production architectures - obey this kind of global constraint. Local changes are not local. They never were.
 
 <StatGrid items={[
   { value: "Every strand", label: "Load-bearing", sub: "In a real dependency web, there is no such thing as a harmless removal. Every strand is maintaining tension in adjacent strands you may not be tracking.", color: "tech" },
@@ -32,11 +30,11 @@ Remove one finger. The whole structure rearranges.
 
 A dependency diagram in architecture documentation typically shows boxes and arrows. The boxes are services or teams. The arrows indicate relationships. It is a useful simplification.
 
-But the cat's cradle in this image is not a simplified diagram. It is the actual structure - and the actual structure has three properties that the simplified diagram misses.
+The cat's cradle is the actual structure, and the actual structure has three properties that the simplified diagram misses.
 
-First: the tension in each strand is maintained by all the other strands. You cannot understand the load on any one line by looking at it in isolation. The orange strand running from top-left to bottom-right is under a specific tension only because of the purple strands crossing it, which are under their own specific tensions.
+First: the tension in each strand is maintained by all the other strands. You cannot understand the load on any one line by looking at it in isolation. A strand crossing the interior is under a specific tension only because of the strands crossing it, which are under their own specific tensions.
 
-Second: the structure is only stable while all hands are present. The cat's cradle does not freestand. It requires everyone in the frame to maintain their position. The moment one participant changes their grip, the whole structure shifts.
+Second: the structure is only stable while all hands are present. A cat's cradle does not freestand. It requires everyone in the frame to maintain their position. The moment one participant changes their grip, the whole structure shifts.
 
 Third: the geometry is not designed - it emerges. No individual strand was placed with the intention of creating the overall pattern. The pattern is the aggregate of all the local decisions about where each strand crosses.
 
@@ -96,7 +94,7 @@ Most real organisational and technical dependencies are the feeding kind. Two se
 
 ## The hands at the edge
 
-In the cat's cradle image, the hands at the periphery are the most important. They define the perimeter. If one of the edge hands lets go, the entire interior collapses - not just the strands connected to that hand, but every strand that was tensioned relative to those.
+In a cat's cradle, the hands at the periphery are the most important. They define the perimeter. If one of the edge hands lets go, the entire interior collapses - not just the strands connected to that hand, but every strand that was tensioned relative to those.
 
 In complex systems, the perimeter dependencies are exactly this: the foundational infrastructure, the shared platforms, the senior engineers who hold context about why certain decisions were made. When they change - when the hand at the edge shifts or releases - the interior rearranges in ways that are difficult to predict and often invisible until something downstream breaks.
 
@@ -124,5 +122,7 @@ This is not extra work. It is the cat's cradle logic: in a web of dependencies, 
 ]} />
 
 ---
+
+*Reference: Buhler, J., Eisenbud, D., Graham, R., and Wright, C. (1994). "Juggling Drops and Descents." American Mathematical Monthly, 101(6), 507-519. The combinatorial proof that a sequence of throws is a valid pattern only when every throw is consistent with every other.*
 
 *Read next: [The Web Is Not Built Alone](/blog/the-web-is-not-built-alone) - how shared infrastructure requires multiple hands to hold it.*
