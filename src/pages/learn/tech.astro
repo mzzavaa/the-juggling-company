@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import VideoImage from "@/components/VideoImage.astro";
 import { getPosts } from "@/lib/content";
@@ -202,9 +202,9 @@ const analogues = [
         <p class="mt-3 max-w-xl text-[var(--color-muted)]">Siteswap notation was invented to solve distributed timing. Each number is the time-to-next-throw for that object. It is a scheduling algorithm expressed as a juggling pattern.</p>
       </div>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div data-reveal><JugglingPattern pattern="3" title="Cascade (Siteswap 3)" description="Round-robin: each object takes 3 beats before returning. Equal load, equal distribution, no priority queue." pillar="tech" notation="3" /></div>
-        <div data-reveal data-delay="100"><JugglingPattern pattern="4" title="Fountain (Siteswap 4)" description="Each hand runs independently. Two parallel loops, no cross-traffic. The microservice model." pillar="tech" notation="4" slowdown={2.0} /></div>
-        <div data-reveal data-delay="200"><JugglingPattern pattern="534" title="Async Sequence (534)" description="Three different timing windows. The 5 is in flight while the 3 lands and the 4 is scheduled. Concurrent async operations." pillar="tech" notation="534" slowdown={2.5} /></div>
+        <div data-reveal><JugglingPatternGif src="/animations/pattern-3-cascade.gif" title="Cascade (Siteswap 3)" description="Round-robin: each object takes 3 beats before returning. Equal load, equal distribution, no priority queue." pillar="tech" notation="3" difficulty="beginner" /></div>
+        <div data-reveal data-delay="100"><JugglingPatternGif src="/animations/pattern-4-fountain.gif" title="Fountain (Siteswap 4)" description="Each hand runs independently. Two parallel loops, no cross-traffic. The microservice model." pillar="tech" notation="4" difficulty="intermediate" /></div>
+        <div data-reveal data-delay="200"><JugglingPatternGif src="/animations/pattern-4-534.gif" title="Async Sequence (534)" description="Three different timing windows. The 5 is in flight while the 3 lands and the 4 is scheduled. Concurrent async operations." pillar="tech" notation="534" difficulty="advanced" /></div>
       </div>
     </div>
   </section>

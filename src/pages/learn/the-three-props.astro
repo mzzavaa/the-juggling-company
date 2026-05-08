@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import { getPosts } from "@/lib/content";
 
@@ -273,13 +273,13 @@ const recommended = allPosts.filter(p =>
     </div>
     <div class="grid gap-5 sm:grid-cols-3">
       <div data-reveal data-delay="0">
-        <JugglingPattern pattern="3" title="The Cascade (Ball)" description="Siteswap 3. The foundation. Both hands throwing alternately, every ball crossing center." pillar="brain" notation="3" />
+        <JugglingPatternGif src="/animations/pattern-3-cascade.gif" title="The Cascade (Ball)" description="Siteswap 3. The foundation. Both hands throwing alternately, every ball crossing center." pillar="brain" notation="3" difficulty="beginner" />
       </div>
       <div data-reveal data-delay="100">
-        <JugglingPattern pattern="531" title="Heights Vary (Club arc)" description="Siteswap 531. Not all throws need to be equal. The 5 is high, the 3 medium, the 1 a quiet pass." pillar="change" notation="531" slowdown={2.2} />
+        <JugglingPatternGif src="/animations/pattern-3-531.gif" title="Heights Vary (Club arc)" description="Siteswap 531. Not all throws need to be equal. The 5 is high, the 3 medium, the 1 a quiet pass." pillar="change" notation="531" difficulty="intermediate" />
       </div>
       <div data-reveal data-delay="200">
-        <JugglingPattern pattern="(4,4)" title="The Fountain (Ring orbit)" description="Siteswap (4,4). Both hands synchronous. Two parallel tracks that never cross. The ring's wide orbit." pillar="tech" notation="(4,4)" slowdown={2.0} />
+        <JugglingPatternGif src="/animations/pattern-4-fountain.gif" title="The Fountain (Ring orbit)" description="Siteswap 4. Both hands run in parallel. Two columns that never cross. The ring's wide orbit." pillar="tech" notation="4" difficulty="intermediate" />
       </div>
     </div>
   </section>

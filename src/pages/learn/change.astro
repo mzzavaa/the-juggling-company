@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import { getPosts } from "@/lib/content";
 
@@ -231,9 +231,9 @@ const stats = [
         <p class="mt-3 max-w-xl text-[var(--color-muted)]">Each pattern below has a change management analogue. The timing, recovery structure, and failure modes map directly onto how teams absorb new work.</p>
       </div>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div data-reveal><JugglingPattern pattern="3" title="The Cascade" description="Stable change with one concurrent process at a time. Ball, club, ring each have a clear hand and moment." pillar="change" notation="3" /></div>
-        <div data-reveal data-delay="100"><JugglingPattern pattern="531" title="The 531 Pattern" description="Three different heights. Three different timing windows. The recovery buffer is built into the structure." pillar="change" notation="531" slowdown={2.2} /></div>
-        <div data-reveal data-delay="200"><JugglingPattern pattern="753" title="High-Demand Sequence" description="Maximum concurrent load. The 7 is already planned before the 3 lands. Organisational saturation, visualised." pillar="change" notation="753" slowdown={2.8} /></div>
+        <div data-reveal><JugglingPatternGif src="/animations/pattern-3-cascade.gif" title="The Cascade" description="Stable change with one concurrent process at a time. Ball, club, ring each have a clear hand and moment." pillar="change" notation="3" difficulty="beginner" /></div>
+        <div data-reveal data-delay="100"><JugglingPatternGif src="/animations/pattern-3-531.gif" title="The 531 Pattern" description="Three different heights. Three different timing windows. The recovery buffer is built into the structure." pillar="change" notation="531" difficulty="intermediate" /></div>
+        <div data-reveal data-delay="200"><JugglingPatternGif src="/animations/pattern-5-cascade.gif" title="High-Demand Sequence" description="Maximum concurrent load. Five objects in flight, every catch already planning the next throw. Organisational saturation, visualised." pillar="change" notation="5" difficulty="advanced" /></div>
       </div>
     </div>
   </section>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import VideoImage from "@/components/VideoImage.astro";
 import { getPosts } from "@/lib/content";
@@ -194,9 +194,9 @@ const infiniteMarkers = [
         <p class="mt-3 max-w-xl text-[var(--color-muted)]">Each pattern below runs continuously until interrupted. There is no final state. The pattern is the point.</p>
       </div>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div data-reveal><JugglingPattern pattern="3" title="The Cascade" description="The infinite loop in its simplest form. Left throws right, right throws left, gravity returns. No end state." pillar="all" notation="3" /></div>
-        <div data-reveal data-delay="100"><JugglingPattern pattern="(4x,4)(4,4x)" title="Sync Fountain" description="Both hands throw simultaneously in a fountain pattern. Fully parallel, fully continuous, no terminal beat." pillar="all" notation="(4x,4)(4,4x)" slowdown={2.2} /></div>
-        <div data-reveal data-delay="200"><JugglingPattern pattern="b" title="Bounce Cascade" description="Gravity reversed - bouncing off the floor instead of falling. Same infinite structure, different physics." pillar="all" notation="b" slowdown={2.0} /></div>
+        <div data-reveal><JugglingPatternGif src="/animations/pattern-3-cascade.gif" title="The Cascade" description="The infinite loop in its simplest form. Left throws right, right throws left, gravity returns. No end state." pillar="all" notation="3" difficulty="beginner" /></div>
+        <div data-reveal data-delay="100"><JugglingPatternGif src="/animations/pattern-4-fountain.gif" title="The Fountain" description="Two parallel fountains, one in each hand. Fully concurrent, fully continuous, no terminal beat." pillar="all" notation="4" difficulty="intermediate" /></div>
+        <div data-reveal data-delay="200"><JugglingPatternGif src="/animations/pattern-3-51.gif" title="The Shower" description="All balls travel one direction in a continuous circle. The infinite loop in its most visible form." pillar="all" notation="51" difficulty="intermediate" /></div>
       </div>
     </div>
   </section>
