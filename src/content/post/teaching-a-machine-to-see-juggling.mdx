@@ -86,7 +86,7 @@ The structure of model improvement is identical to the structure of skill improv
 
 The real test is always the one outside the training environment.
 
-The Vienna test was the first time the model ran on video I had not used in training - in a space it had not seen, with lighting conditions it had not been calibrated on. The bounding boxes in the image are the model's output in real time: here is where I think the juggler's body is, here is where I think the ball is.
+The Vienna test was the first time the model ran on video I had not used in training - in a space it had not seen, with lighting conditions it had not been calibrated on. The bounding boxes drawn over the frame are the model's output in real time: here is where I think the juggler's body is, here is where I think the ball is.
 
 The model worked. Not perfectly - edge cases and fast motion still produced misses. But the precision was high enough to be useful, and more importantly, to be improvable. The error cases were informative: specific angles, specific distances, specific lighting conditions where the model needed more training examples.
 

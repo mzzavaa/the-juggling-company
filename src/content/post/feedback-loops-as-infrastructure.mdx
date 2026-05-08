@@ -98,9 +98,9 @@ The key word is "adjusts." A feedback loop without adjustment is telemetry. Usef
 </svg>
 </Diagram>
 
-## The circuit in the image
+## The closed loop
 
-The circuit in the image for this post is a closed loop. The signal travels around. It does not terminate.
+Feedback infrastructure is, structurally, a closed loop. The signal travels around. It does not terminate.
 
 This is the important property. An open circuit - a pathway with no return - carries a signal from source to destination and stops. The source cannot know what happened to the signal after it left. The destination cannot communicate back.
 
@@ -171,7 +171,7 @@ The form is less important than the structure: output observed, compared, adjust
 Every real feedback loop has the same four steps: (1) observe - the system measures something about its own output; (2) compare - the observation is checked against a reference state; (3) decide - a signal is generated when the comparison shows deviation; (4) adjust - something in the system changes in response. Missing any of these steps produces telemetry, not a feedback loop.
 </Callout>
 
-The amber circuit in the image runs around. The signal returns to where it started.
+The closed circuit runs around. The signal returns to where it started.
 
 Build systems that know what they produce, compare it to what they should produce, and can change based on that comparison.
 
