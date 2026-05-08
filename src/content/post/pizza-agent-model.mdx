@@ -17,7 +17,7 @@ import StatGrid from "../../components/StatGrid.astro";
 import PullQuote from "../../components/PullQuote.astro";
 import Takeaways from "../../components/Takeaways.astro";
 
-Amazon has a rule: a team should be small enough that two large pizzas can feed everyone. The idea is that if you need more pizza, your team has too many people, which means too much coordination overhead.
+Amazon has a rule: a team should be small enough that two large pizzas can feed everyone. The idea is that if you need more pizza, your team has too many people, which means too much coordination overhead - the same n²/2 communication-cost curve Brooks formalised in *The Mythical Man-Month* (1975).
 
 It's a metaphor that sounds clean until you try to apply it to actual humans. Do they eat pizza? Did they already have lunch? Is one person vegetarian and half the pizza doesn't count?
 
@@ -117,6 +117,16 @@ If you can't, something is too heavy. Rethink the design. If you can, you have a
   "The constraint scales: solo consultant = 1 pizza, startup team = 2-3 pizzas, enterprise = full pizzeria. The per-session limit stays.",
   "If your team doesn't fit, something is too heavy - rethink before you build, not after you've hit the rate limit."
 ]} />
+
+---
+
+---
+
+## Further reading
+
+- **Brooks, F.P.** (1975). *The Mythical Man-Month: Essays on Software Engineering*. Addison-Wesley. The original coordination-overhead argument behind small-team rules.
+- **Cowan, N.** (2001). "The magical number 4 in short-term memory: A reconsideration of mental storage capacity." *Behavioral and Brain Sciences*, 24(1), 87-114. Why a coordination role can only track ~4 concurrent items - the human analogue of the slice ceiling.
+- **Hackman, J.R., and Vidmar, N.** (1970). "The effects of size and task type on group performance and member reactions." *Sociometry*, 33(1), 37-54. The empirical case that group performance peaks at small numbers, then degrades.
 
 ---
 

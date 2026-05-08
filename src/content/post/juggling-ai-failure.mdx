@@ -83,7 +83,7 @@ You can't fully anticipate failure in advance. Not in juggling, not in software,
 This is not recklessness. This is structured iteration. There's a difference between dropping balls in practice and dropping balls during a performance. The former is how you learn. The latter is a system design problem - it means you didn't practice enough in the right conditions.
 
 <Callout type="info" title="Practice space vs performance space">
-The difference between a staging environment and production isn't just data volume or user count - it's the cost of failure. In staging, failure is information. In production, failure is an incident. Design your staging environment to surface failures you need to know about, not to preview what success looks like.
+The difference between a staging environment and production isn't just data volume or user count - it's the cost of failure. In staging, failure is information. In production, failure is an incident. Design your staging environment to surface failures you need to know about, not to preview what success looks like. This is the same distinction Schmidt and Lee (*Motor Control and Learning*, 2011) make about practice variability: low-cost failure in practice is what produces robust performance under high-stakes conditions.
 </Callout>
 
 ---
@@ -239,6 +239,15 @@ The goal isn't a juggling routine that never drops. The goal is a juggler who ca
   "Before blaming the agent, look upstream. Most agent failures are system failures - wrong data, wrong context, wrong trigger.",
   "Every handled failure builds something. Otto's stale-data drop created an automatic sync pipeline that now runs continuously. Drops compound into robustness if you handle them well."
 ]} />
+
+---
+
+## Further reading
+
+- **Schmidt, R.A., and Lee, T.D.** (2011). *Motor Control and Learning: A Behavioral Emphasis*. Human Kinetics. Variable practice and error-based learning - why surfaced failure produces robust skill.
+- **Beek, P.J., and Lewbel, A.** (1995). "The science of juggling." *Scientific American*, 273(5), 92-97. The cascade as a continuously self-correcting timing-coupled system.
+- **Allspaw, J., and Robbins, J.** (2010). *Web Operations: Keeping the Data on Time*. O'Reilly. The operational case for designing for failure rather than against it.
+- **Beyer, B., Jones, C., Petoff, J., and Murphy, N.R., eds.** (2016). *Site Reliability Engineering: How Google Runs Production Systems*. O'Reilly. Error budgets as the formal mechanism for "failures are information, not catastrophe."
 
 ---
 

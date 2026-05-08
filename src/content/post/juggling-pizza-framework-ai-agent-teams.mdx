@@ -110,7 +110,7 @@ These agents don't fit neatly into a slice count, because their complexity is de
 
 ## Part 2: The Pizza Model - How Many Agents Can Run at Once
 
-You know Amazon's 2-pizza team rule: a team should be small enough that two large pizzas can feed them. It's a proxy for communication overhead. Too many people, too many handoffs, everything slows down.
+You know Amazon's 2-pizza team rule: a team should be small enough that two large pizzas can feed them. It's a proxy for communication overhead - rooted in Brooks's classic observation that adding people to a project increases coordination cost as roughly n²/2 (Brooks, *The Mythical Man-Month*, 1975). Too many people, too many handoffs, everything slows down.
 
 For humans, the limiting factor is coordination. For AI agents, the limiting factor is tokens. They don't get tired or hungry, but they do get expensive and slow if you run too many heavy ones concurrently.
 
@@ -316,6 +316,15 @@ If you do this honestly, you'll end up with a right-sized agent team where you a
   "Session window design is where the two frameworks combine - group agents by when they run, sum the slices, and verify you're under budget.",
   "Apply the same prop taxonomy to human teams: ball contributors, ring project managers, club specialists, and devil stick self-directed teams with leadership checkpoints."
 ]} />
+
+---
+
+## Further reading
+
+- **Brooks, F.P.** (1975). *The Mythical Man-Month: Essays on Software Engineering*. Addison-Wesley. The original n²/2 coordination-overhead argument that the 2-pizza rule abstracts.
+- **Cowan, N.** (2001). "The magical number 4 in short-term memory: A reconsideration of mental storage capacity." *Behavioral and Brain Sciences*, 24(1), 87-114. The working-memory ceiling that maps to the maximum concurrent agents a coordination role can track.
+- **Buhler, J., Eisenbud, D., Graham, R., and Wright, C.** (1994). "Juggling Drops and Descents." *The American Mathematical Monthly*, 101(6), 507-519. The formal scheduling treatment behind the cascade-as-system view.
+- **Beek, P.J., and Lewbel, A.** (1995). "The science of juggling." *Scientific American*, 273(5), 92-97. Prop dynamics and why different props impose different cognitive load.
 
 ---
 
