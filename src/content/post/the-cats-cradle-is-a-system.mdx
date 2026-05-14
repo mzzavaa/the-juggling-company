@@ -1,0 +1,128 @@
+---
+title: "The Cat's Cradle Is a System"
+slug: the-cats-cradle-is-a-system
+summary: "The image shows multiple hands holding a complex cat's cradle of neon strings - orange and purple lines weaving an intricate structure across the space between them. Every strand is load-bearing. Remove one, and the geometry changes. This is the architecture of every real system: not a clean diagram but a web of dependencies where nothing is truly independent."
+date: 2026-06-10
+tags: ["tech", "change", "juggling", "dependencies", "systems", "architecture", "teams", "infrastructure"]
+pillars: ["tech", "change"]
+cover: ../../assets/images/hands-cats-cradle-neon-strings.png
+coverAlt: "Multiple hands from both sides holding an intricate cat's cradle of glowing orange and purple neon strings, forming a complex geometric web structure between them"
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+
+The cat's cradle is a structure of pure tension.
+
+Each strand in the image runs from one pair of fingers to another. None of the orange and purple lines exists independently - each is kept in position by the tension in the lines adjacent to it, which are kept in position by the lines adjacent to them, all the way back to the fingers that hold the perimeter. The geometry emerges from the web of relationships, not from any single strand.
+
+Remove one finger. The whole structure rearranges.
+
+<StatGrid items={[
+  { value: "Every strand", label: "Load-bearing", sub: "In a real dependency web, there is no such thing as a harmless removal. Every strand is maintaining tension in adjacent strands you may not be tracking.", color: "tech" },
+  { value: "No center", label: "The whole web is the structure", sub: "Unlike a hub-and-spoke diagram, the cat's cradle has no single point of control. The structure is the relationships - not any node within them.", color: "change" },
+  { value: "Visible", label: "Only while held", sub: "The cat's cradle disappears the moment the hands let go. A dependency web that isn't actively maintained - documented, monitored, understood - becomes invisible before it becomes a problem.", color: "brain" }
+]} />
+
+## What the diagram doesn't show
+
+A dependency diagram in architecture documentation typically shows boxes and arrows. The boxes are services or teams. The arrows indicate relationships. It is a useful simplification.
+
+But the cat's cradle in this image is not a simplified diagram. It is the actual structure - and the actual structure has three properties that the simplified diagram misses.
+
+First: the tension in each strand is maintained by all the other strands. You cannot understand the load on any one line by looking at it in isolation. The orange strand running from top-left to bottom-right is under a specific tension only because of the purple strands crossing it, which are under their own specific tensions.
+
+Second: the structure is only stable while all hands are present. The cat's cradle does not freestand. It requires everyone in the frame to maintain their position. The moment one participant changes their grip, the whole structure shifts.
+
+Third: the geometry is not designed - it emerges. No individual strand was placed with the intention of creating the overall pattern. The pattern is the aggregate of all the local decisions about where each strand crosses.
+
+<Callout type="info" title="Why real systems look like cat's cradles">
+A microservices architecture that has evolved over five years looks more like a cat's cradle than a clean architecture diagram. Each service was added to solve a specific local problem. The overall structure emerged from those additions. Nobody designed the global pattern - it is the aggregate of local decisions.
+
+The cat's cradle is not a failure of planning. It is the accurate representation of how systems that solve real problems actually look after enough iterations.
+</Callout>
+
+## The two kinds of dependency
+
+In juggling, there are two fundamentally different ways to be connected to another performer. One is passing - you send a prop to them and they catch it. The other is feeding - you maintain your own pattern while staying within the frame of a shared structure.
+
+The passing relationship is direct and visible: the club travels from one hand to the other. The dependency is temporal - it happens at a specific moment and then resolves.
+
+The feeding relationship is structural and ongoing: both jugglers are maintaining their own patterns simultaneously, but the available space for each pattern is shaped by what the other is doing. If one juggler moves, the other has to adjust. The dependency is not a transfer - it is a shared constraint on the available space.
+
+Most real organisational and technical dependencies are the feeding kind. Two services do not directly call each other, but both consume from the same shared queue, and their independent decisions about rate and volume shape the other's experience. Two teams do not hand work to each other, but both depend on the same platform team's deployment pipeline, and each team's release schedule constrains the other's.
+
+<Diagram caption="Direct dependency vs structural dependency - both exist in every real system, but only direct dependencies appear in most documentation">
+<svg viewBox="0 0 560 190" width="560" height="190" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="190" fill="#14141f" rx="8"/>
+
+  <text x="130" y="18" text-anchor="middle" fill="#ffcc33" font-size="9" font-weight="600">DIRECT DEPENDENCY</text>
+  <text x="430" y="18" text-anchor="middle" fill="#cc33ff" font-size="9" font-weight="600">STRUCTURAL DEPENDENCY</text>
+  <line x1="275" y1="12" x2="275" y2="178" stroke="#2a2a3d" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <rect x="20" y="32" width="80" height="30" rx="4" fill="#ffcc3322" stroke="#ffcc33" stroke-width="1"/>
+  <text x="60" y="50" text-anchor="middle" fill="#ffcc33" font-size="8">Service A</text>
+  <rect x="160" y="32" width="80" height="30" rx="4" fill="#ffcc3322" stroke="#ffcc33" stroke-width="1"/>
+  <text x="200" y="50" text-anchor="middle" fill="#ffcc33" font-size="8">Service B</text>
+  <line x1="100" y1="47" x2="160" y2="47" stroke="#ffcc33" stroke-width="1.5" marker-end="url(#ccas-arr-y)"/>
+  <text x="130" y="43" text-anchor="middle" fill="#9696b0" font-size="7">calls directly</text>
+  <text x="130" y="80" text-anchor="middle" fill="#9696b0" font-size="7.5">visible in architecture diagram</text>
+  <text x="130" y="92" text-anchor="middle" fill="#9696b0" font-size="7.5">breaks visibly when removed</text>
+  <text x="130" y="104" text-anchor="middle" fill="#ffcc33" font-size="8">easy to find, easy to fix</text>
+
+  <rect x="320" y="32" width="80" height="30" rx="4" fill="#cc33ff22" stroke="#cc33ff" stroke-width="1"/>
+  <text x="360" y="50" text-anchor="middle" fill="#cc33ff" font-size="8">Team A</text>
+  <rect x="460" y="32" width="80" height="30" rx="4" fill="#cc33ff22" stroke="#cc33ff" stroke-width="1"/>
+  <text x="500" y="50" text-anchor="middle" fill="#cc33ff" font-size="8">Team B</text>
+
+  <rect x="375" y="90" width="90" height="28" rx="4" fill="#3b6cff22" stroke="#3b6cff" stroke-width="1"/>
+  <text x="420" y="108" text-anchor="middle" fill="#6699ff" font-size="8">Platform Team</text>
+
+  <line x1="360" y1="62" x2="390" y2="90" stroke="#cc33ff" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="500" y1="62" x2="450" y2="90" stroke="#cc33ff" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="430" y="140" text-anchor="middle" fill="#9696b0" font-size="7.5">no direct call between A and B</text>
+  <text x="430" y="152" text-anchor="middle" fill="#9696b0" font-size="7.5">but shared dependency constrains both</text>
+  <text x="430" y="164" text-anchor="middle" fill="#cc33ff" font-size="8">invisible in most diagrams</text>
+
+  <defs>
+    <marker id="ccas-arr-y" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#ffcc33"/></marker>
+  </defs>
+</svg>
+</Diagram>
+
+## The hands at the edge
+
+In the cat's cradle image, the hands at the periphery are the most important. They define the perimeter. If one of the edge hands lets go, the entire interior collapses - not just the strands connected to that hand, but every strand that was tensioned relative to those.
+
+In complex systems, the perimeter dependencies are exactly this: the foundational infrastructure, the shared platforms, the senior engineers who hold context about why certain decisions were made. When they change - when the hand at the edge shifts or releases - the interior rearranges in ways that are difficult to predict and often invisible until something downstream breaks.
+
+<PullQuote>
+The most dangerous dependency is the one nobody documented because it seemed obvious when it was built. Three years later, the person who built it has left. The hand at the edge is empty. The interior is still holding its geometry, for now, because the other hands haven't moved yet.
+</PullQuote>
+
+## Making the web visible
+
+The cat's cradle can only be understood while it is held. The moment the hands release, the structure collapses and the pattern that existed is lost. The only way to understand a cat's cradle is to trace it while it is under tension - to follow each strand from one hand to the next, noting every crossing and every point of contact.
+
+This is what dependency mapping does. Not a clean diagram of the intended architecture, but a tracing of the actual web under tension: every service-to-service call, every shared database, every team that depends on every other team's output.
+
+<Callout type="success" title="Before you move a hand">
+Before removing a service, depreciating a dependency, or reorganising a team: trace the web. Find every strand connected to the element you are changing. Identify the adjacent elements that will rearrange when the tension changes.
+
+This is not extra work. It is the cat's cradle logic: in a web of dependencies, there is no such thing as a local change. Every movement redistributes tension through the whole structure. The only question is whether you understand the redistribution before it happens, or discover it afterward.
+</Callout>
+
+<Takeaways color="tech" items={[
+  "In a real dependency web, every strand is load-bearing. The tension in each line is maintained by all adjacent lines. There is no such thing as a harmless removal - every change redistributes tension through the whole structure.",
+  "Most real systems have two kinds of dependency: direct (visible, documented, breaks clearly) and structural (invisible, shared, breaks in distant places). Structural dependencies are the more dangerous because they rarely appear in the diagram.",
+  "The hands at the perimeter are the most important. When an edge dependency changes - foundational infrastructure, a shared platform, a senior engineer who holds architectural context - the entire interior rearranges.",
+  "The cat's cradle only reveals its structure while held under tension. Dependency mapping must trace the actual web in operation, not the intended architecture. The map is only accurate when the system is running."
+]} />
+
+---
+
+*Read next: [The Web Is Not Built Alone](/blog/the-web-is-not-built-alone) - how shared infrastructure requires multiple hands to hold it.*

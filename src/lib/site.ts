@@ -9,7 +9,7 @@ export const site = {
     name: "Linda Mohamed",
     handle: "linda_mhmd",
     role: "AWS Hero · Juggler · Founder",
-    email: "hello@thejugglingcompany.com",
+    email: "hello@lindamohamed.com",
   },
   defaultOgImage: "/images/og-juggling-hands-rgb-light.png",
 } as const;
@@ -221,8 +221,8 @@ export const socialLinks: readonly SocialLink[] = [
     handle: "@linda-mhmd",
   },
   {
-    label: "AWS Hero profile",
-    href: "https://aws.amazon.com/developer/community/heroes/linda-mohamed/",
+    label: "Website",
+    href: "https://lindamohamed.com",
     icon: "external-link",
   },
 ] as const;

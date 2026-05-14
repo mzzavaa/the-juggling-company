@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import VideoImage from "@/components/VideoImage.astro";
 import { getPosts } from "@/lib/content";
@@ -177,10 +177,10 @@ const recommended = allPosts.filter(p =>
         <p class="mt-3 max-w-xl text-[var(--color-muted)]">Every pattern below is built on the same foundation: the three-ball cascade. Each one changes one parameter - height, sequence, or multiplicity - while preserving the underlying arc structure.</p>
       </div>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <div data-reveal><JugglingPattern pattern="3" title="The Cascade" description="The foundation. Siteswap 3. Every throw takes 3 beats. The pattern studied in the grey matter research." pillar="all" notation="3" /></div>
-        <div data-reveal data-delay="80"><JugglingPattern pattern="423" title="The 423" description="A cascade with one higher throw. The 4 buys time to adjust - a built-in recovery beat." pillar="all" notation="423" slowdown={2.0} /></div>
-        <div data-reveal data-delay="160"><JugglingPattern pattern="531" title="The 531" description="Three heights in sequence. The 5 requires early planning. The 1 is almost already in the hand." pillar="all" notation="531" slowdown={2.2} /></div>
-        <div data-reveal data-delay="240"><JugglingPattern pattern="5" title="Five-Ball Cascade" description="Same pattern, five objects. Higher arcs, faster tempo, smaller margin. The same grammar, more demanding." pillar="all" notation="5" slowdown={1.6} /></div>
+        <div data-reveal class="flex"><JugglingPatternGif src="/animations/pattern-3-cascade.gif" notation="3" title="The Cascade" description="The foundation. Siteswap 3. Every throw takes 3 beats. The pattern studied in the grey matter research." difficulty="beginner" pillar="all" /></div>
+        <div data-reveal data-delay="80" class="flex"><JugglingPatternGif src="/animations/pattern-3-423.gif" notation="423" title="The 423" description="A cascade with one higher throw. The 4 buys time to adjust - a built-in recovery beat." difficulty="beginner" pillar="all" /></div>
+        <div data-reveal data-delay="160" class="flex"><JugglingPatternGif src="/animations/pattern-3-531.gif" notation="531" title="The 531" description="Three heights in sequence. The 5 requires early planning. The 1 is almost already in the hand." difficulty="intermediate" pillar="all" /></div>
+        <div data-reveal data-delay="240" class="flex"><JugglingPatternGif src="/animations/pattern-5-cascade.gif" notation="5" title="Five-Ball Cascade" description="Same pattern, five objects. Higher arcs, faster tempo, smaller margin. The same grammar, more demanding." difficulty="advanced" pillar="all" /></div>
       </div>
     </div>
   </section>

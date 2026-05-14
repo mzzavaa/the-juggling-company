@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import { getPosts } from "@/lib/content";
 
@@ -272,14 +272,14 @@ const recommended = allPosts.filter(p =>
       <p class="mt-3 max-w-xl text-[var(--color-muted)]">Each siteswap number tells you how many beats before that prop is thrown again. The ball (3), the clubs (passing), the rings (high arcs) - all visible in these live animations.</p>
     </div>
     <div class="grid gap-5 sm:grid-cols-3">
-      <div data-reveal data-delay="0">
-        <JugglingPattern pattern="3" title="The Cascade (Ball)" description="Siteswap 3. The foundation. Both hands throwing alternately, every ball crossing center." pillar="brain" notation="3" />
+      <div data-reveal data-delay="0" class="flex">
+        <JugglingPatternGif src="/animations/pattern-3-cascade.gif" notation="3" title="The Cascade (Ball)" description="Siteswap 3. The foundation. Both hands throwing alternately, every ball crossing center." difficulty="beginner" pillar="brain" />
       </div>
-      <div data-reveal data-delay="100">
-        <JugglingPattern pattern="531" title="Heights Vary (Club arc)" description="Siteswap 531. Not all throws need to be equal. The 5 is high, the 3 medium, the 1 a quiet pass." pillar="change" notation="531" slowdown={2.2} />
+      <div data-reveal data-delay="100" class="flex">
+        <JugglingPatternGif src="/animations/pattern-3-531.gif" notation="531" title="Heights Vary (Club arc)" description="Siteswap 531. Not all throws need to be equal. The 5 is high, the 3 medium, the 1 a quiet pass." difficulty="intermediate" pillar="change" />
       </div>
-      <div data-reveal data-delay="200">
-        <JugglingPattern pattern="(4,4)" title="The Fountain (Ring orbit)" description="Siteswap (4,4). Both hands synchronous. Two parallel tracks that never cross. The ring's wide orbit." pillar="tech" notation="(4,4)" slowdown={2.0} />
+      <div data-reveal data-delay="200" class="flex">
+        <JugglingPatternGif src="/animations/pattern-4-fountain.gif" notation="4" title="The Fountain (Ring orbit)" description="Siteswap 4. Both hands run independent loops. Two parallel tracks that never cross. The ring's wide, even orbit." difficulty="intermediate" pillar="tech" />
       </div>
     </div>
   </section>

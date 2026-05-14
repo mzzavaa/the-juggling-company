@@ -15,12 +15,12 @@ import StatGrid from '../../components/StatGrid.astro';
 import PullQuote from '../../components/PullQuote.astro';
 import Takeaways from '../../components/Takeaways.astro';
 
-In 1985, three independent groups of jugglers - Bruce Tiemann at Caltech, Paul Klimek in California, and Mike Day with Adam Chalcraft in Cambridge - converged on the same mathematical notation for describing juggling patterns. None of them knew the others were working on the problem. The notation came to be called siteswap.
+In the early-to-mid 1980s, several independent groups of jugglers converged on the same mathematical notation for describing juggling patterns. Paul Klimek in Santa Cruz developed it first, around 1981; Bruce Tiemann (with Mike Magnusson) at Caltech and Mike Day with colleagues in Cambridge arrived at the same notation independently around 1985. None of them knew the others were working on the problem. The notation came to be called siteswap.
 
 What they had discovered, without setting out to, was a small domain-specific programming language for scheduling objects in time. Read with a software engineer's eyes, the notation looks remarkably familiar.
 
 <StatGrid items={[
-  { value: "1985", label: "Independent discovery", sub: "by three separate groups", color: "tech" },
+  { value: "1981-85", label: "Independent discovery", sub: "Klimek (1981), then Tiemann and Day independently around 1985", color: "tech" },
   { value: "n", label: "Number = throw height", sub: "in beats, not metres", color: "brain" },
   { value: "avg", label: "Average of digits", sub: "equals the number of objects", color: "yellow" },
   { value: "0", label: "Collisions allowed", sub: "valid patterns are collision-free", color: "change" }
@@ -68,7 +68,7 @@ A juggling pattern is a schedule for moving objects through hands across time. T
 
 ## What jugglers and engineers stumbled on together
 
-The independent discovery in 1985 is itself worth pausing on. Three groups, none collaborating, arrived at the same encoding of the problem. Why?
+The independent discovery across the early-to-mid 1980s is itself worth pausing on. Multiple groups, none collaborating, arrived at the same encoding of the problem. Why?
 
 Because the problem has a unique well-formed solution. Once you decide that you want a notation that is finite, ordered, and respects the timing structure of throws, you end up at integer sequences indexing flight times. The space of reasonable encodings is small enough that converging on the same one is not a coincidence.
 
@@ -76,14 +76,14 @@ This is the same reason that distributed schedulers - cron tables, Kubernetes po
 
 The notation has continued to evolve. Multiplex throws (multiple balls released at once) extend siteswap with bracketed digits. Synchronous patterns where both hands throw on every beat use a parallel notation. Passing patterns between multiple jugglers extend further still. Each extension corresponds to a real generalisation in scheduling theory.
 
-What started as three groups of jugglers wanting to write down what they were doing turned out to be a small but well-formed corner of computer science.
+What started as independent groups of jugglers wanting to write down what they were doing turned out to be a small but well-formed corner of computer science.
 
 <Takeaways title="What siteswap teaches" color="tech" items={[
   "Each digit is a throw height in beats, equal to the time before that ball lands in the other hand.",
   "The average of the digits equals the number of balls in play - a O(n) sanity check on any sequence.",
   "A sequence is a valid pattern if and only if it is collision-free: no two balls land on the same beat in the same hand.",
   "Standard juggling patterns map directly to scheduling primitives: round-robin (cascade), parallel processes (fountain), pipeline (shower).",
-  "Three groups independently discovered the notation in 1985, because the problem space has a small set of well-formed solutions."
+  "Multiple groups independently discovered the notation in the early-to-mid 1980s, because the problem space has a small set of well-formed solutions."
 ]} />
 
 ---
@@ -92,5 +92,5 @@ What started as three groups of jugglers wanting to write down what they were do
 
 - **Buhler, J., Eisenbud, D., Graham, R., and Wright, C.** (1994). "Juggling Drops and Descents." *The American Mathematical Monthly*, 101(6), 507-519. The formal proof of the collision-free validity condition.
 - **Polster, B.** (2003). *The Mathematics of Juggling*. Springer. The standard book-length treatment.
-- **Magnusson, B., and Tiemann, B.** (1991). "The physics of juggling." *The Physics Teacher*, 29(9), 584-589. Tiemann's account of the original discovery period.
+- **Magnusson, B., and Tiemann, B.** (1989). "The physics of juggling." *The Physics Teacher*, 27(8), 584-588. One of the earliest published references to siteswap notation; the authors credit Paul Klimek with independently developing it first.
 - **Beek, P.J., and Lewbel, A.** (1995). "The science of juggling." *Scientific American*, 273(5), 92-97. Accessible introduction to siteswap and juggling dynamics.

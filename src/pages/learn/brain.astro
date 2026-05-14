@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
-import JugglingPattern from "@/components/JugglingPattern.astro";
+import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import { getPosts } from "@/lib/content";
 
@@ -170,9 +170,9 @@ const stats = [
         <p class="mt-3 max-w-xl text-[var(--color-muted)]">The three-ball cascade (siteswap 3) is the pattern studied in the neuroplasticity research. Three months of this pattern produced measurable gray matter growth in 24 adults.</p>
       </div>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div data-reveal><JugglingPattern pattern="3" title="The Cascade" description="The pattern that grew grey matter in both hemispheres. Three months. Measurable structural change." pillar="brain" notation="3" /></div>
-        <div data-reveal data-delay="100"><JugglingPattern pattern="5" title="Five-Ball Cascade" description="Same pattern, higher load. More anticipation required. The brain that can run this has more to work with." pillar="brain" notation="5" slowdown={1.6} /></div>
-        <div data-reveal data-delay="200"><JugglingPattern pattern="753" title="Variable Heights" description="Three different heights cycling. The brain plans the 7 while catching the 3. Anticipatory processing at full stretch." pillar="brain" notation="753" slowdown={2.5} /></div>
+        <div data-reveal class="flex"><JugglingPatternGif src="/animations/pattern-3-cascade.gif" notation="3" title="The Cascade" description="The pattern that grew grey matter in both hemispheres. Three months. Measurable structural change." difficulty="beginner" pillar="brain" /></div>
+        <div data-reveal data-delay="100" class="flex"><JugglingPatternGif src="/animations/pattern-5-cascade.gif" notation="5" title="Five-Ball Cascade" description="Same pattern, higher load. More anticipation required. The brain that can run this has more to work with." difficulty="advanced" pillar="brain" /></div>
+        <div data-reveal data-delay="200" class="flex"><JugglingPatternGif src="/animations/pattern-4-552.gif" notation="552" title="The 552" description="Two highs and a pause. The brain schedules both 5s while managing the 2. Anticipatory processing across three timing windows." difficulty="advanced" pillar="brain" /></div>
       </div>
     </div>
   </section>

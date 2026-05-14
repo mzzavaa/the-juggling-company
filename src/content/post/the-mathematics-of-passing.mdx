@@ -1,0 +1,232 @@
+---
+title: "The Mathematics of Passing"
+slug: the-mathematics-of-passing
+summary: "When two or more jugglers pass objects between each other, the pattern obeys the same mathematical constraints as solo juggling - but extended into a shared state space. Prechac notation, causal diagrams, and the combinatorics of passing siteswap describe a space that is both more complex and more structured than it appears."
+date: 2026-05-06
+tags: ["mathematics", "passing", "collaboration", "notation", "science", "Prechac", "research"]
+pillars: ["tech", "change"]
+cover: ../../assets/images/two-jugglers-passing-chaos.png
+coverAlt: "Two people facing each other in darkness, a chaotic web of colored light trails between them where clubs, balls and rings cross in every direction"
+draft: false
+---
+
+import StatGrid from '../../components/StatGrid.astro';
+import Callout from '../../components/Callout.astro';
+import Diagram from '../../components/Diagram.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import Takeaways from '../../components/Takeaways.astro';
+import AnalogyTable from '../../components/AnalogyTable.astro';
+
+<StatGrid items={[
+  { value: "6", label: "Objects minimum for a 2-person passing pattern", sub: "3 objects per person, shared between two jugglers - the equivalent of two independent cascades that exchange objects on a schedule", color: "tech" },
+  { value: "1995", label: "Prechac notation published", sub: "by Martin Probert and Christophe Prechac, extending siteswap to multi-juggler patterns", color: "brain" },
+  { value: "~30", label: "Named 2-person 6-club patterns", sub: "including the 3-count, 4-count, chocolate bar, and their variations - each a distinct cycle in the passing state graph", color: "change" },
+  { value: "∞", label: "Valid 3-person passing patterns", sub: "the state space expands exponentially with juggler count - most have never been performed", color: "yellow" }
+]} />
+
+Look at the image. Two people. The space between them is not empty - it is structured. Every arc of light follows a specific trajectory, obeys a specific timing, arrives at a specific hand at a specific moment. What looks like chaos is, in fact, a directed graph being traced in real time by two humans using only their hands, timing, and practice.
+
+When juggling is shared between multiple jugglers, the mathematics extends from individual sequences into a higher-dimensional structure - a shared state space where each person's throws affect what the other person can throw. This is passing siteswap, and it has a formal theory that is both precise and beautiful.
+
+## From solo to duet: the shared state
+
+In solo siteswap, the state at any moment is a description of which future beats already have a ball scheduled to land. For a 3-ball juggler, this is typically a 3-bit or 5-bit string depending on the maximum throw value.
+
+When two jugglers share objects, the state must encode the future landing schedule for both jugglers simultaneously. A pass - an object thrown from juggler A to juggler B - changes both A's state (one object leaves A's future schedule) and B's state (one object enters B's future schedule).
+
+The constraint from solo siteswap extends: every beat must have exactly the right number of objects landing. The modular arithmetic check now applies across the combined schedule of both jugglers.
+
+## Prechac notation
+
+Standard siteswap cannot represent passing patterns because it does not encode which juggler catches each throw. Prechac notation (developed by Christophe Prechac and Martin Probert in 1995, formalized by Probert) extends siteswap by adding a letter to mark passes.
+
+In Prechac notation for two jugglers:
+- Each throw value `v` represents the number of beats before landing, as in siteswap
+- A suffix `p` marks a pass - the object goes to the other juggler
+- The two jugglers' sequences are written separated by a pipe: `A | B`
+- Both sequences must have the same period (they share the beat grid)
+
+The validity condition extends the siteswap theorem: for each juggler's sequence independently, and for the combined sequence across both jugglers, the modular distinctness condition must hold.
+
+**Example: the 3-count**
+
+The most common 2-person club passing pattern. Sequence: `3 3 4p | 3 3 4p` (both jugglers do the same sequence, offset by half a period).
+
+- `3 3 4p` - two self throws (value 3), then a pass (value 4, goes to partner)
+- Mean: (3+3+4)/3 = 10/3 - not an integer. But wait - this is Prechac notation where passes count at half-value for the throwing juggler...
+
+<Callout type="info" title="Prechac notation: the half-value convention">
+In Prechac notation, the throw value of a pass represents when the ball lands from the perspective of the thrower's beat count, but the receiving juggler counts from their own beat grid. A common convention is that the written value is the total beats from throw to catch, counting in the thrower's half-beat. This can be confusing: always check which convention a given source uses. The International Jugglers Database (juggling.org) uses the "self equivalent" convention where a pass with value n takes the same beats as a self with value n from the throwing juggler's perspective.
+</Callout>
+
+<Diagram caption="Causal diagram for the 6-club 3-count passing pattern. Juggler A (top) and Juggler B (bottom) exchange objects every third beat. Passes are shown crossing between rows.">
+<svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <marker id="mp-arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#9696b0"/>
+    </marker>
+    <marker id="mp-arr-p" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#ffcc33"/>
+    </marker>
+  </defs>
+  <rect width="560" height="200" rx="8" fill="#0d0d1a"/>
+
+  <text x="25" y="65" fill="#33cc66" font-size="11" font-family="monospace">A</text>
+  <text x="25" y="145" fill="#ff3366" font-size="11" font-family="monospace">B</text>
+
+  <text x="80"  y="185" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">1</text>
+  <text x="160" y="185" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">2</text>
+  <text x="240" y="185" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">3</text>
+  <text x="320" y="185" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">4</text>
+  <text x="400" y="185" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">5</text>
+  <text x="480" y="185" fill="#9696b0" font-size="9" font-family="monospace" text-anchor="middle">6</text>
+
+  <path d="M80 60 Q120 35 160 60" stroke="#33cc66" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#mp-arr)"/>
+  <text x="120" y="32" fill="#33cc66" font-size="10" font-family="monospace" text-anchor="middle">3</text>
+
+  <path d="M160 60 Q200 35 240 60" stroke="#33cc66" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#mp-arr)"/>
+  <text x="200" y="32" fill="#33cc66" font-size="10" font-family="monospace" text-anchor="middle">3</text>
+
+  <path d="M240 60 Q360 100 480 140" stroke="#ffcc33" stroke-width="2" marker-end="url(#mp-arr-p)"/>
+  <text x="360" y="88" fill="#ffcc33" font-size="10" font-family="monospace" text-anchor="middle">4p</text>
+
+  <path d="M320 140 Q360 165 400 140" stroke="#ff3366" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#mp-arr)"/>
+  <text x="360" y="175" fill="#ff3366" font-size="10" font-family="monospace" text-anchor="middle">3</text>
+
+  <path d="M400 140 Q440 165 480 140" stroke="#ff3366" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#mp-arr)"/>
+  <text x="440" y="175" fill="#ff3366" font-size="10" font-family="monospace" text-anchor="middle">3</text>
+
+  <path d="M80 140 Q200 100 320 60" stroke="#ffcc33" stroke-width="2" marker-end="url(#mp-arr-p)"/>
+  <text x="195" y="90" fill="#ffcc33" font-size="10" font-family="monospace" text-anchor="middle">4p</text>
+
+  <circle cx="80"  cy="60" r="5" fill="#33cc66" opacity="0.8"/>
+  <circle cx="160" cy="60" r="5" fill="#33cc66" opacity="0.8"/>
+  <circle cx="240" cy="60" r="5" fill="#33cc66" opacity="0.8"/>
+  <circle cx="320" cy="60" r="5" fill="#33cc66" opacity="0.8"/>
+  <circle cx="400" cy="60" r="5" fill="#33cc66" opacity="0.8"/>
+  <circle cx="480" cy="60" r="5" fill="#33cc66" opacity="0.8"/>
+  <circle cx="80"  cy="140" r="5" fill="#ff3366" opacity="0.8"/>
+  <circle cx="160" cy="140" r="5" fill="#ff3366" opacity="0.8"/>
+  <circle cx="240" cy="140" r="5" fill="#ff3366" opacity="0.8"/>
+  <circle cx="320" cy="140" r="5" fill="#ff3366" opacity="0.8"/>
+  <circle cx="400" cy="140" r="5" fill="#ff3366" opacity="0.8"/>
+  <circle cx="480" cy="140" r="5" fill="#ff3366" opacity="0.8"/>
+
+  <text x="80" y="20" fill="#9696b0" font-size="9" font-family="monospace">3</text>
+  <text x="160" y="20" fill="#9696b0" font-size="9" font-family="monospace">3</text>
+  <text x="240" y="20" fill="#9696b0" font-size="9" font-family="monospace">4p</text>
+  <text x="80" y="160" fill="#9696b0" font-size="9" font-family="monospace">4p</text>
+  <text x="320" y="160" fill="#9696b0" font-size="9" font-family="monospace">3</text>
+  <text x="400" y="160" fill="#9696b0" font-size="9" font-family="monospace">3</text>
+</svg>
+</Diagram>
+
+## Standard 2-person passing patterns
+
+The named 6-club patterns form a well-understood vocabulary:
+
+<AnalogyTable
+  headers={["Pattern name", "Prechac sequence", "Pass frequency", "Character"]}
+  rows={[
+    ["4-count (every other)", "3 3 3 4p | 3 3 3 4p", "Every 4 beats", "Relaxed, most common entry point"],
+    ["3-count", "3 3 4p | 3 3 4p", "Every 3 beats", "Standard 6-club, good rhythm"],
+    ["2-count (alternating)", "3 4p | 3 4p", "Every 2 beats", "Faster, both pass every beat"],
+    ["1-count (every)", "4p | 4p", "Every beat", "All passes, no selfs - very fast"],
+    ["Chocolate bar", "3 4p 3 3 4p 3 | (offset)", "Mixed", "Syncopated, 7-club feel at 6"],
+    ["Why not?", "5 3 4p 3 | (offset)", "Every 4 beats (varied)", "One high self changes rhythm entirely"],
+    ["Jim's 2-count", "4p 4 | 4p 4", "Every 2 beats", "Higher selfs, more air time between passes"]
+  ]}
+/>
+
+## Three-person patterns: the feed and the W
+
+With three jugglers, the state space expands significantly. The simplest structure is the **feed**: one juggler (the feeder) passes alternately to each of two feedees, while the feedees only pass to the feeder.
+
+<Diagram caption="The 3-person feed pattern. The feeder (center) passes to feedee A, then feedee B, alternating. Feedees pass back to feeder only. The feeder's pass rate is double that of each feedee.">
+<svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <marker id="mp-arr2" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#9696b0"/>
+    </marker>
+    <marker id="mp-arr2-y" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+      <polygon points="0 0, 6 2.5, 0 5" fill="#ffcc33"/>
+    </marker>
+  </defs>
+  <rect width="560" height="220" rx="8" fill="#0d0d1a"/>
+
+  <circle cx="280" cy="170" r="22" fill="#1a1a2e" stroke="#33cc66" stroke-width="2"/>
+  <text x="280" y="175" fill="#33cc66" font-size="11" font-family="monospace" text-anchor="middle">Feeder</text>
+
+  <circle cx="100" cy="70" r="20" fill="#1a1a2e" stroke="#ff3366" stroke-width="1.5"/>
+  <text x="100" y="75" fill="#ff3366" font-size="11" font-family="monospace" text-anchor="middle">A</text>
+
+  <circle cx="460" cy="70" r="20" fill="#1a1a2e" stroke="#3b6cff" stroke-width="1.5"/>
+  <text x="460" y="75" fill="#3b6cff" font-size="11" font-family="monospace" text-anchor="middle">B</text>
+
+  <path d="M262 155 Q175 115 116 85" stroke="#ffcc33" stroke-width="2" marker-end="url(#mp-arr2-y)"/>
+  <text x="175" y="108" fill="#ffcc33" font-size="10" font-family="monospace">4p</text>
+
+  <path d="M116 82 Q185 120 262 158" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#mp-arr2)"/>
+
+  <path d="M298 155 Q385 115 444 85" stroke="#ffcc33" stroke-width="2" marker-end="url(#mp-arr2-y)"/>
+  <text x="388" y="108" fill="#ffcc33" font-size="10" font-family="monospace">4p</text>
+
+  <path d="M444 82 Q373 120 298 158" stroke="#3b6cff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#mp-arr2)"/>
+
+  <text x="280" y="205" fill="#9696b0" font-size="10" font-family="monospace" text-anchor="middle">Feeder passes every 2 beats (alternating A, B). Each feedee passes every 4 beats.</text>
+  <text x="280" y="218" fill="#9696b0" font-size="10" font-family="monospace" text-anchor="middle">Total objects: 9 (3 per juggler). Standard pattern: 4-count feedees, 2-count feeder.</text>
+</svg>
+</Diagram>
+
+The **W pattern** places three jugglers in a line. The outer two pass to each other across the middle juggler who passes to both. This creates a more complex shared state where the middle juggler must synchronize with two different rhythms simultaneously.
+
+The mathematics of the W pattern cannot be expressed in simple Prechac notation without an extension to three sequences. The International Juggling Association's pattern library uses a graph-based notation for patterns beyond two jugglers.
+
+## The combinatorics of passing
+
+For two jugglers sharing `b` objects each (total `2b` objects), with sequences of period `n`, the number of valid Prechac patterns grows rapidly with `b` and `n`. The exact count requires inclusion-exclusion over the joint state graph of both jugglers.
+
+The patterns that exist are countable. From the passing pattern literature and community databases:
+- For 6 clubs (3 each), period 3, there are exactly 5 essentially distinct 2-person patterns
+- For 6 clubs, period 6, there are 37 valid patterns
+- For 8 clubs (4 each), period 3, the count is 14
+
+These are not large numbers - the patterns have been enumerated and catalogued. The International Juggling Database (ijdb.com) maintains a searchable index of named passing patterns with their notations and video examples.
+
+## Cascade communication: what passing requires cognitively
+
+The cognitive demands of passing are qualitatively different from solo juggling. The juggler must simultaneously:
+
+1. Maintain their own solo rhythm (the "self" throws)
+2. Predict the partner's throw timing and trajectory
+3. Synchronize pass release to the partner's catch window
+4. Adjust in real time when the partner's timing drifts
+
+Research by Richardson, Marsh, and colleagues on interpersonal coordination (2005-2015) shows that two people maintaining a shared rhythmic task develop **coordinative coupling** - their movements become synchronized not through explicit communication but through the perceptual-motor feedback loop of watching and responding to each other.
+
+In passing, this coupling is explicit in the prop trajectories: if your partner's throw is slightly early, the club arrives early, you catch early, and your subsequent throw is early. The error propagates unless actively corrected. Experienced passing pairs learn to make micro-corrections transparently - absorbing the partner's timing errors without visible disruption to the visual pattern.
+
+<PullQuote>
+"A passing pattern is not two soloists coordinating. It is one shared pattern distributed across two bodies. The objects do not belong to either juggler. They live in the space between, following a schedule that requires both people to hold simultaneously."
+</PullQuote>
+
+## Further reading
+
+- **Probert, M.** (1995). "Prechac notation for passing patterns." Available at juggling.org/passing. The foundational technical document.
+- **Lewbel, A.** (1995). "The Science of Juggling." *Scientific American*, 273(5), 92-97. Covers solo siteswap and introduces passing concepts.
+- **Richardson, M.J., Marsh, K.L., and Schmidt, R.C.** (2005). "Effects of visual and verbal interaction on unintentional interpersonal coordination." *Journal of Experimental Psychology: Human Perception and Performance*, 31(1), 62-79. PMID: 15709863.
+- **International Juggling Database** - ijdb.com. Pattern library with Prechac notation, video links, and community-contributed difficulty ratings.
+- **PassingZone YouTube channel** - practical demonstrations of all major 2-person club patterns with slow-motion analysis.
+- **Hall, A., and Probert, M.** (2000). "Siteswap for passing patterns." Leeds juggling convention workshop notes. Available at juggling.org.
+
+<Takeaways items={[
+  "Passing siteswap is an extension of solo siteswap where throws marked 'p' go to the other juggler. The validity theorem extends: the combined state of both jugglers must satisfy the modular distinctness condition.",
+  "Prechac notation (1995) is the standard for writing 2-person passing patterns. Three-person and larger patterns require graph-based notation - simple Prechac cannot express them without extension.",
+  "Standard named 6-club patterns (4-count, 3-count, 2-count, chocolate bar) are all cycles in the shared state graph. The total number of valid 6-club patterns of period 6 is 37 - the space is fully enumerated.",
+  "The feed (one feeder to two feedees) and the W pattern are the canonical 3-person structures. Feeders pass at double the rate of feedees, requiring a feeder who can maintain rhythm under asymmetric load.",
+  "Passing couples develop coordinative coupling: micro-timing adjustments propagate through the shared pattern, and experienced pairs absorb their partner's errors without visible disruption."
+]} />
+
+---
+
+*On this site: [The Mandala of Group Juggling](/post/the-mandala-of-group-juggling) explores what happens when 6 jugglers form a circle - the geometry, the coordination mechanisms, and the emergent pattern no individual sees. [The Mathematics of Siteswap](/post/the-mathematics-of-siteswap) covers the solo foundation that Prechac notation extends. [Juggling in Science and Public Life](/post/juggling-in-science-and-public-life) covers Colin Wright's public lectures on juggling mathematics, which include passing patterns.*

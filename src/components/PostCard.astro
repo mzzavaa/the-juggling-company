@@ -26,10 +26,11 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
         <Image
           src={post.data.cover}
           alt={post.data.coverAlt ?? post.data.title}
-          width={800}
-          height={450}
-          class="media-img h-full w-full object-cover"
+          width={640}
+          height={360}
+          class="media-img h-full w-full object-cover img-lazy"
           loading="lazy"
+          decoding="async"
         />
         {post.data.coverVideo && (
           <video
@@ -79,6 +80,34 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   }
   .media-wrap {
     position: relative;
+    /* Shimmer placeholder shown while image loads */
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--card-accent, #9696b0) 8%, #12121e) 0%,
+      #12121e 50%,
+      color-mix(in oklab, var(--card-accent, #9696b0) 5%, #12121e) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease infinite;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Image starts invisible; JS adds .is-loaded when decoded */
+  .img-lazy {
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+  .img-lazy.is-loaded {
+    opacity: 1;
+  }
+  /* Once loaded, stop the shimmer animation to save CPU */
+  .media-wrap:has(.is-loaded) {
+    animation: none;
+    background: none;
   }
 
   /* Video fades in only after JS confirms a real frame is ready */
@@ -120,10 +149,21 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   @media (prefers-reduced-motion: reduce) {
     .media-vid { display: none; }
     .no-vid .media-img { transition: none; }
+    .img-lazy { opacity: 1; }
+    .media-wrap { animation: none; }
   }
 </style>
 
 <script>
+  // Fade in images once they're decoded - works for both cached and fresh loads
+  document.querySelectorAll<HTMLImageElement>(".img-lazy").forEach((img) => {
+    if (img.complete && img.naturalWidth > 0) {
+      img.classList.add("is-loaded");
+    } else {
+      img.addEventListener("load", () => img.classList.add("is-loaded"), { once: true });
+    }
+  });
+
   document.querySelectorAll<HTMLAnchorElement>(".card").forEach((card) => {
     const video = card.querySelector<HTMLVideoElement>(".media-vid");
     if (!video) return;

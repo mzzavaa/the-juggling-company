@@ -1,0 +1,39 @@
+---
+interface Props {
+  user: string;
+  domain: string;
+  class?: string;
+  subject?: string;
+}
+const { user, domain, class: className, subject } = Astro.props;
+---
+
+<span
+  class:list={["email-obf", className]}
+  data-u={user}
+  data-d={domain}
+  data-s={subject}
+  aria-label={`${user} at ${domain}`}
+></span>
+
+<style>
+  .email-obf::before {
+    content: attr(data-u) "@" attr(data-d);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLSpanElement>(".email-obf").forEach((el) => {
+    const u = el.dataset.u!;
+    const d = el.dataset.d!;
+    const s = el.dataset.s;
+    const a = document.createElement("a");
+    a.href =
+      "mailto:" + u + "\x40" + d + (s ? "?subject=" + encodeURIComponent(s) : "");
+    a.className = el.className;
+    a.setAttribute("data-u", u);
+    a.setAttribute("data-d", d);
+    if (s) a.setAttribute("data-s", s);
+    el.replaceWith(a);
+  });
+</script>

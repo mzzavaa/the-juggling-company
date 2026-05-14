@@ -1,8 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
+import ProtectedEmail from "@/components/ProtectedEmail.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
 import { site } from "@/lib/site";
+
+const BOOKING_URL =
+  "https://outlook.office.com/bookwithme/user/eae9d2c35f5842448c93534d3e3a9bad@lindamohamed.com/meetingtype/RUP6EGbn9kSiUnWGiSLdyg2?anonymous&ismsaljsauthenabled&ep=mlink";
 
 const mailto = (topic: string) =>
   `mailto:${site.author.email}?subject=${encodeURIComponent("[" + topic + "] inquiry")}`;
@@ -28,7 +32,7 @@ const topics: { label: string; accent: string }[] = [
     </h1>
     <p class="mt-5 text-lg text-[var(--color-muted)]">
       Email is the fastest way to reach me. Pick the topic that fits and I'll usually
-      reply within two working days.
+      reply within two working days. Or book a call directly if you'd rather talk first.
     </p>
 
     <ul class="mt-10 grid gap-3 md:grid-cols-2">
@@ -50,12 +54,34 @@ const topics: { label: string; accent: string }[] = [
       }
     </ul>
 
+    <!-- Booking -->
     <div class="mt-10 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6">
+      <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Book a call</p>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">
+        Prefer a quick conversation before committing to an inquiry? Book a 30-minute slot
+        to talk through your event, workshop, or idea directly.
+      </p>
+      <a
+        href={BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-[var(--color-bg)] transition-all"
+        style="background: linear-gradient(135deg, var(--color-brain) 0%, var(--color-change) 100%);"
+      >
+        <Icon name="calendar" size={14} />
+        Book a meeting
+      </a>
+    </div>
+
+    <!-- Email and social -->
+    <div class="mt-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6">
       <p class="flex items-center gap-2 text-sm text-[var(--color-muted)]">
         <Icon name="mail" size={16} />
-        <a class="text-[var(--color-brain-tech)] hover:underline" href={`mailto:${site.author.email}`}>
-          {site.author.email}
-        </a>
+        <ProtectedEmail
+          user="hello"
+          domain="lindamohamed.com"
+          class="text-[var(--color-brain-tech)] hover:underline"
+        />
       </p>
       <div class="mt-4">
         <SocialLinks variant="list" />

@@ -173,7 +173,7 @@ const totalPatterns = threeBall.length + fourBall.length + fiveBall.length;
 
       <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {group.patterns.map((p, i) => (
-          <li data-reveal style={`animation-delay: ${i * 60}ms;`}>
+          <li data-reveal class="flex" style={`animation-delay: ${i * 60}ms;`}>
             <JugglingPatternGif {...p} />
           </li>
         ))}

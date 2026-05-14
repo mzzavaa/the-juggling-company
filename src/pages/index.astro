@@ -4,7 +4,6 @@ import Icon from "@/components/Icon.astro";
 import VideoStrip from "@/components/VideoStrip.astro";
 import VideoStripCard from "@/components/VideoStripCard.astro";
 import PostCard from "@/components/PostCard.astro";
-import JugglingCascade from "@/components/JugglingCascade.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
@@ -62,7 +61,7 @@ const personJsonLd = {
     "https://www.instagram.com/mrs_lee_g/",
     "https://x.com/linda_mhmd",
     "https://github.com/linda-mhmd",
-    "https://aws.amazon.com/developer/community/heroes/linda-mohamed/",
+    "https://lindamohamed.com",
   ],
 };
 ---
@@ -177,7 +176,7 @@ const personJsonLd = {
     </div>
 
     <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      <li>
+      <li class="flex">
         <JugglingPatternGif
           src="/animations/pattern-3-cascade.gif"
           notation="3"
@@ -187,7 +186,7 @@ const personJsonLd = {
           pillar="all"
         />
       </li>
-      <li>
+      <li class="flex">
         <JugglingPatternGif
           src="/animations/pattern-3-531.gif"
           notation="531"
@@ -197,7 +196,7 @@ const personJsonLd = {
           pillar="change"
         />
       </li>
-      <li>
+      <li class="flex">
         <JugglingPatternGif
           src="/animations/pattern-4-fountain.gif"
           notation="4"

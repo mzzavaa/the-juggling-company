@@ -1,6 +1,10 @@
 ---
 import { footerNav, primaryNav, site } from "@/lib/site";
+import ProtectedEmail from "./ProtectedEmail.astro";
 import SocialLinks from "./SocialLinks.astro";
+
+const BOOKING_URL =
+  "https://outlook.office.com/bookwithme/user/eae9d2c35f5842448c93534d3e3a9bad@lindamohamed.com/meetingtype/RUP6EGbn9kSiUnWGiSLdyg2?anonymous&ismsaljsauthenabled&ep=mlink";
 
 const year = new Date().getFullYear();
 ---
@@ -14,6 +18,21 @@ const year = new Date().getFullYear();
       <p class="mt-2 max-w-sm text-sm text-[var(--color-muted)]">{site.description}</p>
       <div class="mt-5">
         <SocialLinks />
+      </div>
+      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        <ProtectedEmail
+          user="hello"
+          domain="lindamohamed.com"
+          class="text-[var(--color-muted)] hover:text-[var(--color-brain-tech)] transition-colors"
+        />
+        <a
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--color-muted)] hover:text-[var(--color-brain-tech)] transition-colors"
+        >
+          Book a call
+        </a>
       </div>
     </div>
 

@@ -1,0 +1,189 @@
+---
+title: "Feedback Loops as Infrastructure: Why Systems Need to Learn from Themselves"
+slug: feedback-loops-as-infrastructure
+summary: "A system that cannot observe itself cannot improve. The feedback loop is not a monitoring feature or a quality initiative. It is load-bearing infrastructure. Remove it and the system degrades without knowing it is degrading."
+date: 2026-05-15
+tags: ["architecture", "systems", "tech", "observability", "feedback"]
+pillars: ["tech"]
+cover: ../../assets/images/circuit-infinity-amber.png
+coverAlt: "An amber-orange circuit board pattern forming an infinity loop of interconnected pathways"
+coverVideo: /videos/circuit-infinity-amber.mp4
+draft: false
+---
+
+import Callout from "../../components/Callout.astro";
+import Diagram from "../../components/Diagram.astro";
+import StatGrid from "../../components/StatGrid.astro";
+import PullQuote from "../../components/PullQuote.astro";
+import Takeaways from "../../components/Takeaways.astro";
+import AnalogyTable from "../../components/AnalogyTable.astro";
+
+There is a failure mode that is unique to complex systems.
+
+In a simple system, failure is visible. A thing breaks. You can see that it broke. You fix it.
+
+In a complex system, failure can be invisible for a long time. The system continues to produce outputs. Those outputs degrade gradually. The degradation is within the noise floor of normal variation. No individual output is wrong enough to trigger an alert. The cumulative drift goes unnoticed until it has become severe enough to be obvious - at which point fixing it is much harder than it would have been if it had been caught earlier.
+
+This failure mode has a name: silent degradation. And the only defense against it is a feedback loop that is woven into the system, running continuously, with the specific purpose of detecting it.
+
+<StatGrid items={[
+  { value: "~3", label: "cycles/second", sub: "The feedback loop rate of a three-ball juggling cascade", color: "tech" },
+  { value: "0", label: "seconds", sub: "How long a cascade survives with visual feedback removed", color: "brain" },
+  { value: "2", label: "feedback channels", sub: "Visual + proprioceptive - high-ball jugglers train both independently", color: "change" }
+]} />
+
+## What feedback loops actually do
+
+A feedback loop, in the systems sense, is a mechanism that takes a system's output and feeds it back as an input to the system itself.
+
+The most basic version of this is a thermostat. The thermostat measures the room temperature (output), compares it to the target temperature (reference), and adjusts the heating (input) accordingly. Without this loop, the heating runs until it is manually turned off.
+
+More complex systems have more complex feedback loops - but the structure is the same. The system observes something about itself, compares it to a reference state, and adjusts.
+
+The key word is "adjusts." A feedback loop without adjustment is telemetry. Useful, but passive. A true feedback loop closes: observation leads to comparison, comparison leads to decision, decision leads to action, action changes the state being observed.
+
+<Diagram caption="Open circuit vs closed circuit: only the closed loop can observe its own output and adjust">
+<svg viewBox="0 0 560 280" width="560" height="280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="560" height="280" fill="#14141f" rx="8"/>
+
+  <text x="130" y="30" text-anchor="middle" fill="#9696b0" font-size="11" font-weight="600">OPEN CIRCUIT</text>
+  <text x="410" y="30" text-anchor="middle" fill="#9696b0" font-size="11" font-weight="600">CLOSED CIRCUIT</text>
+
+  <rect x="30" y="50" width="70" height="34" rx="4" fill="#1b1b2a" stroke="#ffcc33" stroke-width="1.5"/>
+  <text x="65" y="72" text-anchor="middle" fill="#ffcc33" font-size="10" font-weight="600">Source</text>
+
+  <rect x="155" y="50" width="70" height="34" rx="4" fill="#1b1b2a" stroke="#9696b0" stroke-width="1.5"/>
+  <text x="190" y="72" text-anchor="middle" fill="#9696b0" font-size="10">Destination</text>
+
+  <line x1="100" y1="67" x2="155" y2="67" stroke="#ffcc33" stroke-width="1.5" marker-end="url(#arrowAmber)"/>
+
+  <text x="130" y="108" text-anchor="middle" fill="#9696b0" font-size="8.5">Signal travels one way.</text>
+  <text x="130" y="121" text-anchor="middle" fill="#9696b0" font-size="8.5">Source never learns the result.</text>
+
+  <text x="65" y="155" text-anchor="middle" fill="#ff3366" font-size="8" font-weight="600">emits events</text>
+  <text x="190" y="155" text-anchor="middle" fill="#9696b0" font-size="8">never reads logs</text>
+  <line x1="100" y1="148" x2="155" y2="148" stroke="#ff3366" stroke-width="1" stroke-opacity="0.5"/>
+
+  <rect x="310" y="50" width="70" height="34" rx="4" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="345" y="68" text-anchor="middle" fill="#33cc66" font-size="10" font-weight="600">Source</text>
+  <text x="345" y="79" text-anchor="middle" fill="#33cc66" font-size="8">+ adjuster</text>
+
+  <rect x="460" y="50" width="70" height="34" rx="4" fill="#1b1b2a" stroke="#33cc66" stroke-width="1.5"/>
+  <text x="495" y="68" text-anchor="middle" fill="#33cc66" font-size="10">Output</text>
+  <text x="495" y="79" text-anchor="middle" fill="#33cc66" font-size="8">observer</text>
+
+  <line x1="380" y1="60" x2="460" y2="60" stroke="#33cc66" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <path d="M 495 84 L 495 175 L 345 175 L 345 84" fill="none" stroke="#33cc66" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrowGreenBack)"/>
+
+  <text x="420" y="195" text-anchor="middle" fill="#33cc66" font-size="8.5">comparison + decision</text>
+  <text x="420" y="207" text-anchor="middle" fill="#33cc66" font-size="8.5">happens inside the loop</text>
+
+  <text x="310" y="240" text-anchor="middle" fill="#9696b0" font-size="8.5">emits events, monitors downstream,</text>
+  <text x="310" y="252" text-anchor="middle" fill="#9696b0" font-size="8.5">adjusts behaviour based on outcomes</text>
+  <text x="460" y="240" text-anchor="middle" fill="#33cc66" font-size="8.5" font-weight="600">can learn</text>
+  <text x="130" y="240" text-anchor="middle" fill="#ff3366" font-size="8.5" font-weight="600">cannot learn</text>
+
+  <defs>
+    <marker id="arrowAmber" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#ffcc33"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#33cc66"/>
+    </marker>
+    <marker id="arrowGreenBack" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#33cc66"/>
+    </marker>
+  </defs>
+</svg>
+</Diagram>
+
+## The circuit in the image
+
+The circuit in the image for this post is a closed loop. The signal travels around. It does not terminate.
+
+This is the important property. An open circuit - a pathway with no return - carries a signal from source to destination and stops. The source cannot know what happened to the signal after it left. The destination cannot communicate back.
+
+A closed circuit - a loop - carries the signal around and brings information back to the source. The source can now act on the result of its previous output.
+
+In software terms: a service that emits events but never reads logs is an open circuit. A service that emits events, monitors the downstream effects, and adjusts behaviour based on observed outcomes is a closed circuit.
+
+<PullQuote>
+The closed circuit can learn. The open circuit cannot.
+</PullQuote>
+
+## Why this is infrastructure, not observability
+
+"Observability" is the term that usually covers monitoring, logging, and distributed tracing. These are necessary. They are also insufficient.
+
+Observability is the capacity to ask questions about a system and get answers. It requires instrumentation, tooling, and someone looking at dashboards.
+
+Feedback loops are different. They do not require someone looking at dashboards. They run automatically. The comparison and adjustment happen as part of the system's operation, not as a human-mediated review process.
+
+The distinction matters because human-mediated review scales poorly. As a system grows in complexity, the number of things that require review grows faster than the capacity of any team to review them. Observability tools help, but they still require human attention.
+
+Feedback loops transfer the review function into the system itself. The system observes, compares, and adjusts. It does not wait for a human to notice the drift and intervene.
+
+This is why feedback loops are infrastructure, not tooling. They are not a feature added on top of the system. They are part of what makes the system capable of sustained operation.
+
+<Callout type="warning" title="Observability without feedback loops is passive">
+Dashboards and alerts require a human to notice drift and intervene. As systems grow, the number of things needing review grows faster than any team can scale. Observability answers the question "what is happening?" A feedback loop answers that question automatically and then acts on the answer. The distinction is not academic - it determines whether your system degrades silently or corrects itself.
+</Callout>
+
+## What juggling teaches about feedback
+
+The cascade is a feedback loop in physical form.
+
+Each throw produces a ball in the air. The ball's position at the apex is observed. The observation informs the next throw - how early, how high, in which direction. The next throw is adjusted based on the previous one. The loop runs at approximately three cycles per second.
+
+Remove the feedback loop - close your eyes while juggling - and the cascade degrades immediately. Without observation, each throw is made blindly. Small errors compound. The pattern collapses within seconds.
+
+This is not a failure of skill. It is a structural consequence of removing the feedback component from a system that requires it to maintain stability.
+
+High-ball jugglers train with visual feedback suppressed - not to operate without feedback, but to develop proprioceptive feedback (the body's internal sense of position and movement) as a supplementary channel. They are not removing feedback. They are building an additional feedback mechanism that does not depend on vision.
+
+The lesson: systems that must remain stable under conditions where the primary feedback channel may be disrupted need secondary feedback channels. The redundancy is not overhead. It is what makes the stability robust.
+
+<AnalogyTable
+  domain="Software systems"
+  caption="The juggling cascade is a near-perfect physical model of a closed feedback loop"
+  rows={[
+    { juggling: "Ball in the air - position at apex", analogue: "System output - observed metric or event" },
+    { juggling: "Eye tracks ball, brain computes adjustment", analogue: "Observation layer compares output to reference state" },
+    { juggling: "Next throw adjusted - earlier, higher, or redirected", analogue: "System adjusts routing, rate, prompting, or load" },
+    { juggling: "Loop runs at ~3 cycles per second", analogue: "Feedback loop runs continuously, not on human review schedule" },
+    { juggling: "Eyes closed: errors compound, cascade collapses", analogue: "No feedback loop: silent degradation accumulates" },
+    { juggling: "Proprioceptive feedback as secondary channel", analogue: "Circuit breaker or canary as redundant feedback mechanism" }
+  ]}
+/>
+
+## Building the closed circuit
+
+The design question for any system is: where is the loop?
+
+For each significant output the system produces, there should be a corresponding observation and a corresponding path from that observation back to something that can change. If no such path exists, the system is open-circuit for that output. It is operating without feedback.
+
+The specific design will vary: circuit breakers that detect failure rates and adjust routing, canary deployments that observe error rates before widening traffic, agents that monitor their own output quality and adjust prompting strategies, services that track latency percentiles and shed load when thresholds are exceeded.
+
+The form is less important than the structure: output observed, compared, adjustment path available.
+
+<Callout type="info" title="The four steps of a complete feedback loop">
+Every real feedback loop has the same four steps: (1) observe - the system measures something about its own output; (2) compare - the observation is checked against a reference state; (3) decide - a signal is generated when the comparison shows deviation; (4) adjust - something in the system changes in response. Missing any of these steps produces telemetry, not a feedback loop.
+</Callout>
+
+The amber circuit in the image runs around. The signal returns to where it started.
+
+Build systems that know what they produce, compare it to what they should produce, and can change based on that comparison.
+
+The open circuit carries a signal once and then stops. The closed circuit runs indefinitely, getting better as it goes.
+
+<Takeaways color="tech" items={[
+  "Silent degradation is the failure mode unique to complex systems: output drifts gradually, no individual alert fires, cumulative error becomes severe before it becomes visible.",
+  "A feedback loop is not observability. Observability requires human attention at dashboard time. A feedback loop closes automatically - observation, comparison, and adjustment happen as part of the system's operation.",
+  "The cascade is a feedback loop running at three cycles per second. Removing visual feedback (closing your eyes) collapses it within seconds - not from lack of skill, but from structural removal of the loop.",
+  "Every significant system output needs a corresponding observation path and an adjustment path back. If either is missing, the system is open-circuit for that output and cannot correct its own drift."
+]} />
+
+---
+
+*Related: [The Cascade Pattern in Distributed Systems](/blog/cascade-pattern-distributed-systems) - on how the three-ball timing model maps to distributed event handling.*
