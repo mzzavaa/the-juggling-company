@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import HeroVideo from "@/components/HeroVideo.astro";
 import { getPosts } from "@/lib/content";
 
 import threePropsEnergy from "@/assets/images/three-props-energy-triptych.png";
@@ -24,14 +25,13 @@ const recommended = allPosts.filter(p =>
 >
   <!-- HERO: full-bleed image with overlay text -->
   <section class="concept-hero relative overflow-hidden" style="min-height: clamp(600px, 92vh, 980px);">
-    <div class="absolute inset-0">
-      <video autoplay muted loop playsinline class="h-full w-full object-cover">
-        <source src="/videos/three-props-triptych.mp4" type="video/mp4" />
-        <Image src={threePropsEnergy} alt="Three juggling props - ball, club, ring - each with its own energy signature" width={1800} height={900} class="h-full w-full object-cover" />
-      </video>
-      <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(10,10,18,0.95) 0%, rgba(10,10,18,0.7) 55%, rgba(10,10,18,0.25) 100%);"></div>
-      <div class="absolute bottom-0 inset-x-0 h-48" style="background: linear-gradient(to top, var(--color-bg), transparent);"></div>
-    </div>
+    <HeroVideo
+      src="/videos/three-props-triptych.mp4"
+      fallbackImage={threePropsEnergy}
+      fallbackAlt="Three juggling props - ball, club, ring - each with its own energy signature"
+      loops={2}
+      overlayStyle="background: linear-gradient(to right, rgba(10,10,18,0.95) 0%, rgba(10,10,18,0.7) 55%, rgba(10,10,18,0.25) 100%);"
+    />
 
     <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-28 lg:px-10 lg:pb-36" style="min-height: inherit;">
       <div class="max-w-xl" data-reveal>

@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import { Image } from "astro:assets";
+import HeroVideo from "@/components/HeroVideo.astro";
 import threePropsEnergy from "@/assets/images/three-props-energy-triptych.png";
 import womanNeural from "@/assets/images/woman-neural-juggling-trails.png";
 import handsDna from "@/assets/images/hands-dna-light-helix.png";
@@ -72,23 +73,26 @@ const concepts = [
   description="Six entry points into the juggling-as-change framework. Brain science, systems thinking, change management, patterns, and the infinite game - all through juggling."
 >
   <!-- HERO -->
-  <section class="relative overflow-hidden pb-0 pt-28 md:pt-36">
-    <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div class="absolute left-1/4 top-0 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-3xl" style="background: var(--color-brain);"></div>
-      <div class="absolute right-1/4 top-1/2 h-[24rem] w-[24rem] translate-x-1/2 rounded-full opacity-15 blur-3xl" style="background: var(--color-change);"></div>
-    </div>
-
-    <div class="mx-auto max-w-[1400px] px-4 md:px-6 lg:px-10">
-      <p class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
-        <Icon name="layers" size={12} />
-        Start here
-      </p>
-      <h1 class="mt-6 font-display text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight">
-        Six ways in.
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
-        Juggling is not the point. The point is what happens when you look at brain science, cloud systems, and organisational change through the same lens. Each concept below is an entry point. Each one leads deeper.
-      </p>
+  <section class="concept-hero relative overflow-hidden" style="min-height: clamp(500px, 65vh, 780px);">
+    <HeroVideo
+      src="/videos/rgb-infinity-loop.mp4"
+      fallbackImage={twoHandsGreen}
+      fallbackAlt="Two hands with a glowing green infinity loop, representing the six entry points into juggling as a framework"
+      loops={2}
+    />
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-24 lg:px-10" style="min-height: inherit;">
+      <div class="max-w-2xl" data-reveal>
+        <p class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+          <Icon name="layers" size={12} />
+          Start here
+        </p>
+        <h1 class="mt-6 font-display text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight">
+          Six ways in.
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
+          Juggling is not the point. The point is what happens when you look at brain science, cloud systems, and organisational change through the same lens. Each concept below is an entry point. Each one leads deeper.
+        </p>
+      </div>
     </div>
   </section>
 

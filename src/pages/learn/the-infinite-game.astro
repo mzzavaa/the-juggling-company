@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import HeroVideo from "@/components/HeroVideo.astro";
 import VideoImage from "@/components/VideoImage.astro";
 import { getPosts } from "@/lib/content";
 
@@ -31,14 +32,12 @@ const infiniteMarkers = [
 >
   <!-- HERO -->
   <section class="concept-hero relative overflow-hidden" style="min-height: clamp(600px, 90vh, 940px);">
-    <div class="absolute inset-0">
-      <video autoplay muted loop playsinline class="h-full w-full object-cover">
-        <source src="/videos/green-infinity-cascade.mp4" type="video/mp4" />
-        <Image src={twoHandsGreen} alt="Two hands with a glowing green infinity loop between them, representing the infinite game of juggling" width={1800} height={900} class="h-full w-full object-cover" />
-      </video>
-      <div class="absolute inset-0" style="background: linear-gradient(120deg, rgba(10,10,18,0.97) 0%, rgba(10,10,18,0.65) 60%, rgba(10,10,18,0.2) 100%);"></div>
-      <div class="absolute bottom-0 inset-x-0 h-48" style="background: linear-gradient(to top, var(--color-bg), transparent);"></div>
-    </div>
+    <HeroVideo
+      src="/videos/green-infinity-cascade.mp4"
+      fallbackImage={twoHandsGreen}
+      fallbackAlt="Two hands with a glowing green infinity loop between them, representing the infinite game of juggling"
+      loops={2}
+    />
     <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-28 lg:px-10" style="min-height: inherit;">
       <div class="max-w-2xl" data-reveal>
         <span class="mb-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5" style="background: color-mix(in oklab, var(--color-brain-tech) 14%, transparent); border: 1px solid color-mix(in oklab, var(--color-brain-tech) 35%, transparent); color: var(--color-brain-tech);">

@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: string;
+  fallbackImage: ImageMetadata;
+  fallbackAlt: string;
+  loops?: number;
+  overlayStyle?: string;
+}
+
+const {
+  src,
+  fallbackImage,
+  fallbackAlt,
+  loops = 2,
+  overlayStyle = "background: linear-gradient(120deg, rgba(10,10,18,0.97) 0%, rgba(10,10,18,0.65) 60%, rgba(10,10,18,0.2) 100%);",
+} = Astro.props;
+---
+
+<div class="absolute inset-0">
+  <video
+    autoplay
+    muted
+    playsinline
+    class="h-full w-full object-cover"
+    data-hero-loops={loops}
+  >
+    <source src={src} type="video/mp4" />
+    <Image
+      src={fallbackImage}
+      alt={fallbackAlt}
+      width={1800}
+      height={900}
+      class="h-full w-full object-cover"
+    />
+  </video>
+  <div class="absolute inset-0" style={overlayStyle}></div>
+  <div class="absolute bottom-0 inset-x-0 h-48" style="background: linear-gradient(to top, var(--color-bg), transparent);"></div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLVideoElement>("[data-hero-loops]").forEach((video) => {
+    const max = parseInt(video.dataset.heroLoops ?? "2", 10);
+    let count = 0;
+    video.addEventListener("ended", () => {
+      count++;
+      if (count < max) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+    });
+  });
+</script>

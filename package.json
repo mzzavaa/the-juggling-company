@@ -18,20 +18,20 @@
     "anim:single": "tsx scripts/generate-animations.ts --pattern"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.4",
-    "@astrojs/mdx": "4.2.0",
-    "@astrojs/react": "4.2.0",
-    "@astrojs/rss": "4.0.11",
-    "@astrojs/sitemap": "3.2.1",
-    "@tailwindcss/vite": "4.1.18",
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/react": "^5.0.5",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "@tailwindcss/vite": "^4.3.0",
     "@types/leaflet": "^1.9.21",
-    "astro": "5.2.5",
+    "astro": "^6.3.3",
     "leaflet": "^1.9.4",
     "lucide-react": "0.474.0",
     "maplibre-gl": "5.1.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "tailwindcss": "4.1.18",
+    "tailwindcss": "^4.3.0",
     "typescript": "5.7.3",
     "zod": "3.24.1"
   },
@@ -41,5 +41,8 @@
     "prettier": "3.4.2",
     "prettier-plugin-astro": "0.14.1",
     "tsx": "^4.21.0"
+  },
+  "overrides": {
+    "yaml": ">=2.8.3"
   }
 }

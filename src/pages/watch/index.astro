@@ -1,0 +1,121 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import HeroVideo from "@/components/HeroVideo.astro";
+import { Image } from "astro:assets";
+
+import jugglingHandsRgb from "@/assets/images/juggling-hands-rgb-light.png";
+import lindaConference from "@/assets/images/linda-mohamed-juggling-conference.png";
+import threePropsNeon from "@/assets/images/three-props-neon-triptych.png";
+
+const sections = [
+  {
+    label: "Juggling",
+    href: "/videos",
+    description: "Balls, clubs, and rings in motion. Live performances, practice sessions, and pattern demonstrations.",
+    accent: "var(--color-brain)",
+    icon: "ball" as const,
+    image: jugglingHandsRgb,
+    imageAlt: "Hands juggling with colorful RGB light trails",
+  },
+  {
+    label: "Talks & Podcasts",
+    href: "/talks",
+    description: "AWS re:Invent, community tech events, and podcast conversations. The juggling framework on stage.",
+    accent: "var(--color-tech)",
+    icon: "calendar" as const,
+    image: lindaConference,
+    imageAlt: "Linda Mohamed at a juggling conference",
+  },
+  {
+    label: "Short Clips",
+    href: "/videos#tiktok",
+    description: "Quick juggling moments from everyday life. TikTok and Instagram reels - the pattern in the wild.",
+    accent: "var(--color-change)",
+    icon: "tiktok" as const,
+    image: threePropsNeon,
+    imageAlt: "Three juggling props with neon light effects",
+  },
+];
+---
+
+<BaseLayout
+  title="Watch - The Juggling Company"
+  description="Juggling videos, conference talks, and short clips. Live performances, AWS re:Invent sessions, and everyday moments from Linda Mohamed."
+>
+  <!-- HERO -->
+  <section class="concept-hero relative overflow-hidden" style="min-height: clamp(500px, 65vh, 780px);">
+    <HeroVideo
+      src="/videos/juggling-hands-rgb-light.mp4"
+      fallbackImage={jugglingHandsRgb}
+      fallbackAlt="Hands juggling with colorful RGB light trails"
+      loops={2}
+    />
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-24 lg:px-10" style="min-height: inherit;">
+      <div class="max-w-2xl" data-reveal>
+        <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Watch</p>
+        <h1 class="font-display text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight">
+          Watch the<br /><span class="rgb-text">throws.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
+          Juggling clips, conference talks, and short-form content. Every throw is a demonstration of the framework in action.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/videos" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-[#0a0a12] transition-all hover:opacity-90" style="background: var(--color-brain);">
+            Juggling videos
+            <Icon name="arrow-right" size={14} />
+          </a>
+          <a href="/talks" class="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-5 py-2.5 text-sm font-semibold text-[var(--color-fg)] transition-all hover:bg-[var(--color-bg-card)]">
+            Talks & Podcasts
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CARDS -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10 md:py-24">
+    <div class="grid gap-6 sm:grid-cols-3">
+      {sections.map((s, i) => (
+        <a
+          href={s.href}
+          class="group flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-all duration-300 hover:-translate-y-1"
+          style={`--accent: ${s.accent};`}
+          data-reveal
+          data-delay={i * 80}
+        >
+          <div class="relative h-52 overflow-hidden">
+            <Image
+              src={s.image}
+              alt={s.imageAlt}
+              width={600}
+              height={400}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(to top, var(--color-bg-card) 0%, transparent 50%);"></div>
+          </div>
+          <div class="flex flex-1 flex-col gap-3 p-6">
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                style={`background: color-mix(in oklab, ${s.accent} 18%, var(--color-bg-elevated)); color: ${s.accent};`}
+              >
+                <Icon name={s.icon} size={20} />
+              </span>
+              <h2 class="font-display text-xl font-semibold text-[var(--color-fg)]">{s.label}</h2>
+            </div>
+            <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)]">{s.description}</p>
+            <div class="mt-2 flex items-center gap-1.5 text-xs font-medium" style={`color: ${s.accent};`}>
+              Watch
+              <Icon name="arrow-right" size={13} />
+            </div>
+          </div>
+          <div
+            class="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={`box-shadow: inset 0 0 0 1px color-mix(in oklab, ${s.accent} 50%, transparent), 0 0 40px -8px color-mix(in oklab, ${s.accent} 30%, transparent);`}
+          ></div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

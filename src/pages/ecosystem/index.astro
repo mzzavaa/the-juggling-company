@@ -1,0 +1,135 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Icon from "@/components/Icon.astro";
+import HeroVideo from "@/components/HeroVideo.astro";
+import { Image } from "astro:assets";
+
+import glowingLaptop from "@/assets/images/glowing-balls-dark-laptop.jpg";
+import handTechTree from "@/assets/images/hand-tech-tree-cloud.png";
+import brainChangeTech from "@/assets/images/brain-change-tech-illustration.png";
+import jugglerBrainCloud from "@/assets/images/juggler-brain-cloud-arc.png";
+import plasmaBallTech from "@/assets/images/plasma-ball-tech.png";
+
+const projects = [
+  {
+    label: "Freelancer Templates",
+    href: "https://freelancer-templates.org",
+    description: "200+ free contracts, proposals, invoices, and email scripts. Every document a freelancer needs to run a professional practice - ready to use.",
+    accent: "#4f9ef8",
+    icon: "templates" as const,
+    tag: "Free templates",
+    image: handTechTree,
+    imageAlt: "Hand reaching toward a glowing tech tree structure in the cloud",
+  },
+  {
+    label: "AI Workshops",
+    href: "https://ai-workshops.online",
+    description: "Enterprise AI workshops - from proof of concept to full implementation. The same systems-thinking framework, applied to organisational AI adoption.",
+    accent: "#a855f7",
+    icon: "workshop" as const,
+    tag: "Enterprise",
+    image: brainChangeTech,
+    imageAlt: "Illustration showing the intersection of brain science, change, and technology",
+  },
+  {
+    label: "Freelancer Automation",
+    href: "https://freelancer-automation.com",
+    description: "AgentCore framework - AI automation tools built for freelancers. Solo operators deserve the same infrastructure as teams.",
+    accent: "#f59e0b",
+    icon: "automation" as const,
+    tag: "Open source",
+    image: jugglerBrainCloud,
+    imageAlt: "Juggler silhouette connected to a brain circuit and cloud arc",
+  },
+  {
+    label: "AI Solutions Wiki",
+    href: "https://ai-solutions.wiki",
+    description: "A searchable knowledge base of AI tools, solutions, and use cases. One place to find what actually works - without the noise.",
+    accent: "#10b981",
+    icon: "wiki" as const,
+    tag: "Knowledge base",
+    image: plasmaBallTech,
+    imageAlt: "Plasma ball glowing with electric tech energy",
+  },
+];
+---
+
+<BaseLayout
+  title="Ecosystem - The Juggling Company"
+  description="Four tools from Linda Mohamed - templates, workshops, automation, and a knowledge base - built on the same framework as the juggling company."
+>
+  <!-- HERO -->
+  <section class="concept-hero relative overflow-hidden" style="min-height: clamp(500px, 65vh, 780px);">
+    <HeroVideo
+      src="/videos/glowing-balls-dark-laptop.mp4"
+      fallbackImage={glowingLaptop}
+      fallbackAlt="Glowing juggling balls next to a dark laptop, at the intersection of juggling and technology"
+      loops={2}
+    />
+    <div class="relative mx-auto flex max-w-[1400px] flex-col justify-end px-4 pb-20 pt-32 md:px-6 md:pb-24 lg:px-10" style="min-height: inherit;">
+      <div class="max-w-2xl" data-reveal>
+        <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">Ecosystem</p>
+        <h1 class="font-display text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[0.95] tracking-tight">
+          Tools for the way<br /><span class="rgb-text">you actually work.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
+          Four independent projects built from the same principles - practice over theory, structure over luck, systems that hold under pressure.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT GRID -->
+  <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10 md:py-24">
+    <div class="grid gap-6 sm:grid-cols-2">
+      {projects.map((p, i) => (
+        <a
+          href={p.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-all duration-300 hover:-translate-y-1"
+          data-reveal
+          data-delay={i * 80}
+        >
+          <div class="relative h-52 overflow-hidden">
+            <Image
+              src={p.image}
+              alt={p.imageAlt}
+              width={600}
+              height={400}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(to top, var(--color-bg-card) 0%, transparent 50%);"></div>
+            <span
+              class="absolute left-4 top-4 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest backdrop-blur-sm"
+              style={`border-color: color-mix(in oklab, ${p.accent} 40%, transparent); background: color-mix(in oklab, ${p.accent} 12%, transparent); color: ${p.accent};`}
+            >
+              {p.tag}
+            </span>
+          </div>
+          <div class="flex flex-1 flex-col gap-3 p-6">
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                style={`background: color-mix(in oklab, ${p.accent} 18%, var(--color-bg-elevated)); color: ${p.accent};`}
+              >
+                <Icon name={p.icon} size={20} />
+              </span>
+              <h2 class="font-display text-xl font-semibold text-[var(--color-fg)]">{p.label}</h2>
+              <Icon name="external-link" size={13} class="ml-auto opacity-0 transition-opacity group-hover:opacity-60 text-[var(--color-muted)]" />
+            </div>
+            <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)]">{p.description}</p>
+            <div class="mt-2 flex items-center gap-1.5 text-xs font-medium" style={`color: ${p.accent};`}>
+              Visit site
+              <Icon name="arrow-up-right" size={13} />
+            </div>
+          </div>
+          <div
+            class="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={`box-shadow: inset 0 0 0 1px color-mix(in oklab, ${p.accent} 50%, transparent), 0 0 40px -8px color-mix(in oklab, ${p.accent} 30%, transparent);`}
+          ></div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

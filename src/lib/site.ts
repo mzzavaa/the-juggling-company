@@ -91,7 +91,7 @@ export const primaryNav: readonly NavItem[] = [
   },
   {
     label: "Watch",
-    href: "/videos",
+    href: "/watch",
     children: [
       {
         label: "Juggling",
@@ -126,7 +126,7 @@ export const primaryNav: readonly NavItem[] = [
   },
   {
     label: "Ecosystem",
-    href: "#",
+    href: "/ecosystem",
     megaColumns: 2,
     megaWidth: "580px",
     children: [
