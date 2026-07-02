@@ -66,6 +66,16 @@ const accent = pillarColor[pillar];
     ></canvas>
 
     <div class="glow-overlay" aria-hidden="true"></div>
+
+    <a
+      href="https://jugglinglab.org"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="jlab-credit"
+      title="Animation powered by JugglingLab"
+    >
+      JugglingLab
+    </a>
   </div>
 
   <div class="card-body">
@@ -175,6 +185,22 @@ const accent = pillarColor[pillar];
     line-height: 1.55;
     color: var(--color-muted);
     margin-top: 0.25rem;
+  }
+
+  .jlab-credit {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    z-index: 4;
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: color-mix(in oklab, var(--color-muted) 60%, transparent);
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+  .jlab-credit:hover {
+    color: var(--accent);
   }
 </style>
 
