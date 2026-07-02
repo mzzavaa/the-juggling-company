@@ -61,6 +61,12 @@ typecheck, build, link check, and zizmor scan of workflow files.
 
 ## Attribution
 
-**Pattern animations powered by [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The animations use JugglingLab's physics engine and siteswap simulation. We adapted the visual rendering to create a custom feminine avatar and a dark theme that matches the design of this site.
+### Juggling Animations
 
-Animation engine: JugglingLab (© Jack Boyce), used under its [GPL-2.0 license](https://github.com/jkboyce/jugglinglab/blob/master/LICENSE).
+**Pattern animations generated with [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The juggling physics, timing, gravity, and siteswap simulation come directly from JugglingLab. We customized the visual rendering with a feminine avatar and a dark interface to match this website's design.
+
+Animation engine: JugglingLab (© Jack Boyce), used under [GPL-2.0 license](https://github.com/jkboyce/jugglinglab/blob/master/LICENSE).
+
+### Juggler Avatar
+
+The feminine juggler silhouette used in our animations is a custom creation for this website. We adapted JugglingLab's rendering pipeline to display our avatar instead of the default stick figure, while preserving all the underlying physics and mathematics.
