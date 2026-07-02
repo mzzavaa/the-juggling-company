@@ -102,6 +102,24 @@ const product = defineCollection({
 
 const locationType = z.enum(["past-performance", "home-base", "available", "workshop", "juggling-shop"]);
 
+const shopCategory = z.enum([
+  "balls",
+  "clubs",
+  "rings",
+  "diabolos",
+  "poi",
+  "staff",
+  "cigar-boxes",
+  "contact",
+  "fire",
+  "led",
+  "unicycles",
+  "aerial",
+  "flowersticks",
+  "hats",
+  "general",
+]);
+
 const location = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx,yaml,yml}", base: "./src/content/location" }),
   schema: z.object({
@@ -115,6 +133,15 @@ const location = defineCollection({
     notes: z.string().default(""),
     photos: z.array(z.string()).default([]),
     website: z.string().url().optional(),
+    // Shop-specific fields (optional, only for juggling-shop type)
+    address: z.string().optional(),
+    brands: z.array(z.string()).default([]),
+    categories: z.array(shopCategory).default([]),
+    physicalStore: z.boolean().default(false),
+    onlineStore: z.boolean().default(false),
+    shipsWorldwide: z.boolean().optional(),
+    foundedYear: z.number().int().min(1900).max(2030).optional(),
+    isManufacturer: z.boolean().default(false),
   }),
 });
 
