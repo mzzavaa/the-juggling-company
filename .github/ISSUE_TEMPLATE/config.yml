@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Website Feedback
+    url: https://thejugglingcompany.com/contact
+    about: General questions or feedback about the website
+  - name: Bug Report
+    url: https://github.com/mzzavaa/the-juggling-company/issues/new
+    about: Report a bug or broken link on the website

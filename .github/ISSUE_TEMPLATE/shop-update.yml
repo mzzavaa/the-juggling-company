@@ -1,0 +1,73 @@
+name: Update Shop Information
+description: Correct or update information about an existing shop in our directory
+title: "[Update] "
+labels: ["shop-update", "community"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep our juggling shop directory accurate!
+        
+        Use this form to report corrections, closures, or updates to existing shops.
+
+  - type: input
+    id: shop-name
+    attributes:
+      label: Shop Name
+      description: The name of the shop you want to update
+      placeholder: e.g., Renegade Juggling
+    validations:
+      required: true
+
+  - type: dropdown
+    id: update-type
+    attributes:
+      label: Type of Update
+      description: What kind of update is this?
+      options:
+        - Incorrect information (wrong address, URL, etc.)
+        - Shop has closed permanently
+        - Shop has moved to a new location
+        - New website or contact info
+        - Additional brands or categories
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-info
+    attributes:
+      label: Current (Incorrect) Information
+      description: What does the site currently show that's wrong?
+      placeholder: |
+        e.g., "The website is listed as https://old-url.com"
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct-info
+    attributes:
+      label: Correct Information
+      description: What should it say instead?
+      placeholder: |
+        e.g., "The correct website is https://new-url.com"
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: How did you verify this?
+      description: Help us confirm the correction
+      placeholder: |
+        e.g., "I called the shop" or "The new URL is on their social media"
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      description: Please confirm
+      options:
+        - label: I have verified this information is accurate
+          required: true

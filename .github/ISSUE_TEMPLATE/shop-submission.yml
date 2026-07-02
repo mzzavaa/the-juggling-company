@@ -1,0 +1,142 @@
+name: Submit a Juggling Shop
+description: Add a new juggling shop to our worldwide directory
+title: "[Shop] "
+labels: ["shop-submission", "community"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us build the most comprehensive juggling shop directory! 
+        
+        Please provide as much detail as you can. We'll verify the information before adding it to the site.
+
+  - type: input
+    id: shop-name
+    attributes:
+      label: Shop Name
+      description: The official name of the shop
+      placeholder: e.g., Renegade Juggling
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Website
+      description: The shop's official website URL
+      placeholder: https://example.com
+    validations:
+      required: true
+
+  - type: input
+    id: city
+    attributes:
+      label: City
+      description: City where the shop is located (or headquarters if online-only)
+      placeholder: e.g., Santa Cruz
+    validations:
+      required: true
+
+  - type: input
+    id: country
+    attributes:
+      label: Country
+      description: Country where the shop is located
+      placeholder: e.g., USA
+    validations:
+      required: true
+
+  - type: input
+    id: address
+    attributes:
+      label: Street Address (optional)
+      description: Full street address if it's a physical store
+      placeholder: e.g., 123 Main Street
+
+  - type: checkboxes
+    id: store-type
+    attributes:
+      label: Store Type
+      description: What kind of store is this?
+      options:
+        - label: Physical store (you can visit in person)
+        - label: Online store
+        - label: Ships worldwide
+        - label: Manufacturer (they make their own props)
+
+  - type: dropdown
+    id: primary-category
+    attributes:
+      label: Primary Category
+      description: What does this shop mainly sell?
+      options:
+        - General (sells everything)
+        - Balls
+        - Clubs
+        - Rings
+        - Diabolos
+        - Poi
+        - Staff
+        - Cigar boxes
+        - Contact juggling
+        - Fire props
+        - LED props
+        - Unicycles
+        - Aerial equipment
+        - Flowersticks
+        - Hats
+    validations:
+      required: true
+
+  - type: textarea
+    id: brands
+    attributes:
+      label: Brands Carried
+      description: List the major brands this shop carries (one per line)
+      placeholder: |
+        Play
+        Henrys
+        Renegade
+        PX3
+
+  - type: input
+    id: founded-year
+    attributes:
+      label: Year Founded (optional)
+      description: When was the shop established?
+      placeholder: e.g., 1982
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Anything else we should know? Special services, community involvement, etc.
+      placeholder: |
+        e.g., "Family-owned since 1982, makes their own clubs by hand"
+        or "Great selection of beginner equipment, offers workshops"
+
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your Relationship to This Shop
+      description: How do you know about this shop?
+      options:
+        - I'm a customer
+        - I work there / own it
+        - I've visited in person
+        - Recommended by another juggler
+        - Found online
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      description: Please confirm the following
+      options:
+        - label: I have verified this shop currently exists and is operational
+          required: true
+        - label: The website URL I provided is correct and working
+          required: true
