@@ -3,9 +3,12 @@
  * Juggling pattern card backed by a pre-rendered animated GIF.
  *
  * Unlike the canvas-based JugglingPattern.astro (which simulates throws live),
- * this component shows a JugglingLab-rendered GIF of Linda's stick figure
- * running the pattern. GIFs live at /animations/pattern-{slug}.gif and are
- * loaded lazily so an out-of-viewport card costs nothing.
+ * this component shows a JugglingLab-rendered GIF with our custom feminine avatar.
+ * GIFs live at /animations/pattern-{slug}.gif and are loaded lazily so an
+ * out-of-viewport card costs nothing.
+ *
+ * Animation engine: JugglingLab (© Jack Boyce), GPL-2.0 licensed.
+ * https://github.com/jkboyce/jugglinglab
  */
 interface Props {
   src: string;

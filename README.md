@@ -58,3 +58,9 @@ All content is Zod-validated at build time. See `src/content/config.ts` for sche
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site
 and publishes `dist/` to GitHub Pages. PRs run `.github/workflows/ci.yml` for
 typecheck, build, link check, and zizmor scan of workflow files.
+
+## Attribution
+
+**Pattern animations powered by [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The animations use JugglingLab's physics engine and siteswap simulation. We adapted the visual rendering to create a custom feminine avatar and a dark theme that matches the design of this site.
+
+Animation engine: JugglingLab (© Jack Boyce), used under its [GPL-2.0 license](https://github.com/jkboyce/jugglinglab/blob/master/LICENSE).

@@ -4,6 +4,9 @@
  * Fetches GIF animations from JugglingLab and saves them locally as static assets.
  * Run during build to pre-render all patterns in the registry.
  *
+ * Animation engine: JugglingLab (© Jack Boyce), GPL-2.0 licensed.
+ * https://github.com/jkboyce/jugglinglab
+ *
  * Usage:
  *   npx tsx scripts/generate-animations.ts           # Generate missing only
  *   npx tsx scripts/generate-animations.ts --force   # Regenerate all
