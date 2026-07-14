@@ -6,6 +6,7 @@ lng: -0.1372
 country: "United Kingdom"
 city: "Brighton"
 type: juggling-shop
+region: europe
 notes: "Major UK/EU circus equipment retailer headquartered in Brighton. Own-brand Status line plus Play, Henrys, and more. Also runs wholesale distribution. Custom aerial equipment manufacturing."
 website: "https://firetoys.co.uk"
 photos: []

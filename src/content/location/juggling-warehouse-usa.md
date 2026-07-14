@@ -6,6 +6,7 @@ lng: -122.4194
 country: "United States"
 city: "San Francisco"
 type: juggling-shop
+region: north-america
 notes: "Josh Horton's online juggling superstore. Wide selection of brands at competitive prices. Partners with Taylor Tries for beginner-friendly sets."
 website: "https://jugglingwarehouse.com"
 photos: []

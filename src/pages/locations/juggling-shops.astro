@@ -1,28 +1,104 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import LocationsMap, { type MapLocation } from "@/islands/LocationsMap";
+import ShopsMap from "@/islands/ShopsMap";
+import ShopDirectory from "@/islands/ShopDirectory";
 import { getLocations } from "@/lib/content";
 
 const allLocations = await getLocations();
 const shops = allLocations.filter((l) => l.data.type === "juggling-shop");
 
-const mapLocations: MapLocation[] = shops.map((l) => ({
-  slug: l.id,
-  name: l.data.name,
-  city: l.data.city,
-  country: l.data.country,
-  lat: l.data.lat,
-  lng: l.data.lng,
-  type: l.data.type,
-  notes: l.data.notes,
-  website: l.data.website,
+// Calculate stats
+const physicalStores = shops.filter((s) => s.data.physicalStore).length;
+const onlineStores = shops.filter((s) => s.data.onlineStore).length;
+const countriesSet = new Set(shops.map((s) => s.data.country));
+const countriesCount = countriesSet.size;
+
+// Calculate community reviews count (sum of all reviews across shops)
+// Note: We only count reviews actually submitted to our site, not copied from Google
+const communityReviews = shops.reduce((acc, s) => {
+  const localReviews = s.data.reviews?.length || 0;
+  return acc + localReviews;
+}, 0);
+
+// Prepare map data
+const mapShops = shops.map((s) => ({
+  id: s.id,
+  name: s.data.name,
+  city: s.data.city,
+  country: s.data.country,
+  lat: s.data.lat,
+  lng: s.data.lng,
+  type: s.data.type as "juggling-shop",
+  physicalStore: s.data.physicalStore,
+  website: s.data.website,
 }));
 
+// Prepare shop directory data - transform photos and reviews properly
+// Auto-detect region from country if not specified
+const countryToRegion: Record<string, string> = {
+  "United States": "north-america",
+  "Canada": "north-america",
+  "Mexico": "north-america",
+  "Brazil": "south-america",
+  "Argentina": "south-america",
+  "Chile": "south-america",
+  "Colombia": "south-america",
+  "Japan": "asia",
+  "China": "asia",
+  "South Korea": "asia",
+  "India": "asia",
+  "Thailand": "asia",
+  "Singapore": "asia",
+  "Australia": "oceania",
+  "New Zealand": "oceania",
+  "South Africa": "africa",
+  "Egypt": "africa",
+  "Morocco": "africa",
+  // All other countries default to Europe
+};
+
+const directoryShops = shops.map((s) => ({
+  id: s.id,
+  name: s.data.name,
+  slug: s.data.slug,
+  lat: s.data.lat,
+  lng: s.data.lng,
+  country: s.data.country,
+  city: s.data.city,
+  notes: s.data.notes || "",
+  website: s.data.website,
+  address: s.data.address,
+  brands: s.data.brands || [],
+  categories: s.data.categories || [],
+  physicalStore: s.data.physicalStore || false,
+  onlineStore: s.data.onlineStore || false,
+  shipsWorldwide: s.data.shipsWorldwide,
+  foundedYear: s.data.foundedYear,
+  isManufacturer: s.data.isManufacturer || false,
+  region: s.data.region || countryToRegion[s.data.country] || "europe",
+  verified: s.data.verified || false,
+  lastVerified: s.data.lastVerified?.toISOString(),
+  rating: s.data.rating,
+  reviewCount: s.data.reviewCount,
+  hours: s.data.hours,
+  languages: s.data.languages || [],
+  paymentMethods: s.data.paymentMethods || [],
+  taxFree: s.data.taxFree,
+  returnPolicy: s.data.returnPolicy,
+  sellsCategories: s.data.sellsCategories || [],
+  photos: s.data.photos || [],
+  reviews: (s.data.reviews || []).map((r: any) => ({
+    ...r,
+    date: r.date?.toISOString() || new Date().toISOString(),
+  })),
+}));
+
+// JSON-LD for SEO
 const itemListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Juggling Shops Around the World",
-  description: "A curated directory of specialist juggling and circus equipment shops, visited and verified by Linda Mohamed.",
+  description: "A curated directory of specialist juggling and circus equipment shops worldwide.",
   numberOfItems: shops.length,
   itemListElement: shops.map((shop, i) => ({
     "@type": "ListItem",
@@ -30,12 +106,13 @@ const itemListJsonLd = {
     item: {
       "@type": "Store",
       name: shop.data.name,
-      description: shop.data.notes ?? `Juggling shop in ${shop.data.city}, ${shop.data.country}.`,
+      description: shop.data.notes || `Juggling shop in ${shop.data.city}, ${shop.data.country}.`,
       ...(shop.data.website ? { url: shop.data.website } : {}),
       address: {
         "@type": "PostalAddress",
         addressLocality: shop.data.city,
         addressCountry: shop.data.country,
+        ...(shop.data.address ? { streetAddress: shop.data.address } : {}),
       },
       geo: {
         "@type": "GeoCoordinates",
@@ -48,82 +125,184 @@ const itemListJsonLd = {
 ---
 
 <BaseLayout
-  title="Juggling Shops Directory - Where to Buy Juggling Props Worldwide"
-  description={`${shops.length} specialist juggling shops across Europe, the US, and beyond. Find where to buy juggling balls, clubs, and rings near you.`}
+  title="Find Juggling Shops Worldwide | The Juggling Company"
+  description={`Discover ${shops.length} specialist juggling shops in ${countriesCount} countries. Find where to buy juggling balls, clubs, diabolos and more.`}
   jsonLd={itemListJsonLd}
 >
-  <section class="mx-auto max-w-[1400px] px-4 py-20 md:px-6 lg:px-10">
-    <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain-change)]">
-      Juggling Shops
-    </p>
-    <h1 class="mt-2 font-display text-4xl font-bold tracking-tight md:text-6xl">
-      <span class="rgb-text">Shops around the world.</span>
-    </h1>
-    <p class="mt-5 max-w-2xl text-lg text-[var(--color-muted)]">
-      Wherever I travel, I look for juggling shops - to test balls, discover local gear, and meet the community. This is my growing directory of shops I've visited, rated, and reviewed.
-    </p>
-    <a
-      href="/locations"
-      class="mt-6 inline-flex items-center gap-2 text-sm text-[var(--color-muted)] hover:text-[var(--color-fg)] transition"
-    >
-      ← All locations
-    </a>
+
+  <!-- Hero Section -->
+  <section class="mx-auto max-w-[1600px] px-4 pt-8 pb-6 md:px-6 lg:px-10 md:pt-12">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+      <!-- Left: Title and description -->
+      <div class="max-w-md">
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain-change)]">
+          Juggling Shops
+        </p>
+        <h1 class="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+          Find juggling shops worldwide.
+        </h1>
+        <p class="mt-4 text-sm text-[var(--color-muted)] leading-relaxed">
+          Verified shops by the juggling community. Real reviews, photos, brands, and more.
+        </p>
+        
+        <!-- Stats -->
+        <div class="mt-6 grid grid-cols-3 gap-4">
+          <div>
+            <p class="font-display text-2xl font-bold text-[var(--color-brain-change)]">{shops.length}</p>
+            <p class="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">Shops listed</p>
+          </div>
+          <div>
+            <p class="font-display text-2xl font-bold text-[var(--color-brain-change)]">{countriesCount}</p>
+            <p class="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">Countries</p>
+          </div>
+          <div>
+            <p class="font-display text-2xl font-bold text-[var(--color-brain-change)]">{physicalStores}</p>
+            <p class="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">Physical stores</p>
+          </div>
+        </div>
+        
+        <!-- CTA buttons -->
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="https://github.com/mzzavaa/the-juggling-company/issues/new?template=shop-submission.yml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg bg-[var(--color-brain-change)] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
+          >
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            Add a shop
+          </a>
+          <a
+            href="#how-it-works"
+            class="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-elevated)]"
+          >
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            How it works
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Map -->
+      <div class="flex-1 min-w-0 lg:max-w-[900px]">
+        <ShopsMap client:visible shops={mapShops} />
+      </div>
+    </div>
   </section>
 
-  {mapLocations.length > 0 && (
-    <section class="mx-auto max-w-[1400px] px-4 pb-12 md:px-6">
-      <LocationsMap client:visible locations={mapLocations} />
-    </section>
-  )}
+  <!-- Shop Directory -->
+  <section class="mx-auto max-w-[1600px] px-4 py-8 md:px-6 lg:px-10">
+    <ShopDirectory client:load shops={directoryShops} />
+  </section>
 
-  <section class="mx-auto max-w-[1400px] px-4 pb-24 md:px-6">
-    {shops.length === 0 ? (
-      <p class="text-[var(--color-muted)]">No shops listed yet - check back soon.</p>
-    ) : (
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {shops.map((shop) => (
-          <article
-            id={shop.id}
-            class="flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5"
-            style="border-top: 3px solid var(--color-brain-change);"
-          >
-            <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brain-change)]">
-              {shop.data.city}, {shop.data.country}
-            </p>
-            <h2 class="mt-1 font-display text-xl font-bold text-[var(--color-fg)]">
-              {shop.data.name}
-            </h2>
-            {shop.data.notes && (
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-muted)]">
-                {shop.data.notes}
-              </p>
-            )}
-            {shop.data.website && (
-              <a
-                href={shop.data.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-tech)] hover:underline"
-              >
-                Visit website →
-              </a>
-            )}
-          </article>
-        ))}
-      </div>
-    )}
-
-    <div class="mt-16 rounded-xl border border-dashed border-[var(--color-border)] p-8 text-center">
-      <p class="font-display text-lg font-semibold text-[var(--color-fg)]">Know a juggling shop?</p>
-      <p class="mt-2 text-sm text-[var(--color-muted)]">
-        I'm always looking for new places to discover. If you know a great juggling shop anywhere in the world, get in touch.
+  <!-- How It Works -->
+  <section id="how-it-works" class="mx-auto max-w-[1600px] px-4 py-12 md:px-6 lg:px-10">
+    <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8 md:p-12">
+      <h2 class="font-display text-2xl font-bold text-[var(--color-fg)] md:text-3xl">How this directory works</h2>
+      <p class="mt-3 max-w-2xl text-[var(--color-muted)]">
+        This is a community-maintained, open source directory of juggling shops worldwide. Here's how it stays accurate and grows.
       </p>
-      <a
-        href="/contact"
-        class="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--color-brain-change)] px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
-      >
-        Suggest a shop
-      </a>
+      
+      <div class="mt-8 grid gap-8 md:grid-cols-3">
+        <!-- Step 1 -->
+        <div class="flex flex-col">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-brain-change)]/20 text-[var(--color-brain-change)] font-bold">
+            1
+          </div>
+          <h3 class="mt-4 font-display text-lg font-semibold text-[var(--color-fg)]">Community submitted</h3>
+          <p class="mt-2 text-sm text-[var(--color-muted)]">
+            Anyone can suggest a shop via GitHub. We verify the shop exists, check their website, and add it to the directory.
+          </p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="flex flex-col">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-brain-change)]/20 text-[var(--color-brain-change)] font-bold">
+            2
+          </div>
+          <h3 class="mt-4 font-display text-lg font-semibold text-[var(--color-fg)]">Verified & maintained</h3>
+          <p class="mt-2 text-sm text-[var(--color-muted)]">
+            Each shop is periodically checked to ensure the website works and info is current. Last verified dates show when we checked.
+          </p>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="flex flex-col">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-brain-change)]/20 text-[var(--color-brain-change)] font-bold">
+            3
+          </div>
+          <h3 class="mt-4 font-display text-lg font-semibold text-[var(--color-fg)]">Open source</h3>
+          <p class="mt-2 text-sm text-[var(--color-muted)]">
+            All shop data is on GitHub. You can suggest edits, report issues, or even submit a pull request directly.
+          </p>
+        </div>
+      </div>
+      
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href="https://github.com/mzzavaa/the-juggling-company/issues/new?template=shop-submission.yml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg bg-[var(--color-brain-change)] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Submit a shop
+        </a>
+        <a
+          href="https://github.com/mzzavaa/the-juggling-company/tree/main/src/content/location"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-elevated)]"
+        >
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Help CTA -->
+  <section class="mx-auto max-w-[1600px] px-4 pb-16 md:px-6 lg:px-10">
+    <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-fuchsia-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+          <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="font-display text-lg font-bold text-[var(--color-fg)]">Help keep this directory up to date!</p>
+          <p class="text-sm text-[var(--color-muted)]">Found incorrect info or know a great shop? Contribute on GitHub.</p>
+        </div>
+      </div>
+      <div class="flex gap-3 w-full sm:w-auto">
+        <a
+          href="https://github.com/mzzavaa/the-juggling-company/issues/new?template=shop-update.yml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-elevated)]"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+          Edit this shop on GitHub
+        </a>
+        <a
+          href="https://github.com/mzzavaa/the-juggling-company/issues/new?template=shop-submission.yml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-brain-change)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+        >
+          Add a review
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

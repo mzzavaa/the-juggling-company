@@ -6,6 +6,7 @@ lng: -122.0308
 country: "United States"
 city: "Santa Cruz"
 type: juggling-shop
+region: north-america
 notes: "Legendary American juggling manufacturer since 1982. Handmade clubs used by world record holders including Anthony Gatto. Custom colors available on all Renegade props."
 website: "https://renegadejuggling.com"
 photos: []
