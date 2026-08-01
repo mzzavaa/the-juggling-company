@@ -1,0 +1,29 @@
+---
+title: "Why the Juggler's Arm Disappeared"
+slug: why-the-jugglers-arm-disappeared
+summary: "The second figure in Juggling Lab broke a rendering assumption that had held for twenty years: that a juggler is basically its own bounding box. A figure in a dress is not - and fixing that removed a fudge factor older than the bug."
+date: 2026-08-01
+tags: ["tech", "open-source", "jugglinglab", "juggling", "rendering"]
+pillars: ["tech"]
+cover: ../../assets/images/cover-arm-disappeared.png
+coverAlt: "The female Juggling Lab figure running a three-ball cascade in dark mode"
+draft: false
+---
+
+The animator has no depth buffer. For every frame it asks, for every pair of things on screen, "does this cover that?", sorts the answers, and paints back to front. That covering test worked on each figure's bounding box - a rectangle. Which is a perfectly good approximation of a stick figure, because a stick figure is basically its own kind of rectangle.
+
+So the code carried an assumption nobody had ever written down, that had never once been false: **your drawn shape is approximately your bounding box.**
+
+A figure in a flared dress is the first thing that makes it false. The corners of her bounding box contain no dress at all. The renderer was making front-or-behind decisions out in those empty corners - and had been for twenty years, invisibly, because nothing had ever been drawn out there for anyone to see. The visible symptom was small and strange: sometimes the lower arm simply disappears.
+
+{/* BEFORE: the render currently on our patterns page (to be regenerated) */}
+![Before: the version still on our patterns page, rendered before the fix. Watch the forearm - at some angles it drops out where it crosses the body.](/animations/pattern-3-cascade.gif)
+
+{/* AFTER: native dark capture from the live Juggling Lab web app (avatar=female) */}
+![After: the current Juggling Lab render. The forearm stays visible over the dress at every angle.](/images/jlab/female-cascade-dark.png)
+
+The fix is to stop approximating the figure with a rectangle the renderer owns, and let each figure declare the outline of what it actually draws. To decide whether an arm is in front, walk along it, keep the points that fall inside that outline, and compare their depth to the body. The part of the arm genuinely over the fabric decides. No flags, no type checks - the knowledge sits in the object that has it, and the classic figure, which declares no special outline, takes the old path untouched.
+
+The part worth keeping: once occlusion is computed from the real shapes, a tolerance constant that had been fudging the bounding-box approximation since the earliest Java version was no longer needed, and was deleted. The new figure did not add a special case. It removed one that had been quietly compensating for over twenty years.
+
+*Read next: [You Cannot Add the Second Figure Until You Name the First](/blog/name-the-first-figure), and the feature itself: [You Can Now Choose Your Juggler](/blog/choose-your-juggler-jugglinglab). Part of [Juggling and Technology](/ideas/juggling-and-technology).*

@@ -1,0 +1,31 @@
+---
+title: "You Cannot Add the Second Figure Until You Name the First"
+slug: name-the-first-figure
+summary: "For nearly thirty years Juggling Lab drew one juggler, so it never needed a way to talk about figures in general. Adding a second one meant naming the first - a small lesson about when an abstraction earns its place."
+date: 2026-08-01
+tags: ["tech", "open-source", "jugglinglab", "juggling", "architecture"]
+pillars: ["tech"]
+cover: ../../assets/images/cover-name-first.png
+coverAlt: "The female Juggling Lab figure running a synchronous four-ball pattern in dark mode"
+draft: false
+---
+
+import Takeaways from "../../components/Takeaways.astro";
+
+Before Juggling Lab could animate a [second juggler figure](/blog/choose-your-juggler-jugglinglab), it had to be able to name the first one. That sounds like wordplay. It is actually the whole reason a refactor came before the feature.
+
+For nearly thirty years there was exactly one figure to draw. The body dimensions lived in a class of constants, and the drawing code sat inline in the renderer, reading those constants to put a figure on screen. Nothing about that was wrong. Building a "figure" abstraction to hold a single case would have been ceremony with no payoff.
+
+But it left the codebase with a concept in its domain that did not exist in its model. Everyone using the software could see a juggler. The code could not name one.
+
+That is the line between refactoring for elegance and refactoring because you have to. The moment you need two of something, the missing abstraction stops being speculative design and becomes the shortest path to the feature. So the first change added no feature at all: it extracted a figure abstraction, made the original stick figure one implementation of it, and left the rendered output pixel for pixel identical.
+
+The tell that it worked is that the renderer never learns which figure it drew. No type checks, no flags, no "if this is the female one" anywhere. Adding a third figure is a new subclass and one more line. If that were not true, the refactor would not have done its job.
+
+<Takeaways color="tech" items={[
+  "A class with a single implementation is a description, not an abstraction.",
+  "The moment you need two of something, the missing abstraction becomes the shortest path to the feature, not speculative design.",
+  "A good refactor is invisible: the output does not change, and the code that uses it never learns what changed underneath."
+]} />
+
+*Read next: [Why the Juggler's Arm Disappeared](/blog/why-the-jugglers-arm-disappeared) - the twenty-year-old rendering assumption the second figure broke. Part of [Juggling and Technology](/ideas/juggling-and-technology).*
