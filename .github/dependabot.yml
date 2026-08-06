@@ -1,0 +1,30 @@
+version: 2
+updates:
+  # Application dependencies. Dependabot also opens security-fix PRs for these
+  # automatically once "Dependabot security updates" is enabled in repo settings.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    open-pull-requests-limit: 10
+    groups:
+      # Batch routine minor/patch bumps into one PR to keep noise down; majors
+      # still arrive as individual PRs so breaking changes get their own review.
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # Keep the pinned action SHAs in .github/workflows/** current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
