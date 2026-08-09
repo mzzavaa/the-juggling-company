@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import { Image } from "astro:assets";
+import AiBadge from "@/components/AiBadge.astro";
 
 import glowingLaptop from "@/assets/images/glowing-balls-dark-laptop.jpg";
 import handTechTree from "@/assets/images/hand-tech-tree-cloud.png";
@@ -99,6 +100,7 @@ const projects = [
               height={400}
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
+            <AiBadge />
             <div class="absolute inset-0" style="background: linear-gradient(to top, var(--color-bg-card) 0%, transparent 50%);"></div>
             <span
               class="absolute left-4 top-4 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest backdrop-blur-sm"

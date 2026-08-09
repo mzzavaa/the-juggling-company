@@ -6,6 +6,8 @@ import VideoStripCard from "@/components/VideoStripCard.astro";
 import PostCard from "@/components/PostCard.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import AiImage from "@/components/AiImage.astro";
+import AiBadge from "@/components/AiBadge.astro";
 import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
 import worldMapGlowing from "@/assets/images/world-map-glowing.png";
 import {
@@ -262,13 +264,14 @@ const personJsonLd = {
           </a>
         </div>
 
-        <Image
+        <AiImage
           src={everyoneBelongsHands}
           alt="A child's hand, an elderly hand, and a hand beside a wheelchair wheel - each holding a glowing ball"
           width={700}
           height={394}
-          class="mt-6 w-full rounded-2xl object-cover"
+          class="w-full rounded-2xl object-cover"
           loading="lazy"
+          wrapperClass="mt-6"
         />
       </div>
 
@@ -483,6 +486,7 @@ const personJsonLd = {
             class="h-full w-full object-cover opacity-90"
             loading="lazy"
           />
+          <AiBadge />
         </div>
       </div>
     </div>

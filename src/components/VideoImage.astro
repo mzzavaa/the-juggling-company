@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import AiBadge from "./AiBadge.astro";
 
 interface Props {
   src: ImageMetadata;
@@ -11,6 +12,7 @@ interface Props {
   class?: string;
   style?: string;
   objectFit?: "cover" | "contain";
+  ai?: boolean;             // AI-generated (shows badge); default true
 }
 
 const {
@@ -22,23 +24,38 @@ const {
   class: className = "",
   style = "",
   objectFit = "cover",
+  ai = true,
 } = Astro.props;
 ---
 
-{videoSrc ? (
-  <video
-    autoplay
-    muted
-    loop
-    playsinline
-    class={className}
-    style={style}
-    aria-label={alt}
-  >
-    <source src={videoSrc} type="video/mp4" />
-    <!-- Fallback for browsers that don't support video -->
+<span class="ai-image">
+  {videoSrc ? (
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      class={className}
+      style={style}
+      aria-label={alt}
+    >
+      <source src={videoSrc} type="video/mp4" />
+      {/* Fallback for browsers that don't support video */}
+      <Image src={src} alt={alt} width={width} height={height} class={className} style={style} />
+    </video>
+  ) : (
     <Image src={src} alt={alt} width={width} height={height} class={className} style={style} />
-  </video>
-) : (
-  <Image src={src} alt={alt} width={width} height={height} class={className} style={style} />
-)}
+  )}
+  {ai && <AiBadge />}
+</span>
+
+<style>
+  .ai-image {
+    position: relative;
+    display: block;
+  }
+  .ai-image > :global(video),
+  .ai-image > :global(img) {
+    display: block;
+  }
+</style>

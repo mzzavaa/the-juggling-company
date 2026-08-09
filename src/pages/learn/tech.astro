@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import AiImage from "@/components/AiImage.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import VideoImage from "@/components/VideoImage.astro";
 import { getPosts } from "@/lib/content";
@@ -119,7 +120,7 @@ const analogues = [
           </a>
         </div>
         <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
-          <Image src={twoHandsMagenta} alt="Two hands with a magenta infinity pass between them, tracing the handoff arc" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
+          <AiImage src={twoHandsMagenta} alt="Two hands with a magenta infinity pass between them, tracing the handoff arc" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
         </div>
       </div>
     </div>
@@ -129,7 +130,7 @@ const analogues = [
   <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
     <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
       <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
-        <Image src={handsCatsCradle} alt="Hands holding neon strings in a cat's cradle formation, showing interconnected dependencies" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
+        <AiImage src={handsCatsCradle} alt="Hands holding neon strings in a cat's cradle formation, showing interconnected dependencies" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" style="aspect-ratio: 700/560;" />
       </div>
       <div class="flex flex-col gap-8" data-reveal data-delay="100">
         <div>
