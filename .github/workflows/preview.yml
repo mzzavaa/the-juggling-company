@@ -39,7 +39,14 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
+
+      # System libs are best-effort: the ubuntu-24.04 runner already ships most
+      # of them, and the apt step can flake on a transient mirror 403. Don't let
+      # that fail the job - the smoke-test step surfaces any real launch problem.
+      - name: Install Playwright system deps
+        run: npx playwright install-deps chromium
+        continue-on-error: true
 
       - name: Build site
         run: npm run build
