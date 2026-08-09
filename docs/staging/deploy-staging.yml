@@ -1,0 +1,86 @@
+# Staging deploy workflow (TEMPLATE - do not run from the main repo).
+#
+# This file is intentionally under docs/ so it does NOT execute here. Copy it
+# into a SECOND repository (e.g. the-juggling-company-staging) at
+# .github/workflows/deploy-staging.yml to publish dev.thejugglingcompany.com.
+# See docs/staging-setup.md for the full, numbered setup.
+#
+# It builds the PUBLIC main repo's `staging` branch (no token needed to read a
+# public repo) and deploys it to the staging repo's GitHub Pages, so staging
+# stays independent of production.
+
+name: Deploy staging site
+
+on:
+  workflow_dispatch: # trigger on demand after pushing to the source `staging` branch
+  schedule:
+    - cron: "0 * * * *" # and hourly, so staging never drifts far
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build staging
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout staging repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Fetch source (public main repo, staging branch)
+        run: |
+          git clone --depth 1 --branch staging \
+            https://github.com/mzzavaa/the-juggling-company.git src
+
+      - name: Setup Node
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version-file: src/.nvmrc
+          cache: npm
+          cache-dependency-path: src/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: src
+
+      - name: Build
+        run: npm run build
+        working-directory: src
+        env:
+          SITE_URL: https://dev.thejugglingcompany.com
+
+      - name: Set staging domain
+        run: echo "dev.thejugglingcompany.com" > src/dist/CNAME
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: src/dist
+
+  deploy:
+    name: Deploy staging
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
