@@ -22,25 +22,32 @@ const TIP = "AI image I created with NotebookLM (now Gemini Notebook)";
 <style>
   .ai-badge {
     position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
+    /* Inset to clear the card's rounded corner so it reads as part of the design */
+    top: 0.75rem;
+    right: 0.75rem;
     z-index: 3;
     display: inline-flex;
     align-items: center;
-    gap: 0.15rem;
+    gap: 0.2rem;
     border-radius: 9999px;
-    border: 1px solid color-mix(in oklab, white 22%, transparent);
-    background: color-mix(in oklab, black 55%, transparent);
-    padding: 0.08rem 0.32rem;
-    font-size: 0.55rem;
+    border: 1px solid color-mix(in oklab, white 16%, transparent);
+    background: color-mix(in oklab, black 48%, transparent);
+    padding: 0.14rem 0.42rem;
+    font-size: 0.5rem;
     font-weight: 600;
     line-height: 1;
-    letter-spacing: 0.02em;
-    color: color-mix(in oklab, white 85%, transparent);
-    backdrop-filter: blur(3px);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in oklab, white 82%, transparent);
+    backdrop-filter: blur(4px);
     cursor: help;
-    opacity: 0.75;
+    opacity: 0.85;
     transition: opacity 160ms ease;
+  }
+  .ai-badge:hover,
+  .ai-badge:focus-visible {
+    opacity: 1;
+    outline: none;
   }
   .ai-badge:hover,
   .ai-badge:focus-visible {
