@@ -49,8 +49,11 @@ export default function LocationsMap({ locations }: Props) {
 
       const map = L.map(containerRef.current, { center: [20, 10], zoom: 2 });
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      // CARTO dark basemap - reliable on hosted sites (OSM's public tiles block
+      // hotlinking, which left the map blank) and matches the site's dark theme.
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
         maxZoom: 19,
       }).addTo(map);
 
