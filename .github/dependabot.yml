@@ -8,6 +8,11 @@ updates:
       interval: weekly
       day: monday
       time: "06:00"
+    # Wait 7 days before proposing a newly published release, so a freshly
+    # compromised version isn't pulled in the moment it lands. Security fixes
+    # still come through Dependabot security updates without this delay.
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 10
     groups:
       # Batch routine minor/patch bumps into one PR to keep noise down; majors
@@ -24,6 +29,8 @@ updates:
       interval: weekly
       day: monday
       time: "06:00"
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns:
