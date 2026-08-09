@@ -1,4 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+// Import map CSS statically so it is reliably bundled. Importing these
+// dynamically left MarkerCluster's CSS out of the build, which 404'd at runtime
+// and crashed the map with "Failed to load map".
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 export interface MapShop {
   id: string;
@@ -45,12 +51,10 @@ export default function ShopsMap({ shops, onShopClick, selectedShopId }: Props) 
     (async () => {
       try {
         const { default: L } = await import("leaflet");
-        await import("leaflet/dist/leaflet.css");
-        
-        // Import marker cluster - it extends L directly
+
+        // leaflet.markercluster extends the global L, so expose it before import.
+        (window as unknown as { L: typeof L }).L = L;
         await import("leaflet.markercluster");
-        await import("leaflet.markercluster/dist/MarkerCluster.css");
-        await import("leaflet.markercluster/dist/MarkerCluster.Default.css");
 
         if (destroyed || !containerRef.current) return;
 
