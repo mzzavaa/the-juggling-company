@@ -29,7 +29,7 @@
     "astro": "^7.0.5",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
-    "lucide-react": "0.474.0",
+    "lucide-react": "1.28.0",
     "maplibre-gl": "5.1.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
