@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import { Image } from "astro:assets";
-import AiBadge from "@/components/AiBadge.astro";
+import AiCaption from "@/components/AiCaption.astro";
 
 import glowingLaptop from "@/assets/images/glowing-balls-dark-laptop.jpg";
 import handTechTree from "@/assets/images/hand-tech-tree-cloud.png";
@@ -100,7 +100,6 @@ const projects = [
               height={400}
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <AiBadge />
             <div class="absolute inset-0" style="background: linear-gradient(to top, var(--color-bg-card) 0%, transparent 50%);"></div>
             <span
               class="absolute left-4 top-4 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-widest backdrop-blur-sm"
@@ -121,6 +120,7 @@ const projects = [
               <Icon name="external-link" size={13} class="ml-auto opacity-0 transition-opacity group-hover:opacity-60 text-[var(--color-muted)]" />
             </div>
             <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)]">{p.description}</p>
+            <AiCaption />
             <div class="mt-2 flex items-center gap-1.5 text-xs font-medium" style={`color: ${p.accent};`}>
               Visit site
               <Icon name="arrow-up-right" size={13} />

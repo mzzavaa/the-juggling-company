@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import AiBadge from "./AiBadge.astro";
+import AiCaption from "./AiCaption.astro";
 
 interface Props {
   src: ImageMetadata;
@@ -46,16 +46,18 @@ const {
   ) : (
     <Image src={src} alt={alt} width={width} height={height} class={className} style={style} />
   )}
-  {ai && <AiBadge />}
+  {ai && <AiCaption class="ai-image__cap" />}
 </span>
 
 <style>
   .ai-image {
-    position: relative;
     display: block;
   }
   .ai-image > :global(video),
   .ai-image > :global(img) {
     display: block;
+  }
+  .ai-image__cap {
+    margin-top: 0.45rem;
   }
 </style>

@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import { formatDate } from "@/lib/format";
 import Icon from "./Icon.astro";
 import PillarBadge from "./PillarBadge.astro";
-import AiBadge from "./AiBadge.astro";
+import AiCaption from "./AiCaption.astro";
 import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 interface Props {
@@ -24,7 +24,6 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   {
     post.data.cover && (
       <div class:list={["media-wrap aspect-[16/9] overflow-hidden", !post.data.coverVideo && "no-vid"]}>
-        {post.data.aiGenerated && <AiBadge />}
         <Image
           src={post.data.cover}
           alt={post.data.coverAlt ?? post.data.title}
@@ -54,6 +53,7 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
         {formatDate(post.data.date)}
       </p>
       {post.data.pillars.length > 0 && <PillarBadge pillars={post.data.pillars} variant="solid" />}
+      {post.data.aiGenerated && <AiCaption />}
     </div>
     <h3
       class="font-display text-2xl font-bold leading-snug text-[var(--color-fg)]"
