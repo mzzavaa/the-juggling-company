@@ -46,3 +46,15 @@ for (const p of PAGES) {
     expect(pageErrors, `uncaught JS errors on ${p.path}`).toEqual([]);
   });
 }
+
+// The juggling-shops directory is the most-visited page; its clustered map has
+// its own failure mode ("Failed to load map"), so guard it explicitly.
+test("juggling-shops map initialises", async ({ page }) => {
+  const pageErrors: string[] = [];
+  page.on("pageerror", (e) => pageErrors.push(String(e)));
+
+  await page.goto("/locations/juggling-shops/", { waitUntil: "load" });
+  await expect(page.locator(".leaflet-container").first()).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByText("Failed to load map")).toHaveCount(0);
+  expect(pageErrors, "uncaught JS errors on juggling-shops map").toEqual([]);
+});
