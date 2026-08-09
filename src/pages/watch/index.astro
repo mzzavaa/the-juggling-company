@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import { Image } from "astro:assets";
-import AiBadge from "@/components/AiBadge.astro";
+import AiCaption from "@/components/AiCaption.astro";
 
 import jugglingHandsRgb from "@/assets/images/juggling-hands-rgb-light.png";
 import lindaConference from "@/assets/images/linda-mohamed-juggling-conference.png";
@@ -94,7 +94,6 @@ const sections = [
               height={400}
               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            {s.ai !== false && <AiBadge />}
             <div class="absolute inset-0" style="background: linear-gradient(to top, var(--color-bg-card) 0%, transparent 50%);"></div>
           </div>
           <div class="flex flex-1 flex-col gap-3 p-6">
@@ -108,6 +107,7 @@ const sections = [
               <h2 class="font-display text-xl font-semibold text-[var(--color-fg)]">{s.label}</h2>
             </div>
             <p class="flex-1 text-sm leading-relaxed text-[var(--color-muted)]">{s.description}</p>
+            {s.ai !== false && <AiCaption />}
             <div class="mt-2 flex items-center gap-1.5 text-xs font-medium" style={`color: ${s.accent};`}>
               Watch
               <Icon name="arrow-right" size={13} />

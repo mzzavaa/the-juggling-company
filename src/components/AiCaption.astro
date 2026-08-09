@@ -1,0 +1,39 @@
+---
+// EU AI Act (Art. 50) disclosure for AI-generated images: a clear, legible
+// label placed NEXT TO the image (not overlaid), so it is distinguishable and
+// accessible rather than a faint mark on the artwork. See /ai for the policy.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const TIP = "AI image I created with NotebookLM (now Gemini Notebook)";
+---
+
+<span class:list={["ai-caption", className]} title={TIP} tabindex="0" aria-label={TIP}>
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z"
+      fill="currentColor"
+    />
+  </svg>
+  <span>AI-generated</span>
+</span>
+
+<style>
+  .ai-caption {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, var(--color-fg) 62%, transparent);
+    cursor: help;
+  }
+  .ai-caption:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--color-fg) 40%, transparent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+</style>

@@ -7,7 +7,7 @@ import PostCard from "@/components/PostCard.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
 import AiImage from "@/components/AiImage.astro";
-import AiBadge from "@/components/AiBadge.astro";
+import AiCaption from "@/components/AiCaption.astro";
 import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
 import worldMapGlowing from "@/assets/images/world-map-glowing.png";
 import {
@@ -486,7 +486,7 @@ const personJsonLd = {
             class="h-full w-full object-cover opacity-90"
             loading="lazy"
           />
-          <AiBadge />
+          <AiCaption class="absolute bottom-2 right-3 rounded bg-[var(--color-bg)]/75 px-1.5 py-0.5 backdrop-blur-sm" />
         </div>
       </div>
     </div>
