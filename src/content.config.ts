@@ -19,6 +19,7 @@ const idea = defineCollection({
       summary: z.string(),
       hero: image().optional(),
       heroAlt: z.string().optional(),
+      aiGenerated: z.boolean().default(true),
       order: z.number().int().nonnegative().default(0),
       tags: z.array(z.string()).default([]),
       pillars: z.array(pillar).min(1),
@@ -93,6 +94,7 @@ const product = defineCollection({
       summary: z.string(),
       image: image().optional(),
       imageAlt: z.string().optional(),
+      aiGenerated: z.boolean().default(true),
       priceCents: z.number().int().nonnegative().optional(),
       externalUrl: z.string().url(),
       category: z.string(),
@@ -233,6 +235,9 @@ const post = defineCollection({
       cover: image().optional(),
       coverAlt: z.string().optional(),
       coverVideo: z.string().optional(),
+      // EU AI Act: images default to AI-generated; set false for real photos
+      // (photos of Linda, screenshots) and other non-AI imagery.
+      aiGenerated: z.boolean().default(true),
       draft: z.boolean().default(false),
       personal: z.boolean().default(false),
     }),

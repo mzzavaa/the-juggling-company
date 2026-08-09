@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import { formatDate } from "@/lib/format";
 import Icon from "./Icon.astro";
 import PillarBadge from "./PillarBadge.astro";
+import AiBadge from "./AiBadge.astro";
 import { blendKey, PILLAR_HEX } from "@/lib/pillar";
 
 interface Props {
@@ -23,6 +24,7 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   {
     post.data.cover && (
       <div class:list={["media-wrap aspect-[16/9] overflow-hidden", !post.data.coverVideo && "no-vid"]}>
+        {post.data.aiGenerated && <AiBadge compact />}
         <Image
           src={post.data.cover}
           alt={post.data.coverAlt ?? post.data.title}
@@ -155,12 +157,17 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
 </style>
 
 <script>
-  // Fade in images once they're decoded - works for both cached and fresh loads
+  // Fade in images once they're decoded - works for both cached and fresh loads.
+  // Also reveal on error and after a timeout so a slow/failed load can never
+  // leave a card stuck on the blank shimmer placeholder.
   document.querySelectorAll<HTMLImageElement>(".img-lazy").forEach((img) => {
+    const reveal = () => img.classList.add("is-loaded");
     if (img.complete && img.naturalWidth > 0) {
-      img.classList.add("is-loaded");
+      reveal();
     } else {
-      img.addEventListener("load", () => img.classList.add("is-loaded"), { once: true });
+      img.addEventListener("load", reveal, { once: true });
+      img.addEventListener("error", reveal, { once: true });
+      window.setTimeout(reveal, 3000);
     }
   });
 

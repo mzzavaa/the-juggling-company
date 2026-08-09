@@ -11,6 +11,7 @@
     "posters": "node scripts/generate-video-posters.mjs",
     "preview": "astro preview",
     "typecheck": "astro check",
+    "test:e2e": "playwright test",
     "linkcheck": "lychee --cache --max-cache-age 1d --no-progress --base ./dist './dist/**/*.html'",
     "format": "prettier --write \"src/**/*.{ts,tsx,astro,md,mdx,json,css}\"",
     "anim:generate": "tsx scripts/generate-animations.ts",
@@ -38,6 +39,7 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
     "prettier": "3.4.2",
