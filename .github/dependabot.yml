@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # Application dependencies. Dependabot also opens security-fix PRs for these
+  # automatically once "Dependabot security updates" is enabled in repo settings.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    # Wait 7 days before proposing a newly published release, so a freshly
+    # compromised version isn't pulled in the moment it lands. Security fixes
+    # still come through Dependabot security updates without this delay.
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 10
+    groups:
+      # Batch routine minor/patch bumps into one PR to keep noise down; majors
+      # still arrive as individual PRs so breaking changes get their own review.
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # Keep the pinned action SHAs in .github/workflows/** current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - "*"
