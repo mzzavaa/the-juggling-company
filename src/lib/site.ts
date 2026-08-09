@@ -178,6 +178,7 @@ export const footerNav: readonly NavItem[] = [
   { label: "RSS", href: "/rss.xml" },
   { label: "Imprint", href: "/imprint" },
   { label: "Datenschutz", href: "/datenschutz" },
+  { label: "AI-generated content", href: "/ai" },
 ] as const;
 
 export type SocialIcon = "youtube" | "instagram" | "tiktok" | "linkedin" | "x" | "github" | "external-link";
