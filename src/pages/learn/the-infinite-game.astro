@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import AiImage from "@/components/AiImage.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import VideoImage from "@/components/VideoImage.astro";
 import { getPosts } from "@/lib/content";
@@ -86,7 +87,7 @@ const infiniteMarkers = [
   <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
     <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
       <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
-        <Image src={threeArcs} alt="Three arcs in orange, infinity loop, and purple showing different trajectory types in the infinite game" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+        <AiImage src={threeArcs} alt="Three arcs in orange, infinity loop, and purple showing different trajectory types in the infinite game" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
       </div>
       <div class="flex flex-col gap-10">
         <div data-reveal data-delay="100">
@@ -149,7 +150,7 @@ const infiniteMarkers = [
           </a>
         </div>
         <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
-          <Image src={elderHands} alt="Weathered elderly hands juggling with red infinity light trails" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+          <AiImage src={elderHands} alt="Weathered elderly hands juggling with red infinity light trails" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
         </div>
       </div>
     </div>

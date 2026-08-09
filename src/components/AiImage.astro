@@ -1,0 +1,27 @@
+---
+// Wraps an <Image> and overlays the AI-generated badge. Use for inline page
+// images that are AI-generated. Pass ai={false} for real photos/screenshots.
+import { Image } from "astro:assets";
+import type { ComponentProps } from "astro/types";
+import AiBadge from "./AiBadge.astro";
+
+type Props = ComponentProps<typeof Image> & { ai?: boolean; wrapperClass?: string };
+const { ai = true, wrapperClass, ...imageProps } = Astro.props as Props;
+---
+
+<span class:list={["ai-image", wrapperClass]}>
+  <Image {...imageProps} />
+  {ai && <AiBadge />}
+</span>
+
+<style>
+  /* Sizes to the image and hosts the absolutely-positioned badge without
+     changing the image's own layout/classes. */
+  .ai-image {
+    position: relative;
+    display: block;
+  }
+  .ai-image > :global(img) {
+    display: block;
+  }
+</style>

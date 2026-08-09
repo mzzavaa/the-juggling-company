@@ -24,7 +24,7 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
   {
     post.data.cover && (
       <div class:list={["media-wrap aspect-[16/9] overflow-hidden", !post.data.coverVideo && "no-vid"]}>
-        {post.data.aiGenerated && <AiBadge compact />}
+        {post.data.aiGenerated && <AiBadge />}
         <Image
           src={post.data.cover}
           alt={post.data.coverAlt ?? post.data.title}

@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import AiBadge from "@/components/AiBadge.astro";
 import prismRgbLight from "@/assets/images/prism-rgb-light.png";
 import lindaProfile from "@/assets/images/linda-mohamed-juggling-conference.png";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -111,6 +112,7 @@ import { site } from "@/lib/site";
             preload="metadata"
             aria-hidden="true"
           />
+          <AiBadge />
         </div>
         <div class="mt-6 grid gap-4 sm:grid-cols-3">
           {[

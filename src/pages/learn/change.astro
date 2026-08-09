@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import AiImage from "@/components/AiImage.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import { getPosts } from "@/lib/content";
 
@@ -79,7 +80,7 @@ const stats = [
   <section class="mx-auto max-w-[1400px] px-4 py-16 md:px-6 lg:px-10">
     <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
       <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
-        <Image src={inclusiveConvergence} alt="All three props converging - balls, clubs, and rings meeting at a single point" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+        <AiImage src={inclusiveConvergence} alt="All three props converging - balls, clubs, and rings meeting at a single point" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
       </div>
       <div class="flex flex-col gap-10">
         <div data-reveal data-delay="100">
@@ -142,7 +143,7 @@ const stats = [
           </a>
         </div>
         <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
-          <Image src={ringFallen} alt="A ring on the ground with two hands reaching toward it from different directions" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+          <AiImage src={ringFallen} alt="A ring on the ground with two hands reaching toward it from different directions" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
         </div>
       </div>
     </div>
@@ -152,7 +153,7 @@ const stats = [
   <section class="mx-auto max-w-[1400px] px-4 py-24 md:px-6 lg:px-10">
     <div class="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
       <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
-        <Image src={silhouettesChaos} alt="Multiple silhouettes with overlapping light trails showing chaos and saturation of motion" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+        <AiImage src={silhouettesChaos} alt="Multiple silhouettes with overlapping light trails showing chaos and saturation of motion" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
       </div>
       <div class="flex flex-col gap-8" data-reveal data-delay="100">
         <div>
@@ -217,7 +218,7 @@ const stats = [
           </a>
         </div>
         <div class="lg:sticky lg:top-24" data-reveal data-direction="right">
-          <Image src={personRing} alt="Person with a glowing ring in continuous orbit, light trail showing unbroken circular motion" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
+          <AiImage src={personRing} alt="Person with a glowing ring in continuous orbit, light trail showing unbroken circular motion" width={700} height={560} class="w-full rounded-3xl object-cover shadow-2xl" />
         </div>
       </div>
     </div>

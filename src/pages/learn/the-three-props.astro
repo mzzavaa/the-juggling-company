@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
 import { Image } from "astro:assets";
+import AiImage from "@/components/AiImage.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
 import { getPosts } from "@/lib/content";
 
@@ -79,7 +80,7 @@ const recommended = allPosts.filter(p =>
         </p>
       </div>
       <div class="relative" data-reveal data-delay="150">
-        <Image
+        <AiImage
           src={jugglerAllProps}
           alt="Juggler with all three props in motion - ball, club, and ring"
           width={700}
@@ -100,7 +101,7 @@ const recommended = allPosts.filter(p =>
       <div class="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-20">
         <!-- Sticky image -->
         <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
-          <Image
+          <AiImage
             src={profileBrainArc}
             alt="Side profile with glowing brain and balls arcing outward - the cascade from the brain's perspective"
             width={700}
@@ -178,7 +179,7 @@ const recommended = allPosts.filter(p =>
         </div>
         <!-- Sticky image -->
         <div class="order-1 lg:order-2 lg:sticky lg:top-24" data-reveal data-direction="right">
-          <Image
+          <AiImage
             src={cascadeAndClub}
             alt="Diptych: solo cascade on the left, club passing between two people on the right"
             width={700}
@@ -196,7 +197,7 @@ const recommended = allPosts.filter(p =>
       <div class="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-20">
         <!-- Sticky image -->
         <div class="lg:sticky lg:top-24" data-reveal data-direction="left">
-          <Image
+          <AiImage
             src={womanRings}
             alt="Woman surrounded by rings at scale - large blue arcs below, purple rings multiplying above"
             width={700}
@@ -241,7 +242,7 @@ const recommended = allPosts.filter(p =>
   <!-- CONVERGENCE: all three together -->
   <section class="relative overflow-hidden">
     <div class="absolute inset-0">
-      <Image
+      <AiImage
         src={convergence}
         alt="Multiple hands reaching toward a center point where rings, balls, and clubs converge in RGB light"
         width={1800}
