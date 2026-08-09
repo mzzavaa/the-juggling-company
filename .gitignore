@@ -41,6 +41,12 @@ public/anim/
 .stackbit/
 screenshots/
 
+# playwright / e2e artefacts
+test-results/
+playwright-report/
+preview-shots/
+
+
 # local Claude / Kiro tool dirs
 .claude/
 .kiro/
