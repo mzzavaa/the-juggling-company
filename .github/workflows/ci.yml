@@ -41,5 +41,5 @@ jobs:
       - name: Link check (built dist/)
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
-          args: --offline --include-fragments --no-progress './dist/**/*.html'
+          args: --offline --include-fragments --no-progress --root-dir "${{ github.workspace }}/dist" --index-files index.html './dist/**/*.html'
           fail: true
