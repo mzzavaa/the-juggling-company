@@ -48,12 +48,12 @@ const accentHex = post.data.pillars.length > 0 ? PILLAR_HEX[blendKey(post.data.p
     )
   }
   <div class="flex flex-1 flex-col gap-3 p-6">
+    {post.data.aiGenerated && <AiCaption class="-mt-1" />}
     <div class="flex flex-wrap items-center gap-3">
       <p class="text-xs uppercase tracking-widest text-[var(--color-muted)]">
         {formatDate(post.data.date)}
       </p>
       {post.data.pillars.length > 0 && <PillarBadge pillars={post.data.pillars} variant="solid" />}
-      {post.data.aiGenerated && <AiCaption />}
     </div>
     <h3
       class="font-display text-2xl font-bold leading-snug text-[var(--color-fg)]"
