@@ -127,7 +127,7 @@ function venueLine(t: CollectionEntry<"talk">) {
                     )}
                     {t.data.locationSlug && (
                       <a
-                        href={`/locations#${t.data.locationSlug.id}`}
+                        href={`/locations/${t.data.locationSlug.id}`}
                         class="inline-flex items-center gap-1 text-[var(--color-tech-change)] hover:underline"
                       >
                         On the map <Icon name="map-pin" size={14} />
