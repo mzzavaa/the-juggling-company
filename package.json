@@ -12,7 +12,7 @@
     "preview": "astro preview",
     "typecheck": "astro check",
     "test:e2e": "playwright test",
-    "linkcheck": "lychee --cache --max-cache-age 1d --no-progress --base ./dist './dist/**/*.html'",
+    "linkcheck": "lychee --cache --max-cache-age 1d --no-progress --offline --include-fragments --root-dir \"$PWD/dist\" --index-files index.html './dist/**/*.html'",
     "format": "prettier --write \"src/**/*.{ts,tsx,astro,md,mdx,json,css}\"",
     "anim:generate": "tsx scripts/generate-animations.ts",
     "anim:regenerate": "tsx scripts/generate-animations.ts --force",
