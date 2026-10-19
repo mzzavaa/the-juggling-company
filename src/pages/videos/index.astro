@@ -4,15 +4,13 @@ import Icon from "@/components/Icon.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
 import VideoStrip from "@/components/VideoStrip.astro";
 import VideoStripCard from "@/components/VideoStripCard.astro";
-import { getVideos } from "@/lib/content";
+import { getVideos, isPortraitVideo } from "@/lib/content";
 
 const videos = await getVideos();
 
-// Portrait sources: TikTok and Instagram reels (9:16). Landscape: YouTube (16:9).
-const portraitVideos = videos.filter(
-  (v) => v.data.source === "tiktok" || v.data.source === "instagram",
-);
-const landscapeVideos = videos.filter((v) => v.data.source === "youtube");
+// Portrait: TikTok, Instagram reels and YouTube Shorts (9:16). Landscape: other YouTube (16:9).
+const portraitVideos = videos.filter(isPortraitVideo);
+const landscapeVideos = videos.filter((v) => !isPortraitVideo(v));
 ---
 
 <BaseLayout
@@ -38,17 +36,17 @@ const landscapeVideos = videos.filter((v) => v.data.source === "youtube");
 
   <!-- Short-form / portrait -->
   {portraitVideos.length > 0 && (
-    <section class="pb-16">
+    <section id="tiktok" class="scroll-mt-24 pb-16">
       <div class="mx-auto mb-5 flex max-w-[1400px] items-end justify-between gap-4 px-4 md:px-6 lg:px-10">
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-fg)]">
             Short clips
           </p>
-          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Reels and TikToks</h2>
+          <h2 class="mt-1 font-display text-2xl font-bold tracking-tight">Shorts, reels and TikToks</h2>
         </div>
         <div class="flex shrink-0 items-center gap-4 text-sm font-semibold">
           <a
-            href="https://www.tiktok.com/@mrs_lee_g_"
+            href="https://www.tiktok.com/@mrs_lee_g"
             class="inline-flex items-center gap-1 text-[var(--color-fg)] hover:underline"
             rel="noopener noreferrer"
             target="_blank"

@@ -1,9 +1,9 @@
 ---
 title: "Drop a Ball and Keep Going"
 slug: tiktok-drop-a-ball-keep-going
-source: tiktok
-externalId: "7328858505161493793"
-externalUrl: https://www.tiktok.com/@mrs_lee_g_/video/7328858505161493793
+source: youtube
+externalId: "gl_Ye28L-_I"
+externalUrl: https://www.youtube.com/shorts/gl_Ye28L-_I
 publishedAt: 2023-01-10
 durationSec: 45
 tags: ["juggling", "mindset", "performance", "resilience", "motivation"]

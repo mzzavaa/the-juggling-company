@@ -199,9 +199,9 @@ export const socialLinks: readonly SocialLink[] = [
   },
   {
     label: "TikTok",
-    href: "https://www.tiktok.com/@mrs_lee_g_",
+    href: "https://www.tiktok.com/@mrs_lee_g",
     icon: "tiktok",
-    handle: "@mrs_lee_g_",
+    handle: "@mrs_lee_g",
   },
   {
     label: "Instagram",

@@ -7,7 +7,7 @@ import VideoCard from "@/components/VideoCard.astro";
 import PillarBadge from "@/components/PillarBadge.astro";
 import Icon from "@/components/Icon.astro";
 import { formatDate, formatDuration } from "@/lib/format";
-import { getVideos, getIdeas } from "@/lib/content";
+import { getVideos, getIdeas, isPortraitVideo } from "@/lib/content";
 import { blendKey, PILLAR_HEX, PILLAR_LABEL_KEYED } from "@/lib/pillar";
 
 export async function getStaticPaths() {
@@ -40,8 +40,8 @@ const videoJsonLd = {
   "@type": "VideoObject",
   name: video.data.title,
   description: video.data.description || video.data.title,
-  uploadDate: video.data.publishedAt.toISOString(),
-  duration: `PT${video.data.durationSec}S`,
+  uploadDate: video.data.publishedAt?.toISOString(),
+  duration: video.data.durationSec ? `PT${video.data.durationSec}S` : undefined,
   contentUrl: video.data.externalUrl,
   thumbnailUrl:
     video.data.source === "youtube"
@@ -67,10 +67,18 @@ const videoJsonLd = {
         <a href="/videos" class="transition hover:text-[var(--color-fg)]">Videos</a>
         <span>·</span>
         <span style={`color: ${accentHex};`}>{pLabel}</span>
-        <span>·</span>
-        <span>{formatDate(video.data.publishedAt)}</span>
-        <span>·</span>
-        <span>{formatDuration(video.data.durationSec)}</span>
+        {video.data.publishedAt && (
+          <>
+            <span>·</span>
+            <span>{formatDate(video.data.publishedAt)}</span>
+          </>
+        )}
+        {video.data.durationSec && (
+          <>
+            <span>·</span>
+            <span>{formatDuration(video.data.durationSec)}</span>
+          </>
+        )}
       </p>
       <h1 class="mt-4 font-display text-3xl font-bold tracking-tight md:text-5xl">
         {video.data.title}
@@ -87,7 +95,13 @@ const videoJsonLd = {
     <div>
       {
         video.data.source === "youtube" ? (
-          <YouTubeEmbed videoId={video.data.externalId} title={video.data.title} />
+          isPortraitVideo(video) ? (
+            <div class="mx-auto max-w-sm">
+              <YouTubeEmbed videoId={video.data.externalId} title={video.data.title} aspect="9 / 16" />
+            </div>
+          ) : (
+            <YouTubeEmbed videoId={video.data.externalId} title={video.data.title} />
+          )
         ) : video.data.source === "tiktok" ? (
           <TikTokEmbed
             videoId={video.data.externalId}
