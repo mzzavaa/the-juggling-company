@@ -1,39 +1,63 @@
 ---
-// EU AI Act (Art. 50) disclosure for AI-generated images: a clear, legible
-// label placed NEXT TO the image (not overlaid), so it is distinguishable and
-// accessible rather than a faint mark on the artwork. See /ai for the policy.
+// EU AI Act (Art. 50) disclosure styled as a small, light image caption
+// (Bildbeschreibung). The short visible label stays understated; the detail
+// lives in the hover/focus overlay. See /ai for the full policy.
 interface Props {
   class?: string;
 }
 const { class: className } = Astro.props;
-const TIP = "AI image I created with NotebookLM (now Gemini Notebook)";
+const TIP = "AI image I created with NotebookLM (now Gemini Notebook).";
 ---
 
-<span class:list={["ai-caption", className]} title={TIP} tabindex="0" aria-label={TIP}>
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z"
-      fill="currentColor"
-    />
-  </svg>
-  <span>AI-generated</span>
+<span class:list={["ai-caption", className]} tabindex="0" aria-label={`AI-generated. ${TIP}`}>
+  AI-generated
+  <span class="ai-caption__tip" role="tooltip">{TIP}</span>
 </span>
 
 <style>
   .ai-caption {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: color-mix(in oklab, var(--color-fg) 62%, transparent);
+    position: relative;
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    color: color-mix(in oklab, var(--color-fg) 40%, transparent);
     cursor: help;
   }
-  .ai-caption:focus-visible {
-    outline: 2px solid color-mix(in oklab, var(--color-fg) 40%, transparent);
-    outline-offset: 2px;
-    border-radius: 4px;
+
+  /* Detail overlay on hover / focus */
+  .ai-caption__tip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    width: max-content;
+    max-width: 220px;
+    padding: 0.4rem 0.55rem;
+    border-radius: 0.5rem;
+    border: 1px solid color-mix(in oklab, white 14%, transparent);
+    background: #0d0d16;
+    color: #e8e8f0;
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: normal;
+    text-align: left;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(3px);
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease;
+    z-index: 20;
+  }
+  .ai-caption:hover .ai-caption__tip,
+  .ai-caption:focus-visible .ai-caption__tip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ai-caption__tip {
+      transition: none;
+    }
   }
 </style>
