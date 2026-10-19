@@ -12,6 +12,7 @@ import everyoneBelongsHands from "@/assets/images/everyone-belongs-hands.png";
 import worldMapGlowing from "@/assets/images/world-map-glowing.png";
 import {
   getFeaturedVideos,
+  isPortraitVideo,
   getLatestPosts,
   getIdeas,
   getLocations,
@@ -405,11 +406,7 @@ const personJsonLd = {
           {featuredVideos.map((v) => (
             <VideoStripCard
               video={v}
-              orientation={
-                v.data.source === "tiktok" || v.data.source === "instagram"
-                  ? "portrait"
-                  : "landscape"
-              }
+              orientation={isPortraitVideo(v) ? "portrait" : "landscape"}
             />
           ))}
         </VideoStrip>

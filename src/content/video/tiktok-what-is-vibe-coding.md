@@ -1,9 +1,9 @@
 ---
 title: "What is Vibe Coding? Explained While Juggling"
 slug: tiktok-what-is-vibe-coding
-source: tiktok
-externalId: "7662773005524864258"
-externalUrl: https://www.tiktok.com/@mrs_lee_g/video/7662773005524864258
+source: youtube
+externalId: "lU3IlhHQBSk"
+externalUrl: https://www.youtube.com/shorts/lU3IlhHQBSk
 publishedAt: 2026-07-15
 durationSec: 65
 tags: ["juggling", "speaking-challenge", "vibe-coding", "ai", "tech"]
