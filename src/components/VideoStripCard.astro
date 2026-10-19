@@ -1,4 +1,6 @@
 ---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { CollectionEntry } from "astro:content";
 import Icon from "./Icon.astro";
 import { formatDuration } from "@/lib/format";
@@ -35,10 +37,13 @@ const sourceColor: Record<typeof source, string> = {
 
 // Real poster baked at build time by scripts/generate-video-posters.mjs.
 // Falls back to a remote YouTube thumbnail (hqdefault is always present)
-// when the local file is missing for any reason.
-const localPoster = `/posters/${video.id}.jpg`;
+// when the local file is missing for any reason. A YouTube clip with no
+// generated poster yet points straight at the remote one, so the page never
+// references a file that is not there.
 const remoteFallback =
   source === "youtube" ? `https://i.ytimg.com/vi/${externalId}/hqdefault.jpg` : null;
+const hasLocalPoster = existsSync(join(process.cwd(), "public", "posters", `${video.id}.jpg`));
+const posterSrc = hasLocalPoster || !remoteFallback ? `/posters/${video.id}.jpg` : remoteFallback;
 
 const aspectClass = orientation === "portrait" ? "aspect-[9/16]" : "aspect-video";
 const widthClass = orientation === "portrait" ? "w-44 sm:w-52" : "w-72 sm:w-80";
@@ -69,7 +74,7 @@ const ytEmbedSrc =
     </div>
 
     <img
-      src={localPoster}
+      src={posterSrc}
       data-fallback={remoteFallback ?? ""}
       alt=""
       loading="lazy"
