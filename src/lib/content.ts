@@ -17,7 +17,15 @@ export async function getIdeas(): Promise<CollectionEntry<"idea">[]> {
 
 export async function getVideos(): Promise<CollectionEntry<"video">[]> {
   const entries = await getCollection("video");
-  return entries.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+  return entries.sort(
+    (a, b) => (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0),
+  );
+}
+
+/** Vertical (9:16) clips: TikTok, Instagram reels, and YouTube Shorts. */
+export function isPortraitVideo(video: CollectionEntry<"video">): boolean {
+  const { source, externalUrl } = video.data;
+  return source !== "youtube" || externalUrl.includes("/shorts/");
 }
 
 export async function getFeaturedVideos(limit = 3): Promise<CollectionEntry<"video">[]> {

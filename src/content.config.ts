@@ -38,8 +38,10 @@ const video = defineCollection({
     externalId: z.string(),
     externalUrl: z.string().url(),
     localVideo: z.string().optional(),
-    publishedAt: isoDate,
-    durationSec: z.number().int().positive(),
+    // Optional: YouTube Shorts cards show no date or length, so leave them out
+    // rather than guess when they cannot be read off the platform.
+    publishedAt: isoDate.optional(),
+    durationSec: z.number().int().positive().optional(),
     tags: z.array(z.string()).default([]),
     pillars: z.array(pillar).default([]),
     description: z.string().default(""),

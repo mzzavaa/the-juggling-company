@@ -84,9 +84,11 @@ const ytEmbedSrc =
       {sourceLabel[source]}
     </span>
 
-    <span class="badge duration absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-white backdrop-blur">
-      {formatDuration(durationSec)}
-    </span>
+    {durationSec && (
+      <span class="badge duration absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-white backdrop-blur">
+        {formatDuration(durationSec)}
+      </span>
+    )}
 
     <span
       class="play-pulse absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100"

@@ -1,9 +1,9 @@
 ---
 title: "Juggling From 2017 to 2023"
 slug: tiktok-juggling-2017-to-2023
-source: tiktok
-externalId: "7348901753246518560"
-externalUrl: https://www.tiktok.com/@mrs_lee_g/video/7348901753246518560
+source: youtube
+externalId: "P4gDz50fCeQ"
+externalUrl: https://www.youtube.com/shorts/P4gDz50fCeQ
 publishedAt: 2023-04-05
 durationSec: 45
 tags: ["juggling", "progression", "throwback", "2017", "2023", "performance"]
