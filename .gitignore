@@ -55,3 +55,7 @@ preview-shots/
 /*.gif
 /*.pdf
 /*.zip
+
+# Local and secret files
+__pycache__/
+.venv/
