@@ -1,6 +1,6 @@
 {
     "type": "Config",
-    "favicon": "/images/4.png",
+    "favicon": "/images/favicon.svg",
     "header": {
         "title": "The Juggling Company",
         "navLinks": [
@@ -23,7 +23,7 @@
                 "underline": "hover"
             }
         ],
-        "logoSrc": "/images/Untitled (5000 x 5000 px) (1).svg",
+        "logoSrc": "/images/logo.svg",
         "logoAlt": "TheJugglingCompany",
         "height": "200"
     },
