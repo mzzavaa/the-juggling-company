@@ -34,8 +34,6 @@ public/videos/*.mov
 
 # build/tool caches
 .cache/
-.next/
-.stackbit/
 screenshots/
 
 # playwright / e2e artefacts
