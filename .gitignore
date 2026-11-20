@@ -32,13 +32,8 @@ yarn-error.log*
 # original .mov exports — too large for git
 public/videos/*.mov
 
-# pre-rendered juggling animations - generated at build time
-public/anim/
-
 # build/tool caches
 .cache/
-.next/
-.stackbit/
 screenshots/
 
 # playwright / e2e artefacts

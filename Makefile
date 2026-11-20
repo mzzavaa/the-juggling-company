@@ -4,7 +4,7 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
-.PHONY: help install dev build preview check typecheck format linkcheck posters anim anim-force anim-single clean clean-all
+.PHONY: help install dev build preview check typecheck format linkcheck posters anim clean clean-all
 
 help: ## List all available commands
 	@echo "The Juggling Company - available commands:"
@@ -18,7 +18,7 @@ install: ## Install dependencies cleanly from package-lock.json
 dev: ## Start the dev server at http://localhost:4321
 	npm run dev
 
-build: ## Production build to dist/ (generates animations, then astro build)
+build: ## Production build to dist/ (astro build)
 	npm run build
 
 preview: ## Serve the built dist/ locally
@@ -38,14 +38,8 @@ linkcheck: build ## Build, then scan dist/ for broken links (needs lychee)
 posters: ## Generate video poster images
 	npm run posters
 
-anim: ## Generate only missing pattern animations
-	npm run anim:generate
-
-anim-force: ## Regenerate ALL pattern animations (note: JugglingLab GIF server is retired)
-	npm run anim:regenerate
-
-anim-single: ## Generate one pattern, e.g. make anim-single PATTERN="3"
-	npm run anim:single -- "$(PATTERN)"
+anim: ## Re-render the pattern GIFs with the Juggling Lab desktop app (needs Juggling Lab + ffmpeg)
+	npm run anim:render
 
 clean: ## Remove the build output (dist/)
 	rm -rf dist

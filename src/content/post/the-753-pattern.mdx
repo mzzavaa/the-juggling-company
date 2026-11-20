@@ -29,13 +29,18 @@ The five-ball cascade is siteswap `5`: every throw has the same value, every thr
 
 The structural parallel to `531` is exact: both are period-3 patterns with mean equal to ball count, all odd values, and the same coordination coupling as the corresponding cascade. `753` is `531` translated up to the five-ball level.
 
+<figure class="not-prose" style="margin:1.5rem auto;max-width:20rem;">
+  <img src="/animations/pattern-5-753.gif" alt="Animated juggling pattern: siteswap 753 with five balls" loading="lazy" style="width:100%;border-radius:0.5rem;display:block;background:#080810;" />
+  <figcaption style="margin-top:0.4rem;text-align:center;font-size:0.75rem;color:var(--color-muted);">Siteswap 753, five balls. Rendered with Juggling Lab.</figcaption>
+</figure>
+
 ## The mathematics of 753
 
-The Buhler-Graham-Eisenbud-Wright theorem (1994) states that a sequence is a valid juggling pattern if and only if all values `(t_k mod n)` are distinct, where `n` is the period length. For `753`:
+The Buhler-Graham-Eisenbud-Wright theorem (1994) states that a sequence is a valid juggling pattern if and only if all values `((t_k + k) mod n)` are distinct, where `n` is the period length and `k` is the position of the throw in the sequence. Throw value plus position is the beat on which that ball lands. For `753`:
 
 - Period: n = 3
 - Values: 7, 5, 3
-- Values mod 3: (7 mod 3, 5 mod 3, 3 mod 3) = (1, 2, 0)
+- Landing beats mod 3: ((7+0) mod 3, (5+1) mod 3, (3+2) mod 3) = (1, 0, 2)
 - All distinct: yes. **Valid.**
 - Mean: (7+5+3)/3 = 5 balls required.
 
@@ -44,7 +49,7 @@ The average theorem states that the mean of the siteswap values equals the numbe
 Every throw in `753` is odd (7, 5, and 3 are all odd numbers), which means every throw crosses from one hand to the other. The coordination structure is identical to the five-ball cascade: both hands always involved, alternating, every throw crossing. `753` does not introduce any self-throws or holds.
 
 <Callout type="info" title="Why the mod-3 values of 753 match 531">
-The mod-3 values of 531 are (2, 0, 1). The mod-3 values of 753 are (1, 2, 0). Both sets are {0, 1, 2} - the same three residues in different order. This is not a coincidence: any valid period-3 pattern with mean k must use all three residues mod 3. What changes between 531 and 753 is the mean (3 vs. 5) and therefore the specific throw heights - but the mathematical structure that makes them valid is the same.
+The landing beats mod 3 of 531 are (2, 1, 0). Those of 753 are (1, 0, 2). Both sets are {0, 1, 2} - the same three residues in different order. This is not a coincidence: in any valid period-3 pattern the landing beats use all three residues mod 3. What changes between 531 and 753 is the mean (3 vs. 5) and therefore the specific throw heights - but the mathematical structure that makes them valid is the same.
 </Callout>
 
 ## The three throws and their physical character

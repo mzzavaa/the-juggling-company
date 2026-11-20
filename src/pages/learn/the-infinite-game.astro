@@ -16,7 +16,7 @@ import greenInfinite from "@/assets/images/green-infinity-cascade.png";
 
 const allPosts = await getPosts();
 const recommended = allPosts.filter(p =>
-  ["juggling-is-an-infinite-game", "you-do-not-age-out-of-the-pattern", "the-inclusive-convergence"].includes(p.id)
+  ["juggling-is-an-infinite-game", "you-do-not-age-out-of-the-pattern", "the-convergence-has-no-entry-requirements"].includes(p.id)
 ).slice(0, 3);
 
 const infiniteMarkers = [
