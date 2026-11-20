@@ -63,10 +63,10 @@ typecheck, build, link check, and zizmor scan of workflow files.
 
 ### Juggling Animations
 
-**Pattern animations generated with [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The juggling physics, timing, gravity, and siteswap simulation come directly from JugglingLab. We customized the visual rendering with a feminine avatar and a dark interface to match this website's design.
+**Pattern animations generated with [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The juggling physics, timing, gravity, and siteswap simulation come directly from JugglingLab. The GIFs in `public/animations/` are rendered with the official Juggling Lab desktop app and its built-in female avatar (`avatar=female`), then recoloured to a dark background to match this website's design. To re-render them, run `npm run anim:render` (needs Juggling Lab 1.7.6 or newer and ffmpeg; see `scripts/render-animations.sh`).
 
 Animation engine: JugglingLab (© Jack Boyce), used under [GPL-2.0 license](https://github.com/jkboyce/jugglinglab/blob/master/LICENSE).
 
 ### Juggler Avatar
 
-The feminine juggler silhouette used in our animations is a custom creation for this website. We adapted JugglingLab's rendering pipeline to display our avatar instead of the default stick figure, while preserving all the underlying physics and mathematics.
+The female juggler figure in our animations is Juggling Lab's own built-in female avatar, which this project contributed upstream ([jkboyce/jugglinglab#191](https://github.com/jkboyce/jugglinglab/pull/191)). No fork or custom rendering is involved any more: the figure, physics and mathematics all come from the official release.
