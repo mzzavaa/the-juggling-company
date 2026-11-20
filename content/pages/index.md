@@ -27,7 +27,7 @@ sections:
     actions: []
     image:
       type: Image
-      url: /images/Untitled (5000 x 5000 px) (1).png
+      url: /images/logo.svg
       altText: Hero section image
   - type: CardsSection
     title: The Juggling Company
