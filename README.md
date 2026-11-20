@@ -63,7 +63,7 @@ typecheck, build, link check, and zizmor scan of workflow files.
 
 ### Juggling Animations
 
-**Pattern animations generated with [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The juggling physics, timing, gravity, and siteswap simulation come directly from JugglingLab. The GIFs in `public/animations/` are rendered with the official Juggling Lab desktop app and its built-in female avatar (`avatar=female`), then recoloured to a dark background to match this website's design. To re-render them, run `npm run anim:render` (needs Juggling Lab 1.7.6 or newer and ffmpeg; see `scripts/render-animations.sh`).
+**Pattern animations generated with [JugglingLab](https://jugglinglab.org)**, the open-source juggling simulator created by Jack Boyce ([GitHub](https://github.com/jkboyce/jugglinglab)). The juggling physics, timing, gravity, and siteswap simulation come directly from JugglingLab. The GIFs in `public/animations/` are rendered with the official Juggling Lab desktop app and its built-in female avatar (`avatar=female`), then recoloured to a dark background to match this website's design. To re-render them, run `npm run anim:render` (needs Juggling Lab 1.7.8 or newer and ffmpeg; see `scripts/render-animations.sh`).
 
 Animation engine: JugglingLab (© Jack Boyce), used under [GPL-2.0 license](https://github.com/jkboyce/jugglinglab/blob/master/LICENSE).
 

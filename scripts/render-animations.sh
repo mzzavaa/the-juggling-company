@@ -2,13 +2,13 @@
 #
 # Renders the pattern GIFs in public/animations/ with the official Juggling Lab
 # desktop app (https://jugglinglab.org, (c) Jack Boyce and contributors, GPL-2.0),
-# using its built-in female avatar (avatar=female, available since 1.7.6).
+# using its built-in female avatar (avatar=female). The committed GIFs were rendered with 1.7.8.
 #
 # Run by hand when a pattern is added or Juggling Lab changes. It is NOT part of
 # the build: the GIFs are committed, so CI needs neither Juggling Lab nor ffmpeg.
 #
 # Needs:
-#   - Juggling Lab desktop 1.7.6 or newer (download from jugglinglab.org)
+#   - Juggling Lab desktop 1.7.8 or newer (download from jugglinglab.org)
 #   - ffmpeg
 #
 # Usage:
@@ -26,22 +26,38 @@ set -euo pipefail
 JLAB="${JLAB:-/Applications/Juggling Lab.app/Contents/MacOS/Juggling Lab}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/public/animations"
-WIDTH=400
 HEIGHT=450
 
-# file slug : siteswap
+# file slug | Juggling Lab pattern | width | avatar per juggler
 PATTERNS=(
-  "3-cascade:3"
-  "3-423:423"
-  "3-441:441"
-  "3-531:531"
-  "3-51:51"
-  "3-312:312"
-  "4-fountain:4"
-  "4-534:534"
-  "4-633:633"
-  "4-552:552"
-  "5-cascade:5"
+  # the patterns page
+  "3-cascade|3|400|female"
+  "3-423|423|400|female"
+  "3-441|441|400|female"
+  "3-531|531|400|female"
+  "3-51|51|400|female"
+  "3-312|312|400|female"
+  "4-fountain|4|400|female"
+  "4-534|534|400|female"
+  "4-633|633|400|female"
+  "4-552|552|400|female"
+  "5-cascade|5|400|female"
+  # learning steps and coloured balls
+  "1-one-ball|300|400|female"
+  "2-two-balls|330|400|female"
+  "3-colours|pattern=3;colors=mixed|400|female"
+  # rings
+  "3-rings|pattern=3;prop=ring|400|female"
+  # longer and higher patterns
+  "5-753|753|400|female"
+  "5-97531|97531|400|female"
+  "5-shower-91|91|400|female"
+  "7-cascade|7|400|female"
+  # synchronous and multiplex
+  "4-sync-44|(4,4)|400|female"
+  "4-multiplex|[33]33|400|female"
+  # passing (Juggling Lab has no club prop, so passes are drawn with balls or rings)
+  "passing-6-balls|<3p|3p>|640|female,classic"
 )
 
 if [[ ! -x "$JLAB" ]]; then
@@ -70,16 +86,22 @@ only="${1:-}"
 mkdir -p "$OUT"
 
 for entry in "${PATTERNS[@]}"; do
-  slug="${entry%%:*}"
-  siteswap="${entry#*:}"
+  # slug is the first field, avatar the last, width the one before it; the
+  # pattern in between may itself contain "|" (passing notation).
+  slug="${entry%%|*}"
+  rest="${entry#*|}"
+  avatar="${rest##*|}"
+  rest="${rest%|*}"
+  width="${rest##*|}"
+  pattern="${rest%|*}"
   [[ -n "$only" && "$only" != "$slug" ]] && continue
 
   raw="$TMP/$slug.gif"
-  "$JLAB" togif "$siteswap" -prefs "width=$WIDTH;height=$HEIGHT;avatar=female" -out "$raw"
+  "$JLAB" togif "$pattern" -prefs "width=$width;height=$HEIGHT;avatar=$avatar" -out "$raw"
   if [[ ! -s "$raw" ]]; then
-    echo "Juggling Lab wrote no GIF for $siteswap" >&2
+    echo "Juggling Lab wrote no GIF for $pattern" >&2
     exit 1
   fi
   ffmpeg -v error -y -i "$raw" -filter_complex "$RECOLOUR" "$OUT/pattern-$slug.gif"
-  echo "pattern-$slug.gif  (siteswap $siteswap)"
+  echo "pattern-$slug.gif  ($pattern)"
 done

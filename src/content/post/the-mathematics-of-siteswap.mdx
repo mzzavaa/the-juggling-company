@@ -130,19 +130,25 @@ A `0` means no throw on that beat. A `1` means a quick pass directly to the adja
 
 Here is the core mathematical result. It is precise enough to state exactly.
 
-**Theorem (Buhler, Graham, Eisenbud, Wright 1994):** A sequence of non-negative integers `(t_0, t_1, ..., t_{n-1})` is a valid juggling pattern for a single juggler if and only if the `n` values `(t_0 mod n, t_1 mod n, ..., t_{n-1} mod n)` are all distinct.
+**Theorem (Buhler, Graham, Eisenbud, Wright 1994):** A sequence of non-negative integers `(t_0, t_1, ..., t_{n-1})` is a valid juggling pattern for a single juggler if and only if the `n` values `((t_0 + 0) mod n, (t_1 + 1) mod n, ..., (t_{n-1} + n-1) mod n)` are all distinct. Each throw value is added to its position in the sequence first: that sum is the beat on which the ball lands.
 
 This is called the **average theorem** because a direct consequence is: if the sequence is valid, the number of balls required equals the arithmetic mean of the sequence. Average the throw values - the result must be a whole number, and that whole number is your ball count.
 
 Some examples:
 
-- `3` - mean is 3, requires 3 balls. Valid: (3 mod 1) = (0) - trivially distinct.
-- `531` - mean is (5+3+1)/3 = 3, requires 3 balls. Values mod 3: (5 mod 3, 3 mod 3, 1 mod 3) = (2, 0, 1) - all distinct. Valid.
-- `441` - mean is (4+4+1)/3 = 3, requires 3 balls. Values mod 3: (4 mod 3, 4 mod 3, 1 mod 3) = (1, 1, 1) - not distinct. Invalid (two balls would land at the same time).
-- `4` - mean is 4, requires 4 balls. Values mod 1: (0) - valid. This is the 4-ball fountain.
-- `423` - mean is (4+2+3)/3 = 3. Values mod 3: (1, 2, 0) - all distinct. Valid.
-- `97531` - mean is 25/5 = 5, requires 5 balls. Values mod 5: (2, 2, 3, 3, 1) - not distinct. Invalid.
+- `3` - mean is 3, requires 3 balls. Valid: (3 + 0) mod 1 = (0) - trivially distinct.
+- `531` - mean is (5+3+1)/3 = 3, requires 3 balls. Landing beats mod 3: ((5+0) mod 3, (3+1) mod 3, (1+2) mod 3) = (2, 1, 0) - all distinct. Valid.
+- `441` - mean is (4+4+1)/3 = 3, requires 3 balls. Landing beats mod 3: ((4+0) mod 3, (4+1) mod 3, (1+2) mod 3) = (1, 2, 0) - all distinct. Valid.
+- `432` - mean is (4+3+2)/3 = 3, but landing beats mod 3: ((4+0) mod 3, (3+1) mod 3, (2+2) mod 3) = (1, 1, 1) - not distinct. Invalid (all three balls would land at the same time).
+- `4` - mean is 4, requires 4 balls. Landing beats mod 1: (0) - valid. This is the 4-ball fountain.
+- `423` - mean is (4+2+3)/3 = 3. Landing beats mod 3: ((4+0) mod 3, (2+1) mod 3, (3+2) mod 3) = (1, 0, 2) - all distinct. Valid.
+- `97531` - mean is 25/5 = 5, requires 5 balls. Landing beats mod 5: (9, 8, 7, 6, 5) mod 5 = (4, 3, 2, 1, 0) - all distinct. Valid.
 - `75631` - mean is 22/5... not an integer. Invalid before we even check distinctness.
+
+<figure class="not-prose" style="margin:1.5rem auto;max-width:20rem;">
+  <img src="/animations/pattern-5-97531.gif" alt="Animated juggling pattern: siteswap 97531 with five balls" loading="lazy" style="width:100%;border-radius:0.5rem;display:block;background:#080810;" />
+  <figcaption style="margin-top:0.4rem;text-align:center;font-size:0.75rem;color:var(--color-muted);">Siteswap 97531, five balls. Rendered with Juggling Lab.</figcaption>
+</figure>
 
 <Callout type="warning" title="What the theorem does not encode">
 Standard vanilla siteswap assumes alternating hands and a single juggler. It does not encode which hand throws, the exact path of each ball, or the spin on clubs. Those require extensions: synchronous siteswap for simultaneous throws, multiplex notation for multiple balls from one hand, and Prechac notation for passing between jugglers. Each extension is its own formal system.
@@ -278,6 +284,16 @@ The validity theorem extends: the average of all throws in both slots must equal
   ]}
 />
 
+<figure class="not-prose" style="margin:1.5rem auto;max-width:20rem;">
+  <img src="/animations/pattern-4-sync-44.gif" alt="Animated juggling pattern: synchronous four-ball fountain, (4,4)" loading="lazy" style="width:100%;border-radius:0.5rem;display:block;background:#080810;" />
+  <figcaption style="margin-top:0.4rem;text-align:center;font-size:0.75rem;color:var(--color-muted);">Synchronous notation: (4,4), the four-ball fountain with both hands throwing together. Rendered with Juggling Lab.</figcaption>
+</figure>
+
+<figure class="not-prose" style="margin:1.5rem auto;max-width:20rem;">
+  <img src="/animations/pattern-4-multiplex.gif" alt="Animated juggling pattern: a four-ball multiplex, [33]33" loading="lazy" style="width:100%;border-radius:0.5rem;display:block;background:#080810;" />
+  <figcaption style="margin-top:0.4rem;text-align:center;font-size:0.75rem;color:var(--color-muted);">Multiplex notation: [33]33, two balls leaving one hand together. Rendered with Juggling Lab.</figcaption>
+</figure>
+
 ## Why this matters beyond juggling
 
 Siteswap's mathematical structure has appeared in unexpected places.
@@ -301,7 +317,7 @@ This means: a computer can verify whether any sequence is valid in constant time
 
 <Takeaways items={[
   "Siteswap was derived independently in 1981 by three groups, including Claude Shannon - the inventor of information theory - working in his MIT office.",
-  "The fundamental theorem: a sequence is valid if and only if all values (t_k mod n) are distinct. This implies the mean of the sequence must be a whole number equal to the ball count.",
+  "The fundamental theorem: a sequence is valid if and only if all values ((t_k + k) mod n) are distinct. This implies the mean of the sequence must be a whole number equal to the ball count.",
   "Every juggling configuration is a node in a directed graph; every pattern is a cycle. The graph has a precise structure that allows complete enumeration of all valid patterns.",
   "Standard siteswap is vanilla (async, single juggler). Synchronous, multiplex, and passing extensions each have their own formal systems.",
   "The set of valid juggling sequences forms a regular language - it is as mathematically tractable as a formal grammar."

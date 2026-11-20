@@ -31,11 +31,11 @@ The result is a pattern with an asymmetric internal rhythm: one hand throws a hi
 
 ## The mathematics of 423
 
-The Buhler-Graham-Eisenbud-Wright theorem (1994) states that a sequence is a valid juggling pattern if and only if all values `(t_k mod n)` are distinct, where `n` is the period length. For `423`:
+The Buhler-Graham-Eisenbud-Wright theorem (1994) states that a sequence is a valid juggling pattern if and only if all values `((t_k + k) mod n)` are distinct, where `n` is the period length and `k` is the position of the throw in the sequence. Throw value plus position is the beat on which that ball lands. For `423`:
 
 - Period: n = 3
 - Values: 4, 2, 3
-- Values mod 3: (4 mod 3, 2 mod 3, 3 mod 3) = (1, 2, 0)
+- Landing beats mod 3: ((4+0) mod 3, (2+1) mod 3, (3+2) mod 3) = (1, 0, 2)
 - All distinct: yes. **Valid.**
 - Mean: (4+2+3)/3 = 3 balls required.
 
