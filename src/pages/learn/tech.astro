@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
+import PatternPlayer from "@/components/PatternPlayer.astro";
 import { Image } from "astro:assets";
 import AiImage from "@/components/AiImage.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
@@ -19,12 +20,12 @@ const recommended = allPosts.filter(p =>
 ).slice(0, 3);
 
 const analogues = [
-  { juggling: "Club pass", tech: "API contract", detail: "Timing, handoff point, and shared protocol must be agreed before the throw." },
-  { juggling: "Three-ball cascade", tech: "Round-robin load balancer", detail: "Equal distribution, no queue backup, predictable arc per slot." },
+  { juggling: "Club pass", anim: "/animations/pattern-passing-6-balls.gif", tech: "API contract", detail: "Timing, handoff point, and shared protocol must be agreed before the throw." },
+  { juggling: "Three-ball cascade", anim: "/animations/pattern-3-cascade.gif", tech: "Round-robin load balancer", detail: "Equal distribution, no queue backup, predictable arc per slot." },
   { juggling: "Cat's cradle", tech: "Service mesh / event mesh", detail: "Strings are dependencies. Pull one and all others shift." },
   { juggling: "Drop and recover", tech: "Graceful degradation", detail: "The pattern keeps running. The dropped prop is retrieved on the next open beat." },
-  { juggling: "Siteswap notation", tech: "Async timing model", detail: "Each number is the number of beats before that object is thrown again." },
-  { juggling: "Multiplex throw", tech: "Batch processing", detail: "Two objects leave one hand at the same time - higher throughput, more complex catch." },
+  { juggling: "Siteswap notation", anim: "/animations/pattern-3-531.gif", tech: "Async timing model", detail: "Each number is the number of beats before that object is thrown again." },
+  { juggling: "Multiplex throw", anim: "/animations/pattern-4-multiplex.gif", tech: "Batch processing", detail: "Two objects leave one hand at the same time - higher throughput, more complex catch." },
 ];
 ---
 
@@ -73,9 +74,14 @@ const analogues = [
       <h2 class="font-display text-3xl font-bold tracking-tight">The vocabulary already existed.</h2>
       <p class="mt-4 max-w-xl leading-relaxed text-[var(--color-muted)]">Siteswap notation was invented in the 1980s to describe timing sequences across multiple concurrent objects. It is, in essence, an async timing model with handoff protocols.</p>
     </div>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {analogues.map((a, i) => (
         <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5" data-reveal data-delay={i * 60}>
+          {a.anim && (
+            <div class="mb-4 h-64 overflow-hidden rounded-xl bg-[#080810]">
+              <PatternPlayer src={a.anim} alt={`Juggling Lab animation: ${a.juggling}`} />
+            </div>
+          )}
           <div class="mb-3 flex items-center gap-3">
             <span class="rounded-lg px-2 py-0.5 font-mono text-xs font-bold" style="background: color-mix(in oklab, var(--color-tech) 14%, transparent); color: var(--color-tech);">{a.juggling}</span>
             <Icon name="arrow-right" size={12} class="text-[var(--color-muted)]" />
