@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Icon from "@/components/Icon.astro";
 import JugglingPatternGif from "@/components/JugglingPatternGif.astro";
+import PatternPlayer from "@/components/PatternPlayer.astro";
 import { Image } from "astro:assets";
 import AiImage from "@/components/AiImage.astro";
 import HeroVideo from "@/components/HeroVideo.astro";
@@ -19,12 +20,12 @@ const recommended = allPosts.filter(p =>
 ).slice(0, 3);
 
 const analogues = [
-  { juggling: "Club pass", tech: "API contract", detail: "Timing, handoff point, and shared protocol must be agreed before the throw." },
-  { juggling: "Three-ball cascade", tech: "Round-robin load balancer", detail: "Equal distribution, no queue backup, predictable arc per slot." },
-  { juggling: "Cat's cradle", tech: "Service mesh / event mesh", detail: "Strings are dependencies. Pull one and all others shift." },
-  { juggling: "Drop and recover", tech: "Graceful degradation", detail: "The pattern keeps running. The dropped prop is retrieved on the next open beat." },
-  { juggling: "Siteswap notation", tech: "Async timing model", detail: "Each number is the number of beats before that object is thrown again." },
-  { juggling: "Multiplex throw", tech: "Batch processing", detail: "Two objects leave one hand at the same time - higher throughput, more complex catch." },
+  { juggling: "Club pass", anim: "/animations/pattern-passing-6-balls.gif", tech: "API contract", detail: "Timing, handoff point, and shared protocol must be agreed before the throw." },
+  { juggling: "Three-ball cascade", anim: "/animations/pattern-3-cascade.gif", tech: "Round-robin load balancer", detail: "Equal distribution, no queue backup, predictable arc per slot." },
+  { juggling: "Cat's cradle", cradle: true, tech: "Service mesh / event mesh", detail: "Strings are dependencies. Pull one and all others shift." },
+  { juggling: "Drop and recover", anim: "/animations/pattern-3-drop-recover.gif", tech: "Graceful degradation", detail: "The pattern keeps running. The dropped prop is retrieved on the next open beat." },
+  { juggling: "Siteswap notation", anim: "/animations/pattern-3-531.gif", tech: "Async timing model", detail: "Each number is the number of beats before that object is thrown again." },
+  { juggling: "Multiplex throw", anim: "/animations/pattern-4-multiplex.gif", tech: "Batch processing", detail: "Two objects leave one hand at the same time - higher throughput, more complex catch." },
 ];
 ---
 
@@ -73,9 +74,33 @@ const analogues = [
       <h2 class="font-display text-3xl font-bold tracking-tight">The vocabulary already existed.</h2>
       <p class="mt-4 max-w-xl leading-relaxed text-[var(--color-muted)]">Siteswap notation was invented in the 1980s to describe timing sequences across multiple concurrent objects. It is, in essence, an async timing model with handoff protocols.</p>
     </div>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {analogues.map((a, i) => (
         <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5" data-reveal data-delay={i * 60}>
+          {a.anim && (
+            <div class="relative mb-4 h-64 overflow-hidden rounded-xl bg-[#080810]">
+              <PatternPlayer src={a.anim} alt={`Juggling Lab animation: ${a.juggling}`} />
+            </div>
+          )}
+          {a.cradle && (
+            <div class="relative mb-4 h-64 overflow-hidden rounded-xl bg-[#080810]">
+              {/* A drawn string figure, not a Juggling Lab render: one finger pulls and every string through the crossing moves. */}
+              <svg viewBox="0 0 400 256" class="h-full w-full" role="img" aria-label="A string figure between two hands. One finger pulls and all the other strings shift.">
+                <g fill="none" stroke="#e6e6f0" stroke-width="1.2" stroke-linecap="round">
+                  <path d="M90 56 L310 56" />
+                  <path d="M90 200 L310 200" />
+                  <path d="M90 56 L200 128 L310 200"><animate attributeName="d" dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" values="M90 56 L200 128 L310 200;M90 56 L238 128 L310 200;M90 56 L200 128 L310 200" /></path>
+                  <path d="M90 200 L200 128 L310 56"><animate attributeName="d" dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" values="M90 200 L200 128 L310 56;M90 200 L238 128 L310 56;M90 200 L200 128 L310 56" /></path>
+                  <path d="M90 128 L200 128 L310 128"><animate attributeName="d" dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" values="M90 128 L200 128 L310 128;M90 128 L238 128 L346 128;M90 128 L200 128 L310 128" /></path>
+                </g>
+                <g fill="#e6e6f0">
+                  <circle cx="90" cy="56" r="4" /><circle cx="90" cy="128" r="4" /><circle cx="90" cy="200" r="4" />
+                  <circle cx="310" cy="56" r="4" /><circle cx="310" cy="200" r="4" />
+                </g>
+                <circle cx="310" cy="128" r="7" fill="#ff0000"><animate attributeName="cx" dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" values="310;346;310" /></circle>
+              </svg>
+            </div>
+          )}
           <div class="mb-3 flex items-center gap-3">
             <span class="rounded-lg px-2 py-0.5 font-mono text-xs font-bold" style="background: color-mix(in oklab, var(--color-tech) 14%, transparent); color: var(--color-tech);">{a.juggling}</span>
             <Icon name="arrow-right" size={12} class="text-[var(--color-muted)]" />

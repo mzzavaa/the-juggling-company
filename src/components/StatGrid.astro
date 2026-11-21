@@ -23,7 +23,7 @@ const colorMap: Record<NonNullable<Stat["color"]>, string> = {
 };
 ---
 
-<div class="stat-grid my-8 grid gap-4 sm:grid-cols-3">
+<div class="stat-grid my-8 grid gap-4">
   {
     items.map((stat) => {
       const colorClass = colorMap[stat.color ?? "default"];
@@ -46,3 +46,11 @@ const colorMap: Record<NonNullable<Stat["color"]>, string> = {
     })
   }
 </div>
+
+<style>
+  /* As many boxes per row as fit: four in one line at post width, wrapping in
+     narrow columns and on phones. */
+  .stat-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+  }
+</style>

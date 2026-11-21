@@ -11,7 +11,7 @@ interface Pattern {
   title: string;
   notation: string;
   description: string;
-  difficulty: Difficulty;
+  difficulty?: Difficulty;
   pillar: Pillar;
 }
 
@@ -112,18 +112,34 @@ const fiveBall: Pattern[] = [
   },
 ];
 
+const more: Pattern[] = [
+  { src: "/animations/pattern-1-one-ball.gif", title: "One Ball", notation: "300", description: "One ball, thrown from hand to hand.", pillar: "all" },
+  { src: "/animations/pattern-2-two-balls.gif", title: "Two Balls", notation: "330", description: "Two balls and one empty beat. The step before the cascade.", pillar: "all" },
+  { src: "/animations/pattern-3-drop-recover.gif", title: "Drop and Recover", notation: "3, 330, 3", description: "The cascade loses one ball and keeps its rhythm with an empty beat, then the ball is back.", pillar: "all" },
+  { src: "/animations/pattern-3-colours.gif", title: "Cascade in Three Colours", notation: "3", description: "The three-ball cascade with a red, a green and a blue ball.", pillar: "all" },
+  { src: "/animations/pattern-3-rings.gif", title: "Three Rings", notation: "3", description: "The cascade with rings. Seen from the front, each ring shows edge-on.", pillar: "all" },
+  { src: "/animations/pattern-5-753.gif", title: "The 753", notation: "753", description: "Five balls. Three different heights in one cycle.", pillar: "all" },
+  { src: "/animations/pattern-5-97531.gif", title: "The 97531", notation: "97531", description: "Five balls. Five different heights, each throw lower than the one before.", pillar: "all" },
+  { src: "/animations/pattern-5-shower-91.gif", title: "Five-Ball Shower", notation: "91", description: "Five balls travelling in one direction. High throws from one hand, quick passes from the other.", pillar: "all" },
+  { src: "/animations/pattern-7-cascade.gif", title: "Seven-Ball Cascade", notation: "7", description: "Seven balls in the cascade.", pillar: "all" },
+  { src: "/animations/pattern-4-sync-44.gif", title: "Synchronous Fountain", notation: "(4,4)", description: "Four balls. Both hands throw at the same time.", pillar: "all" },
+  { src: "/animations/pattern-4-multiplex.gif", title: "Multiplex", notation: "[33]33", description: "Four balls. Two leave one hand together.", pillar: "all" },
+  { src: "/animations/pattern-passing-6-balls.gif", title: "Two-Person Pass", notation: "<3p|3p>", description: "Two jugglers, six balls, every throw a pass.", pillar: "all" },
+];
+
 const groups = [
   { id: "three", label: "Three balls", subtitle: "The foundation. Where every juggler starts.", patterns: threeBall, accent: "var(--color-tech-change)" },
   { id: "four",  label: "Four balls",  subtitle: "Two parallel tracks. Each hand runs its own loop.", patterns: fourBall, accent: "var(--color-tech)" },
   { id: "five",  label: "Five balls",  subtitle: "The milestone. The same pattern, the higher load.", patterns: fiveBall, accent: "var(--color-brain)" },
+  { id: "more",  label: "More",  subtitle: "First steps, rings, higher numbers, synchronous and multiplex throws, and passing.", patterns: more, accent: "var(--color-tech-change)" },
 ];
 
-const totalPatterns = threeBall.length + fourBall.length + fiveBall.length;
+const totalPatterns = threeBall.length + fourBall.length + fiveBall.length + more.length;
 ---
 
 <BaseLayout
   title="Juggling Patterns - The Juggling Company"
-  description="Eleven juggling patterns animated and explained. From the three-ball cascade to the five-ball milestone, each shown with siteswap notation, difficulty, and a brief description."
+  description={`${totalPatterns} juggling patterns animated and explained. From the three-ball cascade to the five-ball milestone, each shown with siteswap notation, difficulty, and a brief description.`}
 >
   <!-- HERO -->
   <section class="relative overflow-hidden pb-0 pt-28 md:pt-36">

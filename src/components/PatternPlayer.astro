@@ -1,0 +1,179 @@
+---
+/**
+ * A Juggling Lab animation with three small controls: pause, slow motion and
+ * ball colour.
+ *
+ * It plays the MP4 that scripts/render-animations.sh writes next to each GIF.
+ * A video can be paused and slowed; a GIF cannot. Ball colour works two ways:
+ * a single colour is an SVG filter over the red render (the filters live in
+ * BaseLayout), and "all different" switches to the second MP4, which Juggling
+ * Lab rendered with every prop in its own colour.
+ *
+ * Animation engine: JugglingLab (© Jack Boyce), GPL-2.0 licensed.
+ */
+interface Props {
+  /** Path of the pattern's GIF, e.g. /animations/pattern-3-cascade.gif */
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+const base = src.replace(/\.gif$/, "");
+---
+
+<div class="pp" data-pp data-red={`${base}.mp4`} data-mixed={`${base}-mixed.mp4`}>
+  <video
+    class="pp-video"
+    src={`${base}.mp4`}
+    poster={src}
+    aria-label={alt}
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="metadata"></video>
+  <div class="pp-controls">
+    <button type="button" data-pp-act="pause" aria-label="Pause the animation">Pause</button>
+    <button type="button" data-pp-act="slow" aria-pressed="false" aria-label="Slow motion">Slow</button>
+    <button type="button" data-pp-act="colour" aria-label="Ball colour: red. Click to change.">
+      <span class="pp-dot" aria-hidden="true"></span>Colour
+    </button>
+  </div>
+</div>
+
+<style>
+  /* Fills its parent, which must be positioned and have a height. */
+  .pp {
+    position: absolute;
+    inset: 0;
+  }
+  .pp-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .pp-controls {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    z-index: 5;
+    display: flex;
+    gap: 0.25rem;
+    opacity: 0.55;
+    transition: opacity 180ms ease;
+  }
+  .pp:hover .pp-controls,
+  .pp:focus-within .pp-controls {
+    opacity: 1;
+  }
+  .pp-controls button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, #ffffff 22%, transparent);
+    background: color-mix(in oklab, #080810 80%, transparent);
+    color: #e6e6f0;
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .pp-controls button:hover,
+  .pp-controls button[aria-pressed="true"] {
+    border-color: color-mix(in oklab, #ffffff 60%, transparent);
+    color: #ffffff;
+  }
+  .pp-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #ff0000;
+  }
+</style>
+
+<script>
+  // One listener for every player on the page.
+  const COLOURS = [
+    { name: "red", dot: "#ff0000", filter: "" },
+    { name: "yellow", dot: "#ffcc33", filter: "url(#pp-ball-yellow)" },
+    { name: "green", dot: "#33cc66", filter: "url(#pp-ball-green)" },
+    { name: "blue", dot: "#4d8dff", filter: "url(#pp-ball-blue)" },
+    { name: "all different", dot: "conic-gradient(#ff0000, #33cc66, #4d8dff, #ff0000)", filter: "" },
+  ];
+  const SLOW = 0.35;
+
+  function parts(el: Element) {
+    const root = el.closest<HTMLElement>("[data-pp]");
+    const video = root?.querySelector<HTMLVideoElement>("video");
+    return root && video ? { root, video } : null;
+  }
+
+  function setPauseLabel(root: HTMLElement, paused: boolean) {
+    const btn = root.querySelector<HTMLButtonElement>('[data-pp-act="pause"]');
+    if (!btn) return;
+    btn.textContent = paused ? "Play" : "Pause";
+    btn.setAttribute("aria-label", paused ? "Play the animation" : "Pause the animation");
+  }
+
+  document.addEventListener("click", (event) => {
+    const btn = (event.target as Element).closest<HTMLButtonElement>("[data-pp-act]");
+    if (!btn) return;
+    const p = parts(btn);
+    if (!p) return;
+    const { root, video } = p;
+    const act = btn.dataset.ppAct;
+
+    if (act === "pause") {
+      if (video.paused) void video.play();
+      else video.pause();
+      setPauseLabel(root, video.paused);
+    }
+
+    if (act === "slow") {
+      const slow = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", String(slow));
+      video.playbackRate = slow ? SLOW : 1;
+    }
+
+    if (act === "colour") {
+      const next = (Number(root.dataset.ppColour ?? 0) + 1) % COLOURS.length;
+      const colour = COLOURS[next];
+      root.dataset.ppColour = String(next);
+      video.style.filter = colour.filter;
+
+      // "All different" is its own render; everything else uses the red one.
+      const wanted = (colour.name === "all different" ? root.dataset.mixed : root.dataset.red) ?? "";
+      if (!video.src.endsWith(wanted)) {
+        const { currentTime, paused, playbackRate } = video;
+        video.addEventListener(
+          "loadedmetadata",
+          () => {
+            video.currentTime = currentTime;
+            video.playbackRate = playbackRate;
+            if (!paused) void video.play();
+          },
+          { once: true },
+        );
+        video.src = wanted;
+      }
+
+      const dot = btn.querySelector<HTMLElement>(".pp-dot");
+      if (dot) dot.style.background = colour.dot;
+      btn.setAttribute("aria-label", `Ball colour: ${colour.name}. Click to change.`);
+    }
+  });
+
+  // Visitors who ask for less motion get a still picture and a Play button.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll<HTMLElement>("[data-pp]").forEach((root) => {
+      const video = root.querySelector("video");
+      if (!video) return;
+      video.removeAttribute("autoplay");
+      video.pause();
+      setPauseLabel(root, true);
+    });
+  }
+</script>

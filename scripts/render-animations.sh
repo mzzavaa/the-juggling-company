@@ -4,7 +4,8 @@
 # desktop app (https://jugglinglab.org, (c) Jack Boyce and contributors, GPL-2.0),
 # using its built-in female avatar (avatar=female). The committed GIFs were rendered with 1.7.8.
 #
-# Run by hand when a pattern is added or Juggling Lab changes. It is NOT part of
+# For each pattern it writes a GIF, an MP4 and an MP4 with every prop in a
+# different colour. Run by hand when a pattern is added or Juggling Lab changes. It is NOT part of
 # the build: the GIFs are committed, so CI needs neither Juggling Lab nor ffmpeg.
 #
 # Needs:
@@ -80,7 +81,22 @@ MN='min(min(r(X,Y),g(X,Y)),b(X,Y))'
 MX='max(max(r(X,Y),g(X,Y)),b(X,Y))'
 RECOLOUR="format=gbrp,geq=r='r(X,Y)-$MN+255-$MX':g='g(X,Y)-$MN+255-$MX':b='b(X,Y)-$MN+255-$MX'"
 RECOLOUR="$RECOLOUR,lutrgb=r='val*247/255+8':g='val*247/255+8':b='val*239/255+16'"
-RECOLOUR="$RECOLOUR,split[a][b];[a]palettegen=reserve_transparent=0[p];[b][p]paletteuse=dither=none"
+TO_GIF="$RECOLOUR,split[a][b];[a]palettegen=reserve_transparent=0[p];[b][p]paletteuse=dither=none"
+
+# One Juggling Lab render, recoloured. $1 pattern, $2 width, $3 avatar, $4 raw file.
+render_raw() {
+  "$JLAB" togif "$1" -prefs "width=$2;height=$HEIGHT;avatar=$3" -out "$4"
+  if [[ ! -s "$4" ]]; then
+    echo "Juggling Lab wrote no GIF for $1" >&2
+    exit 1
+  fi
+}
+
+# MP4 for the on-page player (pause and slow motion need a video, not a GIF).
+to_mp4() {
+  ffmpeg -v error -y -i "$1" -vf "$RECOLOUR,format=yuv420p" -c:v libx264 -crf 20 -preset slow \
+    -movflags +faststart -an "$2"
+}
 
 only="${1:-}"
 mkdir -p "$OUT"
@@ -96,12 +112,37 @@ for entry in "${PATTERNS[@]}"; do
   pattern="${rest%|*}"
   [[ -n "$only" && "$only" != "$slug" ]] && continue
 
+  # The same pattern with every prop in a different colour, for the player's
+  # "all different" setting.
+  case "$pattern" in
+    *colors=*) mixed="$pattern" ;;
+    pattern=*) mixed="$pattern;colors=mixed" ;;
+    *) mixed="pattern=$pattern;colors=mixed" ;;
+  esac
+
   raw="$TMP/$slug.gif"
-  "$JLAB" togif "$pattern" -prefs "width=$width;height=$HEIGHT;avatar=$avatar" -out "$raw"
-  if [[ ! -s "$raw" ]]; then
-    echo "Juggling Lab wrote no GIF for $pattern" >&2
-    exit 1
-  fi
-  ffmpeg -v error -y -i "$raw" -filter_complex "$RECOLOUR" "$OUT/pattern-$slug.gif"
-  echo "pattern-$slug.gif  ($pattern)"
+  raw_mixed="$TMP/$slug-mixed.gif"
+  render_raw "$pattern" "$width" "$avatar" "$raw"
+  render_raw "$mixed" "$width" "$avatar" "$raw_mixed"
+
+  ffmpeg -v error -y -i "$raw" -filter_complex "$TO_GIF" "$OUT/pattern-$slug.gif"
+  to_mp4 "$raw" "$OUT/pattern-$slug.mp4"
+  to_mp4 "$raw_mixed" "$OUT/pattern-$slug-mixed.mp4"
+  echo "pattern-$slug  ($pattern)"
 done
+
+# Drop and recover. Juggling Lab cannot draw a ball falling, so this joins two
+# of its renders: the cascade, then the same cascade with one ball missing
+# (siteswap 330, which keeps the rhythm and leaves an empty beat), then back.
+if [[ -z "$only" ]]; then
+  join() { # $1 cascade raw, $2 times to play it, $3 two-ball raw, $4 joined raw
+    ffmpeg -v error -y -stream_loop "$(($2 - 1))" -i "$1" -i "$3" \
+      -filter_complex "[0:v][1:v]concat=n=2:v=1,split[a][b];[a]palettegen[p];[b][p]paletteuse=dither=none" "$4"
+  }
+  join "$TMP/3-cascade.gif" 3 "$TMP/2-two-balls.gif" "$TMP/3-drop-recover.gif"
+  join "$TMP/3-cascade-mixed.gif" 1 "$TMP/2-two-balls-mixed.gif" "$TMP/3-drop-recover-mixed.gif"
+  ffmpeg -v error -y -i "$TMP/3-drop-recover.gif" -filter_complex "$TO_GIF" "$OUT/pattern-3-drop-recover.gif"
+  to_mp4 "$TMP/3-drop-recover.gif" "$OUT/pattern-3-drop-recover.mp4"
+  to_mp4 "$TMP/3-drop-recover-mixed.gif" "$OUT/pattern-3-drop-recover-mixed.mp4"
+  echo "pattern-3-drop-recover  (3, then 330, joined)"
+fi

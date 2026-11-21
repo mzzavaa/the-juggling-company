@@ -3,14 +3,17 @@
  * Juggling pattern card backed by a pre-rendered animated GIF.
  *
  * Unlike the canvas-based JugglingPattern.astro (which simulates throws live),
- * this component shows a GIF rendered by official Juggling Lab with its built-in
- * female avatar (see scripts/render-animations.sh).
+ * this component shows an animation rendered by official Juggling Lab with its
+ * built-in female avatar (see scripts/render-animations.sh), played through
+ * PatternPlayer so it can be paused, slowed and recoloured.
  * GIFs live at /animations/pattern-{slug}.gif and are loaded lazily so an
  * out-of-viewport card costs nothing.
  *
  * Animation engine: JugglingLab (© Jack Boyce), GPL-2.0 licensed.
  * https://github.com/jkboyce/jugglinglab
  */
+import PatternPlayer from "./PatternPlayer.astro";
+
 interface Props {
   src: string;
   title: string;
@@ -25,7 +28,7 @@ const {
   title,
   notation,
   description,
-  difficulty = "beginner",
+  difficulty,
   pillar = "all",
 } = Astro.props;
 
@@ -42,7 +45,7 @@ const difficultyLabel: Record<string, string> = {
   intermediate: "Intermediate",
   advanced: "Advanced",
 };
-const difficultyDots = { beginner: 1, intermediate: 2, advanced: 3 }[difficulty];
+const difficultyDots = difficulty ? { beginner: 1, intermediate: 2, advanced: 3 }[difficulty] : 0;
 
 // Difficulty has its own color system, separate from pillar accent
 const difficultyColor: Record<string, string> = {
@@ -50,28 +53,24 @@ const difficultyColor: Record<string, string> = {
   intermediate: "#ffcc33",
   advanced: "#ff3366",
 };
-const pillColor = difficultyColor[difficulty];
+const pillColor = difficulty ? difficultyColor[difficulty] : "transparent";
 ---
 
 <article class="pattern-gif-card group" style={`--accent: ${accent}; --pill: ${pillColor};`}>
   <div class="img-wrap">
-    <img
-      src={src}
-      alt={`Animated juggling pattern: ${title}, siteswap ${notation}`}
-      loading="lazy"
-      decoding="async"
-      class="pattern-gif"
-    />
+    <PatternPlayer src={src} alt={`Animated juggling pattern: ${title}, siteswap ${notation}`} />
     <div class="glow-overlay" aria-hidden="true"></div>
 
-    <span class="difficulty-pill" aria-label={`Difficulty: ${difficultyLabel[difficulty]}`}>
-      <span class="dots" aria-hidden="true">
-        {Array.from({ length: 3 }, (_, i) => (
-          <span class:list={["dot", { on: i < difficultyDots }]}></span>
-        ))}
+    {difficulty && (
+      <span class="difficulty-pill" aria-label={`Difficulty: ${difficultyLabel[difficulty]}`}>
+        <span class="dots" aria-hidden="true">
+          {Array.from({ length: 3 }, (_, i) => (
+            <span class:list={["dot", { on: i < difficultyDots }]}></span>
+          ))}
+        </span>
+        {difficultyLabel[difficulty]}
       </span>
-      {difficultyLabel[difficulty]}
-    </span>
+    )}
 
     <a
       href="https://jugglinglab.org"
