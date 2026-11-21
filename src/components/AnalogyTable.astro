@@ -6,36 +6,41 @@ interface Row {
 
 interface Props {
   /** Title of the right-hand concept domain (e.g. "Tech", "Change Management"). */
-  domain: string;
-  rows: Row[];
+  domain?: string;
+  /** Two-column form: objects with `juggling` and `analogue`. Free form: one array of cells per row, used with `headers`. */
+  rows: Row[] | string[][];
+  /** Column titles for the free form, any number of columns. */
+  headers?: string[];
   caption?: string;
 }
 
-const { domain, rows, caption } = Astro.props;
+const { domain, rows, headers, caption } = Astro.props;
+
+// Normalise both forms into header cells and rows of cells.
+const headerCells = headers ?? ["Juggling", domain ?? ""];
+const bodyRows = rows.map((row) => (Array.isArray(row) ? row : [row.juggling, row.analogue]));
 ---
 
 <figure class="my-8 overflow-hidden rounded-lg border border-[var(--color-border)]">
   <table class="w-full border-collapse text-left text-sm">
     <thead class="bg-[var(--color-bg-elevated)] text-[var(--color-fg)]">
       <tr>
-        <th scope="col" class="border-b border-[var(--color-border)] px-4 py-3 font-semibold">
-          Juggling
-        </th>
-        <th scope="col" class="border-b border-[var(--color-border)] px-4 py-3 font-semibold">
-          {domain}
-        </th>
+        {
+          headerCells.map((cell) => (
+            <th scope="col" class="border-b border-[var(--color-border)] px-4 py-3 font-semibold">
+              {cell}
+            </th>
+          ))
+        }
       </tr>
     </thead>
     <tbody>
       {
-        rows.map((row, idx) => (
+        bodyRows.map((cells, idx) => (
           <tr class={idx % 2 === 0 ? "" : "bg-[var(--color-bg-elevated)]/40"}>
-            <td class="border-b border-[var(--color-border)] px-4 py-3 align-top">
-              {row.juggling}
-            </td>
-            <td class="border-b border-[var(--color-border)] px-4 py-3 align-top">
-              {row.analogue}
-            </td>
+            {cells.map((cell) => (
+              <td class="border-b border-[var(--color-border)] px-4 py-3 align-top">{cell}</td>
+            ))}
           </tr>
         ))
       }
