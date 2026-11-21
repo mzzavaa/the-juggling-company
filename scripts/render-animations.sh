@@ -130,3 +130,19 @@ for entry in "${PATTERNS[@]}"; do
   to_mp4 "$raw_mixed" "$OUT/pattern-$slug-mixed.mp4"
   echo "pattern-$slug  ($pattern)"
 done
+
+# Drop and recover. Juggling Lab cannot draw a ball falling, so this joins two
+# of its renders: the cascade, then the same cascade with one ball missing
+# (siteswap 330, which keeps the rhythm and leaves an empty beat), then back.
+if [[ -z "$only" ]]; then
+  join() { # $1 cascade raw, $2 times to play it, $3 two-ball raw, $4 joined raw
+    ffmpeg -v error -y -stream_loop "$(($2 - 1))" -i "$1" -i "$3" \
+      -filter_complex "[0:v][1:v]concat=n=2:v=1,split[a][b];[a]palettegen[p];[b][p]paletteuse=dither=none" "$4"
+  }
+  join "$TMP/3-cascade.gif" 3 "$TMP/2-two-balls.gif" "$TMP/3-drop-recover.gif"
+  join "$TMP/3-cascade-mixed.gif" 1 "$TMP/2-two-balls-mixed.gif" "$TMP/3-drop-recover-mixed.gif"
+  ffmpeg -v error -y -i "$TMP/3-drop-recover.gif" -filter_complex "$TO_GIF" "$OUT/pattern-3-drop-recover.gif"
+  to_mp4 "$TMP/3-drop-recover.gif" "$OUT/pattern-3-drop-recover.mp4"
+  to_mp4 "$TMP/3-drop-recover-mixed.gif" "$OUT/pattern-3-drop-recover-mixed.mp4"
+  echo "pattern-3-drop-recover  (3, then 330, joined)"
+fi
